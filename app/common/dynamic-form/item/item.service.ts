@@ -1,5 +1,5 @@
 import {Injectable}   from '@angular/core';
-import {FormControl, FormGroup, Validators, ValidatorFn, AsyncValidatorFn} from '@angular/forms';
+import {FormControl, FormGroup, Validators, ValidatorFn, AsyncValidatorFn, FormBuilder} from '@angular/forms';
 
 import {ItemBase} from './item-base';
 import {TextboxItem} from "./item-textbox";
@@ -7,80 +7,73 @@ import {MultiselectItem} from "./item-multiselect";
 import {SelectItem} from "./item-select";
 import {CheckboxItem} from "./item-checkbox";
 import {RadioItem} from "./item-radio";
+import {ItemService} from "../../../component/start/item.service";
+import {ButtonItem} from "./item-button";
+import {TextareaItem} from "./item-textarea";
 
 @Injectable()
 export class ItemControlService {
 
-  static createFormItem(config):ItemBase<any> {
+  static createFormGroup(formGroupStruct: {}) {
 
-    let controlType:string = config.controlType || '';
-    let item:ItemBase<any>;
+  }
+
+  static createFormItem(config: {}): ItemBase<any> {
+
+    if(!('controlType' in config)) {
+      config['controlType'] = guessControlType(config);
+    }
+
+    let controlType: string = config['controlType'];
+    let item: ItemBase<any>;
 
     console.log('controlType: ', controlType);
 
-    if(controlType === "textbox") {
+    if (controlType === "textbox") {
       item = new TextboxItem(config);
     }
 
-    if(controlType === "select") {
+    if (controlType === "select") {
       item = new SelectItem(config);
     }
 
-    if(controlType === "multiselect") {
+    if (controlType === "multiselect") {
       item = new MultiselectItem(config);
     }
 
-    if(controlType === "checkbox") {
+    if (controlType === "checkbox") {
       item = new CheckboxItem(config);
     }
 
-    if(controlType === "radio") {
+    if (controlType === "radio") {
       item = new RadioItem(config);
     }
 
+    if (controlType === "textarea") {
+      item = new TextareaItem(config);
+    }
+
+    if (controlType === "button") {
+      item = new ButtonItem(config);
+    }
+
     return item;
+
+    /////////////////////////////
+
+    function guessControlType(struct:{}):string {
+      let controlType:string;
+
+      controlType = "textbox";
+
+      return controlType;
+
+    }
   }
 
   constructor() {
 
   }
 
-  toFormGroup(items: ItemBase<any>[], model?: {}) {
-    items = items || [];
-    model = model || {};
-
-    let group: any = {};
-
-    items
-      .map(applyModelValue(model))
-      .forEach((item:ItemBase<any>) => {
-
-        let formState: any;
-        let validator: ValidatorFn | ValidatorFn[];
-        let asyncValidator: AsyncValidatorFn | AsyncValidatorFn[];
-
-        //compost validators;
-        if('validators' in item) {
-          validator = item.validators;
-        }
-
-        if(item.required) {
-          validator = Validators.required;
-        }
-
-        group[item.key] = item.required ? new FormControl(item.value || '', Validators.required) : new FormControl(item.value || '');
-    });
-    return new FormGroup(group);
-
-    ////////////
-
-    function applyModelValue(model?: any) {
-      return (item:ItemBase<any>) => {
-        item.value = model[item.key];
-        return item;
-      }
-    }
-
-  }
 
 }

@@ -3,6 +3,7 @@ import {FormGroup}                 from '@angular/forms';
 import {ItemBase}              from './item/item-base';
 import {ItemControlService}    from './item/item.service';
 import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
+import {DynamicFormService} from "./dynamic-form.service";
 
 /*
 
@@ -19,9 +20,17 @@ import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
   moduleId: module.id,
   selector: 'dynamic-form',
   templateUrl: './dynamic-form.component.html',
-  providers: [ItemControlService]
+  providers: [ItemControlService, DynamicFormService]
 })
 export class DynamicFormComponent implements OnInit {
+
+  get onPayloadChange(): EventEmitter<IDynamicFormOnPayLoadChangeEvent> {
+    return this._onPayloadChange;
+  }
+
+  set onPayloadChange(value: EventEmitter<IDynamicFormOnPayLoadChangeEvent>) {
+    this._onPayloadChange = value;
+  }
 
   set payLoad(value: any) {
     this._payLoad = value;
@@ -29,21 +38,36 @@ export class DynamicFormComponent implements OnInit {
     //this.onPayloadChange.emit(onPayloadChangeEvent);
   }
 
-  @Input() items: ItemBase<any>[] = [];
-  @Input() model:{} = {};
+  private _items: ItemBase<any>[] = [];
+  @Input()
+  set items(items: Array) {
+    this._items = items.map((item: ItemBase<any>) => {
+      let newItem = ItemControlService.createFormItem(item);
+      return newItem;
+    });
+
+  }
+  get items(): ItemBase<any>[] {
+    return this._items;
+  }
+
+
+  @Input() model: {} = {};
   form: FormGroup;
 
-  @Output()
-  onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
+  @Output() private
+  _onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
 
   @Output()
   onSubmitted: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
 
   private _payLoad: any;
 
-  constructor(private ics: ItemControlService) { }
+  constructor(private ics: ItemControlService, protected dfService:DynamicFormService) {
 
-  ngOnInit() {
+  }
+
+  ngOnInit(): void {
     this.renderForm();
   }
 
@@ -61,7 +85,7 @@ export class DynamicFormComponent implements OnInit {
     //---------------------------------------
 
     if (valueChanged('model', changes)) {
-      //this.model = changes['model'].currentValue || {};
+      this.model = changes['model'].currentValue || {};
       //this.renderForm();
     }
 
@@ -73,15 +97,17 @@ export class DynamicFormComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  onSubmit(): void {
     console.log("onSubmit");
     //this.payLoad = this.form.value;
-    let payLoad:IDynamicFormOnPayLoadChangeEvent = {payLoad:this.form.value};
+    let payLoad: IDynamicFormOnPayLoadChangeEvent = {payLoad: this.form.value};
     this.onSubmitted.emit(payLoad);
   }
 
-  protected renderForm() {
-    this.form = this.ics.toFormGroup(this.items, this.model);
+  protected renderForm(): void {
+    console.log('before apply renderForm');
+    this.form = this.dfService.toFG(this.items, this.model);
+    console.log('form:', this.form);
     console.log('after apply renderForm');
     //this.payLoad = this.form.value;
   }

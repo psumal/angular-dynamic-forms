@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DynamicFormComponent } from "./dynamic-form.component";
 import { ItemComponent } from './item/item.component';
 import {ButtonComponent} from "./item/button.component";
+import {DynamicFormService} from "./dynamic-form.service";
 
 export{ DynamicFormComponent} from "./dynamic-form.component";
 

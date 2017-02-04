@@ -3,6 +3,10 @@
     {{item.label}}
   </label>
 
+  <!--
+  <pre>{{item |json}}</pre>
+  -->
+
   <input *ngIf="isControlTypeVisible('textbox')"
          [formControlName]="item.key"
          [id]="item.key"
@@ -16,11 +20,10 @@
       <label class="form-check-label">
         <input [type]="item.type"
                [id]="item.key + '--' + option.key"
-               [attr.name]="item.key"
+               [formControlName]="item.key"
                [attr.class]="getControlClass()"
                [checked]="idx === 0"
                [value]="option.key">
-        {{ option.value }}
       </label>
     </div>
   </div>

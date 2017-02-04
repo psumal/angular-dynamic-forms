@@ -1,19 +1,20 @@
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule }          from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { DynamicFormComponent } from "./dynamic-form.component";
-import { ItemComponent } from './item/item.component';
+import {NgModule} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {DynamicFormComponent} from "./dynamic-form.component";
+import {ItemComponent} from './item/item.component';
 import {ButtonComponent} from "./item/button.component";
 import {DynamicFormService} from "./dynamic-form.service";
 
-export{ DynamicFormComponent} from "./dynamic-form.component";
+export{DynamicFormComponent} from "./dynamic-form.component";
 
-const EXPORTS = [ DynamicFormComponent, ItemComponent, ButtonComponent ];
+const EXPORTS = [DynamicFormComponent, ItemComponent, ButtonComponent];
 
 @NgModule({
-  imports: [ CommonModule, ReactiveFormsModule ],
-  exports:      [ EXPORTS ],
-  declarations: [ EXPORTS ],
-  providers: [ ]
+  imports: [CommonModule, ReactiveFormsModule],
+  exports: [EXPORTS],
+  declarations: [EXPORTS],
+  providers: []
 })
-export class DynamicFormModule { }
+export class DynamicFormModule {
+}

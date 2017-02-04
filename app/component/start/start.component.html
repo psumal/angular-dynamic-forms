@@ -24,23 +24,20 @@
     -->
 
     <p>Items</p>
-    <pre style="height:200px; overflow-y: scroll;">{{formItems | json}}</pre>
-   <!--
     <dynamic-form
-    [items]="dynamicItems">
+    [items]="dynamicItems"
+    [model]="{}">
     </dynamic-form>
--->
+    
   </div>
 
   <div class="col-lg-6">
     <h4>FormConfig: {{formName}}</h4>
-
+    <pre style="height:200px; overflow-y: scroll;">{{formItems | json}}</pre>
     <dynamic-form
       [items]="formItems"
       [model]="formModel"
-      (onSubmitted)="onSubmitted($event)"
-      (onPayloadChange)="onPayloadChange($event)">
+      (onSubmitted)="onSubmitted($event)">
     </dynamic-form>
-    <!--  -->
   </div>
 </div>

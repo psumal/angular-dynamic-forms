@@ -24,14 +24,6 @@ import {DynamicFormService} from "./dynamic-form.service";
 })
 export class DynamicFormComponent implements OnInit {
 
-  get onPayloadChange(): EventEmitter<IDynamicFormOnPayLoadChangeEvent> {
-    return this._onPayloadChange;
-  }
-
-  set onPayloadChange(value: EventEmitter<IDynamicFormOnPayLoadChangeEvent>) {
-    this._onPayloadChange = value;
-  }
-
   set payLoad(value: any) {
     this._payLoad = value;
     //let onPayloadChangeEvent: IDynamicFormOnPayLoadChangeEvent = {payLoad: this._payLoad};
@@ -40,23 +32,21 @@ export class DynamicFormComponent implements OnInit {
 
   private _items: ItemBase<any>[] = [];
   @Input()
-  set items(items: Array) {
+  set items(items: ItemBase<any>[]) {
     this._items = items.map((item: ItemBase<any>) => {
-      let newItem = ItemControlService.createFormItem(item);
-      return newItem;
+      return ItemControlService.createFormItem(item);
     });
-
+    this.renderForm();
   }
   get items(): ItemBase<any>[] {
     return this._items;
   }
 
-
   @Input() model: {} = {};
   form: FormGroup;
 
-  @Output() private
-  _onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
+  @Output()
+  onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
 
   @Output()
   onSubmitted: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
@@ -75,7 +65,7 @@ export class DynamicFormComponent implements OnInit {
 
     let valueChanged = function (key: string, changes: SimpleChanges): boolean {
       if (key in changes) {
-        if (changes[key].currentValue != changes[key].previousValue) {
+        if (changes[key].currentValue !== changes[key].previousValue) {
           return true;
         }
       }
@@ -89,26 +79,22 @@ export class DynamicFormComponent implements OnInit {
       //this.renderForm();
     }
 
-    if (valueChanged('items', changes)) {
+    if ('items' in changes) {
+      console.log("Items changed: ", changes['items']);
       this.items = changes['items'].currentValue || [];
-      console.log('after apply new items');
-      this.renderForm();
     }
 
   }
 
   onSubmit(): void {
-    console.log("onSubmit");
     //this.payLoad = this.form.value;
     let payLoad: IDynamicFormOnPayLoadChangeEvent = {payLoad: this.form.value};
     this.onSubmitted.emit(payLoad);
   }
 
   protected renderForm(): void {
-    console.log('before apply renderForm');
+    console.log('renderForm');
     this.form = this.dfService.toFG(this.items, this.model);
-    console.log('form:', this.form);
-    console.log('after apply renderForm');
     //this.payLoad = this.form.value;
   }
 

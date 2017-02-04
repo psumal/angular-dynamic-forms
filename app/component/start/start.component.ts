@@ -18,7 +18,7 @@ export class StartComponent implements OnInit, OnChanges {
   demoForms: Array<any>;
 
   formName: string;
-  formItems: any[];
+  formItems: Array<any>;
   formModel: {};
 
   dynamicItems:any[] = [];
@@ -34,26 +34,6 @@ export class StartComponent implements OnInit, OnChanges {
   };
 
   constructor(protected service: ItemService) {
-    let initItem = ItemControlService.createFormItem({
-        "key": "initialItem",
-        "label": "",
-        "required": false,
-        "order": 1,
-        "controlType": "textbox",
-        "placeholder": "",
-        "type": "number"
-      });
-
-    this.dynamicItems.push(initItem);
-    this.dynamicItems.push(ItemControlService.createFormItem({
-      "key": "initial",
-      "label": "",
-      "required": false,
-      "order": 1,
-      "controlType": "textbox",
-      "placeholder": "",
-      "type": "number"
-    }));
 
     this.formItems = service.getGenericElement();
     this.formModel = this.starRatingConfig;
@@ -114,12 +94,12 @@ export class StartComponent implements OnInit, OnChanges {
 
   /*DYNAMIC FORM COMPONENT*/
   onPayloadChange($event: {}) {
-    console.log('onPayloadChange $event', $event['payLoad']);
-    let item: ItemBase<any> = ItemControlService.createFormItem($event['payLoad']);
+    /*console.log('onPayloadChange $event', $event['payLoad']);
+    let item: ItemBase<any> = $event['payLoad'];//ItemControlService.createFormItem($event['payLoad']);
     if(item) {
-      console.log("generated item: ", item);
-      this.dynamicItems.push(item);
-    }
+      console.log("generated item: ", item, this.dynamicItems.concat(item, this.dynamicItems));
+      this.dynamicItems = this.dynamicItems.concat(item, this.dynamicItems);
+    }*/
   }
 
   onSubmitted($event: {}) {
@@ -127,7 +107,7 @@ export class StartComponent implements OnInit, OnChanges {
     let item: ItemBase<any> = ItemControlService.createFormItem($event['payLoad']);
     if(item) {
       console.log("generated item: ", item);
-      this.dynamicItems.push(item);
+      this.dynamicItems = this.dynamicItems.concat(item, this.dynamicItems);
     }
   }
 

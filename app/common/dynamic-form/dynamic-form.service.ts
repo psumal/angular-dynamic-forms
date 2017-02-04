@@ -16,17 +16,11 @@ export class DynamicFormService {
     let formGroupObject: {[key: string]: any;} = {};
     let extra: {[key: string]: any} = {};
 
-    console.log('items struct',items);
     items
       .forEach((item) => {
-        console.log('item: ', item);
         let arr = getFormControlParamsArray(item);
-        console.log('arr: ', arr, formGroupObject);
         formGroupObject[item['key']] = arr;
-        console.log('formGroupObject: ', formGroupObject);
       });
-
-    console.log('items struct map', JSON.parse(JSON.stringify(formGroupObject)));
 
     return this.fb.group(formGroupObject, extra);
 
@@ -40,19 +34,26 @@ export class DynamicFormService {
       //define array of params
       let fCParams: Array<any> = [];
 
-      if ('formState' in item) {
+      if (item['formState'] !== undefined) {
         fCParams.push(item['formState']);
+      } else {
+        fCParams.push('');
       }
 
-      if ('validator' in item) {
-        fCParams.push(item['validator']);
+      console.log('item:  ',item);
+      if (item['validator'] !== undefined && item['validator'].length > 0) {
+       //@TODO implement map to angular validators
+        fCParams.push(Validators.required);
+      } else {
+        fCParams.push([]);
       }
 
       if ('asyncValidator' in item) {
         fCParams.push(item['asyncValidator']);
+      } else {
+        fCParams.push([]);
       }
 
-      console.log('fCParams array: ', fCParams);
       return fCParams;
     }
 
@@ -74,8 +75,8 @@ export class DynamicFormService {
         let asyncValidator: AsyncValidatorFn | AsyncValidatorFn[];
 
         //compost validators;
-        if ('validators' in item) {
-          validator = item.validators;
+        if ('validator' in item) {
+          validator = item.validator;
         }
 
         if (item.required) {

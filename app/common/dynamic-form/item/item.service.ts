@@ -27,8 +27,6 @@ export class ItemControlService {
     let controlType: string = config['controlType'];
     let item: ItemBase<any>;
 
-    console.log('controlType: ', controlType);
-
     if (controlType === "textbox") {
       item = new TextboxItem(config);
     }
@@ -69,6 +67,10 @@ export class ItemControlService {
       return controlType;
 
     }
+  }
+
+  static getFormControlParamsArray(struct:{}) {
+
   }
 
   constructor() {

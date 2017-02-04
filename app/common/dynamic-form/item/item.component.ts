@@ -11,27 +11,41 @@ export class ItemComponent {
   @Input() form: FormGroup;
 
   ngOnInit() {
-  console.log('this.item:', this.item);
+
+    console.log('form: ', this.form);
+
+    console.log('key: ', this.form.get('key'));
   }
 
-  ngOnChanges(changes) {
-
-  }
-
-  get isValid() {
-    return this.form.controls[this.item.key].valid;
-  }
+  //ngOnChanges() {}
 
   getWrapperClass(): string {
-    let classNames: string = "";
+    /*let displayWarning = function() => {
+      return this.item.value !== 'te';
+    };*/
+
+    let classNames: Array<string> = [];
     if (this.item.controlType === 'radio' || this.item.controlType === 'checkbox') {
-      classNames = 'form-check';
+      classNames.push('form-check');
     }
     else {
-      classNames = 'form-group';
+      classNames.push('form-group');
     }
 
-    return classNames;
+    if(this.form.get(this.item.key).valid) {
+      classNames.push('has-success');
+    }
+
+    /*if(displayWarning()) {
+      classNames.push('has-warning');
+    }*/
+
+    if(!this.form.get(this.item.key).valid) {
+      classNames.push('has-danger');
+    }
+
+    return classNames.join(' ');
+
   }
 
   isLabelVisible():boolean {
@@ -51,6 +65,17 @@ export class ItemComponent {
       classNames = 'form-control';
     }
     return classNames;
+  }
+
+  getLabelClass():string {
+    let className:string = 'form-check-label';
+    //className += this.isError()?' has-error':'';
+    return className
+  }
+
+  isError() {
+    console.log('this.form.get: ', this.form.get(this.item.key));
+    return true;
   }
 
 

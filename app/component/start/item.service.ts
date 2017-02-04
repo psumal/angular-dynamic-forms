@@ -384,7 +384,8 @@ export class ItemService {
         label: "Key",
         placeholder: "The element key",
         //helpText: "This value is used in the id and name attribute of the element",
-        type: "text"
+        type: "text",
+        validator:[{name:'required'}]
       },
       // label
       {

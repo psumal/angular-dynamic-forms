@@ -357,7 +357,7 @@ export class ItemService {
   getGenericElement() {
 
     let genericElementConfig: Array<any> = [
-      /*
+      /**/
       // controlType
       {
         controlType: 'select',
@@ -381,18 +381,12 @@ export class ItemService {
         key: 'type',
         label: 'type',
         helpText: "This value is used in the type attribute of the element",
-        type: 'text',
         options: [
-          {key: 'text', value: 'text'},
-          {key: 'number', value: 'number'},
-          {key: 'select', value: 'select'},
-          {key: 'checkbox', value: 'checkbox'},
-          {key: 'radio', value: 'Radio'},
-          {key: 'textarea', value: 'Textarea'},
-          {key: 'sumbit', value: 'Submit'},
-          {key: 'reset', value: 'Reset'},
-          {key: 'button', value: 'Button'}
+          {key: 'text', value: 'text', group:'textbox'},
+          {key: 'number', value: 'number', group:'textbox'},
+          {key: 'button', value: 'Button', group:'buttom'}
         ],
+        changeListener:[{controls:['controlType'], name:"isRendered"}]
       },
       //key
       {
@@ -422,6 +416,20 @@ export class ItemService {
         helpText: "This value is used in the placeholder of the element",
         type: 'text'
       },
+      //validator
+      {
+        controlType: 'select',
+        key: 'validator',
+        label: 'Validator',
+        helpText: "Select default validation for this element",
+        options: [
+          {key: "test", value: "test", children:[
+            {key: [{name:'required'}], value: 'Required'},
+          ]},
+          {key: [{name:'required'}], value: 'Required'},
+          {key: [{name:'minLength', params:[2]}], value: 'minLength of 2'}
+        ],
+      },
       // help
       {
         controlType: 'textbox',
@@ -437,7 +445,7 @@ export class ItemService {
         key: 'submit-button',
         label: 'Update',
         type: 'submit'
-      },*/
+      },
       //reset button
       {
         controlType: 'button',
@@ -451,13 +459,34 @@ export class ItemService {
         key:"groupTest",
         title : "Form Group",
         items: [
-          {
+          /*    {
+            controlType:'formGroup',
+            key:"groupTest2",
+            title : "Form Group2",
+            items: [
+              {
+                controlType: 'button',
+                key: 'reset-button2',
+                label: 'Reset',
+                type: 'reset'
+              }
+            ]
+          },
+
+         {
             controlType: 'textbox',
-            key: 'help',
-            label: 'Help',
-            placeholder: "The element help",
-            helpText: "This value is used in the help of the element",
+            key: 'testtet',
+            label: 'testtet',
+            placeholder: "The testtet help",
+            helpText: "This testtet of the element",
             type: 'text'
+          },
+          */
+          {
+            controlType: 'button',
+            key: 'reset-button',
+            label: 'Reset',
+            type: 'reset'
           }
         ]
       }

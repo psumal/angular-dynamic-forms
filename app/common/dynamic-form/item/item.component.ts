@@ -7,17 +7,73 @@ import {ItemBase}     from './item-base';
   templateUrl: 'item.component.html',
 })
 export class ItemComponent {
-  @Input() item: ItemBase<any>;
-  @Input() form: FormGroup;
+  @Input() item: ItemBase<any> = <any>{};
+  @Input() form: FormGroup = <any>{};
 
-  //ngOnInit() {}
+  controlRendered:boolean = true;
+
+  constructor() {
+
+  }
+
+  ngOnInit() {
+    if(this.item.changeListener) {
+      let listener = this.item.changeListener;
+      listener.forEach((listener) => {
+        console.log('listener: ', listener, this.form.get(listener.controls[0]));
+        //fake cb
+        listener.cb = getIsRendered;
+
+        let otherChanges$ = this.form.get(listener.controls[0]).valueChanges;
+
+        otherChanges$.subscribe(change => {
+          console.log('listener change: ' + change);
+          console.log('item: ', this.item);
+          this.controlRendered = listener.cb(change);
+        });
+
+        /////////////////
+
+        function getIsRendered(change, item, form) {
+          let textboxTypes = ['textbox'];
+          return textboxTypes.indexOf(change) !== -1;
+        }
+      });
+      //this.subscribePaymentTypeChanges(this.item, this.form);
+    }
+  }
 
   //ngOnChanges() {}
 
+  subscribePaymentTypeChanges(item, form) {
+    console.log('item: ', form.get(item.key));
+
+    if (item.key == 'type') {
+
+      const otherChanges$ = form.get('controlType').valueChanges;
+      //console.log('otherChanges$', otherChanges$);
+      otherChanges$
+      //.map((value) => { return {key: item.key, value: value}; })
+        .subscribe(change => {
+          let textboxTypes = ['text', 'number', 'date'];
+
+          if(change == 'textbox') {
+            item.options = item.options.map((option) => {option.value = option.value + '.'; return option});
+          }
+          console.log('change: ' + change);
+          console.log('options: ', this.item);
+        });
+    }
+  }
+
+  isLabelVisible(): boolean {
+    return !!this.item.label;
+  }
+
   getWrapperClass(): string {
     /*let displayWarning = function() => {
-      return this.item.value !== 'te';
-    };*/
+     return this.item.value !== 'te';
+     };*/
 
     let classNames: Array<string> = [];
     if (this.item.controlType === 'radio' || this.item.controlType === 'checkbox') {
@@ -27,15 +83,15 @@ export class ItemComponent {
       classNames.push('form-group');
     }
 
-    if(this.form.get(this.item.key).valid) {
+    if (this.form.get(this.item.key).valid) {
       classNames.push('has-success');
     }
 
     /*if(displayWarning()) {
-      classNames.push('has-warning');
-    }*/
+     classNames.push('has-warning');
+     }*/
 
-    if(!this.form.get(this.item.key).valid) {
+    if (!this.form.get(this.item.key).valid) {
       classNames.push('has-danger');
     }
 
@@ -43,15 +99,11 @@ export class ItemComponent {
 
   }
 
-  isLabelVisible():boolean {
-    return !!this.item.label;
-  }
-
-  isControlTypeVisible(controlType:string):boolean {
+  isControlTypeVisible(controlType: string): boolean {
     return this.item.controlType === controlType;
   }
 
-  getControlClass():string {
+  getControlClass(): string {
     let classNames: string = "";
     if (this.item.controlType === 'radio' || this.item.controlType === 'checkbox') {
       classNames = 'form-check-input';
@@ -62,16 +114,9 @@ export class ItemComponent {
     return classNames;
   }
 
-  getLabelClass():string {
-    let className:string = 'form-check-label';
-    //className += this.isError()?' has-error':'';
-    return className
-  }
-
   isError() {
     console.log('this.form.get: ', this.form.get(this.item.key));
     return true;
   }
-
 
 }

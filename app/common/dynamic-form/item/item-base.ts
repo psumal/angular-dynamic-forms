@@ -8,6 +8,7 @@ export class ItemBase<T>{
   controlType: string;
   helpText:string;
   validator:ValidatorFn | ValidatorFn[];
+  changeListener:Array<any>;
 
   constructor(options: {
     value?: T,
@@ -18,6 +19,7 @@ export class ItemBase<T>{
     controlType?: string,
     helpText?:string
     validator?:ValidatorFn | ValidatorFn[]
+    changeListener?:Array<any>;
   } = {}) {
     this.value = options.value;
     this.key = options.key || '';
@@ -27,5 +29,6 @@ export class ItemBase<T>{
     this.controlType = options.controlType || '';
     this.helpText = options.helpText || '';
     this.validator = options.validator || [];
+    this.changeListener = options.changeListener;
   }
 }

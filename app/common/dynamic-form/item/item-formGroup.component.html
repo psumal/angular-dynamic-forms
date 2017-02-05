@@ -1,9 +1,9 @@
-<div [attr.class]="getFormGroupClass()">
-  <legend>PPPPPPPPPPPPPPPPPP</legend>
+<fieldset [attr.class]="getFormGroupClass()">
+  <legend>{{formGroupConfig.title}}</legend>
 
-  <!--<div *ngFor="let item of formGroup.items">
-  <df-item *ngIf="item.controlType !== 'button'" [item]="item" [form]="form"></df-item>
-  <df-button *ngIf="item.controlType === 'button'" [item]="item" [form]="form"></df-button>
-</div>
--->
-</div>
+  <div *ngFor="let item of formGroupConfig.items">
+    <df-item *ngIf="item.controlType !== 'button'&& item.controlType !== 'formGroup'" [item]="item" [form]="form"></df-item>
+    <df-button *ngIf="item.controlType === 'button'" [item]="item" [form]="form"></df-button>
+  </div>
+
+</fieldset>

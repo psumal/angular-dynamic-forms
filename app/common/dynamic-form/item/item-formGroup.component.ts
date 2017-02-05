@@ -7,8 +7,8 @@ import {ItemBase}     from './item-base';
   templateUrl: 'item-formGroup.component.html',
 })
 export class FormGroupComponent {
-  //@Input() formGroup: Array<ItemBase<any>>;
-  //@Input() form: FormGroup;
+  @Input() formGroupConfig:{};
+  @Input() form: FormGroup;
 
   getFormGroupClass(): string {
 

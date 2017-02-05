@@ -1,11 +1,11 @@
-<div [attr.class]="getWrapperClass()" [formGroup]="form">
-  <label [attr.for]="item.key" [attr.class]="'form-control-label'"  *ngIf="isLabelVisible()">
-    {{item.label}}
+<div [attr.class]="getWrapperClass()" [formGroup]="form" *ngIf="controlRendered">
+  controlRendered: {{controlRendered}}
+  <!---->
+  <label [attr.for]="item.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
+    {{item.label}} type:{{item.controlType}} <!--<pre>{{item |json}}</pre>-->
+
   </label>
 
-  <!--
-  <pre>{{item |json}}</pre>
-  -->
 
   <input *ngIf="isControlTypeVisible('textbox')"
          [formControlName]="item.key"
@@ -47,8 +47,16 @@
     [attr.class]="getControlClass()"
     [attr.aria-describedby]="item.key+'Help'"
     [attr.placeholder]="item.placeholder">
-    <option *ngFor="let opt of item.options" [ngValue]="opt.key">{{opt.value}}</option>
+    <template ngFor let-opt [ngForOf]="item.options">
+      <optgroup *ngIf="opt.children" label="{{opt.value}}">
+        <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
+          {{optChild.value}}
+        </option>
+      </optgroup>
+      <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
+    </template>
   </select>
+
 
   <select
     *ngIf="isControlTypeVisible('multiselect')"
@@ -58,7 +66,14 @@
     [attr.class]="'form-control'"
     [attr.aria-describedby]="item.key+'Help'"
     [attr.placeholder]="item.placeholder">
-    <option *ngFor="let opt of item.options" [ngValue]="opt.key">{{opt.value}}</option>
+    <template ngFor let-opt [ngForOf]="item.options">
+      <optgroup *ngIf="opt.children" label="{{opt.value}}">
+        <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
+          {{optChild.value}}
+        </option>
+      </optgroup>
+      <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
+    </template>
   </select>
 
   <textarea
@@ -68,9 +83,12 @@
     [attr.class]="getControlClass()"
     [attr.aria-describedby]="item.key+'Help'"
     [attr.placeholder]="item.placeholder">
-  </textarea>
-
-  <div class="form-control-feedback" *ngIf="form.controls[item.key]['errors']">{{form.controls[item.key]['errors'] | json }}</div>
+   </textarea>
+  <!-- -->
+  <!-- -->
+  <div class="form-control-feedback" *ngIf="form.controls[item.key]['errors']">{{form.controls[item.key]['errors'] |
+    json }}
+  </div>
 
   <small [attr.id]="item.key+'Help'" class="form-text text-muted">{{item.helpText}}</small>
 

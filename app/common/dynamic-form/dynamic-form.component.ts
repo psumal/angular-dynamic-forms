@@ -26,9 +26,7 @@ import {FormGroupItem} from "./item/formGroup-base";
 export class DynamicFormComponent implements OnInit {
 
   set payLoad(value: any) {
-    this._payLoad = value;
-    //let onPayloadChangeEvent: IDynamicFormOnPayLoadChangeEvent = {payLoad: this._payLoad};
-    //this.onPayloadChange.emit(onPayloadChangeEvent);
+
   }
 
   private _items: ItemBase<any>[] = [];

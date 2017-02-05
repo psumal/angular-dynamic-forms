@@ -17,20 +17,14 @@ export class DynamicFormService {
     let extra: {[key: string]: any} = {};
 
     items.forEach((item) => {
-        console.log("item['controlType']", item['controlType'], );
-        if(item['controlType'] !== 'formGroup') {
-          let arr = getFormControlParamsArray(item);
-          console.log('getFormControlParamsArray: ', arr);
-          formGroupObject[item['key']] = arr;
-        }
-        else {
-          formGroupObject[item['key']] = {};
-          console.log('inner items: ', item['items']);
-          let fg = this.toFG(item['items'], model[item['key']]);
-            console.log('inner formGroupObject: ', fg);
-          formGroupObject[item['key']] = fg;
-        }
-      });
+      if (item['controlType'] !== 'formGroup') {
+        formGroupObject[item['key']] = getFormControlParamsArray(item);
+      }
+      else {
+        formGroupObject[item['key']] = {};
+        formGroupObject[item['key']] = this.toFG(item['items'], model[item['key']]);
+      }
+    });
 
     console.log('formGroupObject: ', formGroupObject);
     return this.fb.group(formGroupObject, extra);
@@ -40,7 +34,8 @@ export class DynamicFormService {
     function getFormControlParamsArray(item: ItemBase<any>): Array<any> {
 
       let validCustomValidator = ['email'];
-        function validateEmail(fc: FormControl) {
+
+      function validateEmail(fc: FormControl) {
         let EMAIL_REGEXP = "[A-z]";
 
         return (false) ? null : {
@@ -50,12 +45,14 @@ export class DynamicFormService {
         };
       }
 
+
       //define FormControl params in the right order
       let formState: any = '';
       let validator: Array<any> = [];
       let asyncValidator: Array<any> = [];
       //define array of params
       let fCParams: Array<any> = [];
+      let changeListener: Array<any> = [];
 
       //form state
       if (item['formState'] !== undefined) {
@@ -64,11 +61,10 @@ export class DynamicFormService {
       fCParams.push(formState);
 
       //valodators
+      if (item['validator'] !== undefined && item['validator'].length > 0) {
 
-     if (item['validator'] !== undefined && item['validator'].length > 0) {
-
-       console.log("item['validator']: ", item['validator']);
-       item['validator'].forEach((item:ItemBase<any>) => {
+        console.log("item['validator']: ", item['validator']);
+        item['validator'].forEach((item: ItemBase<any>) => {
           if (item['name'] in Validators) {
             if ('params' in item) {
               validator.push(Validators[item['name']].apply(undefined, item['params']));
@@ -78,11 +74,11 @@ export class DynamicFormService {
             }
           }
           else {
-         //   console.log("validCustomValidator");
-            if(validCustomValidator.indexOf(item['name']) !== -1) {
+            //   console.log("validCustomValidator");
+            if (validCustomValidator.indexOf(item['name']) !== -1) {
               validator.push(validateEmail);
             }
-         }
+          }
         });
 
       }

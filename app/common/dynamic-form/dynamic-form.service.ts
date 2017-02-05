@@ -1,6 +1,7 @@
 import {Injectable}   from '@angular/core';
 import {FormBuilder, FormGroup, ValidatorFn, AsyncValidatorFn, Validators, FormControl} from "@angular/forms";
 import {ItemBase} from "./item/item-base";
+import {FormGroupItem} from "./item/formGroup-base";
 
 @Injectable()
 export class DynamicFormService {
@@ -9,18 +10,29 @@ export class DynamicFormService {
 
   }
 
-  toFG(items: ItemBase<any>[], model?: {}): FormGroup {
+  toFG(items: ItemBase<any>[] | FormGroupItem[], model?: {}): FormGroup {
 
     //create formBuilder.group() params
     let formGroupObject: {[key: string]: any;} = {};
     let extra: {[key: string]: any} = {};
 
-    items
-      .forEach((item) => {
-        let arr = getFormControlParamsArray(item);
-        formGroupObject[item['key']] = arr;
+    items.forEach((item) => {
+        console.log("item['controlType']", item['controlType'], );
+        if(item['controlType'] !== 'formGroup') {
+          let arr = getFormControlParamsArray(item);
+          console.log('getFormControlParamsArray: ', arr);
+          formGroupObject[item['key']] = arr;
+        }
+        else {
+          formGroupObject[item['key']] = {};
+          console.log('inner items: ', item['items']);
+          let fg = this.toFG(item['items'], model[item['key']]);
+            console.log('inner formGroupObject: ', fg);
+          formGroupObject[item['key']] = fg;
+        }
       });
 
+    console.log('formGroupObject: ', formGroupObject);
     return this.fb.group(formGroupObject, extra);
 
     /////////////////////////////
@@ -52,9 +64,11 @@ export class DynamicFormService {
       fCParams.push(formState);
 
       //valodators
+
      if (item['validator'] !== undefined && item['validator'].length > 0) {
 
-        item['validator'].forEach((item) => {
+       console.log("item['validator']: ", item['validator']);
+       item['validator'].forEach((item:ItemBase<any>) => {
           if (item['name'] in Validators) {
             if ('params' in item) {
               validator.push(Validators[item['name']].apply(undefined, item['params']));
@@ -65,13 +79,14 @@ export class DynamicFormService {
           }
           else {
          //   console.log("validCustomValidator");
-            if(validCustomValidator.indexOf(item.name) !== -1) {
+            if(validCustomValidator.indexOf(item['name']) !== -1) {
               validator.push(validateEmail);
             }
          }
         });
 
       }
+
       fCParams.push(validator);
 
       //async validators

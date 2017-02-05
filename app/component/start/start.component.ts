@@ -6,6 +6,8 @@ import {IDynamicFormOnPayLoadChangeEvent} from "../../common/dynamic-form/dynami
 import {ItemBase} from "../../common/dynamic-form/item/item-base";
 import {ItemControlService} from "../../common/dynamic-form/item/item.service";
 import {TextboxItem} from "../../common/dynamic-form/item/item-textbox";
+import {FormGroup} from "@angular/forms";
+import {FormGroupItem} from "../../common/dynamic-form/item/formGroup-base";
 
 @Component({
   moduleId: module.id,
@@ -104,7 +106,7 @@ export class StartComponent implements OnInit, OnChanges {
 
   onSubmitted($event: {}) {
     console.log('onSubmitted $event', $event['payLoad']);
-    let item: ItemBase<any> = ItemControlService.createFormItem($event['payLoad']);
+    let item: ItemBase<any>|FormGroupItem = ItemControlService.createFormItem($event['payLoad']);
     if(item) {
       console.log("generated item: ", item);
       this.dynamicItems = this.dynamicItems.concat(item, this.dynamicItems);

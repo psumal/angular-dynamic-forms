@@ -10,6 +10,7 @@ import {RadioItem} from "./item-radio";
 import {ItemService} from "../../../component/start/item.service";
 import {ButtonItem} from "./item-button";
 import {TextareaItem} from "./item-textarea";
+import {FormGroupItem} from "./formGroup-base";
 
 @Injectable()
 export class ItemControlService {
@@ -18,14 +19,15 @@ export class ItemControlService {
 
   }
 
-  static createFormItem(config: {}): ItemBase<any> {
+  static createFormItem(config: {}): ItemBase<any> | FormGroupItem {
 
+    console.log('createFormItem :', config);
     if(!('controlType' in config)) {
       config['controlType'] = guessControlType(config);
     }
-
+console.log("config['controlType'] :", config['controlType']);
     let controlType: string = config['controlType'];
-    let item: ItemBase<any>;
+    let item: ItemBase<any> | FormGroupItem;
 
     if (controlType === "textbox") {
       item = new TextboxItem(config);
@@ -53,6 +55,10 @@ export class ItemControlService {
 
     if (controlType === "button") {
       item = new ButtonItem(config);
+    }
+
+    if(controlType === "formGroup") {
+      item = new FormGroupItem(config);
     }
 
     return item;

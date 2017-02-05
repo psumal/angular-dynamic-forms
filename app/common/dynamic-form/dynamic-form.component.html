@@ -1,6 +1,7 @@
 <form (ngSubmit)="onSubmit($event)" [formGroup]="form">
 
   <div *ngFor="let item of items" class="form-row">
+    <!----><df-form-group *ngIf="item.controlType === 'formGroup'" ></df-form-group>
     <df-item *ngIf="item.controlType !== 'button'" [item]="item" [form]="form"></df-item>
     <df-button *ngIf="item.controlType === 'button'" [item]="item" [form]="form"></df-button>
   </div>

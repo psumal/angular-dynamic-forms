@@ -4,6 +4,7 @@ import {ItemBase}              from './item/item-base';
 import {ItemControlService}    from './item/item.service';
 import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
 import {DynamicFormService} from "./dynamic-form.service";
+import {FormGroupItem} from "./item/formGroup-base";
 
 /*
 
@@ -32,13 +33,16 @@ export class DynamicFormComponent implements OnInit {
 
   private _items: ItemBase<any>[] = [];
   @Input()
-  set items(items: ItemBase<any>[]) {
+  set items(items: ItemBase<any>[] | FormGroupItem[]) {
     this._items = items.map((item: ItemBase<any>) => {
-      return ItemControlService.createFormItem(item);
+      let newItem = ItemControlService.createFormItem(item);
+      if(newItem) {
+        return newItem;
+      }
     });
     this.renderForm();
   }
-  get items(): ItemBase<any>[] {
+  get items(): ItemBase<any>[] | FormGroupItem[] {
     return this._items;
   }
 

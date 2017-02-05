@@ -170,7 +170,25 @@ export class ItemService {
         controlType: 'textbox',
         key: "textboxItem_text",
         label: "Textbox Item of type text",
-        type: "text"
+        type: "text",
+        validator: [
+          //static required(control: AbstractControl): {[key: string]: boolean;};
+          {name:'required'},
+          //static requiredTrue(control: AbstractControl): {[key: string]: boolean;};
+
+          //static minLength(minLength: number): ValidatorFn;
+          {name:'minLength', params:[2]},
+          //static maxLength(maxLength: number): ValidatorFn;
+          {name:'maxLength', params:[4]},
+          //pattern(pattern: string | RegExp): ValidatorFn;
+          {name:'pattern', params:["[A-Za-z]+"]},
+          //nullValidator
+          //{name:'nullValidator'}
+
+          //custom validators
+          //email
+          {name:"email"}
+        ]
       },
       //textbox email
       {
@@ -339,6 +357,7 @@ export class ItemService {
   getGenericElement() {
 
     let genericElementConfig: Array<any> = [
+      /*
       // controlType
       {
         controlType: 'select',
@@ -383,24 +402,7 @@ export class ItemService {
         placeholder: "The element key",
         //helpText: "This value is used in the id and name attribute of the element",
         type: "text",
-        validator: [
-          //static required(control: AbstractControl): {[key: string]: boolean;};
-          {name:'required'},
-          //static requiredTrue(control: AbstractControl): {[key: string]: boolean;};
-
-          //static minLength(minLength: number): ValidatorFn;
-          {name:'minLength', params:[2]},
-          //static maxLength(maxLength: number): ValidatorFn;
-          {name:'maxLength', params:[4]},
-          //pattern(pattern: string | RegExp): ValidatorFn;
-          {name:'pattern', params:["[A-Za-z]+"]},
-          //nullValidator
-          //{name:'nullValidator'}
-
-          //custom validators
-          //email
-          {name:"email"}
-        ]
+        validator: [ {name:'required'} ]
       },
       // label
       {
@@ -435,13 +437,29 @@ export class ItemService {
         key: 'submit-button',
         label: 'Update',
         type: 'submit'
-      },
+      },*/
       //reset button
       {
         controlType: 'button',
         key: 'reset-button',
         label: 'Reset',
         type: 'reset'
+      },
+      //formGroup
+      {
+        controlType:'formGroup',
+        key:"groupTest",
+        title : "Form Group",
+        items: [
+          {
+            controlType: 'textbox',
+            key: 'help',
+            label: 'Help',
+            placeholder: "The element help",
+            helpText: "This value is used in the help of the element",
+            type: 'text'
+          }
+        ]
       }
     ];
     return genericElementConfig;

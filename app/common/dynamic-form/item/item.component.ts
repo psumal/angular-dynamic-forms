@@ -20,24 +20,42 @@ export class ItemComponent {
     if(this.item.changeListener) {
       let listener = this.item.changeListener;
       listener.forEach((listener) => {
-        console.log('listener: ', listener, this.form.get(listener.controls[0]));
         //fake cb
-        listener.cb = getIsRendered;
+        let i = 0;
+        if(listener.name == 'isRendered' ) {
+          listener.cb = getIsRendered;
+        }
+        if(listener.name == 'optionsFilter' ) {
+          listener.cb = getFilteredOptions;
+        }
+        /* */
+        //listener.cb = getIsRendered;
 
-        let otherChanges$ = this.form.get(listener.controls[0]).valueChanges;
+        let otherChanges$ = this.form.get(listener.controls[i]).valueChanges;
 
         otherChanges$.subscribe(change => {
           console.log('listener change: ' + change);
           console.log('item: ', this.item);
+
           this.controlRendered = listener.cb(change,listener.params, this.item, this.form);
         });
 
         /////////////////
 
-        function getIsRendered(change,param, item, form) {
+        function getIsRendered(change?:any,param?:any, item?:any, form?:any) {
           let controlTypesTypes = param;
-          console.log('controlTypesTypes: ', controlTypesTypes, controlTypesTypes.indexOf(change) !== -1);
           return controlTypesTypes.indexOf(change) !== -1;
+        }
+
+        function getFilteredOptions(change?:any,params?:any, item?:any, form?:any) {
+          let filterConfig = params.filter((param) => {
+            return change == param['key'];
+          }).pop();
+
+          item.options = item.initialOptions.filter((option) => {
+            return filterConfig.optionsKeys.indexOf(option.value) !== -1;
+          });
+
         }
       });
       //this.subscribePaymentTypeChanges(this.item, this.form);
@@ -46,7 +64,7 @@ export class ItemComponent {
 
   //ngOnChanges() {}
 
-  subscribePaymentTypeChanges(item, form) {
+  subscribePaymentTypeChanges(item:any, form:any) {
     console.log('item: ', form.get(item.key));
 
     if (item.key == 'type') {

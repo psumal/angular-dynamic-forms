@@ -16,7 +16,7 @@ export class DynamicFormService {
     let formGroupObject: {[key: string]: any;} = {};
     let extra: {[key: string]: any} = {};
 
-    items.forEach((item) => {
+    items.forEach((item:any) => {
       if (item['controlType'] !== 'formGroup') {
         formGroupObject[item['key']] = getFormControlParamsArray(item);
       }
@@ -64,7 +64,7 @@ export class DynamicFormService {
       if (item['validator'] !== undefined && item['validator'].length > 0) {
 
         console.log("item['validator']: ", item['validator']);
-        item['validator'].forEach((item: ItemBase<any>) => {
+        item['validator'].forEach((item:any) => {
           if (item['name'] in Validators) {
             if ('params' in item) {
               validator.push(Validators[item['name']].apply(undefined, item['params']));

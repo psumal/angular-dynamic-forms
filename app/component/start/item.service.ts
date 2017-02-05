@@ -173,21 +173,21 @@ export class ItemService {
         type: "text",
         validator: [
           //static required(control: AbstractControl): {[key: string]: boolean;};
-          {name:'required'},
+          {name: 'required'},
           //static requiredTrue(control: AbstractControl): {[key: string]: boolean;};
 
           //static minLength(minLength: number): ValidatorFn;
-          {name:'minLength', params:[2]},
+          {name: 'minLength', params: [2]},
           //static maxLength(maxLength: number): ValidatorFn;
-          {name:'maxLength', params:[4]},
+          {name: 'maxLength', params: [4]},
           //pattern(pattern: string | RegExp): ValidatorFn;
-          {name:'pattern', params:["[A-Za-z]+"]},
+          {name: 'pattern', params: ["[A-Za-z]+"]},
           //nullValidator
           //{name:'nullValidator'}
 
           //custom validators
           //email
-          {name:"email"}
+          {name: "email"}
         ]
       },
       //textbox email
@@ -382,11 +382,24 @@ export class ItemService {
         label: 'type',
         helpText: "This value is used in the type attribute of the element",
         options: [
-          {key: 'text', value: 'text', group:'textbox'},
-          {key: 'number', value: 'number', group:'textbox'},
-          {key: 'button', value: 'Button', group:'buttom'}
+          {key: 'text', value: 'text'},
+          {key: 'number', value: 'number'},
+          {key: 'button', value: 'button'},
+          {key: 'submit', value: 'submit'},
+          {key: 'reset', value: 'reset'}
         ],
-        changeListener:[{controls:['controlType'], name:"isRendered", params:['textbox', 'button']}]
+        changeListener: [
+          /**/{
+            controls: ['controlType'], name: "optionsFilter",
+            params: [
+              {key: 'textbox', optionsKeys: ['text', 'number']},
+              {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
+            ]
+          },
+          {
+            controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
+          }
+        ]
       },
       //key
       {
@@ -396,7 +409,7 @@ export class ItemService {
         placeholder: "The element key",
         //helpText: "This value is used in the id and name attribute of the element",
         type: "text",
-        validator: [ {name:'required'} ]
+        validator: [{name: 'required'}]
       },
       // label
       {
@@ -423,13 +436,19 @@ export class ItemService {
         label: 'Validator',
         helpText: "Select default validation for this element",
         options: [
-          {key: "test", value: "test", children:[
-            {key: [{name:'required'}], value: 'Required'},
-          ]},
-          {key: [{name:'required'}], value: 'Required'},
-          {key: [{name:'minLength', params:[2]}], value: 'minLength of 2'}
+          {
+            key: "test", value: "test", children: [
+            {key: [{name: 'required'}], value: 'Required'},
+          ]
+          },
+          {key: [{name: 'required'}], value: 'Required'},
+          {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
         ],
-        changeListener:[{controls:['controlType'], name:"isRendered", params:['textbox', 'select','multiselect', 'checkbox', 'radio', 'textarea']}]
+        changeListener: [{
+          controls: ['controlType'],
+          name: "isRendered",
+          params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
+        }]
       },
       // help
       {
@@ -456,33 +475,33 @@ export class ItemService {
       },
       //formGroup
       {
-        controlType:'formGroup',
-        key:"groupTest",
-        title : "Form Group",
+        controlType: 'formGroup',
+        key: "groupTest",
+        title: "Form Group",
         items: [
           /*    {
-            controlType:'formGroup',
-            key:"groupTest2",
-            title : "Form Group2",
-            items: [
-              {
-                controlType: 'button',
-                key: 'reset-button2',
-                label: 'Reset',
-                type: 'reset'
-              }
-            ]
-          },
+           controlType:'formGroup',
+           key:"groupTest2",
+           title : "Form Group2",
+           items: [
+           {
+           controlType: 'button',
+           key: 'reset-button2',
+           label: 'Reset',
+           type: 'reset'
+           }
+           ]
+           },
 
-         {
-            controlType: 'textbox',
-            key: 'testtet',
-            label: 'testtet',
-            placeholder: "The testtet help",
-            helpText: "This testtet of the element",
-            type: 'text'
-          },
-          */
+           {
+           controlType: 'textbox',
+           key: 'testtet',
+           label: 'testtet',
+           placeholder: "The testtet help",
+           helpText: "This testtet of the element",
+           type: 'text'
+           },
+           */
           {
             controlType: 'button',
             key: 'reset-button',

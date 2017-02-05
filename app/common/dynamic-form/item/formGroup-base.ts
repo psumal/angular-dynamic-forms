@@ -12,7 +12,7 @@ export class FormGroupItem{
 
   } = {}) {
     this.key = options.key;
-    this.title = options.title;
+    this.title = options.title || '';
     this.items = options.items || [];
   }
 }

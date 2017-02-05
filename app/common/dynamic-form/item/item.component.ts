@@ -10,12 +10,7 @@ export class ItemComponent {
   @Input() item: ItemBase<any>;
   @Input() form: FormGroup;
 
-  ngOnInit() {
-
-    console.log('form: ', this.form);
-
-    console.log('key: ', this.form.get('key'));
-  }
+  //ngOnInit() {}
 
   //ngOnChanges() {}
 

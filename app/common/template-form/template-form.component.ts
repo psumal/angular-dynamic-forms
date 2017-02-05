@@ -27,11 +27,8 @@ export class TemplateFormComponent implements OnInit, OnChanges {
 
   constructor(protected itemService: ItemService) {
 
-    console.log('constructor', this.formModel);
-
     this.formModel['demo'] = itemService.getConfigForm();
 
-    console.log('getKitchenSink: ', itemService.getKitchenSink());
     this.demoForms = [
       {
         value: 'Star Rating Config',

@@ -163,7 +163,7 @@ export class ItemService {
   }
 
   getKitchenSink() {
-    let demoset1: Array<any>= [
+    let demoset1: Array<any> = [
 
       // textbox text
       {
@@ -353,8 +353,6 @@ export class ItemService {
           {key: 'checkboxInline', value: 'Checkbox Inline'},
           {key: 'radioInline', value: 'Radio Inline'},
           {key: 'textarea', value: 'Textarea'},
-          {key: 'sumbit', value: 'Submit'},
-          {key: 'reset', value: 'Reset'},
           {key: 'button', value: 'Button'}
         ],
       },
@@ -385,7 +383,24 @@ export class ItemService {
         placeholder: "The element key",
         //helpText: "This value is used in the id and name attribute of the element",
         type: "text",
-        validator:[{name:'required'}]
+        validator: [
+          //static required(control: AbstractControl): {[key: string]: boolean;};
+          {name:'required'},
+          //static requiredTrue(control: AbstractControl): {[key: string]: boolean;};
+
+          //static minLength(minLength: number): ValidatorFn;
+          {name:'minLength', params:[2]},
+          //static maxLength(maxLength: number): ValidatorFn;
+          {name:'maxLength', params:[4]},
+          //pattern(pattern: string | RegExp): ValidatorFn;
+          {name:'pattern', params:["[A-Za-z]+"]},
+          //nullValidator
+          //{name:'nullValidator'}
+
+          //custom validators
+          //email
+          {name:"email"}
+        ]
       },
       // label
       {
@@ -414,14 +429,20 @@ export class ItemService {
         helpText: "This value is used in the help of the element",
         type: 'text'
       },
-      //button
-       {
+      //submit button
+      {
         controlType: 'button',
         key: 'submit-button',
         label: 'Update',
         type: 'submit'
+      },
+      //reset button
+      {
+        controlType: 'button',
+        key: 'reset-button',
+        label: 'Reset',
+        type: 'reset'
       }
-      /**/
     ];
     return genericElementConfig;
   }

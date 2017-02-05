@@ -80,7 +80,6 @@ export class DynamicFormComponent implements OnInit {
     }
 
     if ('items' in changes) {
-      console.log("Items changed: ", changes['items']);
       this.items = changes['items'].currentValue || [];
     }
 
@@ -93,7 +92,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   protected renderForm(): void {
-    console.log('renderForm');
     this.form = this.dfService.toFG(this.items, this.model);
     //this.payLoad = this.form.value;
   }

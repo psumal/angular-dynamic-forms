@@ -70,7 +70,7 @@
     [attr.placeholder]="item.placeholder">
   </textarea>
 
-  <div class="form-control-feedback">{{form.controls[item.key]['errors'] | json }}</div>
+  <div class="form-control-feedback" *ngIf="form.controls[item.key]['errors']">{{form.controls[item.key]['errors'] | json }}</div>
 
   <small [attr.id]="item.key+'Help'" class="form-text text-muted">{{item.helpText}}</small>
 

@@ -4,7 +4,7 @@ import {ItemBase}     from './item-base';
 @Component({
   moduleId: module.id,
   selector: 'df-item',
-  templateUrl: 'item.component.html',
+  templateUrl: 'formGroup/item.component.html',
 })
 export class ItemComponent {
   @Input() item: ItemBase<any> = <any>{};
@@ -73,11 +73,11 @@ export class ItemComponent {
       //console.log('otherChanges$', otherChanges$);
       otherChanges$
       //.map((value) => { return {key: item.key, value: value}; })
-        .subscribe(change => {
+        .subscribe((change:any) => {
           let textboxTypes = ['text', 'number', 'date'];
 
           if(change == 'textbox') {
-            item.options = item.options.map((option) => {option.value = option.value + '.'; return option});
+            item.options = item.options.map((option:any) => {option.value = option.value + '.'; return option});
           }
           console.log('change: ' + change);
           console.log('options: ', this.item);

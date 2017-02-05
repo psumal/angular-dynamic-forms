@@ -7,7 +7,7 @@ import {ItemBase} from "../../common/dynamic-form/item/item-base";
 import {ItemControlService} from "../../common/dynamic-form/item/item.service";
 import {TextboxItem} from "../../common/dynamic-form/item/item-textbox";
 import {FormGroup} from "@angular/forms";
-import {FormGroupItem} from "../../common/dynamic-form/item/formGroup-base";
+import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
 
 @Component({
   moduleId: module.id,

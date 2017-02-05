@@ -1,4 +1,4 @@
-import {ItemBase} from "./item-base";
+import {ItemBase} from "../item-base";
 export class FormGroupItem{
   key:string;
   title: string;
@@ -8,11 +8,11 @@ export class FormGroupItem{
   constructor(options: {
     key?:string;
     title?: string,
-    items?: string
+    items?: ItemBase<any>[]
 
   } = {}) {
     this.key = options.key;
     this.title = options.title || '';
-    this.items = options.items || [];
+    this.items = options.items || (<Array<any>>[]);
   }
 }

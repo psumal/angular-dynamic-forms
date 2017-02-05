@@ -10,7 +10,7 @@ import {RadioItem} from "./item-radio";
 import {ItemService} from "../../../component/start/item.service";
 import {ButtonItem} from "./item-button";
 import {TextareaItem} from "./item-textarea";
-import {FormGroupItem} from "./formGroup-base";
+import {FormGroupItem} from "./formGroup/formGroup-base";
 
 @Injectable()
 export class ItemControlService {

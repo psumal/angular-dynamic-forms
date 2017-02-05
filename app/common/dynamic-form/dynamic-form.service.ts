@@ -1,7 +1,7 @@
 import {Injectable}   from '@angular/core';
 import {FormBuilder, FormGroup, ValidatorFn, AsyncValidatorFn, Validators, FormControl} from "@angular/forms";
 import {ItemBase} from "./item/item-base";
-import {FormGroupItem} from "./item/formGroup-base";
+import {FormGroupItem} from "./item/formGroup/formGroup-base";
 
 @Injectable()
 export class DynamicFormService {
@@ -10,7 +10,7 @@ export class DynamicFormService {
 
   }
 
-  toFG(items: ItemBase<any>[] | FormGroupItem[], model?: {}): FormGroup {
+  toFG(items: Array<any>, model?: {}): FormGroup {
 
     //create formBuilder.group() params
     let formGroupObject: {[key: string]: any;} = {};
@@ -67,7 +67,8 @@ export class DynamicFormService {
       if (item['validator'] !== undefined && item['validator'].length > 0) {
 
         console.log("item['validator']: ", item['validator']);
-        item['validator'].forEach((item:any) => {
+
+        (<Array<any>>item['validator']).forEach((item:any) => {
           if (item['name'] in Validators) {
             if ('params' in item) {
               validator.push(Validators[item['name']].apply(undefined, item['params']));

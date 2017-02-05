@@ -29,14 +29,15 @@ export class ItemComponent {
         otherChanges$.subscribe(change => {
           console.log('listener change: ' + change);
           console.log('item: ', this.item);
-          this.controlRendered = listener.cb(change);
+          this.controlRendered = listener.cb(change,listener.params, this.item, this.form);
         });
 
         /////////////////
 
-        function getIsRendered(change, item, form) {
-          let textboxTypes = ['textbox'];
-          return textboxTypes.indexOf(change) !== -1;
+        function getIsRendered(change,param, item, form) {
+          let controlTypesTypes = param;
+          console.log('controlTypesTypes: ', controlTypesTypes, controlTypesTypes.indexOf(change) !== -1);
+          return controlTypesTypes.indexOf(change) !== -1;
         }
       });
       //this.subscribePaymentTypeChanges(this.item, this.form);

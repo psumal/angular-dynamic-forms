@@ -386,7 +386,7 @@ export class ItemService {
           {key: 'number', value: 'number', group:'textbox'},
           {key: 'button', value: 'Button', group:'buttom'}
         ],
-        changeListener:[{controls:['controlType'], name:"isRendered"}]
+        changeListener:[{controls:['controlType'], name:"isRendered", params:['textbox', 'button']}]
       },
       //key
       {
@@ -429,6 +429,7 @@ export class ItemService {
           {key: [{name:'required'}], value: 'Required'},
           {key: [{name:'minLength', params:[2]}], value: 'minLength of 2'}
         ],
+        changeListener:[{controls:['controlType'], name:"isRendered", params:['textbox', 'select','multiselect', 'checkbox', 'radio', 'textarea']}]
       },
       // help
       {

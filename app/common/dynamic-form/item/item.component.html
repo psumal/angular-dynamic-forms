@@ -1,8 +1,8 @@
 <div [attr.class]="getWrapperClass()" [formGroup]="form" *ngIf="controlRendered">
-  controlRendered: {{controlRendered}}
+
   <!---->
   <label [attr.for]="item.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
-    {{item.label}} type:{{item.controlType}} <!--<pre>{{item |json}}</pre>-->
+    {{item.label}} <!-- type:{{item.controlType}} <pre>{{item |json}}</pre>-->
 
   </label>
 

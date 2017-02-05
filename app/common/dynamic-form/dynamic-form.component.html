@@ -4,8 +4,9 @@
     <df-form-group *ngIf="item.controlType === 'formGroup'" [formGroupConfig]="item" [form]="form"></df-form-group>
 
     <df-item *ngIf="item.controlType !== 'button' && item.controlType !== 'formGroup'" [item]="item" [form]="form"></df-item>
-    <df-button *ngIf="item.controlType === 'button'" [item]="item" [form]="form"></df-button>
-    <!-- -->
+
+        <df-button *ngIf="item.controlType === 'button'" [item]="item" [form]="form"></df-button>
+
   </div>
   <p>Form valid:<br>{{form.valid}}</p>
 </form>

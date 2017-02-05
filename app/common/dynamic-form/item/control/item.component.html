@@ -3,9 +3,10 @@
   <!---->
   <label [attr.for]="item.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
     {{item.label}} <!-- type:{{item.controlType}} <pre>{{item |json}}</pre>-->
-
   </label>
 
+
+  <item-error>sfdssssssssssssssdsf</item-error>
 
   <input *ngIf="isControlTypeVisible('textbox')"
          [formControlName]="item.key"

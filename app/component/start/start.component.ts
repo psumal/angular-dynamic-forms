@@ -109,7 +109,7 @@ export class StartComponent implements OnInit, OnChanges {
     let item: ItemBase<any>|FormGroupItem = ItemControlService.createFormItem($event['payLoad']);
     if(item) {
       console.log("generated item: ", item);
-      this.dynamicItems = this.dynamicItems.concat(item, this.dynamicItems);
+      this.dynamicItems = this.dynamicItems.concat(item, []);
     }
   }
 

@@ -407,7 +407,7 @@ export class ItemService {
         key: "key",
         label: "Key",
         placeholder: "The element key",
-        //helpText: "This value is used in the id and name attribute of the element",
+        helpText: "This value is used in the id and name attribute of the element",
         type: "text",
         validator: [{name: 'required'}]
       },
@@ -437,12 +437,16 @@ export class ItemService {
         helpText: "Select default validation for this element",
         options: [
           {
-            key: "test", value: "test", children: [
+            key: "builtIn", value: "built in validators", children: [
             {key: [{name: 'required'}], value: 'Required'},
+            {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
           ]
           },
-          {key: [{name: 'required'}], value: 'Required'},
-          {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
+          {
+            key: "custom", value: "custom in validators", children: [
+            {key: [{name: 'email'}], value: 'Email'},
+          ]
+          }
         ],
         changeListener: [{
           controls: ['controlType'],
@@ -495,8 +499,8 @@ export class ItemService {
 
            {
            controlType: 'textbox',
-           key: 'testtet',
-           label: 'testtet',
+           key: 'testtesdast',
+           label: 'asaas',
            placeholder: "The testtet help",
            helpText: "This testtet of the element",
            type: 'text'

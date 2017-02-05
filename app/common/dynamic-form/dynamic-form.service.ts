@@ -36,13 +36,16 @@ export class DynamicFormService {
       let validCustomValidator = ['email'];
 
       function validateEmail(fc: FormControl) {
-        let EMAIL_REGEXP = "[A-z]";
+        let email = fc.value;
+        let emailValid = email !== '' && email.indexOf('@') !== -1 && email.indexOf('.') !== -1;
+        console.log('email', email, fc);
+        let obj =  {};
 
-        return (false) ? null : {
-          validateEmail: {
-            valid: false
-          }
-        };
+        if(!emailValid) {
+          obj['email'] = emailValid;
+        }
+
+        return obj
       }
 
 

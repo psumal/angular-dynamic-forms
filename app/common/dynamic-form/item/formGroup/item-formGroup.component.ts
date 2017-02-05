@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup}        from '@angular/forms';
-import {ItemBase}     from './item-base';
+import {ItemBase}     from '../item-base';
 @Component({
   moduleId: module.id,
   selector: 'df-form-group',

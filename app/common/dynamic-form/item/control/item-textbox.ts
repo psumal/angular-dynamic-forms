@@ -1,4 +1,4 @@
-import { ItemBase } from './item-base';
+import { ItemBase } from '../item-base';
 import { textboxTypes } from "./item-scruct";
 
 export class TextboxItem extends ItemBase<string> {

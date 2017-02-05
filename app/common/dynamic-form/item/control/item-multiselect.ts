@@ -1,4 +1,4 @@
-import { ItemBase } from './item-base';
+import { ItemBase } from '../item-base';
 
 export class MultiselectItem extends ItemBase<string> {
   controlType = 'multiselect';

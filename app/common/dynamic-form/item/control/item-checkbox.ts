@@ -1,4 +1,4 @@
-import { ItemBase } from './item-base';
+import { ItemBase } from '../item-base';
 
 export class CheckboxItem extends ItemBase<string> {
   controlType = 'checkbox';

@@ -5,7 +5,7 @@ import {IStarRatingCompBindings} from "angular-star-rating/src//star-rating-stru
 import {IDynamicFormOnPayLoadChangeEvent} from "../../common/dynamic-form/dynamic-form-scruct";
 import {ItemBase} from "../../common/dynamic-form/item/item-base";
 import {ItemControlService} from "../../common/dynamic-form/item/item.service";
-import {TextboxItem} from "../../common/dynamic-form/item/item-textbox";
+import {TextboxItem} from "../../common/dynamic-form/item/control/item-textbox";
 import {FormGroup} from "@angular/forms";
 import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
 

@@ -1,4 +1,4 @@
-import { ItemBase } from './item-base';
+import { ItemBase } from '../item-base';
 
 export class RadioItem extends ItemBase<string> {
   controlType = 'radio';

@@ -505,17 +505,65 @@ export class ItemService {
            helpText: "This testtet of the element",
            type: 'text'
            },
-           */
+
           {
             controlType: 'button',
             key: 'reset-button',
             label: 'Reset',
             type: 'reset'
           }
+           */
         ]
       }
     ];
     return genericElementConfig;
   }
+
+
+  getTest() {
+
+    let genericElementConfig: Array<any> = [
+      {
+        controlType: 'formGroup',
+        key: "groupTesttt",
+        title: "Form Group222",
+        items: []
+      },
+
+      //input
+      {
+        controlType: 'textbox',
+        key: 'testtesdast'
+      },
+
+      //reset button
+      {
+        controlType: 'button',
+        key: 'reset-button',
+        label: 'Reset',
+        type: 'reset'
+      },
+      //formGroup
+      {
+        controlType: 'formGroup',
+        key: "groupTest",
+        items: [
+          {
+            controlType: 'textbox',
+            key: 'testtesdast'
+          },
+          {
+            controlType: 'textbox',
+            key: 'testtesdast'
+          },
+          //formGroup
+
+        ]
+      }
+
+    ];
+    return genericElementConfig;
+  }
+
 
 }

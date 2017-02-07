@@ -37,7 +37,7 @@ export class StartComponent implements OnInit, OnChanges {
 
   constructor(protected service: ItemService) {
 
-    this.formItems = service.getGenericElement();
+    this.formItems = service.getTest();
     this.formModel = this.starRatingConfig;
     this.demoForms = [
       {
@@ -67,11 +67,9 @@ export class StartComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  ngOnChanges() {
-  }
+  ngOnChanges() { }
 
   /*DEMO SELECT*/
   onTemplateFromModelChange($event: {model: any}) {

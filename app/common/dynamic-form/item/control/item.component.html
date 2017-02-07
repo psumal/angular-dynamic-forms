@@ -1,12 +1,8 @@
 <div [attr.class]="getWrapperClass()" [formGroup]="form" *ngIf="controlRendered">
 
-  <!---->
   <label [attr.for]="item.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
-    {{item.label}} <!-- type:{{item.controlType}} <pre>{{item |json}}</pre>-->
+    {{item.label}}
   </label>
-
-
-  <item-error>sfdssssssssssssssdsf</item-error>
 
   <input *ngIf="isControlTypeVisible('textbox')"
          [formControlName]="item.key"
@@ -58,7 +54,6 @@
     </template>
   </select>
 
-
   <select
     *ngIf="isControlTypeVisible('multiselect')"
     multiple
@@ -85,12 +80,8 @@
     [attr.aria-describedby]="item.key+'Help'"
     [attr.placeholder]="item.placeholder">
    </textarea>
-  <!-- -->
-  <!-- -->
-  <div class="form-control-feedback" *ngIf="form.controls[item.key]['errors']">{{form.controls[item.key]['errors'] |
-    json }}
-  </div>
+
+  <item-errors [item]="item" [form]="form"></item-errors>
 
   <small [attr.id]="item.key+'Help'" class="form-text text-muted">{{item.helpText}}</small>
-
 </div>

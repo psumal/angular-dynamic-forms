@@ -3,9 +3,10 @@
 
   <div *ngFor="let item of formGroupConfig.items">
     item:{{item}}
-    <!--<df-item *ngIf="item.controlType !== 'button'&& item.controlType !== 'formGroup'" [item]="item" [form]="form"></df-item>-->
+    <df-item *ngIf="item.controlType !== 'button'&& item.controlType !== 'formGroup'" [item]="item" [form]="form"></df-item>
 
     <df-button *ngIf="item.controlType === 'button'" [item]="item" [form]="form"></df-button>
     <!-- -->
   </div>
+  <ng-content></ng-content>
 </fieldset>

@@ -9,6 +9,6 @@ export class TextboxItem extends ItemBase<string> {
   constructor(options: {} = {}) {
     super(options);
     this.placeholder = options['placeholder'];
-    this.type = options['type'] || '';
+    this.type = options['type'] || 'text';
   }
 }

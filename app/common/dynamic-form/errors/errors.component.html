@@ -1,3 +1,5 @@
-<span *ngIf="showErrorFlag" class="help-block">
-  <ng-content></ng-content>
-</span>
+<div [attr.class]="getClassNames()">
+  <div class="error-message"*ngFor="let key of errorKeys()">
+    {{errors[key]}}
+  </div>
+</div>

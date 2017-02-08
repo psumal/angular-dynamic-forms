@@ -37,7 +37,7 @@ export class StartComponent implements OnInit, OnChanges {
 
   constructor(protected service: ItemService) {
 
-    this.formItems = service.getTest();
+    this.formItems = service.getGenericElement();
     this.formModel = this.starRatingConfig;
     this.demoForms = [
       {

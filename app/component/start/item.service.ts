@@ -505,14 +505,14 @@ export class ItemService {
            helpText: "This testtet of the element",
            type: 'text'
            },
-
+           */
           {
             controlType: 'button',
             key: 'reset-button',
             label: 'Reset',
             type: 'reset'
           }
-           */
+
         ]
       }
     ];
@@ -529,6 +529,8 @@ export class ItemService {
         title: "Form Group222",
         items: []
       },
+
+
 
       //input
       {

@@ -5,41 +5,37 @@
   </template-form-comp>
 </div>
 
+<div class="row">
+  <div>
+    Model Driven Reactive From
+  </div>
+</div>
+
 <div class="row marketing">
 
   <div class="col-lg-6">
 
-
-    <recurse>
-      <recurse>
-        <recurse>
-          <recurse>
-
-          </recurse>
-        </recurse>
-      </recurse>
-    </recurse>
     <h4>Form</h4>
 
-   <!--
-    <star-rating-comp
-      [rating]="starRatingConfig.rating"
-      [numOfStars]="starRatingConfig.numOfStars"
-      [size]="starRatingConfig.size"
-      [speed]="starRatingConfig.speed"
-      [labelPosition]="starRatingConfig.labelPosition"
-      [starType]="starRatingConfig.starType"
-      (onClick)="onClick($event)"
-      (onRatingChange)="onRatingChange($event)">
-    </star-rating-comp>
-    <pre style="height:200px; overflow-y: scroll;">{{formItems | json}}</pre>
-    -->
+    <!--
+     <star-rating-comp
+       [rating]="starRatingConfig.rating"
+       [numOfStars]="starRatingConfig.numOfStars"
+       [size]="starRatingConfig.size"
+       [speed]="starRatingConfig.speed"
+       [labelPosition]="starRatingConfig.labelPosition"
+       [starType]="starRatingConfig.starType"
+       (onClick)="onClick($event)"
+       (onRatingChange)="onRatingChange($event)">
+     </star-rating-comp>
+     <pre style="height:200px; overflow-y: scroll;">{{formItems | json}}</pre>
+     -->
 
     <p>Items</p>
     <pre style="height:200px; overflow-y: scroll;">{{dynamicItems | json}}</pre>
     <dynamic-form
-    [items]="dynamicItems"
-    [model]="{}">
+      [items]="dynamicItems"
+      [model]="{}">
     </dynamic-form>
 
   </div>

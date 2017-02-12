@@ -1,24 +1,12 @@
 import {Component, Input} from '@angular/core'
 
 @Component({
+  moduleId: module.id,
   selector: 'df-fg',
-  template: `
-    <ul>
-      <li *ngFor="#property of getKeys()">
-        {{property}}: 
-        <span *ngIf="!isObject(property)">
-          {{getValue(property)}}
-        </span>
-        <span *ngIf="isObject(property)">
-          <object-view [object]="getValue(property)"></object-view>
-        </span>
-      </li>
-    </ul>
-  `,
-  directives: [DFFormGroupComp]
+  templateUrl : "./df-form-group.component.html",
 })
 export class DFFormGroupComp {
-  @Input() object: any;
+ /* @Input() object: any;
 
   private getKeys(): string[] {
     return Object.keys(this.object);
@@ -31,5 +19,5 @@ export class DFFormGroupComp {
   private isObject(property: string): boolean {
     const value = this.getValue(property);
     return !Array.isArray(value) && typeof value === 'object';
-  }
+  }*/
 }

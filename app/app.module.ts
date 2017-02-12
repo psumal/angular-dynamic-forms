@@ -6,7 +6,7 @@ import { StartModule } from "./component/start/start.module";
 import { TestModule } from "./component/test/test.module";
 
 @NgModule({
-  imports:      [ BrowserModule, StartModule],
+  imports:      [ BrowserModule, StartModule, TestModule],
   declarations: [ AppComponent],
   bootstrap:    [ AppComponent ]
 })

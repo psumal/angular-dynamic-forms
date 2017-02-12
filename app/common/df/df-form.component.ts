@@ -4,7 +4,6 @@ import {Component}  from '@angular/core';
   moduleId: module.id,
   selector: 'df-f',
   templateUrl: './df-form.component.html',
-  providers: []
 })
 export class DFFormComp {
 

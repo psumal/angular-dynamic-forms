@@ -8,6 +8,8 @@ import {ItemControlService} from "../../common/dynamic-form/item/item.service";
 import {TextboxItem} from "../../common/dynamic-form/item/control/item-textbox";
 import {FormGroup} from "@angular/forms";
 import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
+import {TemplateFormComponent} from "../../common/template-form/template-form.component";
+import {InjectComponent} from "./inject-component/inject-component.component";
 
 @Component({
   moduleId: module.id,
@@ -24,6 +26,8 @@ export class StartComponent implements OnInit, OnChanges {
   formModel: {};
 
   dynamicItems:any[] = [];
+
+  componentTypes: any[] = [InjectComponent];
 
 
   starRatingConfig: IStarRatingCompBindings = {

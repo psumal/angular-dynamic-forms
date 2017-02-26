@@ -52,7 +52,7 @@ export class DynamicFormService {
   getValidators(config: any): ValidatorFn[] | AsyncValidatorFn[] {
 
     return config ?
-      config.map((validatorObj) => {console.log('validatorName: ', validatorObj); this.getValidatorFn(validatorObj.name, config[validatorObj.name])}) : [];
+      config.map((validatorObj:any) => {console.log('validatorName: ', validatorObj); this.getValidatorFn(validatorObj.name, config[validatorObj.name])}) : [];
   }
 
 

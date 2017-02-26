@@ -9,6 +9,16 @@
   <div>
     Model Driven Reactive From
   </div>
+  <div class="col-12">
+    <df-fa></df-fa>
+    <df-fg></df-fg>
+    <df-fc></df-fc>
+    <div class="row" *ngFor="let cellComponentType of componentTypes">
+      <div class="col-lg-12">
+        <df-dc [componentType]="cellComponentType"></df-dc>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row marketing">

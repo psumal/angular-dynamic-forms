@@ -5,6 +5,7 @@ import {ItemControlService}    from './item/item.service';
 import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
 import {DynamicFormService} from "./dynamic-form.service";
 import {FormGroupItem} from "./item/formGroup/formGroup-base";
+import {DFFormGroupComp} from "../df/df-fg/df-form-group.component";
 
 /*
 
@@ -28,6 +29,8 @@ export class DynamicFormComponent implements OnInit {
   set payLoad(value: any) {
 
   }
+
+  dynComp = DFFormGroupComp;
 
   private _items: ItemBase<any>[] = [];
   @Input()

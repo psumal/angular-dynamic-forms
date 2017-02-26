@@ -10,6 +10,7 @@ import {FormGroup} from "@angular/forms";
 import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
 import {TemplateFormComponent} from "../../common/template-form/template-form.component";
 import {InjectComponent} from "./inject-component/inject-component.component";
+import {RecurseComponent} from "./recurse/recurse.component";
 
 @Component({
   moduleId: module.id,
@@ -27,7 +28,7 @@ export class StartComponent implements OnInit, OnChanges {
 
   dynamicItems:any[] = [];
 
-  componentTypes: any[] = [InjectComponent];
+  componentTypes: any[] = [InjectComponent, RecurseComponent];
 
 
   starRatingConfig: IStarRatingCompBindings = {

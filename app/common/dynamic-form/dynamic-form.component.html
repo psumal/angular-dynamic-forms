@@ -2,6 +2,7 @@
 
   <div *ngFor="let item of items" class="form-row">
 
+    <dynamic-comp [componentType]="dynComp"></dynamic-comp>
 
     <df-form-group *ngIf="item.controlType === 'formGroup'" [formGroupConfig]="item" [form]="form"></df-form-group>
 

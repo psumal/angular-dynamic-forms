@@ -12,6 +12,8 @@ import {DFModule} from "../../common/df/df-form.module";
 import {DFDynamicComponentComp} from "../../common/df/df-dc/df-dynamic-component.component";
 import {StarRatingComponent} from "../../common/star-rating/star-rating.component";
 import {InjectComponent} from "./inject-component/inject-component.component";
+import {RecurseComponent} from "./recurse/recurse.component";
+import {DFFormGroupComp} from "../../common/df/df-fg/df-form-group.component";
 
 
 
@@ -20,9 +22,12 @@ export{ StartComponent} from "./start.component";
 const EXPORTS = [ StartComponent, InjectComponent ];
 
 @NgModule({
-  imports: [ CommonModule, StarRatingModule, DynamicFormModule, TemplateFormModule, RecurseModule, CustomSubscriptionsModule, DFModule,
+  imports: [ CommonModule, StarRatingModule, TemplateFormModule, RecurseModule, CustomSubscriptionsModule,
+    DFModule,
+    DynamicFormModule.withComponents([DFFormGroupComp]),
     DFModule.withComponents([
       InjectComponent,
+      RecurseComponent
     ])],
   exports:      [ EXPORTS ],
   declarations: [ EXPORTS ],

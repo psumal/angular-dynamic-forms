@@ -17,7 +17,7 @@
       <label [attr.class]="'form-check-label'">
         <input [type]="item.type"
                [id]="item.key + '--' + option.key"
-               [formControlName]="item.key"
+               name="{{item.key}}"
                [attr.class]="getControlClass()"
                [checked]="item.formState"
                [value]="option.key">

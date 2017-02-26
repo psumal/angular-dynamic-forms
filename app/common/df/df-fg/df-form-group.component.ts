@@ -20,4 +20,5 @@ export class DFFormGroupComp {
     const value = this.getValue(property);
     return !Array.isArray(value) && typeof value === 'object';
   }*/
+
 }

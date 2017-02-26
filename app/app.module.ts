@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent }  from './app.component';
 import { StartModule } from "./component/start/start.module";
-import { TestModule } from "./component/test/test.module";
+
 
 @NgModule({
-  imports:      [ BrowserModule, StartModule, TestModule],
+  imports:      [ BrowserModule, StartModule],
   declarations: [ AppComponent],
   bootstrap:    [ AppComponent ]
 })

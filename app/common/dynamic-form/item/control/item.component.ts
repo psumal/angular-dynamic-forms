@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Optional, Inject} from '@angular/core';
 import {FormGroup}        from '@angular/forms';
 import {ItemBase}     from '../item-base';
+import {CUSTOM_SUBSCRIPTIONS} from "../../../../component/start/customSubscriptions/customSubscriptions.module";
 @Component({
   moduleId: module.id,
   selector: 'df-item',
@@ -12,8 +13,23 @@ export class ItemComponent {
 
   controlRendered:boolean = true;
 
-  constructor() {
+  constructor(@Optional() @Inject(CUSTOM_SUBSCRIPTIONS) private CUSTOM_SUBSCRIPTIONS: Array<any>,) {
+    console.log('this.CUSTOM_SUBSCRIPTIONS', this.CUSTOM_SUBSCRIPTIONS);
+  }
+  getCustomSubscriptionFn(validatorName: string):any | undefined {
 
+    let subscriptionFn;
+
+    if (this.CUSTOM_SUBSCRIPTIONS) {
+
+      subscriptionFn = this.CUSTOM_SUBSCRIPTIONS.find(subscriptions => {
+        console.log('subscriptions.name: ', validatorName, subscriptions);
+        return subscriptions !== undefined;
+      });
+    }
+
+    console.log('subscriptionFn: ', subscriptionFn);
+    return subscriptionFn;
   }
 
   ngOnInit() {
@@ -22,12 +38,13 @@ export class ItemComponent {
       listener.forEach((listener) => {
         //fake cb
         let i = 0;
-        if(listener.name == 'isRendered' ) {
-          listener.cb = getIsRendered;
-        }
-        if(listener.name == 'optionsFilter' ) {
-          listener.cb = getFilteredOptions;
-        }
+        console.log(this.getCustomSubscriptionFn('subscribeIsRendered'));
+
+        listener.cb = this.getCustomSubscriptionFn(listener.name);
+
+
+        console.log("listener.cb: ", listener.cb);
+
         /* */
         //listener.cb = getIsRendered;
 
@@ -42,18 +59,17 @@ export class ItemComponent {
 
         /////////////////
 
-        function getIsRendered(change?:any,param?:any, item?:any, form?:any) {
-          let controlTypesTypes = param;
-          return controlTypesTypes.indexOf(change) !== -1;
-        }
-
         function getFilteredOptions(change?:any,params?:any, item?:any, form?:any) {
+          console.log('getFilteredOptions params: ', params);
           let filterConfig = params.filter((param:any) => {
             return change == param['key'];
           }).pop();
 
           item.options = item.initialOptions.filter((option:any) => {
-            return filterConfig.optionsKeys.indexOf(option.value) !== -1;
+            if(filterConfig && 'optionsKeys' in filterConfig) {
+              return filterConfig.optionsKeys.indexOf(option.value) !== -1;
+            }
+            return false;
           });
 
         }

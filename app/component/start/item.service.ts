@@ -187,7 +187,7 @@ export class ItemService {
 
           //custom validators
           //email
-          {name: "email"}
+          {name: "validateEmail"}
         ]
       },
       //textbox email
@@ -390,14 +390,14 @@ export class ItemService {
         ],
         changeListener: [
           /**/{
-            controls: ['controlType'], name: "optionsFilter",
+            controls: ['controlType'], name: "subscribeFilteredOptions",
             params: [
               {key: 'textbox', optionsKeys: ['text', 'number']},
               {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
             ]
           },
           {
-            controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
+            controls: ['controlType'], name: "subscribeIsRendered", params: ['textbox', 'button']
           }
         ]
       },
@@ -450,7 +450,7 @@ export class ItemService {
         ],
         changeListener: [{
           controls: ['controlType'],
-          name: "isRendered",
+          name: "subscribeIsRendered",
           params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
         }]
       },
@@ -520,51 +520,191 @@ export class ItemService {
   }
 
 
-  getTest() {
+  getCampaign() {
 
-    let genericElementConfig: Array<any> = [
+    let campaignConfig: Array<any> = [
       {
-        controlType: 'formGroup',
-        key: "groupTesttt",
-        title: "Form Group222",
-        items: []
+        controlType: 'select',
+        key: 'anrede',
+        label: 'Anrede',
+        helpText: "Anrede der Person (Herr Frau)",
+        options: [
+            {key: [{name: 'Herr'}], value: 'Herr'},
+            {key: [{name: 'Frau'}], value: 'Frau'}
+        ]
       },
-
-
-
-      //input
+      {
+        controlType: 'select',
+        key: 'titel',
+        label: 'Titel',
+        helpText: "Titel der Person (Dr. Prof.)",
+        options: [
+          {key: [{name: 'Dr'}], value: 'Dr'},
+          {key: [{name: 'Prof'}], value: 'Prof'}
+        ]
+      },
       {
         controlType: 'textbox',
-        key: 'testtesdast'
+        key: 'vorname',
+        label: 'Vorname',
+        placeholder: "Vorname hier",
+        helpText: "der Vorname der Person",
+        type: 'text'
       },
-
-      //reset button
       {
-        controlType: 'button',
-        key: 'reset-button',
-        label: 'Reset',
-        type: 'reset'
+        controlType: 'textbox',
+        key: 'nachname',
+        label: 'Nachname',
+        placeholder: "Nachname hier",
+        helpText: "der Nachname der Person",
+        type: 'text'
       },
-      //formGroup
       {
-        controlType: 'formGroup',
-        key: "groupTest",
-        items: [
-          {
-            controlType: 'textbox',
-            key: 'testtesdast'
-          },
-          {
-            controlType: 'textbox',
-            key: 'testtesdast'
-          },
-          //formGroup
-
+        controlType: 'textbox',
+        key: 'geburtsdatum',
+        label: 'Geburtsdatum',
+        placeholder: "Geburtsdatum hier",
+        helpText: "der Geburtsdatum der Person",
+        type: 'date'
+      },
+      {
+        controlType: 'select',
+        key: 'beschaeftigung',
+        label: 'Beschäftigung',
+        helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
+        options: [
+          {key: [{name: 'Arbeiter'}], value: 'Arbeiter'},
+          {key: [{name: 'Angestellter'}], value: 'Angestellter'}
+        ]
+      },
+      {
+        controlType: 'select',
+        key: 'kommunikationssprache',
+        label: 'Kommunikationssprache',
+        helpText: "Kommunikationssprache der Person",
+        options: [
+          {key: [{name: 'Deutsch'}], value: 'Deutsch'},
+          {key: [{name: 'Englisch'}], value: 'Englisch'}
+        ]
+      },
+      {
+        controlType: 'textbox',
+        key: 'housenr',
+        label: 'House Nummer',
+        placeholder: "House Nummer hier",
+        type: 'text'
+      },
+      {
+        controlType: 'textbox',
+        key: 'strasse',
+        label: 'Strasse',
+        placeholder: "Strassenname hier",
+        type: 'text'
+      },
+      {
+        controlType: 'textbox',
+        key: 'plz',
+        label: 'PLZ',
+        placeholder: "PLZ hier",
+        type: 'text'
+      },
+      {
+        controlType: 'textbox',
+        key: 'stadt',
+        label: 'Stadt',
+        placeholder: "Stadt hier",
+        type: 'text'
+      },
+      {
+        controlType: 'select',
+        key: 'Land',
+        label: 'Land',
+        helpText: "Land der Adresse",
+        options: [
+          {key: [{name: 'Deutschland'}], value: 'Deutschland'},
+          {key: [{name: 'Österreich'}], value: 'Österreich'}
+        ]
+      },
+      {
+        controlType: 'textbox',
+        key: 'email',
+        label: 'Email',
+        placeholder: "Email hier",
+        type: 'mail',
+        validator: [
+          {name: 'required'},
+          {name: 'validateEmail'},
+        ]
+      },
+      {
+        controlType: 'checkbox',
+        key: 'emailkontakt',
+        label: 'Daf mich per Email kontaktieren'
+      },
+      {
+        controlType: 'textbox',
+        key: 'telefonnummer',
+        label: 'Telefonnummer',
+        type: 'tel',
+      },
+      {
+        controlType: 'textbox',
+        key: 'mobilenummer',
+        label: 'Mobilenummer',
+        type: 'tel',
+      },
+      {
+        controlType: 'select',
+        label: 'Sponsorships',
+        options: [
+          {key: 'hund', value: 'Hund'},
+          {key: 'katze', value: 'Katze'},
+        ],
+      },
+      {
+        controlType: 'radio',
+        key: 'additional_amount',
+        label: 'Anderer Betrag',
+        options: [
+          {key: '100', value: '100'},
+          {key: '200', value: '200'},
+        ],
+      },
+      {
+        controlType: 'textbox',
+        key: 'monatsbetrag',
+        label: 'Monatsbetrag',
+        type: 'number',
+      },
+      {
+        controlType: 'textbox',
+        key: 'jahresbetrag',
+        label: 'Jahresbetrag',
+        type: 'number',
+      },
+      {
+        controlType: 'select',
+        key: 'zahlungs_interval',
+        label: 'Zahlungs Interval',
+        helpText: "Intervall der Zahlung",
+        options: [
+          {key: [{name: 'monatlich'}], value: 'monatlich'},
+          {key: [{name: 'vierteljährlich'}], value: 'vierteljährlich'},
+          {key: [{name: 'halbjährlich'}], value: 'halbjährlich'},
+          {key: [{name: 'jährlich'}], value: 'jährlich'}
+        ],
+        changeListener: [
+          /**/{
+            controls: ['sponsorship'], name: "subscribeFilteredOptions",
+            params: [
+              {key: 'hund', optionsKeys: ['monatlich', 'jährlich']},
+              {key: 'katze', optionsKeys: ['vierteljährlich', 'halbjährlich']}
+            ]
+          }
         ]
       }
-
     ];
-    return genericElementConfig;
+    return campaignConfig;
   }
 
 

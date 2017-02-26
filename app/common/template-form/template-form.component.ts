@@ -54,7 +54,14 @@ export class TemplateFormComponent implements OnInit, OnChanges {
           formName : "",
           formItems : itemService.getGenericElement()
         }
-      }
+      },
+      {
+        value: 'Donut Campaign',
+        key: {
+          formName: 'Donut Campaign',
+          formItems: itemService.getCampaign()
+        }
+      },
     ];
 
   }

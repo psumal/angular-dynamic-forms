@@ -31,8 +31,9 @@
      <pre style="height:200px; overflow-y: scroll;">{{formItems | json}}</pre>
      -->
 
-    <p>Items</p>
+    <p>Config from Server</p>
     <pre style="height:200px; overflow-y: scroll;">{{dynamicItems | json}}</pre>
+    <h4>Campaign on Client (app): {{formName}}</h4>
     <dynamic-form
       [items]="dynamicItems"
       [model]="{}">
@@ -41,7 +42,7 @@
   </div>
 
   <div class="col-lg-6">
-    <h4>FormConfig: {{formName}}</h4>
+    <h4>FormBuilder from Customer: {{formName}}</h4>
     <dynamic-form
       [items]="formItems"
       [model]="formModel"

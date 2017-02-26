@@ -21,11 +21,10 @@ export class ItemControlService {
 
   static createFormItem(config: {}): ItemBase<any> | FormGroupItem {
 
-    console.log('createFormItem :', config);
     if(!('controlType' in config)) {
       config['controlType'] = guessControlType(config);
     }
-console.log("config['controlType'] :", config['controlType']);
+
     let controlType: string = config['controlType'];
     let item: ItemBase<any> | FormGroupItem;
 

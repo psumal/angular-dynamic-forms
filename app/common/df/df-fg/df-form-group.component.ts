@@ -6,8 +6,8 @@ import {Component, Input} from '@angular/core'
   templateUrl : "./df-form-group.component.html",
 })
 export class DFFormGroupComp {
- /* @Input() object: any;
-
+  @Input() object: any;
+  /*
   private getKeys(): string[] {
     return Object.keys(this.object);
   }
@@ -20,5 +20,10 @@ export class DFFormGroupComp {
     const value = this.getValue(property);
     return !Array.isArray(value) && typeof value === 'object';
   }*/
+
+  onInit() {
+
+  }
+
 
 }

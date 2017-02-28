@@ -15,7 +15,9 @@ export class ItemComponent {
 
   constructor(@Optional() @Inject(CUSTOM_SUBSCRIPTIONS) private CUSTOM_SUBSCRIPTIONS: Array<any>,) {
     console.log('this.CUSTOM_SUBSCRIPTIONS', this.CUSTOM_SUBSCRIPTIONS);
+
   }
+
   getCustomSubscriptionFn(validatorName: string):any | undefined {
 
     let subscriptionFn;
@@ -33,6 +35,7 @@ export class ItemComponent {
   }
 
   ngOnInit() {
+    console.log('itemcomp ngOnInit ', this.item);
     if(this.item.changeListener) {
       let listener = this.item.changeListener;
       listener.forEach((listener) => {

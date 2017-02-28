@@ -9,11 +9,11 @@ import {TemplateFormModule} from "../../common/template-form/template-form.modul
 import {RecurseModule} from "./recurse/recurse.module";
 import {CustomSubscriptionsModule} from "./customSubscriptions/customSubscriptions.module";
 import {DFModule} from "../../common/df/df-form.module";
-import {DFDynamicComponentComp} from "../../common/df/df-dc/df-dynamic-component.component";
-import {StarRatingComponent} from "../../common/star-rating/star-rating.component";
 import {InjectComponent} from "./inject-component/inject-component.component";
 import {RecurseComponent} from "./recurse/recurse.component";
 import {DFFormGroupComp} from "../../common/df/df-fg/df-form-group.component";
+import {DFFormControlComp} from "../../common/df/df-fc/df-form-control.component";
+import {ItemComponent} from "../../common/dynamic-form/item/control/item.component";
 
 
 
@@ -24,7 +24,7 @@ const EXPORTS = [ StartComponent, InjectComponent ];
 @NgModule({
   imports: [ CommonModule, StarRatingModule, TemplateFormModule, RecurseModule, CustomSubscriptionsModule,
     DFModule,
-    DynamicFormModule.withComponents([DFFormGroupComp]),
+    DynamicFormModule.withComponents([DFFormGroupComp, ItemComponent]),
     DFModule.withComponents([
       InjectComponent,
       RecurseComponent

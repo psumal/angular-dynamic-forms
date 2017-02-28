@@ -1,11 +1,13 @@
-import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges}  from '@angular/core';
-import {FormGroup}                 from '@angular/forms';
-import {ItemBase}              from './item/item-base';
-import {ItemControlService}    from './item/item.service';
+import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges} from "@angular/core";
+import {FormGroup} from "@angular/forms";
+import {ItemBase} from "./item/item-base";
+import {ItemControlService} from "./item/item.service";
 import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
 import {DynamicFormService} from "./dynamic-form.service";
-import {FormGroupItem} from "./item/formGroup/formGroup-base";
 import {DFFormGroupComp} from "../df/df-fg/df-form-group.component";
+import {DFFormControlComp} from "../df/df-fc/df-form-control.component";
+import {ItemComponent} from "./item/control/item.component";
+import {FormGroupItem} from "./item/formGroup/formGroup-base";
 
 /*
 
@@ -30,26 +32,34 @@ export class DynamicFormComponent implements OnInit {
 
   }
 
-  dynComp = DFFormGroupComp;
-
   private _items: ItemBase<any>[] = [];
   @Input()
   set items(items: Array<any>) {
 
     this._items = (<any>items).map((item: any) => {
       let newItem = ItemControlService.createFormItem(item);
-      if(newItem) {
+      if (newItem) {
         return newItem;
       }
     });
     this.renderForm();
   }
+
   get items(): Array<any> {
     return this._items;
   }
 
   @Input() model: {} = {};
   form: FormGroup;
+
+  dynComp = DFFormGroupComp;
+
+  dynCompData = {
+    component: DFFormGroupComp,
+    inputs: {
+      object : {'test':'test'}
+    }
+  };
 
   @Output()
   onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
@@ -59,7 +69,7 @@ export class DynamicFormComponent implements OnInit {
 
   private _payLoad: any;
 
-  constructor(private ics: ItemControlService, protected dfService:DynamicFormService) {
+  constructor(private ics: ItemControlService, protected dfService: DynamicFormService) {
 
   }
 

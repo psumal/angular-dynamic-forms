@@ -1,13 +1,13 @@
-import {Component, OnInit, Input, Output, OnChanges, EventEmitter} from '@angular/core';
+import {Component, OnInit, OnChanges} from "@angular/core";
 import {ItemService} from "./item.service";
 import {IStarRatingOnClickEvent} from "angular-star-rating/src/star-rating-struct";
 import {IStarRatingCompBindings} from "angular-star-rating/src//star-rating-struct";
-import {ItemControlService} from "../../common/dynamic-form/item/item.service";
-import {FormGroup, NgForm} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
 import {InjectComponent} from "./inject-component/inject-component.component";
 import {RecurseComponent} from "./recurse/recurse.component";
 import {AbstractFormControlModel} from "../../common/dynamic-form/model/base/form-control";
+import {DynamicFormUtils} from "../../common/dynamic-form/item/item.utils";
 
 @Component({
   moduleId: module.id,
@@ -19,12 +19,12 @@ export class StartComponent implements OnInit, OnChanges {
   demoSelectionForm: {};
   demoForms: Array<any>;
 
-  form:FormGroup = new FormGroup({});
+  form: FormGroup = new FormGroup({});
   formName: string;
   formItems: Array<any>;
   formModel: {};
 
-  dynamicItems:any[] = [];
+  dynamicItems: any[] = [];
 
   componentTypes: any[] = [InjectComponent, RecurseComponent];
 
@@ -70,9 +70,11 @@ export class StartComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
-  ngOnChanges() { }
+  ngOnChanges() {
+  }
 
   /*DEMO SELECT*/
   onTemplateFromModelChange($event: {model: any}) {
@@ -95,20 +97,10 @@ export class StartComponent implements OnInit, OnChanges {
     }
   }
 
-  /*DYNAMIC FORM COMPONENT*/
-  onPayloadChange($event: {}) {
-    /*console.log('onPayloadChange $event', $event['payLoad']);
-    let item: ItemBase<any> = $event['payLoad'];//ItemControlService.createFormItem($event['payLoad']);
-    if(item) {
-      console.log("generated item: ", item, this.dynamicItems.concat(item, this.dynamicItems));
-      this.dynamicItems = this.dynamicItems.concat(item, this.dynamicItems);
-    }*/
-  }
-
   onSubmitted($event: {}) {
     console.log('onSubmitted $event', $event['payLoad']);
-    let item: AbstractFormControlModel<any>|FormGroupItem = ItemControlService.createFormItem($event['payLoad']);
-    if(item) {
+    let item: AbstractFormControlModel<any>|FormGroupItem = DynamicFormUtils.createFormItem($event['payLoad']);
+    if (item) {
       console.log("generated item: ", item);
       this.dynamicItems = this.dynamicItems.concat(item, []);
     }

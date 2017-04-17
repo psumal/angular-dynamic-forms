@@ -1,13 +1,9 @@
 import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {ItemBase} from "./model/base/item";
-import {ItemControlService} from "./item/item.service";
+import {DynamicFormUtils} from "./item/item.utils";
 import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
 import {DynamicFormService} from "./dynamic-form.service";
 import {DFFormGroupComp} from "../df/df-fg/df-form-group.component";
-import {DFFormControlComp} from "../df/df-fc/df-form-control.component";
-import {ItemComponent} from "./item/control/item.component";
-import {FormGroupItem} from "./item/formGroup/formGroup-base";
 import {AbstractFormControlModel} from "./model/base/form-control";
 
 /*
@@ -25,7 +21,7 @@ import {AbstractFormControlModel} from "./model/base/form-control";
   moduleId: module.id,
   selector: 'dynamic-form',
   templateUrl: './dynamic-form.component.html',
-  providers: [ItemControlService, DynamicFormService]
+  providers: [DynamicFormUtils, DynamicFormService]
 })
 export class DynamicFormComponent implements OnInit {
 
@@ -38,7 +34,7 @@ export class DynamicFormComponent implements OnInit {
   set items(items: Array<any>) {
 
     this._items = (<any>items).map((item: any) => {
-      let newItem = ItemControlService.createFormItem(item);
+      let newItem = DynamicFormUtils.createFormItem(item);
       if (newItem) {
         return newItem;
       }
@@ -70,7 +66,7 @@ export class DynamicFormComponent implements OnInit {
 
   private _payLoad: any;
 
-  constructor(private ics: ItemControlService, protected dfService: DynamicFormService) {
+  constructor(private ics: DynamicFormUtils, protected dfService: DynamicFormService) {
 
   }
 

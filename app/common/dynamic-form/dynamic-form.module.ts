@@ -3,7 +3,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {DynamicFormComponent} from "./dynamic-form.component";
 import {ItemComponent} from './item/control/item.component';
-import {ErrorsModule} from "./errors/errors.module";
+import {ErrorsModule} from "./item/errors/errors.module";
 import {ItemButtonModule} from "./item/button/item.button.module";
 import {FormGroupComponent} from "./item/formGroup/item-formGroup.component";
 import {ItemModule} from "./item/item.module";

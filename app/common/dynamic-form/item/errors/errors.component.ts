@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {AbstractFormControlModel} from "../model/base/form-control";
+import {AbstractFormControlModel} from "../../model/base/form-control";
 
 @Component({
   moduleId: module.id,
   selector: 'item-errors',
-  templateUrl:'./errors.component.html'
+  templateUrl:'errors.component.html'
 })
 export class ItemErrorComponent implements OnInit{
 

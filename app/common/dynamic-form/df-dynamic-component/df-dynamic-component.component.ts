@@ -2,9 +2,11 @@ import {Directive, ComponentFactoryResolver, ViewContainerRef} from "@angular/co
 import {FormGroup} from "@angular/forms";
 import {ControlComponent} from "../item/control/control.component";
 import {AbstractFormControlModel} from "../model/base/form-control";
+import {ButtonComponent} from "../item/button/button.component";
 
 const components = {
-  item: ControlComponent
+  item: ControlComponent,
+  button:ButtonComponent
 };
 
 @Directive({

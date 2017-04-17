@@ -17,6 +17,7 @@ export class DynamicFormService {
   constructor(private fb: FormBuilder,
               @Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
+
   }
 
   toFG(items: Array<any>, model?: {}): FormGroup {
@@ -83,7 +84,6 @@ export class DynamicFormService {
     if (this.NG_VALIDATORS) {
 
       validatorFn = this.NG_VALIDATORS.find(validatorFn => {
-        console.log('validatorFn.name: ', validatorFn.name);
         return validatorName === validatorFn.name || (validatorFn(new FormControl()) as Object).hasOwnProperty(validatorName);
       });
     }
@@ -96,7 +96,6 @@ export class DynamicFormService {
   }
 
   getValidatorFn(validatorName: string, validatorArgs?: any): ValidatorFn | AsyncValidatorFn | never {
-    console.log('validatorName: ', validatorName);
     let validatorFn = Validators[validatorName] || this.getCustomValidatorFn(validatorName);
 
     if (!(typeof validatorFn === "function")) {
@@ -107,6 +106,7 @@ export class DynamicFormService {
   }
 
   getValidators(config: any): ValidatorFn[] | AsyncValidatorFn[] {
+    console.log('NG_VALIDATORS', NG_VALIDATORS);
     let validators: any[] = [];
     if (config) {
       validators = config.map((validatorObj: any) => {

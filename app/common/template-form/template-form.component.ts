@@ -90,7 +90,6 @@ export class TemplateFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit(value:any, valid:boolean) {
-    console.log('value, valid', value, valid);
     this.onModelChange.emit({model:this.formModel});
   }
 

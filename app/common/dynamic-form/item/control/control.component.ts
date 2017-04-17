@@ -1,7 +1,17 @@
-import {Component, Input, Optional, Inject} from '@angular/core';
-import {FormGroup}        from '@angular/forms';
+import {Component, Input, Optional, Inject} from "@angular/core";
+import {FormGroup} from "@angular/forms";
 import {CUSTOM_SUBSCRIPTIONS} from "../../../../component/start/customSubscriptions/customSubscriptions.module";
 import {AbstractFormControlModel} from "../../model/base/form-control";
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/merge';
+
+export interface SubscriptionFn {
+  (): any;
+}
+
 @Component({
   moduleId: module.id,
   selector: 'df-item',
@@ -11,71 +21,66 @@ export class ControlComponent {
   @Input() config: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};
 
-  controlRendered:boolean = true;
+  controlRendered: boolean = true;
 
-  constructor(@Optional() @Inject(CUSTOM_SUBSCRIPTIONS) private CUSTOM_SUBSCRIPTIONS: Array<any>) {
+  constructor(@Optional() @Inject(CUSTOM_SUBSCRIPTIONS) private CUSTOM_SUBSCRIPTIONS: SubscriptionFn[]) {
     console.log('this.CUSTOM_SUBSCRIPTIONS', this.CUSTOM_SUBSCRIPTIONS);
-  }
-
-  getCustomSubscriptionFn(validatorName: string):any | undefined {
-
-    let subscriptionFn;
-
-    if (this.CUSTOM_SUBSCRIPTIONS) {
-
-      subscriptionFn = this.CUSTOM_SUBSCRIPTIONS.find(subscriptions => {
-        console.log('subscriptions.name: ', validatorName, subscriptions);
-        return subscriptions !== undefined;
-      });
-    }
-
-    console.log('subscriptionFn: ', subscriptionFn);
-    return subscriptionFn;
   }
 
   ngOnInit() {
 
-    if(this.config.changeListener) {
+    if (this.config.changeListener) {
       let listener = this.config.changeListener;
       listener.forEach((listener) => {
-        //fake cb
-        let i = 0;
-        listener.cb = this.getCustomSubscriptionFn(listener.name);
 
-        let otherChanges$ = this.form.get(listener.controls[i]).valueChanges;
+          listener.cb = this.getCustomSubscriptionFn(listener.name);
 
-        otherChanges$.subscribe(change => {
-          this.controlRendered = listener.cb(change,listener.params, this.config, this.form);
-        });
+        this.getSubscriptionFn(listener.name);
 
-      }
+        console.log('listener:  ', listener);
+          let otherChanges$ = this.form.get(listener.controls[0]).valueChanges;
 
+          otherChanges$.subscribe(change => {
+
+            this.controlRendered = listener.cb(change, listener.params, this.config, this.form);
+            if (listener.name === 'subscribeControlRendered') {
+
+            } else {
+              //listener.cb(change, listener.params, this.config, this.form);
+            }
+
+          });
+
+        /*
+         let controlsValueChanges = [];
+         for (let i = 0; i < listener.controls.length; i++) {
+         console.log('add valueChanges to array: ', listener.controls[i]);
+         controlsValueChanges.push(this.form.get(listener.controls[i]).valueChanges);
+         }
+
+         let controlsValueChanges$ = new Observable().merge(controlsValueChanges);
+
+         controlsValueChanges$
+         .subscribe(change => {
+         console.log('formValueChanges$', change);
+         console.log('listener.name', listener.name);
+         if (listener.name === 'controlRendered') {
+         this.controlRendered = listener.cb(change, listener.params, this.config, this.form);
+         } else {
+         listener.cb(change, listener.params, this.config, this.form);
+         }
+         });
+
+         */
+
+        }
       );
-      //this.subscribePaymentTypeChanges(this.item, this.form);
     }
   }
 
-  //ngOnChanges() {}
+  init() {
+    //setup controlRendered subscriptions
 
-  subscribePaymentTypeChanges(item:any, form:any) {
-    console.log('config: ', form.get(item.key));
-
-    if (item.key == 'type') {
-
-      const otherChanges$ = form.get('controlType').valueChanges;
-      //console.log('otherChanges$', otherChanges$);
-      otherChanges$
-      //.map((value) => { return {key: item.key, value: value}; })
-        .subscribe((change:any) => {
-          let textboxTypes = ['text', 'number', 'date'];
-
-          if(change == 'textbox') {
-            item.options = item.options.map((option:any) => {option.value = option.value + '.'; return option});
-          }
-          console.log('change: ' + change);
-          console.log('options: ', this.config);
-        });
-    }
   }
 
   isLabelVisible(): boolean {
@@ -130,5 +135,33 @@ export class ControlComponent {
     console.log('this.form.get: ', this.form.get(this.config.key));
     return true;
   }
+
+  getCustomSubscriptionFn(subscriptionName: string): SubscriptionFn | undefined {
+    console.log('getCustomSubscriptionFn name: ', subscriptionName);
+    let subscriptionFn;
+
+      if (this.CUSTOM_SUBSCRIPTIONS) {
+
+        subscriptionFn = this.CUSTOM_SUBSCRIPTIONS.find(subscriptionFn => {
+          console.log('find subscriptionFn.name: ', subscriptionFn);
+          return subscriptionName === subscriptionFn.name;
+        });
+
+      }
+
+    return subscriptionFn;
+  }
+
+  getSubscriptionFn(subscriptionName: string): SubscriptionFn | never {
+    console.log('getSubscriptionFn name: ', subscriptionName);
+    let validatorFn = this.getCustomSubscriptionFn(subscriptionName);
+
+    if (!(typeof validatorFn === "function")) {
+      //throw new Error(`subscription "${subscriptionName}" is not provided via CUSTOM_SUBSCRIPTIONS`);
+    }
+
+    return validatorFn;
+  }
+
 
 }

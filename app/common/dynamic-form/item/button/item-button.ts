@@ -1,6 +1,6 @@
-import { ItemBase } from '../../model/base/item';
+import {AbstractFormControlModel} from "../../model/base/form-control";
 
-export class ButtonItem extends ItemBase<string> {
+export class ButtonItem extends AbstractFormControlModel<string> {
   controlType = 'button';
   type: string;
 

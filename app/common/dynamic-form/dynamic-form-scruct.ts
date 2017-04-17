@@ -1,4 +1,4 @@
-import {ItemBase} from "./model/base/item";
+import {AbstractFormControlModel} from "./model/base/form-control";
 
 
 export interface IDynamicFormOnPayLoadChangeEvent {
@@ -7,6 +7,6 @@ export interface IDynamicFormOnPayLoadChangeEvent {
 }
 
 export interface IDynamicFormBindings{
-  items: ItemBase<any>[];
+  items: AbstractFormControlModel<any>[];
   onPayloadChange:any;
 }

@@ -1,7 +1,7 @@
 import {Injectable}   from '@angular/core';
 import {FormControl, FormGroup, Validators, ValidatorFn, AsyncValidatorFn, FormBuilder} from '@angular/forms';
 
-import {ItemBase} from '../model/base/item';
+
 import {TextboxItem} from "../model/item-textbox";
 import {MultiselectItem} from "../model/item-multiselect";
 import {SelectItem} from "../model/item-select";
@@ -11,6 +11,7 @@ import {ItemService} from "../../../component/start/item.service";
 import {ButtonItem} from "./button/item-button";
 import {TextareaItem} from "../model/item-textarea";
 import {FormGroupItem} from "./formGroup/formGroup-base";
+import {AbstractFormControlModel} from "../model/base/form-control";
 
 @Injectable()
 export class ItemControlService {
@@ -19,14 +20,14 @@ export class ItemControlService {
 
   }
 
-  static createFormItem(config: {}): ItemBase<any> | FormGroupItem {
+  static createFormItem(config: {}): AbstractFormControlModel<any> | FormGroupItem {
 
     if(!('controlType' in config)) {
       config['controlType'] = guessControlType(config);
     }
 
     let controlType: string = config['controlType'];
-    let item: ItemBase<any> | FormGroupItem;
+    let item: AbstractFormControlModel<any> | FormGroupItem;
 
     if (controlType === "textbox") {
       item = new TextboxItem(config);

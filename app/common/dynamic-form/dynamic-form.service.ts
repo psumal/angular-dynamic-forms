@@ -3,8 +3,9 @@ import {
   FormBuilder, FormGroup, ValidatorFn, AsyncValidatorFn, Validators, FormControl,
   NG_VALIDATORS, NG_ASYNC_VALIDATORS
 } from "@angular/forms";
-import {ItemBase} from "./model/base/item";
+
 import {FormGroupItem} from "./item/formGroup/formGroup-base";
+import {AbstractFormControlModel} from "./model/base/form-control";
 
 export type DynamicValidatorsMap = {[validatorName: string]: any};
 
@@ -80,7 +81,7 @@ export class DynamicFormService {
 
   }
 
-  getFormControlParamsArray = (item: ItemBase<any>): Array<any> => {
+  getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
 
   //define FormControl params in the right order
   let formState: any = '';

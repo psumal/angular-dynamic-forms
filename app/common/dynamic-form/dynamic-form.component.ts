@@ -8,6 +8,7 @@ import {DFFormGroupComp} from "../df/df-fg/df-form-group.component";
 import {DFFormControlComp} from "../df/df-fc/df-form-control.component";
 import {ItemComponent} from "./item/control/item.component";
 import {FormGroupItem} from "./item/formGroup/formGroup-base";
+import {AbstractFormControlModel} from "./model/base/form-control";
 
 /*
 
@@ -32,7 +33,7 @@ export class DynamicFormComponent implements OnInit {
 
   }
 
-  private _items: ItemBase<any>[] = [];
+  private _items: AbstractFormControlModel<any>[] = [];
   @Input()
   set items(items: Array<any>) {
 

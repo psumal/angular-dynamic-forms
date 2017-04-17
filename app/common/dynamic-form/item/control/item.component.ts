@@ -15,7 +15,6 @@ export class ItemComponent {
 
   constructor(@Optional() @Inject(CUSTOM_SUBSCRIPTIONS) private CUSTOM_SUBSCRIPTIONS: Array<any>,) {
     console.log('this.CUSTOM_SUBSCRIPTIONS', this.CUSTOM_SUBSCRIPTIONS);
-
   }
 
   getCustomSubscriptionFn(validatorName: string):any | undefined {

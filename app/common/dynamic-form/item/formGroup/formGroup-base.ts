@@ -1,14 +1,14 @@
-import {ItemBase} from "../../model/base/item";
+import {AbstractFormControlModel} from "../../model/base/form-control";
 export class FormGroupItem{
   key:string;
   title: string;
-  items: ItemBase<any>[];
+  items: AbstractFormControlModel<any>[];
   controlType:string = 'formGroup';
 
   constructor(options: {
     key?:string;
     title?: string,
-    items?: ItemBase<any>[]
+    items?: AbstractFormControlModel<any>[]
 
   } = {}) {
     this.key = options.key;

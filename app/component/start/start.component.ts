@@ -2,15 +2,12 @@ import {Component, OnInit, Input, Output, OnChanges, EventEmitter} from '@angula
 import {ItemService} from "./item.service";
 import {IStarRatingOnClickEvent} from "angular-star-rating/src/star-rating-struct";
 import {IStarRatingCompBindings} from "angular-star-rating/src//star-rating-struct";
-import {IDynamicFormOnPayLoadChangeEvent} from "../../common/dynamic-form/dynamic-form-scruct";
-import {ItemBase} from "../../common/dynamic-form/model/base/item";
 import {ItemControlService} from "../../common/dynamic-form/item/item.service";
-import {TextboxItem} from "../../common/dynamic-form/model/item-textbox";
 import {FormGroup, NgForm} from "@angular/forms";
 import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
-import {TemplateFormComponent} from "../../common/template-form/template-form.component";
 import {InjectComponent} from "./inject-component/inject-component.component";
 import {RecurseComponent} from "./recurse/recurse.component";
+import {AbstractFormControlModel} from "../../common/dynamic-form/model/base/form-control";
 
 @Component({
   moduleId: module.id,
@@ -110,7 +107,7 @@ export class StartComponent implements OnInit, OnChanges {
 
   onSubmitted($event: {}) {
     console.log('onSubmitted $event', $event['payLoad']);
-    let item: ItemBase<any>|FormGroupItem = ItemControlService.createFormItem($event['payLoad']);
+    let item: AbstractFormControlModel<any>|FormGroupItem = ItemControlService.createFormItem($event['payLoad']);
     if(item) {
       console.log("generated item: ", item);
       this.dynamicItems = this.dynamicItems.concat(item, []);

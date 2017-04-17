@@ -1,5 +1,4 @@
-import {AsyncValidatorFn, ValidatorFn} from "@angular/forms";
-export class ItemBase<T>{
+export class ItemBase{
   key: string;
   order: number;
   controlType: string;

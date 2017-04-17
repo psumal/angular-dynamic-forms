@@ -1,7 +1,6 @@
-// my-component.component.ts
 import {Component, Input, OnInit} from '@angular/core';
-import {ItemBase} from "../model/base/item";
 import {FormGroup} from "@angular/forms";
+import {AbstractFormControlModel} from "../model/base/form-control";
 
 @Component({
   moduleId: module.id,
@@ -10,7 +9,7 @@ import {FormGroup} from "@angular/forms";
 })
 export class ItemErrorComponent implements OnInit{
 
-  @Input() item: ItemBase<any> = <any>{};
+  @Input() item: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};
 
   private _errors:{[key:string]:string} = {};
@@ -19,7 +18,7 @@ export class ItemErrorComponent implements OnInit{
     required:"This value is required!"
   };
 
-  errorMessages;
+  errorMessages:{};
 
   get errors(): {} {
     return this._errors;
@@ -41,21 +40,20 @@ export class ItemErrorComponent implements OnInit{
     });
   }
 
-  _getErrors(formControlName) : {[key:string]:string} {
+  _getErrors(formControlName:string) : {[key:string]:string} {
     let errors = {};
     return this.form.get(this.item.key).errors || {};
   }
 
   errorKeys() : Array<string> {
-    console.log();
     return Object.keys(this.errors) || [];
   }
 
-  getClassNames() {
+  getClassNames():string {
     return "form-control-feedback";
   }
 
-  _getMessagesByErrors(errors:{}){
+  _getMessagesByErrors(errors:{}):{}{
     let mappedErrors = {};
     for (let key of this.errorKeys()) {
       mappedErrors[key] = this.errorMessageMap[key] || 'No message given for error name '+key;

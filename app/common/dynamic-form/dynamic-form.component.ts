@@ -3,7 +3,6 @@ import {FormGroup} from "@angular/forms";
 import {DynamicFormUtils} from "./dynamic-form.utils";
 import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
 import {DynamicFormService} from "./dynamic-form.service";
-import {DFFormGroupComp} from "../df/df-fg/df-form-group.component";
 import {AbstractFormControlModel} from "./model/base/form-control";
 
 /*
@@ -83,16 +82,10 @@ export class DynamicFormComponent implements OnInit {
       //this.renderForm();
     }
 
-    if ('items' in changes) {
+    if (valueChanged('items',changes)) {
       this.items = changes['items'].currentValue || [];
     }
 
-  }
-
-  onSubmit(): void {
-    //this.payLoad = this.form.value;
-    let payLoad: IDynamicFormOnPayLoadChangeEvent = {payLoad: this.form.value};
-    this.onSubmitted.emit(payLoad);
   }
 
   protected renderForm(): void {

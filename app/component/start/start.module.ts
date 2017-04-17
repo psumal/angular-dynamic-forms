@@ -12,8 +12,7 @@ import {DFModule} from "../../common/df/df-form.module";
 import {InjectComponent} from "./inject-component/inject-component.component";
 import {RecurseComponent} from "./recurse/recurse.component";
 import {DFFormGroupComp} from "../../common/df/df-fg/df-form-group.component";
-import {DFFormControlComp} from "../../common/df/df-fc/df-form-control.component";
-import {ItemComponent} from "../../common/dynamic-form/item/control/item.component";
+import {ControlComponent} from "../../common/dynamic-form/item/control/control.component";
 import {ReactiveFormsModule} from "@angular/forms";
 
 
@@ -25,7 +24,7 @@ const EXPORTS = [ StartComponent, InjectComponent ];
 @NgModule({
   imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule, CustomSubscriptionsModule,
     DFModule,
-    DynamicFormModule.withComponents([DFFormGroupComp, ItemComponent]),
+    DynamicFormModule.withComponents([DFFormGroupComp, ControlComponent]),
     DFModule.withComponents([
       InjectComponent,
       RecurseComponent

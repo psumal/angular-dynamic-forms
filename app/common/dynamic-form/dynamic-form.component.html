@@ -7,11 +7,7 @@
     <df-item *ngIf="config.controlType !== 'button' && config.controlType !== 'formGroup'" [config]="config" [form]="form"></df-item>
 
     <df-button *ngIf="config.controlType === 'button'" [config]="config" [form]="form"></df-button>
-    <!--  -->
+
   </div>
 
-  <p>Form valid:<br>{{form.valid}}</p>
-</div>
-<div *ngIf="payLoad" class="form-row">
-  <strong>Saved the following values</strong><br>{{payLoad}}
 </div>

@@ -5,9 +5,9 @@ import {AbstractFormControlModel} from "../../model/base/form-control";
 @Component({
   moduleId: module.id,
   selector: 'df-item',
-  templateUrl: 'item.component.html',
+  templateUrl: 'control.component.html',
 })
-export class ItemComponent {
+export class ControlComponent {
   @Input() config: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};
 

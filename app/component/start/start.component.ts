@@ -7,7 +7,7 @@ import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-
 import {InjectComponent} from "./inject-component/inject-component.component";
 import {RecurseComponent} from "./recurse/recurse.component";
 import {AbstractFormControlModel} from "../../common/dynamic-form/model/base/form-control";
-import {DynamicFormUtils} from "../../common/dynamic-form/item/item.utils";
+import {DynamicFormUtils} from "../../common/dynamic-form/dynamic-form.utils";
 
 @Component({
   moduleId: module.id,

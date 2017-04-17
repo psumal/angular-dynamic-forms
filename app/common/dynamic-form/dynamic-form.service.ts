@@ -11,15 +11,12 @@ import {
 } from "@angular/forms";
 import {AbstractFormControlModel} from "./model/base/form-control";
 
-export type DynamicValidatorsMap = {[validatorName: string]: any};
-
 @Injectable()
 export class DynamicFormService {
 
   constructor(private fb: FormBuilder,
               @Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
-
   }
 
   toFG(items: Array<any>, model?: {}): FormGroup {
@@ -46,13 +43,15 @@ export class DynamicFormService {
 
   getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
 
-    //define FormControl params in the right order in the form control config array
+    //define array of params
+    let fCParams: Array<any> = [];
+
     let formState: any = '';
     let validator: Array<any> = [];
     let asyncValidator: Array<any> = [];
-    //define array of params
-    let fCParams: Array<any> = [];
     let changeListener: Array<any> = [];
+
+    //define FormControl params in the right order in the form control config array
 
     //form state
     if (item['formState'] !== undefined) {

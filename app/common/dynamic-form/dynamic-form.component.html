@@ -1,17 +1,15 @@
 <div [formGroup]="form">
-  <div *ngFor="let item of items" class="form-row">
-    
-    <!-- [formGroupConfig]="item" [form]="form" -->
-    <dynamic-comp [componentType]="dynComp" [componentData]="dynCompData"></dynamic-comp>
 
-    <df-form-group *ngIf="item.controlType === 'formGroup'" [formGroupConfig]="item" [form]="form"></df-form-group>
+  <div *ngFor="let config of items" class="form-row">
 
-    <df-item *ngIf="item.controlType !== 'button' && item.controlType !== 'formGroup'" [item]="item"
-             [form]="form"></df-item>
+    <df-form-group *ngIf="config.controlType === 'formGroup'" [config]="config" [form]="form"></df-form-group>
 
-    <df-button *ngIf="item.controlType === 'button'" [item]="item" [form]="form"></df-button>
+    <df-item *ngIf="config.controlType !== 'button' && config.controlType !== 'formGroup'" [config]="config" [form]="form"></df-item>
+
+    <df-button *ngIf="config.controlType === 'button'" [config]="config" [form]="form"></df-button>
     <!--  -->
   </div>
+
   <p>Form valid:<br>{{form.valid}}</p>
 </div>
 <div *ngIf="payLoad" class="form-row">

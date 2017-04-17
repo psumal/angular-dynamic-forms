@@ -284,13 +284,13 @@ export class ItemService {
       {
         controlType: 'checkbox',
         key: 'checkboxItem',
-        label: 'Checkbox item',
+        label: 'Checkbox config',
       },
       //radio
       {
         controlType: 'radio',
         key: 'radioItem',
-        label: 'Radio item',
+        label: 'Radio config',
         options: [
           {key: 'key0', value: 'Short label'},
           {key: 'key1', value: 'Label should always fit'},
@@ -303,7 +303,7 @@ export class ItemService {
       {
         controlType: 'select',
         key: 'selectItem',
-        label: 'Select item',
+        label: 'Select config',
         options: [
           {key: 'key0', value: 'Short label'},
           {key: 'key1', value: 'Label should always fit'},

@@ -8,12 +8,12 @@ import {AbstractFormControlModel} from "../../model/base/form-control";
   templateUrl: 'item.component.html',
 })
 export class ItemComponent {
-  @Input() item: AbstractFormControlModel<any> = <any>{};
+  @Input() config: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};
 
   controlRendered:boolean = true;
 
-  constructor(@Optional() @Inject(CUSTOM_SUBSCRIPTIONS) private CUSTOM_SUBSCRIPTIONS: Array<any>,) {
+  constructor(@Optional() @Inject(CUSTOM_SUBSCRIPTIONS) private CUSTOM_SUBSCRIPTIONS: Array<any>) {
     console.log('this.CUSTOM_SUBSCRIPTIONS', this.CUSTOM_SUBSCRIPTIONS);
   }
 
@@ -34,48 +34,23 @@ export class ItemComponent {
   }
 
   ngOnInit() {
-    console.log('itemcomp ngOnInit ', this.item);
-    if(this.item.changeListener) {
-      let listener = this.item.changeListener;
+
+    if(this.config.changeListener) {
+      let listener = this.config.changeListener;
       listener.forEach((listener) => {
         //fake cb
         let i = 0;
-        console.log(this.getCustomSubscriptionFn('subscribeIsRendered'));
-
         listener.cb = this.getCustomSubscriptionFn(listener.name);
-
-
-        console.log("listener.cb: ", listener.cb);
-
-        /* */
-        //listener.cb = getIsRendered;
 
         let otherChanges$ = this.form.get(listener.controls[i]).valueChanges;
 
         otherChanges$.subscribe(change => {
-          console.log('listener change: ' + change);
-          console.log('item: ', this.item);
-
-          this.controlRendered = listener.cb(change,listener.params, this.item, this.form);
+          this.controlRendered = listener.cb(change,listener.params, this.config, this.form);
         });
 
-        /////////////////
+      }
 
-        function getFilteredOptions(change?:any,params?:any, item?:any, form?:any) {
-          console.log('getFilteredOptions params: ', params);
-          let filterConfig = params.filter((param:any) => {
-            return change == param['key'];
-          }).pop();
-
-          item.visibleOptions = item.options.filter((option:any) => {
-            if(filterConfig && 'optionsKeys' in filterConfig) {
-              return filterConfig.optionsKeys.indexOf(option.value) !== -1;
-            }
-            return false;
-          });
-
-        }
-      });
+      );
       //this.subscribePaymentTypeChanges(this.item, this.form);
     }
   }
@@ -83,7 +58,7 @@ export class ItemComponent {
   //ngOnChanges() {}
 
   subscribePaymentTypeChanges(item:any, form:any) {
-    console.log('item: ', form.get(item.key));
+    console.log('config: ', form.get(item.key));
 
     if (item.key == 'type') {
 
@@ -98,13 +73,13 @@ export class ItemComponent {
             item.options = item.options.map((option:any) => {option.value = option.value + '.'; return option});
           }
           console.log('change: ' + change);
-          console.log('options: ', this.item);
+          console.log('options: ', this.config);
         });
     }
   }
 
   isLabelVisible(): boolean {
-    return !!this.item['label'];
+    return !!this.config['label'];
   }
 
   getWrapperClass(): string {
@@ -113,14 +88,14 @@ export class ItemComponent {
      };*/
 
     let classNames: Array<string> = [];
-    if (this.item.controlType === 'radio' || this.item.controlType === 'checkbox') {
+    if (this.config.controlType === 'radio' || this.config.controlType === 'checkbox') {
       classNames.push('form-check');
     }
     else {
       classNames.push('form-group');
     }
 
-    if (this.form.get(this.item.key).valid) {
+    if (this.form.get(this.config.key).valid) {
       classNames.push('has-success');
     }
 
@@ -128,7 +103,7 @@ export class ItemComponent {
      classNames.push('has-warning');
      }*/
 
-    if (!this.form.get(this.item.key).valid) {
+    if (!this.form.get(this.config.key).valid) {
       classNames.push('has-danger');
     }
 
@@ -137,12 +112,12 @@ export class ItemComponent {
   }
 
   isControlTypeVisible(controlType: string): boolean {
-    return this.item.controlType === controlType;
+    return this.config.controlType === controlType;
   }
 
   getControlClass(): string {
     let classNames: string = "";
-    if (this.item.controlType === 'radio' || this.item.controlType === 'checkbox') {
+    if (this.config.controlType === 'radio' || this.config.controlType === 'checkbox') {
       classNames = 'form-check-input';
     }
     else {
@@ -152,7 +127,7 @@ export class ItemComponent {
   }
 
   isError() {
-    console.log('this.form.get: ', this.form.get(this.item.key));
+    console.log('this.form.get: ', this.form.get(this.config.key));
     return true;
   }
 

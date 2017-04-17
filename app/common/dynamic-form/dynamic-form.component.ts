@@ -49,15 +49,6 @@ export class DynamicFormComponent implements OnInit {
   @Input() model: {} = {};
   form: FormGroup;
 
-  dynComp = DFFormGroupComp;
-
-  dynCompData = {
-    component: DFFormGroupComp,
-    inputs: {
-      object : {'test':'test'}
-    }
-  };
-
   @Output()
   onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
 

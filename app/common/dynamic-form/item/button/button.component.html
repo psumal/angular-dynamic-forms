@@ -1,11 +1,11 @@
 <div class="form-group" [formGroup]="form">
 
   <button
-    *ngIf="item.controlType === 'button'"
-    [id]="item.key"
-    [type]="item.type"
+    *ngIf="config.controlType === 'button'"
+    [id]="config.key"
+    [type]="config.type"
     class="btn">
-    {{item.label}}
+    {{config.label}}
   </button>
 
 </div>

@@ -7,8 +7,8 @@ import {AbstractFormControlModel} from "../../model/base/form-control";
   templateUrl: 'button.component.html',
 })
 export class ButtonComponent {
-  @Input() item: AbstractFormControlModel<any>;
+  @Input() config: AbstractFormControlModel<any>;
   @Input() form: FormGroup;
 
-  get isValid() { return this.form.controls[this.item.key].valid; }
+  get isValid() { return this.form.controls[this.config.key].valid; }
 }

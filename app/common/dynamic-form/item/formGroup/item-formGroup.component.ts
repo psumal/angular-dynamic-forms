@@ -7,7 +7,7 @@ import {FormGroup}        from '@angular/forms';
   templateUrl: 'item-formGroup.component.html',
 })
 export class FormGroupComponent {
-  @Input() formGroupConfig:{};
+  @Input() config:{};
   @Input() form: FormGroup;
 
   getFormGroupClass(): string {

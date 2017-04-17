@@ -1,25 +1,25 @@
 <div [attr.class]="getWrapperClass()" [formGroup]="form" *ngIf="controlRendered">
 
-  <label [attr.for]="item.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
-    {{item.label}}
+  <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
+    {{config.label}}
   </label>
 
   <input *ngIf="isControlTypeVisible('textbox')"
-         [formControlName]="item.key"
-         [id]="item.key"
-         [type]="item.type"
+         [formControlName]="config.key"
+         [id]="config.key"
+         [type]="config.type"
          [attr.class]="getControlClass()"
-         [attr.aria-describedby]="item.key+'Help'"
-         [attr.placeholder]="item.placeholder">
+         [attr.aria-describedby]="config.key+'Help'"
+         [attr.placeholder]="config.placeholder">
 
   <div *ngIf="isControlTypeVisible('radio')">
-    <div class="form-check" *ngFor="let option of item.options">
+    <div class="form-check" *ngFor="let option of config.options">
       <label [attr.class]="'form-check-label'">
-        <input [type]="item.type"
-               [id]="item.key + '--' + option.key"
-               name="{{item.key}}"
+        <input [type]="config.type"
+               [id]="config.key + '--' + option.key"
+               name="{{config.key}}"
                [attr.class]="getControlClass()"
-               [checked]="item.formState"
+               [checked]="config.formState"
                [value]="option.key">
         {{option.value}}
       </label>
@@ -27,25 +27,25 @@
   </div>
 
   <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
-    <label class="form-check-label" [attr.for]="item.key">
-      <input [formControlName]="item.key"
-             [type]="item.type"
-             [id]="item.key"
+    <label class="form-check-label" [attr.for]="config.key">
+      <input [formControlName]="config.key"
+             [type]="config.type"
+             [id]="config.key"
              [attr.class]="getControlClass()"
-             [attr.aria-describedby]="item.key+'Help'"
-             [attr.placeholder]="item.placeholder">
-      {{item.label}}
+             [attr.aria-describedby]="config.key+'Help'"
+             [attr.placeholder]="config.placeholder">
+      {{config.label}}
     </label>
   </div>
 
   <select
     *ngIf="isControlTypeVisible('select')"
-    [id]="item.key"
-    [formControlName]="item.key"
+    [id]="config.key"
+    [formControlName]="config.key"
     [attr.class]="getControlClass()"
-    [attr.aria-describedby]="item.key+'Help'"
-    [attr.placeholder]="item.placeholder">
-    <template ngFor let-opt [ngForOf]="item.options">
+    [attr.aria-describedby]="config.key+'Help'"
+    [attr.placeholder]="config.placeholder">
+    <template ngFor let-opt [ngForOf]="config.options">
       <optgroup *ngIf="opt.children" label="{{opt.value}}">
         <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
           {{optChild.value}}
@@ -58,12 +58,12 @@
   <select
     *ngIf="isControlTypeVisible('multiselect')"
     multiple
-    [id]="item.key"
-    [formControlName]="item.key"
+    [id]="config.key"
+    [formControlName]="config.key"
     [attr.class]="'form-control'"
-    [attr.aria-describedby]="item.key+'Help'"
-    [attr.placeholder]="item.placeholder">
-    <template ngFor let-opt [ngForOf]="item.options">
+    [attr.aria-describedby]="config.key+'Help'"
+    [attr.placeholder]="config.placeholder">
+    <template ngFor let-opt [ngForOf]="config.options">
       <optgroup *ngIf="opt.children" label="{{opt.value}}">
         <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
           {{optChild.value}}
@@ -75,14 +75,14 @@
 
   <textarea
     *ngIf="isControlTypeVisible('textarea')"
-    [id]="item.key"
-    [formControlName]="item.key"
+    [id]="config.key"
+    [formControlName]="config.key"
     [attr.class]="getControlClass()"
-    [attr.aria-describedby]="item.key+'Help'"
-    [attr.placeholder]="item.placeholder">
+    [attr.aria-describedby]="config.key+'Help'"
+    [attr.placeholder]="config.placeholder">
    </textarea>
 
-  <item-errors [item]="item" [form]="form"></item-errors>
+  <item-errors [item]="config" [form]="form"></item-errors>
 
-  <small [attr.id]="item.key+'Help'" class="form-text text-muted">{{item.helpText}}</small>
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{config.helpText}}</small>
 </div>

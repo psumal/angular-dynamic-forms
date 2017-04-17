@@ -17,7 +17,7 @@ export class DynamicFormDynamicComponentComp implements OnInit {
 
   @Input() componentType: any;
 
-  @Input('formGroupConfig') item:any;
+  @Input('config') item:any;
   @Input() form:any;
 
   @Input() set componentData(data: {component: any, inputs: any }) {
@@ -65,7 +65,7 @@ export class DynamicFormDynamicComponentComp implements OnInit {
     //let resolvedInputs = ReflectiveInjector.resolve(inputProviders);
 
     //console.log('compRef: ', compRef);
-    //console.log('form: ', this.item);
+    //console.log('form: ', this.config);
     //console.log('form: ', this.form);
 
 

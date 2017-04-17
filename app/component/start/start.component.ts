@@ -101,7 +101,7 @@ export class StartComponent implements OnInit, OnChanges {
     console.log('onSubmitted $event', $event['payLoad']);
     let item: AbstractFormControlModel<any>|FormGroupItem = DynamicFormUtils.createFormItem($event['payLoad']);
     if (item) {
-      console.log("generated item: ", item);
+      console.log("generated config: ", item);
       this.dynamicItems = this.dynamicItems.concat(item, []);
     }
   }

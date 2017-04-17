@@ -3,7 +3,7 @@ import {
   FormBuilder, FormGroup, ValidatorFn, AsyncValidatorFn, Validators, FormControl,
   NG_VALIDATORS, NG_ASYNC_VALIDATORS
 } from "@angular/forms";
-import {ItemBase} from "./item/item-base";
+import {ItemBase} from "./model/base/item";
 import {FormGroupItem} from "./item/formGroup/formGroup-base";
 
 export type DynamicValidatorsMap = {[validatorName: string]: any};

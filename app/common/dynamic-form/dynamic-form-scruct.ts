@@ -1,4 +1,4 @@
-import {ItemBase} from "./item/item-base";
+import {ItemBase} from "./model/base/item";
 
 
 export interface IDynamicFormOnPayLoadChangeEvent {

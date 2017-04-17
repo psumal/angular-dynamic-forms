@@ -1,4 +1,4 @@
-import { ItemBase } from '../item-base';
+import { ItemBase } from '../../model/base/item';
 
 export class ButtonItem extends ItemBase<string> {
   controlType = 'button';

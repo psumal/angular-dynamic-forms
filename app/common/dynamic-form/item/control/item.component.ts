@@ -1,14 +1,14 @@
 import {Component, Input, Optional, Inject} from '@angular/core';
 import {FormGroup}        from '@angular/forms';
-import {ItemBase}     from '../item-base';
 import {CUSTOM_SUBSCRIPTIONS} from "../../../../component/start/customSubscriptions/customSubscriptions.module";
+import {AbstractFormControlModel} from "../../model/base/form-control";
 @Component({
   moduleId: module.id,
   selector: 'df-item',
   templateUrl: 'item.component.html',
 })
 export class ItemComponent {
-  @Input() item: ItemBase<any> = <any>{};
+  @Input() item: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};
 
   controlRendered:boolean = true;
@@ -68,7 +68,7 @@ export class ItemComponent {
             return change == param['key'];
           }).pop();
 
-          item.options = item.initialOptions.filter((option:any) => {
+          item.visibleOptions = item.options.filter((option:any) => {
             if(filterConfig && 'optionsKeys' in filterConfig) {
               return filterConfig.optionsKeys.indexOf(option.value) !== -1;
             }
@@ -105,7 +105,7 @@ export class ItemComponent {
   }
 
   isLabelVisible(): boolean {
-    return !!this.item.label;
+    return !!this.item['label'];
   }
 
   getWrapperClass(): string {

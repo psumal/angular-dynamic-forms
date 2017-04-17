@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {ItemBase} from "./item/item-base";
+import {ItemBase} from "./model/base/item";
 import {ItemControlService} from "./item/item.service";
 import {IDynamicFormOnPayLoadChangeEvent} from "./dynamic-form-scruct";
 import {DynamicFormService} from "./dynamic-form.service";

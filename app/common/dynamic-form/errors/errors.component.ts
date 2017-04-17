@@ -1,6 +1,6 @@
 // my-component.component.ts
 import {Component, Input, OnInit} from '@angular/core';
-import {ItemBase} from "../item/item-base";
+import {ItemBase} from "../model/base/item";
 import {FormGroup} from "@angular/forms";
 
 @Component({

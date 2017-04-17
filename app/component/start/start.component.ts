@@ -3,10 +3,10 @@ import {ItemService} from "./item.service";
 import {IStarRatingOnClickEvent} from "angular-star-rating/src/star-rating-struct";
 import {IStarRatingCompBindings} from "angular-star-rating/src//star-rating-struct";
 import {IDynamicFormOnPayLoadChangeEvent} from "../../common/dynamic-form/dynamic-form-scruct";
-import {ItemBase} from "../../common/dynamic-form/item/item-base";
+import {ItemBase} from "../../common/dynamic-form/model/base/item";
 import {ItemControlService} from "../../common/dynamic-form/item/item.service";
-import {TextboxItem} from "../../common/dynamic-form/item/control/item-textbox";
-import {FormGroup} from "@angular/forms";
+import {TextboxItem} from "../../common/dynamic-form/model/item-textbox";
+import {FormGroup, NgForm} from "@angular/forms";
 import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
 import {TemplateFormComponent} from "../../common/template-form/template-form.component";
 import {InjectComponent} from "./inject-component/inject-component.component";
@@ -22,6 +22,7 @@ export class StartComponent implements OnInit, OnChanges {
   demoSelectionForm: {};
   demoForms: Array<any>;
 
+  form:FormGroup = new FormGroup({});
   formName: string;
   formItems: Array<any>;
   formModel: {};

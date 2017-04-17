@@ -1,15 +1,15 @@
 import {Injectable}   from '@angular/core';
 import {FormControl, FormGroup, Validators, ValidatorFn, AsyncValidatorFn, FormBuilder} from '@angular/forms';
 
-import {ItemBase} from './item-base';
-import {TextboxItem} from "./control/item-textbox";
-import {MultiselectItem} from "./control/item-multiselect";
-import {SelectItem} from "./control/item-select";
-import {CheckboxItem} from "./control/item-checkbox";
-import {RadioItem} from "./control/item-radio";
+import {ItemBase} from '../model/base/item';
+import {TextboxItem} from "../model/item-textbox";
+import {MultiselectItem} from "../model/item-multiselect";
+import {SelectItem} from "../model/item-select";
+import {CheckboxItem} from "../model/item-checkbox";
+import {RadioItem} from "../model/item-radio";
 import {ItemService} from "../../../component/start/item.service";
 import {ButtonItem} from "./button/item-button";
-import {TextareaItem} from "./control/item-textarea";
+import {TextareaItem} from "../model/item-textarea";
 import {FormGroupItem} from "./formGroup/formGroup-base";
 
 @Injectable()

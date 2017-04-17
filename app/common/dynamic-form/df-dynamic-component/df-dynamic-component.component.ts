@@ -11,7 +11,7 @@ import {FormGroup} from "@angular/forms";
 })
 export class DynamicFormDynamicComponentComp implements OnInit {
 
-  currentComponent = null;
+  currentComponent:any = null;
 
   @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) dynamicComponentContainer: ViewContainerRef;
 

@@ -1,12 +1,12 @@
 import {Component, Input, Optional, Inject} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {CUSTOM_SUBSCRIPTIONS} from "../../../../component/start/customSubscriptions/customSubscriptions.module";
 import {AbstractFormControlModel} from "../../model/base/form-control";
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/merge';
+import {CUSTOM_SUBSCRIPTIONS} from "../../customSubscriptions/customSubscriptions.module";
 
 export interface SubscriptionFn {
   (): any;
@@ -132,18 +132,18 @@ export class ControlComponent {
   }
 
   isError() {
-    console.log('this.form.get: ', this.form.get(this.config.key));
     return true;
   }
 
   getCustomSubscriptionFn(subscriptionName: string): SubscriptionFn | undefined {
-    console.log('getCustomSubscriptionFn name: ', subscriptionName);
     let subscriptionFn;
+
+    console.log('this.CUSTOM_SUBSCRIPTIONS: ', this.CUSTOM_SUBSCRIPTIONS);
 
       if (this.CUSTOM_SUBSCRIPTIONS) {
 
         subscriptionFn = this.CUSTOM_SUBSCRIPTIONS.find(subscriptionFn => {
-          console.log('find subscriptionFn.name: ', subscriptionFn);
+          console.log('find subscriptionFn.name: ', subscriptionFn.name);
           return subscriptionName === subscriptionFn.name;
         });
 
@@ -157,7 +157,7 @@ export class ControlComponent {
     let validatorFn = this.getCustomSubscriptionFn(subscriptionName);
 
     if (!(typeof validatorFn === "function")) {
-      //throw new Error(`subscription "${subscriptionName}" is not provided via CUSTOM_SUBSCRIPTIONS`);
+      throw new Error(`subscription "${subscriptionName}" is not provided via CUSTOM_SUBSCRIPTIONS`);
     }
 
     return validatorFn;

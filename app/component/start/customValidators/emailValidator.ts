@@ -4,7 +4,7 @@ export const validateEmail = function (c: FormControl) {
 
   return {
     validateEmail: {
-      valid: (Math.random())
+      valid: (Math.random() > 0.5)
     }
   };
 };

@@ -7,7 +7,6 @@ import {DynamicFormModule} from "../../common/dynamic-form/dynamic-form.module";
 import {ItemService} from "./item.service";
 import {TemplateFormModule} from "../../common/template-form/template-form.module";
 import {RecurseModule} from "./recurse/recurse.module";
-import {CustomSubscriptionsModule} from "./customSubscriptions/customSubscriptions.module";
 import {DFModule} from "../../common/df/df-form.module";
 import {InjectComponent} from "./inject-component/inject-component.component";
 import {RecurseComponent} from "./recurse/recurse.component";
@@ -22,7 +21,7 @@ export{ StartComponent} from "./start.component";
 const EXPORTS = [ StartComponent, InjectComponent ];
 
 @NgModule({
-  imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule, CustomSubscriptionsModule,
+  imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule,
     DFModule,
     DynamicFormModule.withComponents([DFFormGroupComp, ControlComponent]),
     DFModule.withComponents([

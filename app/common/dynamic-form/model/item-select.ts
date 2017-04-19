@@ -5,7 +5,7 @@ export class SelectItem extends AbstractFormControlModel<string> {
   options: {key: string, value: string}[] = [];
   visibleOptions:{key: string, value: string}[] = [];
 
-  constructor(options: {} = {}) {
+  constructor(options: any = {}) {
     super(options);
     this.options = options['options'] || [];
     this.visibleOptions = this.options;

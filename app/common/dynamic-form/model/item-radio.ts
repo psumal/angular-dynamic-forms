@@ -5,7 +5,7 @@ export class RadioItem extends AbstractFormControlModel<string> {
   type="radio";
   options: {key: string, value: string}[] = [];
 
-  constructor(options: {} = {}) {
+  constructor(options: any = {}) {
     super(options);
     this.options = options['options'] || [];
   }

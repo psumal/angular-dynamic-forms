@@ -390,14 +390,14 @@ export class ItemService {
         ],
         changeListener: [
           /**/{
-            controls: ['controlType'], name: "subscribeFilteredOptions",
+            controls: ['controlType'], name: "filteredOptions",
             params: [
               {key: 'textbox', optionsKeys: ['text', 'number']},
               {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
             ]
           },
           {
-            controls: ['controlType'], name: "subscribeIsRendered", params: ['textbox', 'button']
+            controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
           }
         ]
       },
@@ -450,7 +450,7 @@ export class ItemService {
         ],
         changeListener: [{
           controls: ['controlType'],
-          name: "subscribeIsRendered",
+          name: "isRendered",
           params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
         }]
       },
@@ -695,7 +695,7 @@ export class ItemService {
         ],
         changeListener: [
           /**/{
-            controls: ['sponsorship'], name: "subscribeFilteredOptions",
+            controls: ['sponsorship'], name: "filteredOptions",
             params: [
               {key: 'hund', optionsKeys: ['monatlich', 'jährlich']},
               {key: 'katze', optionsKeys: ['vierteljährlich', 'halbjährlich']}

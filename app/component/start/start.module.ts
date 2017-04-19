@@ -13,6 +13,7 @@ import {RecurseComponent} from "./recurse/recurse.component";
 import {DFFormGroupComp} from "../../common/df/df-fg/df-form-group.component";
 import {ControlComponent} from "../../common/dynamic-form/item/control/control.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {CustomValidatorsModule} from "./customValidators/customValidators.module";
 
 
 
@@ -21,7 +22,7 @@ export{ StartComponent} from "./start.component";
 const EXPORTS = [ StartComponent, InjectComponent ];
 
 @NgModule({
-  imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule,
+  imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule, CustomValidatorsModule,
     DFModule,
     DynamicFormModule.withComponents([DFFormGroupComp, ControlComponent]),
     DFModule.withComponents([

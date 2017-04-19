@@ -1,7 +1,5 @@
 export const subscribeFilteredOptions = function(change?:any,params?:any, item?:any, form?:any) {
 
-  console.log('subscribeFilteredOptions params: ', params);
-
   let filterConfig = params.filter((param:any) => {
     return change == param['key'];
   }).pop();

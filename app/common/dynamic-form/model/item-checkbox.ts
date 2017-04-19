@@ -4,7 +4,7 @@ export class CheckboxItem extends AbstractFormControlModel<string> {
   controlType = 'checkbox';
   type = 'checkbox';
 
-  constructor(options: {} = {}) {
+  constructor(options:any = {}) {
     super(options);
   }
 

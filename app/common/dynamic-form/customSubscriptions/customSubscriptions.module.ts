@@ -1,16 +1,5 @@
-import { NgModule, InjectionToken } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { InjectionToken } from '@angular/core';
 
-import {subscribeIsRendered} from "./isRenderedSubscription";
-import {subscribeFilteredOptions} from "./filteredOptionsSubscription";
+import {ChangeSubscriptions} from "./changeSubscriptions";
 
-export const CUSTOM_SUBSCRIPTIONS: InjectionToken<(Function)[]> = new InjectionToken<(Function)[]>('CustomSubscriptions');
-
-@NgModule({
-  imports: [ CommonModule],
-  providers: [
-    { provide: CUSTOM_SUBSCRIPTIONS, useValue: subscribeIsRendered, multi: true },
-    { provide: CUSTOM_SUBSCRIPTIONS, useValue: subscribeFilteredOptions, multi: true }
-  ]
-})
-export class CustomSubscriptionsModule { }
+export const CHANGE_SUBSCRIPTIONS: InjectionToken<(Function | ChangeSubscriptions)[]> = new InjectionToken<(Function | ChangeSubscriptions)[]>('CustomSubscriptions');

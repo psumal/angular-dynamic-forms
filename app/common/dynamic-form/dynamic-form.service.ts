@@ -105,7 +105,6 @@ export class DynamicFormService {
   }
 
   getValidators(config: any): ValidatorFn[] | AsyncValidatorFn[] {
-    console.log('NG_VALIDATORS', NG_VALIDATORS);
     let validators: any[] = [];
     if (config) {
       validators = config.map((validatorObj: any) => {

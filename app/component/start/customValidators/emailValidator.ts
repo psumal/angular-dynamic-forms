@@ -1,10 +1,14 @@
 import {FormControl} from "@angular/forms";
 
-export const validateEmail = function (c: FormControl) {
+export function validateEmail(c: FormControl) {
 
-  return {
+  return (Math.random() > 0.5) ? {
     validateEmail: {
-      valid: (Math.random() > 0.5)
+      valid: true
+    }
+  } : {
+    validateEmail: {
+      valid: false
     }
   };
 };

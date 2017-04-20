@@ -427,7 +427,10 @@ export class ItemService {
         label: 'Placeholder',
         placeholder: "The element placeholder",
         helpText: "This value is used in the placeholder of the element",
-        type: 'text'
+        type: 'text',
+        validator:[
+          {name: "validateEmail"}
+        ]
       },
       //validator
       {

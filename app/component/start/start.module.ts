@@ -14,6 +14,7 @@ import {DFFormGroupComp} from "../../common/df/df-fg/df-form-group.component";
 import {ControlComponent} from "../../common/dynamic-form/item/control/control.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CustomValidatorsModule} from "./customValidators/customValidators.module";
+import {CustomCangeSubscriptionsModule} from "./customSubscriptions/customSubscriptions.module";
 
 
 
@@ -22,7 +23,7 @@ export{ StartComponent} from "./start.component";
 const EXPORTS = [ StartComponent, InjectComponent ];
 
 @NgModule({
-  imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule, CustomValidatorsModule,
+  imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule, CustomValidatorsModule, CustomCangeSubscriptionsModule,
     DFModule,
     DynamicFormModule.withComponents([DFFormGroupComp, ControlComponent]),
     DFModule.withComponents([

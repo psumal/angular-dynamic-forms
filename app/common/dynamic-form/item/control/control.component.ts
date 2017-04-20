@@ -7,7 +7,10 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/merge';
 import {CHANGE_SUBSCRIPTIONS} from "../../customSubscriptions/customSubscriptions.module";
-import {ChangeSubscriptionFn, ChangeSubscriptions} from "../../customSubscriptions/changeSubscriptions";
+import {
+  ChangeSubscriptionFn, ChangeSubscriptions,
+  ChangeSubscriptionResult
+} from "../../customSubscriptions/changeSubscriptions";
 
 export interface SubscriptionFn {
   (): any;
@@ -22,7 +25,7 @@ export class ControlComponent {
   @Input() config: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};
 
-  controlRendered: boolean = true;
+  controlRendered:boolean;
 
   constructor(@Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: SubscriptionFn[]) {
 
@@ -34,13 +37,13 @@ export class ControlComponent {
       let listener = this.config.changeListener;
       listener.forEach((listener) => {
 
-          let subscriptionFn:ChangeSubscriptionFn = <ChangeSubscriptionFn>this.getSubscriptionFn(listener.name);
+          let subscriptionFn:ChangeSubscriptionFn<any> = this.getSubscriptionFn(listener.name);
 
           let otherChanges$ = this.form.get(listener.controls[0]).valueChanges;
 
           otherChanges$.subscribe(change => {
             if (listener.name === 'isRendered') {
-              this.controlRendered = <boolean>subscriptionFn(change, listener.params, this.config, this.form);
+              this.controlRendered = subscriptionFn(change, listener.params, this.config, this.form);
             } else {
               <null>subscriptionFn(change, listener.params, this.config, this.form);
             }
@@ -111,10 +114,12 @@ export class ControlComponent {
 
   getCustomSubscriptionFn(subscriptionName: string): SubscriptionFn | undefined {
     let subscriptionFn;
+    console.log('this.CHANGE_SUBSCRIPTIONS', this.CHANGE_SUBSCRIPTIONS);
 
-      if (this.CHANGE_SUBSCRIPTIONS) {
+    if (this.CHANGE_SUBSCRIPTIONS) {
 
         subscriptionFn = this.CHANGE_SUBSCRIPTIONS.find(subscriptionFn => {
+          console.log('subscriptionFn: ', subscriptionFn);
           return subscriptionName === subscriptionFn.name;
         });
 
@@ -124,8 +129,7 @@ export class ControlComponent {
   }
 
   getSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn | never {
-    console.log('ChangeSubscriptions', ChangeSubscriptions);
-    let validatorFn = ChangeSubscriptions[subscriptionName]; //|| this.getCustomSubscriptionFn(subscriptionName);
+    let validatorFn = ChangeSubscriptions[subscriptionName] || this.getCustomSubscriptionFn(subscriptionName);
 
     if (!(typeof validatorFn === "function")) {
       throw new Error(`validator "${subscriptionName}" is not provided via CHANGE_SUBSCRIPTIONS`);

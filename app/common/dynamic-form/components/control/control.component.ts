@@ -1,15 +1,13 @@
 import {Component, Input, Optional, Inject} from "@angular/core";
-import {FormGroup, Validators} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 import {AbstractFormControlModel} from "../../model/base/form-control";
 
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/merge';
-import {CHANGE_SUBSCRIPTIONS} from "../../customSubscriptions/customSubscriptions.module";
+import {CHANGE_SUBSCRIPTIONS} from "../../customSubscriptions/changeSubscriptions";
 import {
-  ChangeSubscriptionFn, ChangeSubscriptions,
-  ChangeSubscriptionResult
+  ChangeSubscriptionFn, ChangeSubscriptions
 } from "../../customSubscriptions/changeSubscriptions";
 
 export interface SubscriptionFn {

@@ -7,7 +7,7 @@ import {AbstractFormControlModel} from "../../model/base/form-control";
   selector: 'item-errors',
   templateUrl:'errors.component.html'
 })
-export class ItemErrorComponent implements OnInit{
+export class ControlErrorComponent implements OnInit{
 
   @Input() item: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};

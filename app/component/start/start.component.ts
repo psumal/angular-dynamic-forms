@@ -1,22 +1,16 @@
-import {Component, OnInit, OnChanges} from "@angular/core";
+import {Component} from "@angular/core";
 import {FormConfigService} from "./form-config.service";
-import {IStarRatingOnClickEvent} from "angular-star-rating/src/star-rating-struct";
-import {IStarRatingCompBindings} from "angular-star-rating/src//star-rating-struct";
 import {FormGroup} from "@angular/forms";
 import {FormGroupItem} from "../../common/dynamic-form/model/item-formGroup";
-import {InjectComponent} from "./inject-component/inject-component.component";
-import {RecurseComponent} from "./recurse/recurse.component";
-import {AbstractFormControlModel} from "../../common/dynamic-form/model/base/form-control";
-import {DynamicFormUtils} from "../../common/dynamic-form/dynamic-form.utils";
+import {DynamicFormUtils} from "../../common/dynamic-form/services/dynamic-form.utils";
 
 @Component({
   moduleId: module.id,
   selector: 'start',
   templateUrl: 'start.component.html',
 })
-export class StartComponent implements OnInit, OnChanges {
+export class StartComponent {
 
-  demoSelectionForm: {};
   demoForms: Array<any>;
 
   form: FormGroup = new FormGroup({});
@@ -26,22 +20,10 @@ export class StartComponent implements OnInit, OnChanges {
 
   dynamicItems: any[] = [];
 
-  componentTypes: any[] = [InjectComponent, RecurseComponent];
-
-
-  starRatingConfig: IStarRatingCompBindings = {
-    rating: 4,
-    numOfStars: 7,
-    size: "large",
-    speed: "noticeable",
-    labelPosition: "left",
-    starType: "svg"
-  };
-
   constructor(protected service: FormConfigService) {
 
     this.formItems = service.getGenericElement();
-    this.formModel = this.starRatingConfig;
+    this.formModel = {key:"testKEyFromModel"};
     this.demoForms = [
       {
         value: 'Star Rating Config',
@@ -70,11 +52,6 @@ export class StartComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnInit() {
-  }
-
-  ngOnChanges() {
-  }
 
   /*DEMO SELECT*/
   onTemplateFromModelChange($event: {model: any}) {
@@ -104,18 +81,6 @@ export class StartComponent implements OnInit, OnChanges {
       console.log("generated config: ", item);
       this.dynamicItems = this.dynamicItems.concat(item, []);
     }
-  }
-
-  /*STAR RATING COMPONENT*/
-  onClick($event: IStarRatingOnClickEvent) {
-    console.log('onClick $event', $event);
-  }
-
-  onRatingChange($event: IStarRatingOnClickEvent) {
-    console.log('onRatingChange $event', $event);
-    //create new ref
-    this.starRatingConfig.rating = $event.rating;
-    //this.starRatingConfig =  JSON.parse(JSON.stringify(this.starRatingConfig));
   }
 
 }

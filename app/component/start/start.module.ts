@@ -1,38 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {ReactiveFormsModule, NG_VALIDATORS} from "@angular/forms";
+
 import { StartComponent } from "./start.component";
 
-import {StarRatingModule} from "../../common/star-rating/star-rating.module";
-import {DynamicFormModule} from "../../common/dynamic-form/dynamic-form.module";
+import {} from "../../common/dynamic-form/dynamic-form.module";
 import {FormConfigService} from "./form-config.service";
 import {TemplateFormModule} from "../../common/template-form/template-form.module";
-import {RecurseModule} from "./recurse/recurse.module";
-import {DFModule} from "../../common/df/df-form.module";
-import {InjectComponent} from "./inject-component/inject-component.component";
-import {RecurseComponent} from "./recurse/recurse.component";
-import {DFFormGroupComp} from "../../common/df/df-fg/df-form-group.component";
-import {ControlComponent} from "../../common/dynamic-form/item/control/control.component";
-import {ReactiveFormsModule} from "@angular/forms";
-import {CustomValidatorsModule} from "./customValidators/customValidators.module";
-import {CustomCangeSubscriptionsModule} from "./customSubscriptions/customSubscriptions.module";
 
 
+import {CHANGE_SUBSCRIPTIONS} from "../../common/dynamic-form/customSubscriptions/changeSubscriptions";
+import {filteredOptions} from "./customSubscriptions/filteredOptionsSubscription";
+import {validateEmail} from "./customValidators/emailValidator";
+import {DynamicFormModule} from "../../common/dynamic-form/dynamic-form.module";
 
 export{ StartComponent} from "./start.component";
 
-const EXPORTS = [ StartComponent, InjectComponent ];
+const EXPORTS = [ StartComponent ];
 
 @NgModule({
-  imports: [ CommonModule, StarRatingModule,ReactiveFormsModule, TemplateFormModule, RecurseModule, CustomValidatorsModule, CustomCangeSubscriptionsModule,
-    DFModule,
-    DynamicFormModule.withComponents([DFFormGroupComp, ControlComponent]),
-    DFModule.withComponents([
-      InjectComponent,
-      RecurseComponent
-    ])],
+  imports: [ CommonModule,ReactiveFormsModule, TemplateFormModule, DynamicFormModule],
   exports:      [ EXPORTS ],
   declarations: [ EXPORTS ],
-  providers: [ FormConfigService]
+  providers: [
+    FormConfigService,
+    { provide: CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true },
+    { provide: NG_VALIDATORS, useValue: validateEmail, multi: true }
+  ]
 })
 export class StartModule { }
 

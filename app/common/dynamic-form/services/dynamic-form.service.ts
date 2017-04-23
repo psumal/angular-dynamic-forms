@@ -8,7 +8,7 @@ import {
   NG_VALIDATORS,
   NG_ASYNC_VALIDATORS
 } from "@angular/forms";
-import {AbstractFormControlModel} from "./model/base/form-control";
+import {AbstractFormControlModel} from "../model/base/form-control";
 
 @Injectable()
 export class DynamicFormService {

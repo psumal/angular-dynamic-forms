@@ -1,4 +1,5 @@
 import {FormGroup} from "@angular/forms";
+import {InjectionToken} from "@angular/core";
 
 export type ChangeSubscriptionResult = {
   [key: string]: any;
@@ -17,3 +18,5 @@ export class ChangeSubscriptions {
   };
 
 }
+
+export const CHANGE_SUBSCRIPTIONS: InjectionToken<(Function | ChangeSubscriptions)[]> = new InjectionToken<(Function | ChangeSubscriptions)[]>('CustomSubscriptions');

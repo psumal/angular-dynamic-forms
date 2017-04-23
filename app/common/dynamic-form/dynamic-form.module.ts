@@ -2,19 +2,20 @@ import {NgModule, InjectionToken} from '@angular/core';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {DynamicFormComponent} from "./dynamic-form.component";
-import {ControlComponent} from './item/control/control.component';
-import {ErrorsModule} from "./item/errors/errors.module";
-import {ItemButtonModule} from "./item/button/item.button.module";
-import {FormGroupComponent} from "./item/formGroup/item-formGroup.component";
-import {ItemModule} from "./item/item.module";
 
-export{DynamicFormComponent} from "./dynamic-form.component";
+import {DynamicFormComponent} from "./containers/dynamic-form.component";
 
-const EXPORTS = [DynamicFormComponent, FormGroupComponent, ControlComponent];
+import {ControlComponent} from './components/control/control.component';
+import {FormGroupComponent} from "./components/formGroup/item-formGroup.component";
+import {ButtonComponent} from "./components/button/button.component";
+import {ControlErrorComponent} from "./components/errors/errors.component";
+
+export{DynamicFormComponent} from "./containers/dynamic-form.component";
+
+const EXPORTS = [DynamicFormComponent, FormGroupComponent, ControlComponent, ButtonComponent, FormGroupComponent, ControlErrorComponent];
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, ErrorsModule, ItemButtonModule, ItemModule],
+  imports: [CommonModule, ReactiveFormsModule],
   exports: [EXPORTS],
   declarations: [EXPORTS],
   providers: []

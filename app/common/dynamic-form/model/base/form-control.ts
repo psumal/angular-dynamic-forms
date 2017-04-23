@@ -3,6 +3,7 @@ import {ItemBase} from "./item";
 import {changeListenerConfig, IAbstractControlOptions} from "../item.struckts";
 
 export class AbstractFormControlModel<T> extends ItemBase {
+  label?:string;
   value?: T;
   required?: boolean;
   validator?:ValidatorFn | ValidatorFn[];
@@ -12,6 +13,7 @@ export class AbstractFormControlModel<T> extends ItemBase {
   constructor(options: IAbstractControlOptions<T> = <T>{}) {
     super(options);
 
+    this.label = options.label;
     this.value = options.value;
     this.required = !!options.required;
     this.validator = options.validator || [];

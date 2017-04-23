@@ -1,4 +1,4 @@
-import {Injectable}       from '@angular/core';
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class ItemService {
@@ -274,6 +274,7 @@ export class ItemService {
         label: "Textbox Item of type search",
         type: "search"
       },
+      //hidden
       {
         controlType: 'textbox',
         key: "textboxItem_hidden",
@@ -349,6 +350,26 @@ export class ItemService {
         key: 'buttonButton',
         label: 'Button',
         type: 'button'
+      },
+      //formGroup
+      {
+        controlType: 'formGroup',
+        key: "groupTest",
+        title: "Form Group1",
+        config: [
+          {
+            controlType: 'textbox',
+            key: "Textbox in form group 1",
+            label: "Textbox Item of type url",
+            type: "text"
+          },
+          {
+            controlType: 'button',
+            key: 'buttonButton',
+            label: 'Button',
+            type: 'button'
+          }
+        ]
       }
     ];
     return demoset1;
@@ -428,7 +449,7 @@ export class ItemService {
         placeholder: "The element placeholder",
         helpText: "This value is used in the placeholder of the element",
         type: 'text',
-        validator:[
+        validator: [
           {name: "validateEmail"}
         ]
       },
@@ -532,8 +553,8 @@ export class ItemService {
         label: 'Anrede',
         helpText: "Anrede der Person (Herr Frau)",
         options: [
-            {key: [{name: 'Herr'}], value: 'Herr'},
-            {key: [{name: 'Frau'}], value: 'Frau'}
+          {key: [{name: 'Herr'}], value: 'Herr'},
+          {key: [{name: 'Frau'}], value: 'Frau'}
         ]
       },
       {

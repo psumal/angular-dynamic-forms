@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup}        from '@angular/forms';
+import {FormGroupItem} from "../../model/item-formGroup";
 
 @Component({
   moduleId: module.id,
@@ -7,7 +8,7 @@ import {FormGroup}        from '@angular/forms';
   templateUrl: 'item-formGroup.component.html',
 })
 export class FormGroupComponent {
-  @Input() config:{};
+  @Input() config:FormGroupItem;
   @Input() form: FormGroup;
 
   getFormGroupClass(): string {

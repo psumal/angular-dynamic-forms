@@ -18,6 +18,7 @@ export interface IItemBaseOptions {
 
 export interface IAbstractControlOptions<T> extends IItemBaseOptions{
   value?: T,
+  label?:string,
   required?: boolean,
   validator?:ValidatorFn | ValidatorFn[],
   asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[],

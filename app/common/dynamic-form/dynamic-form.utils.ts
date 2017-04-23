@@ -7,7 +7,7 @@ import {CheckboxItem} from "./model/item-checkbox";
 import {RadioItem} from "./model/item-radio";
 import {ButtonItem} from "./model/item-button";
 import {TextareaItem} from "./model/item-textarea";
-import {FormGroupItem} from "./item/formGroup/formGroup-base";
+import {FormGroupItem} from "./model/item-formGroup";
 import {AbstractFormControlModel} from "./model/base/form-control";
 import {ItemBase} from "./model/base/item";
 

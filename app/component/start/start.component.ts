@@ -3,7 +3,7 @@ import {ItemService} from "./item.service";
 import {IStarRatingOnClickEvent} from "angular-star-rating/src/star-rating-struct";
 import {IStarRatingCompBindings} from "angular-star-rating/src//star-rating-struct";
 import {FormGroup} from "@angular/forms";
-import {FormGroupItem} from "../../common/dynamic-form/item/formGroup/formGroup-base";
+import {FormGroupItem} from "../../common/dynamic-form/model/item-formGroup";
 import {InjectComponent} from "./inject-component/inject-component.component";
 import {RecurseComponent} from "./recurse/recurse.component";
 import {AbstractFormControlModel} from "../../common/dynamic-form/model/base/form-control";
@@ -99,7 +99,7 @@ export class StartComponent implements OnInit, OnChanges {
 
   onSubmitted($event: {}) {
     console.log('onSubmitted $event', $event['payLoad']);
-    let item: AbstractFormControlModel<any>|FormGroupItem = DynamicFormUtils.createFormItem($event['payLoad']);
+    let item: any | FormGroupItem = DynamicFormUtils.createFormItem($event['payLoad']);
     if (item) {
       console.log("generated config: ", item);
       this.dynamicItems = this.dynamicItems.concat(item, []);

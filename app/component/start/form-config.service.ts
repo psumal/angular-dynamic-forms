@@ -1,9 +1,35 @@
 import {Injectable} from "@angular/core";
 
 @Injectable()
-export class ItemService {
-  // Todo: get from a remote source of form metadata
-  // Todo: make asynchronous
+export class FormConfigService {
+
+  getFormGroupTestConfig() {
+    let bindings: Array<any> = [
+      {
+        controlType: 'formGroup',
+        key: "groupTest",
+        title: "Form Group",
+        config: [
+          {
+            controlType: 'textbox',
+            type: "text",
+            key: "TextboxFg1",
+            label: "Textbox Item of type url"
+          },
+          {
+            controlType: 'button',
+            key: 'buttonButton',
+            label: 'Button',
+            type: 'button'
+          }
+        ]
+      }
+    ];
+
+    return bindings;
+
+  }
+
   getConfigForm() {
 
     let bindings: Array<any> = [

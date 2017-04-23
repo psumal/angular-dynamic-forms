@@ -4,7 +4,7 @@ import { StartComponent } from "./start.component";
 
 import {StarRatingModule} from "../../common/star-rating/star-rating.module";
 import {DynamicFormModule} from "../../common/dynamic-form/dynamic-form.module";
-import {ItemService} from "./item.service";
+import {FormConfigService} from "./form-config.service";
 import {TemplateFormModule} from "../../common/template-form/template-form.module";
 import {RecurseModule} from "./recurse/recurse.module";
 import {DFModule} from "../../common/df/df-form.module";
@@ -32,7 +32,7 @@ const EXPORTS = [ StartComponent, InjectComponent ];
     ])],
   exports:      [ EXPORTS ],
   declarations: [ EXPORTS ],
-  providers: [ ItemService]
+  providers: [ FormConfigService]
 })
 export class StartModule { }
 

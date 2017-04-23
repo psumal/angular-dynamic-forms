@@ -107,13 +107,8 @@ export class ControlComponent {
     return classNames;
   }
 
-  isError() {
-    return true;
-  }
-
   getCustomSubscriptionFn(subscriptionName: string): SubscriptionFn | undefined {
     let subscriptionFn;
-    console.log('this.CHANGE_SUBSCRIPTIONS', this.CHANGE_SUBSCRIPTIONS);
 
     if (this.CHANGE_SUBSCRIPTIONS) {
 

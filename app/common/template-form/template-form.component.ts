@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, OnChanges, EventEmitter, SimpleChanges} from '@angular/core';
-import {ItemService} from "../../component/start/item.service";
+import {FormConfigService} from "../../component/start/form-config.service";
 
 @Component({
   moduleId: module.id,
@@ -25,16 +25,16 @@ export class TemplateFormComponent implements OnInit, OnChanges {
 
   @Output() onModelChange = new EventEmitter();
 
-  constructor(protected itemService: ItemService) {
+  constructor(protected formConfigService: FormConfigService) {
 
-    this.formModel['demo'] = itemService.getConfigForm();
+    this.formModel['demo'] = formConfigService.getConfigForm();
 
     this.demoForms = [
       {
         value: 'Star Rating Config',
         key: {
           formName: 'Star Rating Config',
-          formItems: itemService.getConfigForm()
+          formItems: formConfigService.getConfigForm()
           /*formModel: {
             rating: 4,
             numOfStars: 7,
@@ -46,20 +46,20 @@ export class TemplateFormComponent implements OnInit, OnChanges {
         value: 'KitchenSink',
         key: {
           formName: 'KitchenSink',
-          formItems: itemService.getKitchenSink()
+          formItems: formConfigService.getKitchenSink()
         }
       },
       {value : "generic Item",
         key : {
           formName : "",
-          formItems : itemService.getGenericElement()
+          formItems : formConfigService.getGenericElement()
         }
       },
       {
         value: 'Donut Campaign',
         key: {
           formName: 'Donut Campaign',
-          formItems: itemService.getCampaign()
+          formItems: formConfigService.getCampaign()
         }
       },
     ];

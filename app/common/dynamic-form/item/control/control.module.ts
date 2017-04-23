@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ControlComponent} from "./control.component";
-import {ItemService} from "../../../../component/start/item.service";
 import {RadioItem} from "../../model/item-radio";
 import {CheckboxItem} from "../../model/item-checkbox";
 import {MultiselectItem} from "../../model/item-multiselect";
@@ -23,6 +22,6 @@ const EXPORTS = [ControlComponent];
   imports: [CommonModule, ReactiveFormsModule],
   exports: [EXPORTS],
   declarations: [EXPORTS],
-  providers: [ItemService]
+  providers: []
 })
 export class ItemControlModule {}

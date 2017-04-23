@@ -1,5 +1,5 @@
 import {Component, OnInit, OnChanges} from "@angular/core";
-import {ItemService} from "./item.service";
+import {FormConfigService} from "./form-config.service";
 import {IStarRatingOnClickEvent} from "angular-star-rating/src/star-rating-struct";
 import {IStarRatingCompBindings} from "angular-star-rating/src//star-rating-struct";
 import {FormGroup} from "@angular/forms";
@@ -38,7 +38,7 @@ export class StartComponent implements OnInit, OnChanges {
     starType: "svg"
   };
 
-  constructor(protected service: ItemService) {
+  constructor(protected service: FormConfigService) {
 
     this.formItems = service.getGenericElement();
     this.formModel = this.starRatingConfig;

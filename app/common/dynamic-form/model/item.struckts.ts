@@ -12,6 +12,7 @@ export interface changeListenerParamsConfig {
 
 export interface IItemBaseOptions {
   key?: string,
+  formPath?:string;
   order?: number,
   controlType?: string
 }

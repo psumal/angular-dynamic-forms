@@ -42,7 +42,7 @@ export class ItemErrorComponent implements OnInit{
 
   _getErrors(formControlName:string) : {[key:string]:string} {
     let errors = {};
-    return this.form.get(this.item.key).errors || {};
+    return this.form.get(this.item.formPath || this.item.key).errors || {};
   }
 
   errorKeys() : Array<string> {

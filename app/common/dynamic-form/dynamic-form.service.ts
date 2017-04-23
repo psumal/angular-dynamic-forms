@@ -5,7 +5,6 @@ import {
   ValidatorFn,
   AsyncValidatorFn,
   Validators,
-  FormControl,
   NG_VALIDATORS,
   NG_ASYNC_VALIDATORS
 } from "@angular/forms";
@@ -20,25 +19,57 @@ export class DynamicFormService {
 
   }
 
-  toFG(items: Array<any>, model?: {}): FormGroup {
+  toFG(config: Array<any>, model?: {}): FormGroup {
+
+    //create formBuilder.group() params
+    let formGroupObject: {[key: string]: any;} = {};
+    let extra: {[key: string]: any} = {};
+
+    if (config && config.length > 0) {
+
+      config.forEach((conf: any) => {
+        if (conf['controlType'] !== 'formGroup' && conf['controlType'] !== 'formArray') {
+          formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
+        }
+        else if (conf['controlType'] === 'formArray') {
+          console.log(this.toFA(conf['config'], model[conf['key']]));
+          //formGroupObject[conf['key']] = {};
+          //formGroupObject[conf['key']] = this.toFA(conf['config'], model[conf['key']]);
+        }
+        else {
+          formGroupObject[conf['key']] = {};
+          formGroupObject[conf['key']] = this.toFG(conf['config'], model[conf['key']]);
+        }
+      });
+    }
+
+    return this.fb.group(formGroupObject, extra);
+
+    /////////////////////////////
+
+  }
+
+  toFA(items: Array<any>, model?: {}): FormGroup {
 
     //create formBuilder.group() params
     let formGroupObject: {[key: string]: any;} = {};
     let extra: {[key: string]: any} = {};
 
     items.forEach((item: any) => {
-      if (item['controlType'] !== 'formGroup') {
+      if (item['controlType'] !== 'formGroup' && item['controlType'] !== 'formArray') {
         formGroupObject[item['key']] = this.getFormControlParamsArray(item);
+      }
+      else if (item['controlType'] === 'formArray') {
+        formGroupObject[item['key']] = {};
+        formGroupObject[item['key']] = this.toFA(item['config'], model[item['key']]);
       }
       else {
         formGroupObject[item['key']] = {};
-        formGroupObject[item['key']] = this.toFG(item['items'], model[item['key']]);
+        formGroupObject[item['key']] = this.toFG(item['config'], model[item['key']]);
       }
     });
 
     return this.fb.group(formGroupObject, extra);
-
-    /////////////////////////////
 
   }
 

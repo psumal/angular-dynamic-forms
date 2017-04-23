@@ -5,15 +5,16 @@ import {MultiselectItem} from "./model/item-multiselect";
 import {SelectItem} from "./model/item-select";
 import {CheckboxItem} from "./model/item-checkbox";
 import {RadioItem} from "./model/item-radio";
-import {ButtonItem} from "./item/button/item-button";
+import {ButtonItem} from "./model/item-button";
 import {TextareaItem} from "./model/item-textarea";
 import {FormGroupItem} from "./item/formGroup/formGroup-base";
 import {AbstractFormControlModel} from "./model/base/form-control";
+import {ItemBase} from "./model/base/item";
 
 @Injectable()
 export class DynamicFormUtils {
 
-  static createFormItem(config: {}): AbstractFormControlModel<any> | FormGroupItem {
+  static createFormItem(config: {}): AbstractFormControlModel<any> | ButtonItem| FormGroupItem {
     //prevent side effects
     config = {...config};
 
@@ -22,10 +23,10 @@ export class DynamicFormUtils {
     }
 
     let controlType: string = config['controlType'];
-    let item: AbstractFormControlModel<any> | FormGroupItem;
+    let item: AbstractFormControlModel<any>  | ButtonItem | FormGroupItem;
 
     if (controlType === "textbox") {
-      item = new TextboxItem(config);
+      item = new TextboxItem(<any>config);
     }
 
     if (controlType === "select") {

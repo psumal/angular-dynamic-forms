@@ -5,6 +5,7 @@
   </template-form-comp>
 </div>
 
+<!--
 <div class="row">
   <div>
     Model Driven Reactive From
@@ -20,7 +21,7 @@
     </div>
   </div>
 </div>
-
+-->
 <div class="row marketing">
 
   <div class="col-lg-6">
@@ -46,7 +47,7 @@
     <h4>Campaign on Client (app): {{formName}}</h4>
     <form (ngSubmit)="onSubmit($event)" [formGroup]="form">
     <dynamic-form
-      [items]="dynamicItems"
+      [config]="dynamicItems"
       [model]="{}">
     </dynamic-form>
       </form>
@@ -57,7 +58,7 @@
     <h4>FormBuilder from Customer: {{formName}}</h4>
 
     <dynamic-form
-      [items]="formItems"
+      [config]="formItems"
       [model]="formModel"
       (onSubmitted)="onSubmitted($event)">
     </dynamic-form>

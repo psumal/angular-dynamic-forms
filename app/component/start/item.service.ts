@@ -485,12 +485,12 @@ export class ItemService {
         controlType: 'formGroup',
         key: "groupTest",
         title: "Form Group",
-        items: [
+        config: [
           /*    {
            controlType:'formGroup',
            key:"groupTest2",
            title : "Form Group2",
-           items: [
+           config: [
            {
            controlType: 'button',
            key: 'reset-button2',

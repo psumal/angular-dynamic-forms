@@ -25,7 +25,7 @@ export class ControlComponent {
   @Input() config: AbstractFormControlModel<any> = <any>{};
   @Input() form: FormGroup = <any>{};
 
-  controlRendered:boolean;
+  controlRendered:boolean = true;
 
   constructor(@Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: SubscriptionFn[]) {
 
@@ -57,7 +57,6 @@ export class ControlComponent {
 
   init() {
     //setup controlRendered subscriptions
-
   }
 
   isLabelVisible(): boolean {
@@ -128,14 +127,14 @@ export class ControlComponent {
     return subscriptionFn;
   }
 
-  getSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn | never {
-    let validatorFn = ChangeSubscriptions[subscriptionName] || this.getCustomSubscriptionFn(subscriptionName);
+  getSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn<any> | never {
+    let subscriptionFn = ChangeSubscriptions[subscriptionName] || this.getCustomSubscriptionFn(subscriptionName);
 
-    if (!(typeof validatorFn === "function")) {
+    if (!(typeof subscriptionFn === "function")) {
       throw new Error(`validator "${subscriptionName}" is not provided via CHANGE_SUBSCRIPTIONS`);
     }
 
-    return validatorFn;
+    return subscriptionFn;
   }
 
 

@@ -1,7 +1,7 @@
 <fieldset [attr.class]="getFormGroupClass()">
   <legend>{{config.title}}</legend>
 
-  <div *ngFor="let config of config.items">
+  <div *ngFor="let config of config.config">
 
     <df-form-group [config]="config" [form]="form"></df-form-group>
     <df-item *ngIf="config.controlType !== 'button'&& config.controlType !== 'formGroup'" [config]="config" [form]="form"></df-item>

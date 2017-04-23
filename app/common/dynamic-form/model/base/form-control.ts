@@ -9,7 +9,7 @@ export class AbstractFormControlModel<T> extends ItemBase {
   asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[];
   changeListener?:changeListenerConfig[];
 
-  constructor(options: IAbstractControlOptions = <T>{}) {
+  constructor(options: IAbstractControlOptions<T> = <T>{}) {
     super(options);
 
     this.value = options.value;

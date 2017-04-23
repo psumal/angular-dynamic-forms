@@ -10,7 +10,7 @@ import {AbstractFormControlModel} from "./model/base/form-control";
  interface IDynamicFormComponent {
  renderForm;
  model;
- items;
+ config;
  payLoad;
  onPayloadChange;
  onSave;
@@ -28,11 +28,11 @@ export class DynamicFormComponent implements OnInit {
 
   }
 
-  private _items: AbstractFormControlModel<any>[] = [];
+  private _config: AbstractFormControlModel<any>[] = [];
   @Input()
-  set items(items: Array<any>) {
+  set config(items: Array<any>) {
 
-    this._items = (<any>items).map((item: any) => {
+    this._config = (<any>items).map((item: any) => {
       let newItem = DynamicFormUtils.createFormItem(item);
       if (newItem) {
         return newItem;
@@ -41,11 +41,12 @@ export class DynamicFormComponent implements OnInit {
     this.renderForm();
   }
 
-  get items(): Array<any> {
-    return this._items;
+  get config(): Array<any> {
+    return this._config;
   }
 
   @Input() model: {} = {};
+
   form: FormGroup;
 
   @Output()
@@ -82,14 +83,15 @@ export class DynamicFormComponent implements OnInit {
       //this.renderForm();
     }
 
-    if (valueChanged('items',changes)) {
-      this.items = changes['items'].currentValue || [];
+    if (valueChanged('config',changes)) {
+      this.config = changes['config'].currentValue || [];
     }
 
   }
 
   protected renderForm(): void {
-    this.form = this.dfService.toFG(this.items, this.model);
+    console.log('renderForm config: ', this.config);
+    this.form = this.dfService.toFG(this.config, this.model);
     //this.payLoad = this.form.value;
   }
 

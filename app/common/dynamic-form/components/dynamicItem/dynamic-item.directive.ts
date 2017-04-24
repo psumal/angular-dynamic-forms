@@ -1,16 +1,17 @@
-import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+
 import {ButtonComponent} from "../button/button.component";
-import {AbstractFormControlModel} from "../../model/base/form-control";
 import {DynamicItem} from "../../dynamic-form.scruct";
+import {AbstractFormControlModel} from "../../model/base/form-control";
 
 const components: {[type: string]: any} = {
   button: ButtonComponent
 };
 
 @Directive({
-  inputs:['config', 'group'],
+  inputs: ['config','group'],
   selector: '[dynamicField]'
 })
 export class DynamicFieldDirective implements DynamicItem, OnChanges, OnInit {

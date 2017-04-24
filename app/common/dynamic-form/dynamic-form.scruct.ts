@@ -13,6 +13,6 @@ export interface IDynamicFormBindings{
 }
 
 export interface DynamicItem {
-  config: AbstractFormControlModel<any>,
+  config: any,
   group: FormGroup
 }

@@ -15,10 +15,10 @@
     <pre style="height:200px; overflow-y: scroll;">{{dynamicItems | json}}</pre>
     <h4>Campaign on Client (app): {{formName}}</h4>
     <form (ngSubmit)="onSubmit($event)" [formGroup]="form">
-    <dynamic-form
+    <dynamic-form-group
       [config]="dynamicItems"
       [model]="{}">
-    </dynamic-form>
+    </dynamic-form-group>
       </form>
 
   </div>
@@ -26,10 +26,10 @@
   <div class="col-lg-6">
     <h4>FormBuilder from Customer: {{formName}}</h4>
 
-    <dynamic-form
+    <dynamic-form-group
       [config]="formItems"
       [model]="formModel"
       (onSubmitted)="onSubmitted($event)">
-    </dynamic-form>
+    </dynamic-form-group>
     </div>
 </div>

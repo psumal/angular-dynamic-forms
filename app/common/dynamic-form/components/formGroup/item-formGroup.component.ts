@@ -1,15 +1,16 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormGroup}        from '@angular/forms';
 import {FormGroupItem} from "../../model/item-formGroup";
 
 @Component({
   moduleId: module.id,
+  inputs: ['config', 'group'],
   selector: 'df-form-group',
   templateUrl: 'item-formGroup.component.html',
 })
 export class FormGroupComponent {
-  @Input() config:FormGroupItem;
-  @Input() form: FormGroup;
+  config:FormGroupItem;
+  group: FormGroup;
 
   getFormGroupClass(): string {
     let classNames: Array<string> = [];

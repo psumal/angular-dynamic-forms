@@ -22,6 +22,7 @@ export class DynamicItemDirective {
   }
 
   ngOnInit() {
+    console.log('DynamicItemDirective OnInit');
     const component = components[this.config.controlType];
     const factory = this.resolver.resolveComponentFactory<any>(component);
   }

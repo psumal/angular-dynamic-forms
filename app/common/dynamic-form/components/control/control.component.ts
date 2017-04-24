@@ -16,12 +16,13 @@ export interface SubscriptionFn {
 
 @Component({
   moduleId: module.id,
+  inputs: ['config', 'group'],
   selector: 'df-item',
   templateUrl: 'control.component.html',
 })
 export class ControlComponent {
-  @Input() config: AbstractFormControlModel<any> = <any>{};
-  @Input() form: FormGroup = <any>{};
+  config: AbstractFormControlModel<any> = <any>{};
+  group: FormGroup = <any>{};
 
   controlRendered:boolean = true;
 
@@ -37,13 +38,13 @@ export class ControlComponent {
 
           let subscriptionFn:ChangeSubscriptionFn<any> = this.getSubscriptionFn(listener.name);
 
-          let otherChanges$ = this.form.get(listener.controls[0]).valueChanges;
+          let otherChanges$ = this.group.get(listener.controls[0]).valueChanges;
 
           otherChanges$.subscribe(change => {
             if (listener.name === 'isRendered') {
-              this.controlRendered = subscriptionFn(change, listener.params, this.config, this.form);
+              this.controlRendered = subscriptionFn(change, listener.params, this.config, this.group);
             } else {
-              <null>subscriptionFn(change, listener.params, this.config, this.form);
+              <null>subscriptionFn(change, listener.params, this.config, this.group);
             }
 
           });
@@ -74,7 +75,7 @@ export class ControlComponent {
       classNames.push('form-group');
     }
 
-    if (this.form.get(this.config.key).valid) {
+    if (this.group.get(this.config.key).valid) {
       classNames.push('has-success');
     }
 
@@ -82,7 +83,7 @@ export class ControlComponent {
      classNames.push('has-warning');
      }*/
 
-    if (!this.form.get(this.config.key).valid) {
+    if (!this.group.get(this.config.key).valid) {
       classNames.push('has-danger');
     }
 

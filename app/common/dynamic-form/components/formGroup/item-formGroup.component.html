@@ -2,12 +2,12 @@
   <legend>{{config.label}}</legend>
 
   <div *ngFor="let conf of config.config">
-    <!--
-    <df-form-group *ngIf="conf.controlType === 'formGroup'" [config]="conf" [form]="form"></df-form-group>
- -->
-    <df-item *ngIf="conf.controlType !== 'button' && conf.controlType !== 'formGroup'" [config]="conf" [form]="form"></df-item>
 
-    <df-button *ngIf="conf.controlType === 'button'" [config]="conf" [form]="form"></df-button>
+    <df-form-group *ngIf="conf.controlType === 'formGroup'" [config]="conf" [group]="group"></df-form-group>
+
+    <df-item *ngIf="conf.controlType !== 'button' && conf.controlType !== 'formGroup'" [config]="conf" [group]="group"></df-item>
+
+    <df-button *ngIf="conf.controlType === 'button'" [config]="conf" [group]="group"></df-button>
   </div>
 
 </fieldset>

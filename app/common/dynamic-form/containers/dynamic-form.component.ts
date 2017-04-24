@@ -1,35 +1,20 @@
 import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {DynamicFormUtils} from "../services/dynamic-form.utils";
-import {IDynamicFormOnPayLoadChangeEvent} from "../dynamic-form-scruct";
+import {IDynamicFormOnPayLoadChangeEvent} from "../dynamic-form.scruct";
 import {DynamicFormService} from "../services/dynamic-form.service";
 import {AbstractFormControlModel} from "../model/base/form-control";
 
-/*
-
- interface IDynamicFormComponent {
- renderForm;
- model;
- config;
- payLoad;
- onPayloadChange;
- onSave;
- }
- */
 @Component({
   moduleId: module.id,
+  inputs: ['config', 'group', 'model'],
   selector: 'dynamic-form',
   templateUrl: './dynamic-form.component.html',
   providers: [DynamicFormUtils, DynamicFormService]
 })
 export class DynamicFormComponent implements OnInit {
 
-  set payLoad(value: any) {
-
-  }
-
   private _config: AbstractFormControlModel<any>[] = [];
-  @Input()
   set config(items: Array<any>) {
 
     this._config = (<any>items).map((item: any) => {
@@ -45,9 +30,9 @@ export class DynamicFormComponent implements OnInit {
     return this._config;
   }
 
-  @Input() model: {} = {};
+  model: {} = {};
 
-  form: FormGroup;
+  group: FormGroup;
 
   @Output()
   onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
@@ -91,8 +76,7 @@ export class DynamicFormComponent implements OnInit {
 
   protected renderForm(): void {
     console.log('renderForm config: ', this.config);
-    this.form = this.dfService.toFG(this.config, this.model);
-    //this.payLoad = this.form.value;
+    this.group = this.dfService.toFG(this.config, this.model);
   }
 
 }

@@ -1,4 +1,5 @@
 import {AbstractFormControlModel} from "./model/base/form-control";
+import { FormGroup } from '@angular/forms';
 
 
 export interface IDynamicFormOnPayLoadChangeEvent {
@@ -9,4 +10,9 @@ export interface IDynamicFormOnPayLoadChangeEvent {
 export interface IDynamicFormBindings{
   items: AbstractFormControlModel<any>[];
   onPayloadChange:any;
+}
+
+export interface DynamicItem {
+  config: AbstractFormControlModel<any>,
+  group: FormGroup
 }

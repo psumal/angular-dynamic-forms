@@ -4,13 +4,14 @@ import {AbstractFormControlModel} from "../../model/base/form-control";
 
 @Component({
   moduleId: module.id,
+  inputs: ['config', 'group'],
   selector: 'item-errors',
   templateUrl:'errors.component.html'
 })
 export class ControlErrorComponent implements OnInit{
 
   @Input() item: AbstractFormControlModel<any> = <any>{};
-  @Input() form: FormGroup = <any>{};
+  @Input() group: FormGroup = <any>{};
 
   private _errors:{[key:string]:string} = {};
 
@@ -34,7 +35,7 @@ export class ControlErrorComponent implements OnInit{
   ngOnInit() {
     this.errors = this._getErrors(this.item.key);
 
-    let $statusChanges = this.form.get(this.item.key).statusChanges;
+    let $statusChanges = this.group.get(this.item.key).statusChanges;
     $statusChanges.subscribe((status) => {
       this.errors = this._getErrors(this.item.key);
     });
@@ -42,7 +43,7 @@ export class ControlErrorComponent implements OnInit{
 
   _getErrors(formControlName:string) : {[key:string]:string} {
     let errors = {};
-    return this.form.get(this.item.formPath || this.item.key).errors || {};
+    return this.group.get(this.item.key).errors || {};
   }
 
   errorKeys() : Array<string> {

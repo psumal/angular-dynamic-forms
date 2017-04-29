@@ -30,6 +30,19 @@ export class FormConfigService {
 
   }
 
+  getDynCompTestConfig() {
+    let bindings: Array<any> = [
+      {
+        controlType: 'slider',
+        key: "slider",
+        title: "Slider Group"
+      }
+    ];
+
+    return bindings;
+
+  }
+
   getConfigForm() {
 
     let bindings: Array<any> = [

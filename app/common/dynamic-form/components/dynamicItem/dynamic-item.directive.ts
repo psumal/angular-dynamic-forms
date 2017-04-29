@@ -1,49 +1,88 @@
-import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-
-
-import {ButtonComponent} from "../button/button.component";
+import {
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  OnChanges,
+  OnInit,
+  ViewContainerRef,
+  Inject,
+  Optional
+} from "@angular/core";
+import {FormGroup} from "@angular/forms";
 import {DynamicItem} from "../../dynamic-form.scruct";
 import {AbstractFormControlModel} from "../../model/base/form-control";
-
-const components: {[type: string]: any} = {
-  button: ButtonComponent
-};
+import {UI_COMPONENTS} from "../ui-components.token";
 
 @Directive({
-  inputs: ['config','group'],
-  selector: '[dynamicField]'
+  inputs: ['config', 'group'],
+  selector: '[dynamicItem]'
 })
-export class DynamicFieldDirective implements DynamicItem, OnChanges, OnInit {
+export class DynamicItemDirective implements DynamicItem, OnChanges, OnInit {
 
   config: AbstractFormControlModel<any>;
   group: FormGroup;
 
   component: ComponentRef<DynamicItem>;
 
-  constructor(
-    private resolver: ComponentFactoryResolver,
-    private container: ViewContainerRef
-  ) {}
+  constructor(private resolver: ComponentFactoryResolver,
+              private container: ViewContainerRef,
+              @Optional() @Inject(UI_COMPONENTS) private UI_COMPONENTS: Function[]) {
+  }
+
 
   ngOnChanges() {
+    //if component is set up correctly update values
     if (this.component) {
       this.component.instance.config = this.config;
       this.component.instance.group = this.group;
     }
+
   }
 
   ngOnInit() {
-    if (!components[this.config.controlType]) {
-      const supportedTypes = Object.keys(components).join(', ');
+
+    const componentClass = this.getComponent(this.config.controlType);
+    if (!componentClass) {
       throw new Error(
-        `Trying to use an unsupported type (${this.config.controlType}).
-        Supported types: ${supportedTypes}`
+        `Trying to use an unsupported type (${this.config.controlType}). Check that your components has a static controlTypes array setup with proper types`
       );
     }
-    const component = this.resolver.resolveComponentFactory<DynamicItem>(components[this.config.controlType]);
-    this.component = this.container.createComponent(component);
+
+    const componentFactory = this.resolver.resolveComponentFactory<DynamicItem>(componentClass);
+
+    this.component = this.container.createComponent(componentFactory);
+
     this.component.instance.config = this.config;
     this.component.instance.group = this.group;
   }
+
+  getComponent(componentName: string): any | undefined {
+    let component;
+
+    if (this.UI_COMPONENTS) {
+      component = this.UI_COMPONENTS.find(component => {
+        let isComponent = false;
+
+        //custom identifier
+        if ('controlTypes' in component) {
+          isComponent = component['controlTypes'].indexOf(componentName) !== -1;
+        }
+        else {
+          throw new Error(`component: ${component.name} has not custom identifier`);
+        }
+
+        return (isComponent) ? isComponent : componentName === component.name;
+      });
+    } else {
+      throw new Error(`No Components provided via UI_COMPONENTS. Import a ui bundle`);
+    }
+
+    if (!(typeof component === "function")) {
+      throw new Error(`Component "${component}" is not provided via UI_COMPONENTS`);
+    }
+
+    return component;
+
+  }
+
 }

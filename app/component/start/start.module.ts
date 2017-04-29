@@ -13,13 +13,14 @@ import {CHANGE_SUBSCRIPTIONS} from "../../common/dynamic-form/customSubscription
 import {filteredOptions} from "./customSubscriptions/filteredOptionsSubscription";
 import {validateEmail} from "./customValidators/emailValidator";
 import {DynamicFormModule} from "../../common/dynamic-form/dynamic-form.module";
+import {UiBasicModule} from "../../common/ui-basic/ui-basic.module";
 
 export{ StartComponent} from "./start.component";
 
 const EXPORTS = [ StartComponent ];
 
 @NgModule({
-  imports: [ CommonModule,ReactiveFormsModule, TemplateFormModule, DynamicFormModule],
+  imports: [ CommonModule,ReactiveFormsModule, TemplateFormModule, DynamicFormModule, UiBasicModule],
   exports:      [ EXPORTS ],
   declarations: [ EXPORTS ],
   providers: [

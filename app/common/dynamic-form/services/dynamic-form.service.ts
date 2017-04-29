@@ -73,6 +73,7 @@ export class DynamicFormService {
 
   }
 
+  //@TODO move to utils
   getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
 
     //define array of params
@@ -103,10 +104,8 @@ export class DynamicFormService {
     }
     fCParams.push(asyncValidator);
 
-
     return fCParams;
-
-  }
+  };
 
   getCustomValidatorFn(validatorName: string): ValidatorFn | AsyncValidatorFn | undefined {
 

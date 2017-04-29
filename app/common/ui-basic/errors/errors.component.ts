@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {AbstractFormControlModel} from "../../model/base/form-control";
+import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 
 @Component({
   moduleId: module.id,

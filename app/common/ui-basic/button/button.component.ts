@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {ButtonItem} from "../../model/item-button";
+import {ButtonItem} from "../../dynamic-form/model/item-button";
 
 @Component({
   moduleId: module.id,
@@ -9,6 +9,8 @@ import {ButtonItem} from "../../model/item-button";
   templateUrl: 'button.component.html',
 })
 export class ButtonComponent {
+  static controlTypes = ["button", "submit", "reset"];
+
   config: ButtonItem;
   group: FormGroup;
 }

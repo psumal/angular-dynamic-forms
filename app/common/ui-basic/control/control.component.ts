@@ -1,14 +1,14 @@
 import {Component, Input, Optional, Inject} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {AbstractFormControlModel} from "../../model/base/form-control";
+import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/merge';
-import {CHANGE_SUBSCRIPTIONS} from "../../customSubscriptions/changeSubscriptions";
+import {CHANGE_SUBSCRIPTIONS} from "../../dynamic-form/customSubscriptions/changeSubscriptions";
 import {
   ChangeSubscriptionFn, ChangeSubscriptions
-} from "../../customSubscriptions/changeSubscriptions";
+} from "../../dynamic-form/customSubscriptions/changeSubscriptions";
 
 export interface SubscriptionFn {
   (): any;
@@ -21,6 +21,9 @@ export interface SubscriptionFn {
   templateUrl: 'control.component.html',
 })
 export class ControlComponent {
+
+  static controlTypes = ["select", "checkbox", "radio", "textbox", "textarea"];
+
   config: AbstractFormControlModel<any> = <any>{};
   group: FormGroup = <any>{};
 

@@ -1,13 +1,10 @@
-<div [formGroup]="group" dynamicItem>
+<div [formGroup]="group">
 
-  <div *ngFor="let conf of config" class="form-row">
-
-    <df-form-group *ngIf="conf.controlType === 'formGroup'" [config]="conf" [group]="group"></df-form-group>
-
-    <df-item *ngIf="conf.controlType !== 'button' && conf.controlType !== 'formGroup'" [config]="conf" [group]="group"></df-item>
-
-    <df-button *ngIf="conf.controlType === 'button'" [config]="conf" [group]="group"></df-button>
-
-  </div>
+  <ng-container
+    *ngFor="let conf of config;"
+    dynamicItem
+    [config]="conf"
+    [group]="group">
+  </ng-container>
 
 </div>

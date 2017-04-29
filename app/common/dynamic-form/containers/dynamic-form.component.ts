@@ -75,7 +75,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   protected renderForm(): void {
-    console.log('renderForm config: ', this.config);
     this.group = this.dfService.toFG(this.config, this.model);
   }
 

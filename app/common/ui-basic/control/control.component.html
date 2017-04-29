@@ -1,4 +1,4 @@
-<div [attr.class]="getWrapperClass()" [formGroup]="group" *ngIf="controlRendered">
+<div [formGroup]="group" *ngIf="controlRendered" [attr.class]="getWrapperClass()">
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
     {{config.label}}
@@ -85,4 +85,5 @@
   <item-errors [item]="config" [group]="group"></item-errors>
 
   <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{config.helpText}}</small>
+
 </div>

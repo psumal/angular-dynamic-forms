@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormGroup}        from '@angular/forms';
-import {FormGroupItem} from "../../model/item-formGroup";
+import {FormGroupItem} from "../../dynamic-form/model/item-formGroup";
 
 @Component({
   moduleId: module.id,
@@ -9,6 +9,9 @@ import {FormGroupItem} from "../../model/item-formGroup";
   templateUrl: 'item-formGroup.component.html',
 })
 export class FormGroupComponent {
+
+  static controlTypes = ["formGroup"];
+
   config:FormGroupItem;
   group: FormGroup;
 

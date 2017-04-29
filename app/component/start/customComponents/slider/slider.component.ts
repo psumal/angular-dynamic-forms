@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {ItemBase} from "../../dynamic-form/model/base/item";
+import {ItemBase} from "../../../../common/dynamic-form/model/base/item";
 
 @Component({
   moduleId: module.id,

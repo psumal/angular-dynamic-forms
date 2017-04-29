@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges} from "@angular/core";
-import {FormGroup} from "@angular/forms";
+import {FormGroup, FormBuilder} from "@angular/forms";
 import {DynamicFormUtils} from "../services/dynamic-form.utils";
 import {IDynamicFormOnPayLoadChangeEvent} from "../dynamic-form.scruct";
 import {DynamicFormService} from "../services/dynamic-form.service";
@@ -16,7 +16,6 @@ export class DynamicFormComponent implements OnInit {
 
   private _config: AbstractFormControlModel<any>[] = [];
   set config(items: Array<any>) {
-
     this._config = (<any>items).map((item: any) => {
       let newItem = DynamicFormUtils.createFormItem(item);
       if (newItem) {
@@ -34,15 +33,7 @@ export class DynamicFormComponent implements OnInit {
 
   group: FormGroup;
 
-  @Output()
-  onPayloadChange: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
-
-  @Output()
-  onSubmitted: EventEmitter<IDynamicFormOnPayLoadChangeEvent> = new EventEmitter<IDynamicFormOnPayLoadChangeEvent>();
-
-  private _payLoad: any;
-
-  constructor(private ics: DynamicFormUtils, protected dfService: DynamicFormService) {
+  constructor(protected dfService: DynamicFormService, protected fb:FormBuilder) {
 
   }
 
@@ -65,7 +56,6 @@ export class DynamicFormComponent implements OnInit {
 
     if (valueChanged('model', changes)) {
       this.model = changes['model'].currentValue || {};
-      //this.renderForm();
     }
 
     if (valueChanged('config',changes)) {
@@ -75,7 +65,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   protected renderForm(): void {
-    this.group = this.dfService.toFG(this.config, this.model);
+    this.group = this.dfService.toFG(this.config);
   }
 
 }

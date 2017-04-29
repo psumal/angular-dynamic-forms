@@ -7,13 +7,14 @@ import {ControlComponent} from "./control/control.component";
 import {FormGroupComponent} from "./formGroup/item-formGroup.component";
 import {ControlErrorComponent} from "./errors/errors.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {DynamicFGItemDirective} from "./formGroup/dynamicFormGroupItem/dynamic-form-group-item.directive";
 
-const EXPORTS = [ ControlComponent, ButtonComponent, ControlErrorComponent, FormGroupComponent ];
+const EXPORTS = [ ControlComponent, ButtonComponent, ControlErrorComponent, FormGroupComponent  ];
 
 @NgModule({
   imports: [ CommonModule, ReactiveFormsModule],
-  exports:      [ EXPORTS ],
-  declarations: [ EXPORTS ],
+  exports:      [ EXPORTS, DynamicFGItemDirective ],
+  declarations: [ EXPORTS , DynamicFGItemDirective],
   entryComponents: [
     EXPORTS
   ],
@@ -21,7 +22,7 @@ const EXPORTS = [ ControlComponent, ButtonComponent, ControlErrorComponent, Form
     { provide: UI_COMPONENTS, useValue: ButtonComponent, multi: true },
     { provide: UI_COMPONENTS, useValue: ControlComponent, multi: true },
     { provide: UI_COMPONENTS, useValue: FormGroupComponent, multi: true },
-    { provide: UI_COMPONENTS, useValue: ControlErrorComponent, multi: true }
+    //{ provide: UI_COMPONENTS, useValue: ControlErrorComponent, multi: true }
   ]
 })
 export class UiBasicModule {}

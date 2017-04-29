@@ -34,7 +34,7 @@ export class ControlComponent {
   }
 
   ngOnInit() {
-
+return;
     if (this.config.changeListener) {
       let listener = this.config.changeListener;
       listener.forEach((listener) => {
@@ -66,6 +66,7 @@ export class ControlComponent {
   }
 
   getWrapperClass(): string {
+    return ;
     /*let displayWarning = function() => {
      return this.item.value !== 'te';
      };*/
@@ -115,7 +116,6 @@ export class ControlComponent {
     if (this.CHANGE_SUBSCRIPTIONS) {
 
         subscriptionFn = this.CHANGE_SUBSCRIPTIONS.find(subscriptionFn => {
-          console.log('subscriptionFn: ', subscriptionFn);
           return subscriptionName === subscriptionFn.name;
         });
 

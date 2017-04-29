@@ -543,26 +543,15 @@ export class FormConfigService {
       //formGroup
       {
         controlType: 'formGroup',
-        key: "groupTest",
-        title: "Form Group",
+        key: "g1",
+        label: "Form Group",
         config: [
-          /*    {
-           controlType:'formGroup',
-           key:"groupTest2",
-           title : "Form Group2",
-           config: [
-           {
-           controlType: 'button',
-           key: 'reset-button2',
-           label: 'Reset',
-           type: 'reset'
-           }
-           ]
-           },
 
-           {
+          /*
+          {
            controlType: 'textbox',
            key: 'testtesdast',
+           formPath:'g1.testtesdast',
            label: 'asaas',
            placeholder: "The testtet help",
            helpText: "This testtet of the element",

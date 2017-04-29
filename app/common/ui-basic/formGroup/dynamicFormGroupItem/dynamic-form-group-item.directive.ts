@@ -9,17 +9,17 @@ import {
   Optional
 } from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {DynamicItem} from "../../dynamic-form.scruct";
-import {AbstractFormControlModel} from "../../model/base/form-control";
-import {UI_COMPONENTS} from "../ui-components.token";
+import {DynamicItem} from "../../../dynamic-form/dynamic-form.scruct";
+import {UI_COMPONENTS} from "../../../dynamic-form/components/ui-components.token";
+
 
 @Directive({
   inputs: ['config', 'group'],
-  selector: '[dynamicItem]'
+  selector: '[dynamicFGItem]'
 })
-export class DynamicItemDirective implements DynamicItem, OnChanges, OnInit {
+export class DynamicFGItemDirective implements DynamicItem, OnChanges, OnInit {
 
-  config: AbstractFormControlModel<any>;
+  config: any;
   group: FormGroup;
 
   component: ComponentRef<DynamicItem>;

@@ -1,10 +1,7 @@
-<div [formGroup]="group">
-
-  <ng-container
-    *ngFor="let conf of config;"
-    dynamicItem
-    [config]="conf"
-    [group]="group">
-  </ng-container>
-
-</div>
+<ng-container
+  [formGroup]="group"
+  *ngFor="let conf of config;"
+  dynamicItem
+  [config]="conf"
+  [group]="group">
+</ng-container>

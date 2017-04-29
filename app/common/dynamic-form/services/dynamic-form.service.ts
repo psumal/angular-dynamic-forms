@@ -38,10 +38,12 @@ export class DynamicFormService {
         }
         else {
           formGroupObject[conf['key']] = {};
-          formGroupObject[conf['key']] = this.toFG(conf['config'], model[conf['key']]);
+          formGroupObject[conf['key']] = this.toFG(conf['config']);
         }
       });
     }
+
+    console.log('formGroupObject', formGroupObject);
 
     return this.fb.group(formGroupObject, extra);
 

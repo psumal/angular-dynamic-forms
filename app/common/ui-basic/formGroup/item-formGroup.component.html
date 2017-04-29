@@ -1,13 +1,22 @@
-<fieldset [attr.class]="getFormGroupClass()">
+<fieldset [attr.class]="getFormGroupClass()" >
   <legend>{{config.label}}</legend>
 
-  <div *ngFor="let conf of config.config">
 
-    <df-form-group *ngIf="conf.controlType === 'formGroup'" [config]="conf" [group]="group"></df-form-group>
+    <ng-container
+      *ngFor="let conf of items;"
+      dynamicFGItem
+      [config]="conf"
+      [group]="group">
+    </ng-container>
+  <!--
+       <div *ngFor="let conf of items" class="form-row">
 
-    <df-item *ngIf="conf.controlType !== 'button' && conf.controlType !== 'formGroup'" [config]="conf" [group]="group"></df-item>
+         <df-form-group *ngIf="conf.controlType === 'formGroup'" [config]="conf" [group]="group"></df-form-group>
 
-    <df-button *ngIf="conf.controlType === 'button'" [config]="conf" [group]="group"></df-button>
-  </div>
+         <df-item *ngIf="conf.controlType !== 'button' && conf.controlType !== 'formGroup'" [config]="conf" [group]="group"></df-item>
 
+         <df-button *ngIf="conf.controlType === 'button'" [config]="conf" [group]="group"></df-button>
+
+       </div>
+     -->
 </fieldset>

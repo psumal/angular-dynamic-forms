@@ -1,4 +1,4 @@
-import {NgModule, InjectionToken, Component} from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -16,10 +16,4 @@ const EXPORTS = [DynamicFormComponent, DynamicItemDirective];
   declarations: [EXPORTS],
   providers: []
 })
-export class DynamicFormModule {
-  static withComponents(components: any[]) {
-    return {
-      ngModule: DynamicFormModule
-    }
-  }
-}
+export class DynamicFormModule {}

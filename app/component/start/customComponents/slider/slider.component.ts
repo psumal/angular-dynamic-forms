@@ -9,6 +9,7 @@ import {ItemBase} from "../../../../common/dynamic-form/model/base/item";
   templateUrl: 'slider.component.html',
 })
 export class SliderComponent {
+  static controlTypes = ['slider'];
   config: ItemBase;
   group: FormGroup;
 }

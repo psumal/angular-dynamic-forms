@@ -33,18 +33,25 @@ export class ControlComponent {
 
   }
 
+  get currentFormItem() {
+    return this.group.get(this.config.formPath);
+  }
+
   ngOnInit() {
 
 
+    if(this.config.key == 'g1T1') {
     console.log('FormItem Config: ', this.config);
     console.log('FormGroup Root: ', this.group);
     console.log('FormComponent.key: ', this.config.key);
-    console.log('FormComponent FormControl: ', this.group.get(this.config.key));
-    let currentItem = this.group.get(this.config.key);
+    console.log('FormComponent.formPath: ', this.config.formPath);
+    console.log('FormComponent FormControl by formPath: ', this.currentFormItem);
+    let currentItem = this.currentFormItem;
 
     console.log(`${this.config.key} form Item: `, currentItem);
+    }
 
-    if (false && this.config.changeListener) {
+    if (this.config.changeListener) {
       let listener = this.config.changeListener;
       listener.forEach((listener) => {
 
@@ -96,6 +103,7 @@ export class ControlComponent {
   }
 
   isLabelVisible(): boolean {
+
     return !!this.config['label'];
   }
 

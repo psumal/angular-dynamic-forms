@@ -1,16 +1,22 @@
 import {IItemBaseOptions} from "../item.struckts";
 export class ItemBase{
+  parentId?:string;
   key: string;
-  formPath?:string;
   order: number;
   controlType: string;
 
-  constructor(options: IItemBaseOptions = {}, parentId?:string) {
-    this.formPath = options.formPath;
+  constructor(options: IItemBaseOptions = {}) {
 
-    this.key = (parentId)?`${parentId}.${options.key}` : options.key || '';
+
+    this.parentId = options.parentId || '';
+    this.key = options.key || '';
 
     this.order = options.order === undefined ? 1 : options.order;
     this.controlType = options.controlType || '';
   }
+
+  get formPath() {
+    return (this.parentId)? `${this.parentId}.${this.key}` : this.key;
+  }
+
 }

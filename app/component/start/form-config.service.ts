@@ -6,6 +6,12 @@ export class FormConfigService {
   getFormGroupTestConfig() {
     let formConfig: Array<any> = [
       {
+        controlType: 'textbox',
+        type: "text",
+        key: "TextboxFg1",
+        label: "Textbox Item of type url"
+      },
+      {
         controlType: 'formGroup',
         key: "groupTest",
         title: "Form Group",
@@ -15,7 +21,7 @@ export class FormConfigService {
             type: "text",
             key: "TextboxFg1",
             label: "Textbox Item of type url"
-          },
+          },/**/
           {
             controlType: 'button',
             key: 'buttonButton',

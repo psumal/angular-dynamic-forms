@@ -54,7 +54,7 @@ export class FormConfigSelectorComponent {
 
   }
 
-  onSubmit(form) {
+  onSubmit(form:any) {
     this.formConfig = form.value.formConfigSelect.formItems;
   }
 

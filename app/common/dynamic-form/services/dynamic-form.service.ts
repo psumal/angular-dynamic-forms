@@ -62,11 +62,11 @@ export class DynamicFormService {
         formGroupObject[item['key']] = this.getFormControlParamsArray(item);
       }
       else if (item['controlType'] === 'formArray') {
-        formGroupObject[item['key']] = {};
+
         formGroupObject[item['key']] = this.toFA(item['config'], model[item['key']]);
       }
       else {
-        formGroupObject[item['key']] = {};
+
         formGroupObject[item['key']] = this.toFG(item['config'], model[item['key']]);
       }
     });

@@ -2,9 +2,8 @@ import {ItemBase} from "./base/item";
 import {ValidatorFn, AsyncValidatorFn} from "@angular/forms";
 import {changeListenerConfig} from "./item.struckts";
 
-export class FormGroupItem {
+export class FormGroupItem extends ItemBase{
 
-  key:string;
   label: string;
   controlType:string = 'formGroup';
 
@@ -22,6 +21,9 @@ export class FormGroupItem {
     asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[];
     changeListener?:changeListenerConfig[];
   } = {}) {
+
+    super();
+
     this.key = options.key;
     this.label = options.label || '';
     this.config = options.config || (<ItemBase[]>[]);

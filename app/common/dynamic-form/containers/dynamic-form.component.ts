@@ -15,19 +15,27 @@ import {AbstractFormControlModel} from "../model/base/form-control";
 export class DynamicFormComponent implements OnInit {
 
   private _config: AbstractFormControlModel<any>[] = [];
-  set config(items: Array<any>) {
-    this._config = (<any>items).map((item: any) => {
-      let newItem = DynamicFormUtils.createFormItem(item);
-      if (newItem) {
-        return newItem;
-      }
-    });
+  set config(config: Array<any>) {
+
+    console.log('before prep parentId', [...config]);
+    let prepConfig = this.setParentId(config);
+    console.log('after prep parentId', [...prepConfig]);
+
+    let formConfig = this.configToFormConfig(prepConfig);
+    console.log('after prep formConfig', [...formConfig]);
+
+    this._config = formConfig;
+    console.log(this._config);
+
     this.renderForm();
+
   }
 
   get config(): Array<any> {
     return this._config;
   }
+
+
 
   model: {} = {};
 
@@ -37,8 +45,51 @@ export class DynamicFormComponent implements OnInit {
 
   }
 
+  configToFormConfig(config:any) {
+
+    return config.map((conf:any) => {
+      let newItem = {};
+      console.log('config.controlType', conf['controlType']);
+      if(conf['controlType'] == "formGroup") {
+        newItem = DynamicFormUtils.createFormItem(conf);
+        newItem['config'] = this.configToFormConfig(conf.config);
+        console.log('fg newItem', newItem);
+      } else {
+        newItem = DynamicFormUtils.createFormItem(conf);
+        console.log('newItem', newItem);
+      }
+      return newItem;
+    });
+
+  }
+
+  setParentId(config:any, parentId:string = ''):any {
+    return config.map((conf:any) => {
+      console.log('setParentId for: ',  conf.key, ' with parentId ', parentId);
+      if(conf.controlType === 'formGroup') {
+        console.log('call recursive: ', conf.config, conf.key);
+        conf.config = this.setParentId(conf.config, conf.key);
+      }
+      conf.parentId = parentId;
+      return conf;
+    });
+  }
+
   ngOnInit(): void {
+
     this.renderForm();
+
+    let changes = this.group.valueChanges;
+
+    changes.subscribe(
+      (next) => {
+        this.model = next;
+        console.log('formPathArr: ', this.config['formPath'] );
+        console.log('CHANGE ', this.group.get(['groupTest', 'TextboxFg1']) );
+      },
+      () => {},
+      () => {},
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,6 +117,7 @@ export class DynamicFormComponent implements OnInit {
 
   protected renderForm(): void {
     this.group = this.dfService.toFG(this.config);
+
   }
 
 }

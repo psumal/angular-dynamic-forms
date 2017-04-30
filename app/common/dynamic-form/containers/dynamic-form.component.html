@@ -1,7 +1,10 @@
 <ng-container
-  [formGroup]="group"
   *ngFor="let conf of config;"
   dynamicItem
   [config]="conf"
   [group]="group">
 </ng-container>
+
+<pre>
+  {{model | json}}
+</pre>

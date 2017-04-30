@@ -17,15 +17,13 @@ export class DynamicFormComponent implements OnInit {
   private _config: AbstractFormControlModel<any>[] = [];
   set config(config: Array<any>) {
 
-    console.log('before prep parentId', [...config]);
     let prepConfig = this.setParentId(config);
-    console.log('after prep parentId', [...prepConfig]);
-
+    console.log('prepConfig: ', prepConfig);
     let formConfig = this.configToFormConfig(prepConfig);
-    console.log('after prep formConfig', [...formConfig]);
+
+    console.log('formConfig: ', formConfig);
 
     this._config = formConfig;
-    console.log(this._config);
 
     this.renderForm();
 
@@ -49,29 +47,39 @@ export class DynamicFormComponent implements OnInit {
 
     return config.map((conf:any) => {
       let newItem = {};
-      console.log('config.controlType', conf['controlType']);
       if(conf['controlType'] == "formGroup") {
         newItem = DynamicFormUtils.createFormItem(conf);
         newItem['config'] = this.configToFormConfig(conf.config);
-        console.log('fg newItem', newItem);
       } else {
         newItem = DynamicFormUtils.createFormItem(conf);
-        console.log('newItem', newItem);
       }
       return newItem;
     });
 
   }
 
-  setParentId(config:any, parentId:string = ''):any {
+  setParentId(config:any, parentId:string = '', formPath?:string[] ):any {
+
     return config.map((conf:any) => {
-      console.log('setParentId for: ',  conf.key, ' with parentId ', parentId);
-      if(conf.controlType === 'formGroup') {
-        console.log('call recursive: ', conf.config, conf.key);
-        conf.config = this.setParentId(conf.config, conf.key);
+      let newConf:any = {...conf};
+      let formPathNew = formPath?[...formPath]:[];
+
+      newConf.parentId = parentId;
+      newConf.formPath = [];
+
+      if(newConf.parentId) {
+        formPathNew.push(newConf.key);
+        newConf.formPath = formPathNew;
+      } else {
+        newConf.formPath.push(newConf.key);
       }
-      conf.parentId = parentId;
-      return conf;
+
+
+      if(newConf.controlType === 'formGroup') {
+        newConf.config = this.setParentId(newConf.config, newConf.key, newConf.formPath);
+      }
+
+      return newConf;
     });
   }
 
@@ -84,8 +92,6 @@ export class DynamicFormComponent implements OnInit {
     changes.subscribe(
       (next) => {
         this.model = next;
-        console.log('formPathArr: ', this.config['formPath'] );
-        console.log('CHANGE ', this.group.get(['groupTest', 'TextboxFg1']) );
       },
       () => {},
       () => {},
@@ -116,6 +122,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   protected renderForm(): void {
+    console.log('renderForm!');
     this.group = this.dfService.toFG(this.config);
 
   }

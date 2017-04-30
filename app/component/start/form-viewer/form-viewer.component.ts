@@ -17,8 +17,6 @@ export class FormViewerComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {}): any {
 
-
-    console.log('Viewer ngOnChanges: ', changes);
     if('config' in changes && changes['config'] != this.config) {
 
       this.config = changes['config'].currentValue;

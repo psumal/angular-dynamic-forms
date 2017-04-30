@@ -24,11 +24,12 @@ export class FormGroupComponent {
 
   group: FormGroup;
 
-  _items:any;
+  _items: AbstractFormControlModel<any>[]= [];
 
   set items(value:any[]) {
     this._items = value
       .map((item: any) => {
+        console.log('item: ', item);
         let newItem = DynamicFormUtils.createFormItem(item);
         if (newItem) {
           return newItem;
@@ -41,20 +42,36 @@ export class FormGroupComponent {
     return this._items;
   }
 
-  private _config: AbstractFormControlModel<any>[] = [];
+  private _config: AbstractFormControlModel<any>;
 
-  set config(config: Array<any>) {
+  set config(config: AbstractFormControlModel<any>) {
 
     this._config = config;
     this.items = config['config'];
 
   }
 
-  get config(): Array<any> {
+  get config(): AbstractFormControlModel<any> {
     return this._config;
   }
 
   constructor() {}
+
+  getParentFormGroup() {
+
+    let newFormPath:string[] = [...this.config.formPath];
+    newFormPath.pop();
+    console.log('newFormPath:: ', newFormPath);
+    //isRoot
+    if(newFormPath.length == 0) {
+      return this.group;
+    }
+    return this.group.get(newFormPath);
+  }
+
+  get currentFormItem() {
+    return this.group.get(this.config.formPath);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -71,8 +88,6 @@ export class FormGroupComponent {
 
     if (valueChanged('group', changes)) {
       this.group = changes['group'].currentValue || {};
-
-      console.log('this.group: ', this.group);
     }
 
     if (valueChanged('config',changes)) {

@@ -1,13 +1,13 @@
-import {Component, Input, Optional, Inject, SimpleChange, SimpleChanges} from "@angular/core";
+import {Component, Optional, Inject, SimpleChanges} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/merge';
-import {CHANGE_SUBSCRIPTIONS} from "../../dynamic-form/customSubscriptions/changeSubscriptions";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/merge";
 import {
-  ChangeSubscriptionFn, ChangeSubscriptions
+  CHANGE_SUBSCRIPTIONS,
+  ChangeSubscriptionFn,
+  ChangeSubscriptions
 } from "../../dynamic-form/customSubscriptions/changeSubscriptions";
 
 export interface SubscriptionFn {
@@ -25,12 +25,24 @@ export class ControlComponent {
   static controlTypes = ["select", "multiselect", "checkbox", "radio", "textbox", "textarea"];
 
   config: AbstractFormControlModel<any> = <any>{};
-  group: FormGroup = <any>{};
+  group: FormGroup = new FormGroup([]);
 
-  controlRendered:boolean = true;
+  controlRendered: boolean = true;
 
   constructor(@Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: SubscriptionFn[]) {
 
+  }
+
+  getParentFormGroup() {
+
+    let newFormPath:string[] = [...this.config.formPath];
+    newFormPath.pop();
+    console.log('newFormPath:: ', newFormPath);
+    //isRoot
+    if(newFormPath.length == 0) {
+      return this.group;
+    }
+    return this.group.get(newFormPath);
   }
 
   get currentFormItem() {
@@ -38,24 +50,12 @@ export class ControlComponent {
   }
 
   ngOnInit() {
-
-
-    if(this.config.key == 'g1T1') {
-    console.log('FormItem Config: ', this.config);
-    console.log('FormGroup Root: ', this.group);
-    console.log('FormComponent.key: ', this.config.key);
-    console.log('FormComponent.formPath: ', this.config.formPath);
-    console.log('FormComponent FormControl by formPath: ', this.currentFormItem);
-    let currentItem = this.currentFormItem;
-
-    console.log(`${this.config.key} form Item: `, currentItem);
-    }
-
+/*
     if (this.config.changeListener) {
       let listener = this.config.changeListener;
       listener.forEach((listener) => {
 
-          let subscriptionFn:ChangeSubscriptionFn<any> = this.getSubscriptionFn(listener.name);
+          let subscriptionFn: ChangeSubscriptionFn<any> = this.getSubscriptionFn(listener.name);
 
           let otherChanges$ = this.group.get(listener.controls[0]).valueChanges;
 
@@ -71,6 +71,8 @@ export class ControlComponent {
         }
       );
     }
+
+    */
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -88,10 +90,9 @@ export class ControlComponent {
 
     if (valueChanged('group', changes)) {
       this.group = changes['group'].currentValue || {};
-      console.log('!!!!!!!!!!!!!!!!!!!!!', this.group);
     }
 
-    if (valueChanged('config',changes)) {
+    if (valueChanged('config', changes)) {
       this.config = changes['config'].currentValue || [];
     }
 
@@ -109,10 +110,6 @@ export class ControlComponent {
 
   getWrapperClass(): string {
 
-    /*let displayWarning = function() => {
-     return this.item.value !== 'te';
-     };*/
-
     let classNames: Array<string> = [];
     if (this.config.controlType === 'radio' || this.config.controlType === 'checkbox') {
       classNames.push('form-check');
@@ -124,10 +121,6 @@ export class ControlComponent {
     if (this.group.get(this.config.key).valid) {
       classNames.push('has-success');
     }
-
-    /*if(displayWarning()) {
-     classNames.push('has-warning');
-     }*/
 
     if (!this.group.get(this.config.key).valid) {
       classNames.push('has-danger');
@@ -157,11 +150,11 @@ export class ControlComponent {
 
     if (this.CHANGE_SUBSCRIPTIONS) {
 
-        subscriptionFn = this.CHANGE_SUBSCRIPTIONS.find(subscriptionFn => {
-          return subscriptionName === subscriptionFn.name;
-        });
+      subscriptionFn = this.CHANGE_SUBSCRIPTIONS.find(subscriptionFn => {
+        return subscriptionName === subscriptionFn.name;
+      });
 
-      }
+    }
 
     return subscriptionFn;
   }

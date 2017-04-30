@@ -32,7 +32,6 @@ export class DynamicFormService {
           formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
         }
         else if (conf['controlType'] === 'formArray') {
-          console.log(this.toFA(conf['config'], model[conf['key']]));
           //formGroupObject[conf['key']] = {};
           //formGroupObject[conf['key']] = this.toFA(conf['config'], model[conf['key']]);
         }
@@ -42,8 +41,6 @@ export class DynamicFormService {
         }
       });
     }
-
-    console.log('formGroupObject', formGroupObject);
 
     return this.fb.group(formGroupObject, extra);
 

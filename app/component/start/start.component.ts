@@ -29,7 +29,6 @@ export class StartComponent {
 
   /*DEMO SELECT*/
   onFormConfigSelectChange($event: {model: any}) {
-    console.log('onTemplateFromModelChange', $event.model.demo.formItems);
 
     if ('model' in $event && 'demo' in $event.model) {
 

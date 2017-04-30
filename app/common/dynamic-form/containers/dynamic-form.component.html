@@ -1,4 +1,6 @@
 <ng-container
+  [formGroup]="group"
+  (change)="modelChange($event)"
   *ngFor="let conf of config;"
   dynamicItem
   [config]="conf"

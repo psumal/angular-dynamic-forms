@@ -22,7 +22,7 @@ export class FormGroupItem extends ItemBase{
     changeListener?:changeListenerConfig[];
   } = {}) {
 
-    super();
+    super(options);
 
     this.key = options.key;
     this.label = options.label || '';

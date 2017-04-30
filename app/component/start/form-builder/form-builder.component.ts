@@ -30,10 +30,8 @@ export class FormBuilderComponent implements OnInit, OnChanges {
 
 
   onSubmitted($event: {}) {
-    console.log('onSubmitted $event', $event['payLoad']);
     let item: any | FormGroupItem = DynamicFormUtils.createFormItem($event['payLoad']);
     if (item) {
-      console.log("generated config: ", item);
       this.dynamicItems = this.dynamicItems.concat(item, []);
     }
   }

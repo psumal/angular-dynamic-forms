@@ -4,35 +4,88 @@ import {Injectable} from "@angular/core";
 export class FormConfigService {
 
   getFormGroupTestConfig() {
-    let formConfig: Array<any> = [
-      {
-        controlType: 'textbox',
-        type: "text",
-        key: "TextboxFg1",
-        label: "Textbox Item of type url"
-      },
+
+    let config = [
       {
         controlType: 'formGroup',
-        key: "groupTest",
-        title: "Form Group",
+        key: "fG1",
+        title: "Form Group 1",
         config: [
           {
             controlType: 'textbox',
             type: "text",
             key: "TextboxFg1",
             label: "Textbox Item of type url"
-          },/**/
+          }, /**/
           {
             controlType: 'button',
             key: 'buttonButton',
             label: 'Button',
             type: 'button'
+          },
+          {
+            controlType: 'formGroup',
+            key: "fG0",
+            title: "Form Group 0",
+            config: [
+              {
+                controlType: 'textbox',
+                type: "text",
+                key: "TextboxFg0",
+                label: "Textbox Item of type url"
+              }, /**/
+              {
+                controlType: 'button',
+                key: 'buttonButton',
+                label: 'Button',
+                type: 'button'
+              }
+            ]
           }
         ]
       }
     ];
 
-    return formConfig;
+
+    return createFgConfig(1);
+
+    //////////////////////////////////
+
+    function createFgConfig(count:any): any {
+
+      let conf = [
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count,
+          label: "Textbox Item of type url"
+        }
+        /*
+         ,{
+          controlType: 'button',
+          key: 'buttonButton',
+          label: 'Button',
+          type: 'button'
+        }*/
+      ];
+
+      let fg = {
+        controlType: 'formGroup',
+        key: "fG" + count,
+        title: "Form Group " + count,
+        config: conf
+      };
+
+
+      if (count > 0) {
+
+        fg.config = fg.config.concat(createFgConfig(count - 1));
+      }
+
+
+      return [fg];
+
+    }
 
   }
 
@@ -398,24 +451,24 @@ export class FormConfigService {
       },
       //formGroup
       /*{
-        controlType: 'formGroup',
-        key: "groupTest",
-        title: "Form Group1",
-        config: [
-          {
-            controlType: 'textbox',
-            key: "Textbox in form group 1",
-            label: "Textbox Item of type url",
-            type: "text"
-          },
-          {
-            controlType: 'button',
-            key: 'buttonButton',
-            label: 'Button',
-            type: 'button'
-          }
-        ]
-      }*/
+       controlType: 'formGroup',
+       key: "groupTest",
+       title: "Form Group1",
+       config: [
+       {
+       controlType: 'textbox',
+       key: "Textbox in form group 1",
+       label: "Textbox Item of type url",
+       type: "text"
+       },
+       {
+       controlType: 'button',
+       key: 'buttonButton',
+       label: 'Button',
+       type: 'button'
+       }
+       ]
+       }*/
     ];
     return formConfig;
   }
@@ -555,13 +608,13 @@ export class FormConfigService {
 
           /**/
           {
-           controlType: 'textbox',
-           key: 'g1T1',
-           label: 'g1T1',
-           placeholder: "The g1T1",
-           helpText: "g1T1 of the g1 froup",
-           type: 'text'
-           },
+            controlType: 'textbox',
+            key: 'g1T1',
+            label: 'g1T1',
+            placeholder: "The g1T1",
+            helpText: "g1T1 of the g1 froup",
+            type: 'text'
+          },
 
           {
             controlType: 'button',

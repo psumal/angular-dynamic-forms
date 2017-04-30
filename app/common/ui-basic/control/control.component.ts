@@ -25,7 +25,7 @@ export class ControlComponent {
   static controlTypes = ["select", "multiselect", "checkbox", "radio", "textbox", "textarea"];
 
   config: AbstractFormControlModel<any> = <any>{};
-  group: FormGroup = new FormGroup([]);
+  group: FormGroup;
 
   controlRendered: boolean = true;
 

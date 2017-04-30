@@ -47,7 +47,7 @@ export class FormConfigService {
     ];
 
 
-    return createFgConfig(1);
+    return createFgConfig(2);
 
     //////////////////////////////////
 

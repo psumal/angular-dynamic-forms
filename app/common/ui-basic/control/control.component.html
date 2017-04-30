@@ -1,94 +1,96 @@
-<div [formGroup]="group" *ngIf="controlRendered" [attr.class]="">
+<div [formGroup]="getParentFormGroup()" *ngIf="controlRendered" [attr.class]="">
 
-  control: config.parentId: {{config.parentId}}, config.formPath: {{config.formPath}}
+  control:  {{config.key}} <br/>
+  parentId: {{config.parentId}} <br/>
+  formPath: {{config.formPath}} <br/>
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
     {{config.label}}
   </label>
 
-    <input
-      *ngIf="isControlTypeVisible('textbox')"
-      [formControlName]="config.key"
-      [id]="config.key"
-      [type]="config.type"
-      [attr.class]="getControlClass()"
-      [attr.aria-describedby]="config.key+'Help'"
-      [attr.placeholder]="config.placeholder">
+      <input
+        *ngIf="isControlTypeVisible('textbox')"
+        [formControlName]="config.key"
+        [id]="config.key"
+        [type]="config.type"
+        [attr.class]="getControlClass()"
+        [attr.aria-describedby]="config.key+'Help'"
+        [attr.placeholder]="config.placeholder">
 
-    <div *ngIf="isControlTypeVisible('radio')">
-      <div class="form-check" *ngFor="let option of config.options">
-        <label [attr.class]="'form-check-label'">
-          <input [type]="config.type"
-                 [id]="config.key + '--' + option.key"
-                 name="{{config.key}}"
+      <div *ngIf="isControlTypeVisible('radio')">
+        <div class="form-check" *ngFor="let option of config.options">
+          <label [attr.class]="'form-check-label'">
+            <input [type]="config.type"
+                   [id]="config.key + '--' + option.key"
+                   name="{{config.key}}"
+                   [attr.class]="getControlClass()"
+                   [checked]="config.formState"
+                   [value]="option.key">
+            {{option.value}}
+          </label>
+        </div>
+      </div>
+
+      <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
+        <label class="form-check-label" [attr.for]="config.key">
+          <input [formControlName]="config.key"
+                 [type]="config.type"
+                 [id]="config.key"
                  [attr.class]="getControlClass()"
-                 [checked]="config.formState"
-                 [value]="option.key">
-          {{option.value}}
+                 [attr.aria-describedby]="config.key+'Help'"
+                 [attr.placeholder]="config.placeholder">
+          {{config.label}}
         </label>
       </div>
-    </div>
 
-    <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
-      <label class="form-check-label" [attr.for]="config.key">
-        <input [formControlName]="config.key"
-               [type]="config.type"
-               [id]="config.key"
-               [attr.class]="getControlClass()"
-               [attr.aria-describedby]="config.key+'Help'"
-               [attr.placeholder]="config.placeholder">
-        {{config.label}}
-      </label>
-    </div>
+      <select
+        *ngIf="isControlTypeVisible('select')"
+        [id]="config.key"
+        [formControlName]="config.key"
+        [attr.class]="getControlClass()"
+        [attr.aria-describedby]="config.key+'Help'"
+        [attr.placeholder]="config.placeholder">
+        <template ngFor let-opt [ngForOf]="config.visibleOptions">
+          <optgroup *ngIf="opt.children" label="{{opt.value}}">
+            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
+              {{optChild.value}}
+            </option>
+          </optgroup>
+          <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
+        </template>
+      </select>
 
-    <select
-      *ngIf="isControlTypeVisible('select')"
-      [id]="config.key"
-      [formControlName]="config.key"
-      [attr.class]="getControlClass()"
-      [attr.aria-describedby]="config.key+'Help'"
-      [attr.placeholder]="config.placeholder">
-      <template ngFor let-opt [ngForOf]="config.visibleOptions">
-        <optgroup *ngIf="opt.children" label="{{opt.value}}">
-          <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
-            {{optChild.value}}
-          </option>
-        </optgroup>
-        <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
-      </template>
-    </select>
+      <select
+        *ngIf="isControlTypeVisible('multiselect')"
+        multiple
+        [id]="config.key"
+        [formControlName]="config.key"
+        [attr.class]="'form-control'"
+        [attr.aria-describedby]="config.key+'Help'"
+        [attr.placeholder]="config.placeholder">
+        <template ngFor let-opt [ngForOf]="config.options">
+          <optgroup *ngIf="opt.children" label="{{opt.value}}">
+            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
+              {{optChild.value}}
+            </option>
+          </optgroup>
 
-    <select
-      *ngIf="isControlTypeVisible('multiselect')"
-      multiple
-      [id]="config.key"
-      [formControlName]="config.key"
-      [attr.class]="'form-control'"
-      [attr.aria-describedby]="config.key+'Help'"
-      [attr.placeholder]="config.placeholder">
-      <template ngFor let-opt [ngForOf]="config.options">
-        <optgroup *ngIf="opt.children" label="{{opt.value}}">
-          <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
-            {{optChild.value}}
-          </option>
-        </optgroup>
+          <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
+        </template>
+      </select>
 
-        <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
-      </template>
-    </select>
-
-    <textarea
-      *ngIf="isControlTypeVisible('textarea')"
-      [id]="config.key"
-      [formControlName]="config.key"
-      [attr.class]="getControlClass()"
-      [attr.aria-describedby]="config.key+'Help'"
-      [attr.placeholder]="config.placeholder">
-     </textarea>
-
+      <textarea
+        *ngIf="isControlTypeVisible('textarea')"
+        [id]="config.key"
+        [formControlName]="config.key"
+        [attr.class]="getControlClass()"
+        [attr.aria-describedby]="config.key+'Help'"
+        [attr.placeholder]="config.placeholder">
+       </textarea>
   <!--
-    <item-errors [config]="config" [group]="group"></item-errors>
-  -->
+    <!--
+      <item-errors [config]="config" [group]="group"></item-errors>
+    -->
   <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{config.helpText}}</small>
 
 </div>

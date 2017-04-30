@@ -61,11 +61,13 @@ export class FormGroupComponent {
 
     let newFormPath:string[] = [...this.config.formPath];
     newFormPath.pop();
-    console.log('newFormPath:: ', newFormPath);
+
     //isRoot
     if(newFormPath.length == 0) {
+      console.log('newFormPath:: is group');
       return this.group;
     }
+    console.log('newFormPath:: ', newFormPath);
     return this.group.get(newFormPath);
   }
 

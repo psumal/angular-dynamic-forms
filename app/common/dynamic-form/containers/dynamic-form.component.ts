@@ -68,8 +68,8 @@ export class DynamicFormComponent implements OnInit {
       newConf.formPath = [];
 
       if(newConf.parentId) {
-        formPathNew.push(newConf.key);
         newConf.formPath = formPathNew;
+        newConf.formPath.push(newConf.key)
       } else {
         newConf.formPath.push(newConf.key);
       }

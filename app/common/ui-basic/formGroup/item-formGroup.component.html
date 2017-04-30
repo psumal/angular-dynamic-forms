@@ -1,11 +1,19 @@
-<fieldset [attr.class]="getFormGroupClass()">
+<fieldset [attr.class]="getFormGroupClass()" [formGroup]="getParentFormGroup()">
   <legend>{{config.label}}</legend>
-  formGroup: config.parentId: {{config.parentId}}, config.formPath: {{config.formPath}}
-  <ng-container
-    *ngFor="let conf of items;"
-    dynamicFGItem
-    [config]="conf"
-    [group]="getParentFormGroup()">
-  </ng-container>
+
+  formGroup: {{config.key}}<br/>
+  parentId: {{config.parentId}} <br/>
+  formPath: {{config.formPath}} <br/>
+
+  <div class="form-row" [formGroupName]="config.key">
+
+    <ng-container
+      *ngFor="let conf of items;"
+      dynamicFGItem
+      [config]="conf"
+      [group]="group">
+    </ng-container>
+
+  </div>
 
 </fieldset>

@@ -7,10 +7,9 @@ import {ControlComponent} from "./control/control.component";
 import {FormGroupComponent} from "./formGroup/item-formGroup.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DynamicFGItemDirective} from "./formGroup/dynamicFormGroupItem/dynamic-form-group-item.directive";
-import {DynamicFromGroupNameDirective} from "./dynamic-from-group-name/dynamic-form-group-name.directive";
 
 const ENTRY_COMPONENTS = [ ControlComponent, ButtonComponent, FormGroupComponent  ];
-const EXPORTS = [ ...ENTRY_COMPONENTS, DynamicFGItemDirective, DynamicFromGroupNameDirective  ];
+const EXPORTS = [ ...ENTRY_COMPONENTS, DynamicFGItemDirective  ];
 
 @NgModule({
   imports: [ CommonModule, ReactiveFormsModule],

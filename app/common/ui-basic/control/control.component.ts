@@ -8,6 +8,7 @@ import {
   ChangeSubscriptions
 } from "../../dynamic-form/customSubscriptions/changeSubscriptions";
 import {BaseComponent} from "../../dynamic-form/components/base-component/base-component";
+import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 
 export interface SubscriptionFn {
   (): any;
@@ -26,7 +27,6 @@ export class ControlComponent extends BaseComponent {
   constructor(@Optional() @Inject(CHANGE_SUBSCRIPTIONS) CHANGE_SUBSCRIPTIONS: SubscriptionFn[]) {
     super(CHANGE_SUBSCRIPTIONS);
   }
-
 
   ngOnInit() {
     this.initSubscriptionFunctions();

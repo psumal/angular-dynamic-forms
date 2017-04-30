@@ -37,14 +37,12 @@ export class FormGroupComponent extends BaseComponent {
   private _config: AbstractFormControlModel<any>;
 
   set config(config: AbstractFormControlModel<any>) {
-
-    this._config = config;
+    super.config = config;
     this.items = config['config'];
-
   }
 
   get config(): AbstractFormControlModel<any> {
-    return this._config;
+    return super.config;
   }
 
 

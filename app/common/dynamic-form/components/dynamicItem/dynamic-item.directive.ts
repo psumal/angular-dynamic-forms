@@ -78,7 +78,7 @@ export class DynamicItemDirective implements DynamicItem, OnChanges, OnInit {
     }
 
     if (!(typeof component === "function")) {
-      throw new Error(`Component "${component}" is not provided via UI_COMPONENTS`);
+      throw new Error(`Component "${component}" with name ${componentName} is not provided via UI_COMPONENTS. Maybe your controlType is not present in controlTypes in any component?`);
     }
 
     return component;

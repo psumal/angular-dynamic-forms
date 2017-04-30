@@ -5,9 +5,11 @@ export class ItemBase{
   order: number;
   controlType: string;
 
-  constructor(options: IItemBaseOptions = {}) {
+  constructor(options: IItemBaseOptions = {}, parentId?:string) {
     this.formPath = options.formPath;
-    this.key = options.key || '';
+
+    this.key = (parentId)?`${parentId}.${options.key}` : options.key || '';
+
     this.order = options.order === undefined ? 1 : options.order;
     this.controlType = options.controlType || '';
   }

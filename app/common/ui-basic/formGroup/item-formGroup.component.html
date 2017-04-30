@@ -1,6 +1,9 @@
-<fieldset [attr.class]="getFormGroupClass()" >
+<fieldset [attr.class]="getFormGroupClass()" [formGroup]="group" >
   <legend>{{config.label}}</legend>
 
+  <pre>{{config |json}}</pre>{{config.key}}
+
+  <div class="form-row" formGroupName="{{config.key}}">
 
     <ng-container
       *ngFor="let conf of items;"
@@ -8,7 +11,16 @@
       [config]="conf"
       [group]="group">
     </ng-container>
+
+  </div>
   <!--
+    <ng-container
+      *ngFor="let conf of items;"
+      dynamicFGItem
+      [config]="conf"
+      [group]="group">
+    </ng-container>
+
        <div *ngFor="let conf of items" class="form-row">
 
          <df-form-group *ngIf="conf.controlType === 'formGroup'" [config]="conf" [group]="group"></df-form-group>

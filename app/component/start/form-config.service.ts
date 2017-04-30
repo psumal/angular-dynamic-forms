@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
 export class FormConfigService {
 
   getFormGroupTestConfig() {
-    let bindings: Array<any> = [
+    let formConfig: Array<any> = [
       {
         controlType: 'formGroup',
         key: "groupTest",
@@ -26,12 +26,12 @@ export class FormConfigService {
       }
     ];
 
-    return bindings;
+    return formConfig;
 
   }
 
   getDynCompTestConfig() {
-    let bindings: Array<any> = [
+    let formConfig: Array<any> = [
       {
         controlType: 'slider',
         key: "slider",
@@ -39,7 +39,7 @@ export class FormConfigService {
       }
     ];
 
-    return bindings;
+    return formConfig;
 
   }
 
@@ -202,7 +202,7 @@ export class FormConfigService {
   }
 
   getKitchenSink() {
-    let demoset1: Array<any> = [
+    let formConfig: Array<any> = [
 
       // textbox text
       {
@@ -391,7 +391,7 @@ export class FormConfigService {
         type: 'button'
       },
       //formGroup
-      {
+      /*{
         controlType: 'formGroup',
         key: "groupTest",
         title: "Form Group1",
@@ -409,14 +409,14 @@ export class FormConfigService {
             type: 'button'
           }
         ]
-      }
+      }*/
     ];
-    return demoset1;
+    return formConfig;
   }
 
   getGenericElement() {
 
-    let genericElementConfig: Array<any> = [
+    let formConfig: Array<any> = [
       /**/
       // controlType
       {
@@ -547,17 +547,16 @@ export class FormConfigService {
         label: "Form Group",
         config: [
 
-          /*
+          /**/
           {
            controlType: 'textbox',
-           key: 'testtesdast',
-           formPath:'g1.testtesdast',
-           label: 'asaas',
-           placeholder: "The testtet help",
-           helpText: "This testtet of the element",
+           key: 'g1T1',
+           label: 'g1T1',
+           placeholder: "The g1T1",
+           helpText: "g1T1 of the g1 froup",
            type: 'text'
            },
-           */
+
           {
             controlType: 'button',
             key: 'reset-button',
@@ -568,13 +567,12 @@ export class FormConfigService {
         ]
       }
     ];
-    return genericElementConfig;
+    return formConfig;
   }
-
 
   getCampaign() {
 
-    let campaignConfig: Array<any> = [
+    let formConfig: Array<any> = [
       {
         controlType: 'select',
         key: 'anrede',
@@ -756,8 +754,7 @@ export class FormConfigService {
         ]
       }
     ];
-    return campaignConfig;
+    return formConfig;
   }
-
 
 }

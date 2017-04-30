@@ -1,35 +1,24 @@
 <div class="jumbotron">
   <h1 class="display-3">Dough-Fabric</h1>
   <p class="lead">Generic Form Form Builder</p>
-  <template-form-comp (onModelChange)="onTemplateFromModelChange($event)">
-  </template-form-comp>
+  <form-config-selector-comp (onModelChange)="onTemplateFromModelChange($event)">
+  </form-config-selector-comp>
 </div>
 
 <div class="row marketing">
 
   <div class="col-lg-6">
 
-    <h4>Form</h4>
-
-    <p>Config from Server</p>
-    <pre style="height:200px; overflow-y: scroll;">{{dynamicItems | json}}</pre>
-    <h4>Campaign on Client (app): {{formName}}</h4>
-    <form (ngSubmit)="onSubmit($event)" [formGroup]="form">
-    <dynamic-form-group
-      [config]="dynamicItems"
-      [model]="{}">
-    </dynamic-form-group>
-      </form>
+<form-viewer-comp
+  [config]="dynamicItems"
+  [model]="formModel">
+  </form-viewer-comp>
 
   </div>
 
   <div class="col-lg-6">
-    <h4>FormBuilder from Customer: {{formName}}</h4>
+   <form-builder-comp>
 
-    <dynamic-form-group
-      [config]="formItems"
-      [model]="formModel"
-      (onSubmitted)="onSubmitted($event)">
-    </dynamic-form-group>
+   </form-builder-comp>
     </div>
 </div>

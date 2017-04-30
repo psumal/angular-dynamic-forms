@@ -6,8 +6,7 @@ import { StartComponent } from "./start.component";
 
 import {} from "../../common/dynamic-form/dynamic-form.module";
 import {FormConfigService} from "./form-config.service";
-import {TemplateFormModule} from "../../common/template-form/template-form.module";
-
+import {FormConfigSelectorModule} from "./form-config-selector/form-config-selector.module";
 
 import {CHANGE_SUBSCRIPTIONS} from "../../common/dynamic-form/customSubscriptions/changeSubscriptions";
 import {filteredOptions} from "./customSubscriptions/filteredOptionsSubscription";
@@ -16,13 +15,15 @@ import {DynamicFormModule} from "../../common/dynamic-form/dynamic-form.module";
 import {UiBasicModule} from "../../common/ui-basic/ui-basic.module";
 import {UI_COMPONENTS} from "../../common/dynamic-form/components/ui-components.token";
 import {SliderComponent} from "./customComponents/slider/slider.component";
+import {FormViewerModule} from "./form-viewer/form-viewer.module";
+import {FormBuilderModule} from "./form-builder/form-builder.module";
 
 export{ StartComponent} from "./start.component";
 
 const EXPORTS = [ StartComponent, SliderComponent ];
 
 @NgModule({
-  imports: [ CommonModule,ReactiveFormsModule, TemplateFormModule, DynamicFormModule, UiBasicModule],
+  imports: [ CommonModule,ReactiveFormsModule, FormConfigSelectorModule, DynamicFormModule, UiBasicModule, FormViewerModule, FormBuilderModule],
   exports:      [ EXPORTS ],
   declarations: [ EXPORTS ],
   entryComponents : [SliderComponent],

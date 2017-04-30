@@ -23,38 +23,12 @@ export class StartComponent {
   constructor(protected service: FormConfigService) {
 
     this.formItems = service.getGenericElement();
-    this.formModel = {key:"testKEyFromModel"};
-    this.demoForms = [
-      {
-        value: 'Star Rating Config',
-        key: {
-          formItems: service.getConfigForm(),
-          formModel: {
-            rating: 4,
-            numOfStars: 7,
-            size: "large"
-          }
-        }
-      },
-      {
-        value: 'KitchenSink',
-        key: {
-          forItems: service.getKitchenSink()
-        }
-      },
-      {
-        value: 'Generic form',
-        key: {
-          forItems: service.getGenericElement()
-        }
-      }
-    ];
+    this.formModel = {key: "testKEyFromModel"};
 
   }
 
-
   /*DEMO SELECT*/
-  onTemplateFromModelChange($event: {model: any}) {
+  onFormConfigSelectChange($event: {model: any}) {
     console.log('onTemplateFromModelChange', $event.model.demo.formItems);
 
     if ('model' in $event && 'demo' in $event.model) {
@@ -71,15 +45,6 @@ export class StartComponent {
         this.formModel = $event.model.demo.formModel;
       }
 
-    }
-  }
-
-  onSubmitted($event: {}) {
-    console.log('onSubmitted $event', $event['payLoad']);
-    let item: any | FormGroupItem = DynamicFormUtils.createFormItem($event['payLoad']);
-    if (item) {
-      console.log("generated config: ", item);
-      this.dynamicItems = this.dynamicItems.concat(item, []);
     }
   }
 

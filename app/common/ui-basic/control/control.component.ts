@@ -1,4 +1,4 @@
-import {Component, Input, Optional, Inject} from "@angular/core";
+import {Component, Input, Optional, Inject, SimpleChange, SimpleChanges} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 
@@ -22,7 +22,7 @@ export interface SubscriptionFn {
 })
 export class ControlComponent {
 
-  static controlTypes = ["select", "checkbox", "radio", "textbox", "textarea"];
+  static controlTypes = ["select", "multiselect", "checkbox", "radio", "textbox", "textarea"];
 
   config: AbstractFormControlModel<any> = <any>{};
   group: FormGroup = <any>{};
@@ -34,8 +34,17 @@ export class ControlComponent {
   }
 
   ngOnInit() {
-return;
-    if (this.config.changeListener) {
+
+
+    console.log('FormItem Config: ', this.config);
+    console.log('FormGroup Root: ', this.group);
+    console.log('FormComponent.key: ', this.config.key);
+    console.log('FormComponent FormControl: ', this.group.get(this.config.key));
+    let currentItem = this.group.get(this.config.key);
+
+    console.log(`${this.config.key} form Item: `, currentItem);
+
+    if (false && this.config.changeListener) {
       let listener = this.config.changeListener;
       listener.forEach((listener) => {
 
@@ -57,6 +66,31 @@ return;
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+
+    let valueChanged = function (key: string, changes: SimpleChanges): boolean {
+      if (key in changes) {
+        if (changes[key].currentValue !== changes[key].previousValue) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    //---------------------------------------
+
+    if (valueChanged('group', changes)) {
+      this.group = changes['group'].currentValue || {};
+      console.log('!!!!!!!!!!!!!!!!!!!!!', this.group);
+    }
+
+    if (valueChanged('config',changes)) {
+      this.config = changes['config'].currentValue || [];
+    }
+
+  }
+
+
   init() {
     //setup controlRendered subscriptions
   }
@@ -66,7 +100,7 @@ return;
   }
 
   getWrapperClass(): string {
-    return ;
+
     /*let displayWarning = function() => {
      return this.item.value !== 'te';
      };*/

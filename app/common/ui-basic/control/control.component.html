@@ -1,5 +1,6 @@
-<div [formGroup]="group" *ngIf="controlRendered" [attr.class]="getWrapperClass()">
-
+<div [formGroup]="group" *ngIf="controlRendered" [attr.class]="">
+CONTROL COMP CONTENT IS COMMENTED OUT
+  <!--
   <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
     {{config.label}}
   </label>
@@ -69,6 +70,7 @@
           {{optChild.value}}
         </option>
       </optgroup>
+
       <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
     </template>
   </select>

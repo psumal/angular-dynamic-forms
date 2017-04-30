@@ -10,7 +10,7 @@ import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-contr
   inputs: ['config', 'group'],
   selector: 'df-form-group',
   templateUrl: 'item-formGroup.component.html',
-  declarations: [FormGroupComponent]
+  providers: [DynamicFormUtils, DynamicFormService]
 })
 export class FormGroupComponent {
 
@@ -24,29 +24,37 @@ export class FormGroupComponent {
 
   group: FormGroup;
 
-  items;
+  _items:any;
 
-  private _config: AbstractFormControlModel<any>[] = [];
-  set config(config: Array<any>) {
-    console.log('configconfigconfig', config);
-
-    this._config = config;
-
-    this.items = (<any>config['config'])
+  set items(value:any[]) {
+    this._items = value
       .map((item: any) => {
-
         let newItem = DynamicFormUtils.createFormItem(item);
         if (newItem) {
           return newItem;
         }
-    });
+      });
+
+  }
+
+  get items() : any[] {
+    return this._items;
+  }
+
+  private _config: AbstractFormControlModel<any>[] = [];
+
+  set config(config: Array<any>) {
+
+    this._config = config;
+    this.items = config['config'];
+
   }
 
   get config(): Array<any> {
     return this._config;
   }
 
-  constructor(protected dfService: DynamicFormService, protected fb:FormBuilder) {}
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -63,6 +71,8 @@ export class FormGroupComponent {
 
     if (valueChanged('group', changes)) {
       this.group = changes['group'].currentValue || {};
+
+      console.log('this.group: ', this.group);
     }
 
     if (valueChanged('config',changes)) {
@@ -71,8 +81,5 @@ export class FormGroupComponent {
 
   }
 
-  protected renderForm(): void {
-    this.group = this.fb.group(this.items);
-  }
 
 }

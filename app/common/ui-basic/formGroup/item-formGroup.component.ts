@@ -37,14 +37,13 @@ export class FormGroupComponent extends BaseComponent {
   private _config: AbstractFormControlModel<any>;
 
   set config(config: AbstractFormControlModel<any>) {
-    super.config = config;
+    this._config = config;
     this.items = config['config'];
   }
 
   get config(): AbstractFormControlModel<any> {
-    return super.config;
+    return this._config;
   }
-
 
   constructor(@Optional() @Inject(CHANGE_SUBSCRIPTIONS) CHANGE_SUBSCRIPTIONS: SubscriptionFn[]) {
     super(CHANGE_SUBSCRIPTIONS);
@@ -52,6 +51,7 @@ export class FormGroupComponent extends BaseComponent {
 
 
   ngOnInit() {
+    console.log('fromGroup ngOnInit');
     this.initSubscriptionFunctions();
   }
 

@@ -6,7 +6,7 @@ import {ChangeSubscriptionFn, ChangeSubscriptions} from "../../customSubscriptio
 
 export class BaseComponent {
 
-  static controlTypes = [];
+  static controlTypes:string[] = [];
 
   CHANGE_SUBSCRIPTIONS:SubscriptionFn[];
 
@@ -19,7 +19,7 @@ export class BaseComponent {
     return this.group.get(this.config.formPath);
   }
 
-  constructor(CHANGE_SUBSCRIPTIONS) {
+  constructor(CHANGE_SUBSCRIPTIONS:SubscriptionFn[]) {
     this.CHANGE_SUBSCRIPTIONS = CHANGE_SUBSCRIPTIONS
   }
 
@@ -125,7 +125,7 @@ export class BaseComponent {
     return subscriptionFn;
   }
 
-  valueChanged(key: string, changes: any, currentValue): boolean {
+  valueChanged(key: string, changes: any, currentValue:any): boolean {
   if (key in changes) {
     if (changes[key].currentValue !== currentValue) {
       return true;

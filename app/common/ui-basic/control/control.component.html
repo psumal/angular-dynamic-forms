@@ -1,8 +1,4 @@
-<div [formGroup]="getParentFormGroup()" *ngIf="controlRendered" [attr.class]="">
-
-  control:  {{config.key}} <br/>
-  parentId: {{config.parentId}} <br/>
-  formPath: {{config.formPath}} <br/>
+<div [formGroup]="getParentFormGroup()" *ngIf="componentRendered" [attr.class]="">
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
     {{config.label}}

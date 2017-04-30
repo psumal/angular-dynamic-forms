@@ -16,7 +16,6 @@ export class DynamicFormService {
   constructor(private fb: FormBuilder,
               @Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
-
   }
 
   toFG(config: Array<any>, model?: {}): FormGroup {
@@ -140,6 +139,5 @@ export class DynamicFormService {
     }
     return validators;
   }
-
 
 }

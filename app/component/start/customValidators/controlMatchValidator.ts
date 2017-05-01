@@ -1,13 +1,23 @@
-import {FormControl, AbstractControl} from "@angular/forms";
+import {AbstractControl} from "@angular/forms";
 
-export function controlMatch(control: AbstractControl, controlPathList:string[]): {[key: string]: boolean} => {
-  console.log('controlMatch: ', control, controlPathList);
+export function controlMatch(formGroup: AbstractControl, params:any) {
 
-  const email = control.get('email');
-  const confirm = control.get('confirm');
+  console.log('controlMatch', formGroup, params);
 
-  if (!email || !confirm) return null;
-  if (email.value === confirm.value) {
-    return null;
-  }
+  const values = params.filter((formPath) => {
+    console.log(formPath);
+    const item = formGroup.get(formPath);
+    if(item && item.value) {
+     return true;
+    }
+    return false;
+  });
+
+  console.log('values');
+
+
+  if (!values || values.length == 0) return null;
+  return true ? null : {controlMatch: true};
+
+
 };

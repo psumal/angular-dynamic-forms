@@ -6,8 +6,9 @@ export class AbstractFormControlModel<T> extends ItemBase {
   label?:string;
   value?: T;
   required?: boolean;
-  validator?:ValidatorFn | ValidatorFn[];
-  asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[];
+  validator?:any;
+  validator?:any;
+  asyncValidator?:any;
   changeListener?:changeListenerConfig[];
 
   constructor(options: IAbstractControlOptions<T> = <T>{}) {

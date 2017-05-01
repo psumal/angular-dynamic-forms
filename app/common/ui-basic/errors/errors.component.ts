@@ -10,8 +10,8 @@ import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-contr
 })
 export class ControlErrorComponent implements OnInit{
 
-  @Input() config: AbstractFormControlModel<any> = <any>{};
-  @Input() group: FormGroup = <any>{};
+  config: AbstractFormControlModel<any> = <any>{};
+  group: FormGroup = <any>{};
 
   private _errors:{[key:string]:string} = {};
 
@@ -33,17 +33,17 @@ export class ControlErrorComponent implements OnInit{
 
 
   ngOnInit() {
-    this.errors = this._getErrors(this.config.key);
+    this.errors = this._getErrors(this.config.formPath);
 
-    let $statusChanges = this.group.get(this.config.key).statusChanges;
+    let $statusChanges = this.group.get(this.config.formPath).statusChanges;
     $statusChanges.subscribe((status) => {
-      this.errors = this._getErrors(this.config.key);
+      this.errors = this._getErrors(this.config.formPath);
     });
   }
 
-  _getErrors(formControlName:string) : {[key:string]:string} {
+  _getErrors(formControlName:string | string[]) : {[key:string]:string} {
     let errors = {};
-    let item = this.group.get(this.config.key);
+    let item = this.group.get(formControlName);
     return (item && 'errors' in item)?item.errors:{};
   }
 

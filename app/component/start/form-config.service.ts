@@ -24,7 +24,19 @@ export class FormConfigService {
           controlType: 'textbox',
           type: "text",
           key: "TextboxFg" + count,
-          label: "Textbox Item of type url"
+          label: "Textbox Item "+'.'+count +" of fG"+count
+        },
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count +'.'+count,
+          label: "Textbox Item "+'.'+count+'.'+count +" of fG"+count
+        },
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count +'.'+count+'.'+count,
+          label: "Textbox Item "+ count +'.'+count+'.'+count +" of fG"+count
         }
         /*
          ,{
@@ -40,7 +52,7 @@ export class FormConfigService {
         key: "fG" + count,
         title: "Form Group " + count,
         config: conf,
-        validator: (count > 0)?{name: 'controlMatch', params:[["fG" + count,"TextboxFg" + count], ["fG" + (count-1),"TextboxFg" + (count-1)]]}:{}
+        validator: (count > 0)?{name: 'controlMatch', params:[ ["TextboxFg2"], ["TextboxFg2.2"] ] }:{}
       };
 
 

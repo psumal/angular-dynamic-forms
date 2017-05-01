@@ -1,23 +1,40 @@
 import {AbstractControl} from "@angular/forms";
 
-export function controlMatch(formGroup: AbstractControl, params:any) {
+export function controlMatch(formGroup: AbstractControl, params: any) {
 
-  console.log('controlMatch', formGroup, params);
+  console.log('params: ', formGroup.value);
 
-  const values = params.filter((formPath:any) => {
-    console.log(formPath);
+  let values = params.filter((formPath: any) => {
+    console.log('formPath: ',formPath);
     const item = formGroup.get(formPath);
-    if(item && item.value) {
-     return true;
+    if (item && item.value) {
+      console.log('item.value: ',formPath.join('.'), item.value);
+      return true;
     }
     return false;
+  })
+
+  console.log('values filtered', values);
+
+  values = values.map((formPath) => {
+    console.log('formPath .value: ',formGroup.get(formPath).value);
+    return formGroup.get(formPath).value;
   });
 
-  console.log('values');
+  console.log('values', values);
+
+  let isValid = values.every(
+    (value, _, array) => {
+      console.log('every: ', value, _, array);
+      return array[0] === value;
+    }
+  );
+
+  console.log('isValid', isValid);
 
 
   if (!values || values.length == 0) return null;
-  return true ? null : {controlMatch: true};
+  return isValid ? null : {controlMatch: true};
 
 
 };

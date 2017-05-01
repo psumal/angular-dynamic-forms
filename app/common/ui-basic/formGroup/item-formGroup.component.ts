@@ -51,7 +51,7 @@ export class FormGroupComponent extends BaseComponent {
 
 
   ngOnInit() {
-    console.log('fromGroup ngOnInit');
+    console.log('fromGroup ngOnInit', this.group);
     this.initSubscriptionFunctions();
   }
 

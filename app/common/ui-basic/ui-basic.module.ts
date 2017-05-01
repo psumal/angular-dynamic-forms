@@ -7,8 +7,9 @@ import {ControlComponent} from "./control/control.component";
 import {FormGroupComponent} from "./formGroup/item-formGroup.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DynamicFGItemDirective} from "./formGroup/dynamicFormGroupItem/dynamic-form-group-item.directive";
+import {ControlErrorComponent} from "./errors/errors.component";
 
-const ENTRY_COMPONENTS = [ ControlComponent, ButtonComponent, FormGroupComponent  ];
+const ENTRY_COMPONENTS = [ ControlComponent, ButtonComponent, FormGroupComponent, ControlErrorComponent  ];
 const EXPORTS = [ ...ENTRY_COMPONENTS, DynamicFGItemDirective  ];
 
 @NgModule({

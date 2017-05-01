@@ -110,12 +110,12 @@ export class FormConfigService {
 
     ////// Custom Async Control Validators
 
-    let controlAsyncFormGroupValidationFg = this._getRandItem('controlAsyncFormGroupValidationFg', 'formGroup', null, 'Custom Async Validators', [], [], '', 'Async Validators');
+    let controlAsyncFormGroupValidationFg:any = this._getRandItem('customControlValidationFg', 'formGroup', null, 'Custom validators', [], [], '', '');
 
     //controlAsyncFormGroupValidationFg.config.push(this._getRandItem('promiseValidator',    'textbox', 'text', 'Promise Validation', [], [{ name : "promiseValidator"}],     '', ''));
     //controlAsyncFormGroupValidationFg.config.push(this._getRandItem('observableValidator', 'textbox', 'text', 'Observable Validation', [], [{ name : "observableValidator"}],  '', ''));
 
-   config.push(controlAsyncFormGroupValidationFg);
+   //config.push(controlAsyncFormGroupValidationFg);
 
     ////// Custom Group Validators
 
@@ -124,7 +124,7 @@ export class FormConfigService {
      customGroupValidationFg.config.push(this._getRandItem('controlMatchPattern',  ct, 'text', 'Control Match Pattern', [],[], '', ''));
      customGroupValidationFg.config.push(this._getRandItem('controlMatch',  ct, 'text', 'Control Match', [],           [], '', ''));
 
-    config.push(customGroupValidationFg);
+    //config.push(customGroupValidationFg);
 
     return config;
   }

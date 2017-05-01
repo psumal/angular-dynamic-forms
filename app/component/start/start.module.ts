@@ -38,7 +38,7 @@ const EXPORTS = [StartComponent, SliderComponent];
     {provide: NG_VALIDATORS, useValue: dividableBy, multi: true},
     //ASYNC_VALIDATORS
     //customAsyncValidator for control
-    {provide: NG_ASYNC_VALIDATORS, useValue: promiseValidator, multi: true},
+    //{provide: NG_ASYNC_VALIDATORS, useValue: promiseValidator, multi: true},
     //{provide: NG_VALIDATORS, useValue: observableValidator, multi: true},
     //customValidator for group
     //{provide: NG_VALIDATORS, useValue: controlMatch, multi: true}

@@ -5,50 +5,16 @@ export class FormConfigService {
 
   getFormGroupTestConfig() {
 
-    let config = [
-      {
-        controlType: 'formGroup',
-        key: "fG1",
-        title: "Form Group 1",
-        config: [
-          {
-            controlType: 'textbox',
-            type: "text",
-            key: "TextboxFg1",
-            label: "Textbox Item of type url"
-          }, /**/
-          {
-            controlType: 'button',
-            key: 'buttonButton',
-            label: 'Button',
-            type: 'button'
-          },
-          {
-            controlType: 'formGroup',
-            key: "fG0",
-            title: "Form Group 0",
-            config: [
-              {
-                controlType: 'textbox',
-                type: "text",
-                key: "TextboxFg0",
-                label: "Textbox Item of type url"
-              }, /**/
-              {
-                controlType: 'button',
-                key: 'buttonButton',
-                label: 'Button',
-                type: 'button'
-              }
-            ]
-          }
-        ]
-      }
-    ];
+    let conf = createFgConfig(2);
 
+    conf.push( {
+      controlType: 'textbox',
+      type: "text",
+      key: "TextboxFg" + 3,
+      label: "Textbox Item of type url"
+    });
 
-    return createFgConfig(2);
-
+    return conf;
     //////////////////////////////////
 
     function createFgConfig(count:any): any {
@@ -73,7 +39,8 @@ export class FormConfigService {
         controlType: 'formGroup',
         key: "fG" + count,
         title: "Form Group " + count,
-        config: conf
+        config: conf,
+        validator: (count > 0)?{name: 'controlMatch', params:[["fG" + count,"TextboxFg" + count], ["fG" + (count-1),"TextboxFg" + (count-1)]]}:{}
       };
 
 

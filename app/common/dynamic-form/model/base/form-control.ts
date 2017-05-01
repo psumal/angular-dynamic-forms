@@ -7,7 +7,6 @@ export class AbstractFormControlModel<T> extends ItemBase {
   value?: T;
   required?: boolean;
   validator?:any;
-  validator?:any;
   asyncValidator?:any;
   changeListener?:changeListenerConfig[];
 

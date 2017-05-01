@@ -4,7 +4,7 @@ export function controlMatch(formGroup: AbstractControl, params:any) {
 
   console.log('controlMatch', formGroup, params);
 
-  const values = params.filter((formPath) => {
+  const values = params.filter((formPath:any) => {
     console.log(formPath);
     const item = formGroup.get(formPath);
     if(item && item.value) {

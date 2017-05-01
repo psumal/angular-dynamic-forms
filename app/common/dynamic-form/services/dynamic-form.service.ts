@@ -18,7 +18,7 @@ export class DynamicFormService {
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
   }
 
-  toFG(config: Array<any>, model?: {}): FormGroup {
+  toFG(config: Array<any>, extras?: any): FormGroup {
 
     //create formBuilder.group() params
     let formGroupObject: {[key: string]: any;} = {};
@@ -35,13 +35,15 @@ export class DynamicFormService {
           //formGroupObject[conf['key']] = this.toFA(conf['config'], model[conf['key']]);
         }
         else {
+          let extras = this.getFormGroupExtras(conf);
+          console.log('extras: ', extras);
           formGroupObject[conf['key']] = {};
-          formGroupObject[conf['key']] = this.toFG(conf['config']);
+          formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
         }
       });
     }
 
-    return this.fb.group(formGroupObject, extra);
+    return this.fb.group(formGroupObject, extras);
 
     /////////////////////////////
 
@@ -72,6 +74,25 @@ export class DynamicFormService {
   }
 
   //@TODO move to utils
+  getFormGroupExtras = (forgGroupConfig: AbstractFormControlModel<any>) => {
+
+    //define array of params
+    let fGExtras: any = {};
+
+    let asyncValidator: AsyncValidatorFn;
+
+    if ('validator' in forgGroupConfig && Object.keys(forgGroupConfig.validator).length > 0) {
+      fGExtras.validator = this.getValidatorFn(forgGroupConfig.validator.name, forgGroupConfig.validator.params);
+    }
+
+    if ('asyncValidator' in forgGroupConfig) {
+      //fGExtras.asyncValidator = this.getValidatorFn(forgGroupConfig.asyncValidator.name);
+    }
+
+    return fGExtras;
+  };
+
+
   getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
 
     //define array of params
@@ -98,7 +119,7 @@ export class DynamicFormService {
 
     //async validators
     if ('asyncValidator' in item) {
-      asyncValidator = this.getValidators(item['asyncValidator']);
+      //asyncValidator = this.getValidators(item['asyncValidator']);
     }
     fCParams.push(asyncValidator);
 
@@ -127,14 +148,14 @@ export class DynamicFormService {
       throw new Error(`validator "${validatorName}" is not provided via NG_VALIDATORS or NG_ASYNC_VALIDATORS`);
     }
 
-    return validatorArgs ? validatorFn(validatorArgs) : validatorFn;
+    return (validatorArgs) ? (c) =>  { return validatorFn(c, validatorArgs) } : validatorFn;
   }
 
   getValidators(config: any): ValidatorFn[] | AsyncValidatorFn[] {
     let validators: any[] = [];
     if (config) {
       validators = config.map((validatorObj: any) => {
-        return this.getValidatorFn(validatorObj.name, config[validatorObj.name])
+        return this.getValidatorFn(validatorObj.name, config[validatorObj.params])
       })
     }
     return validators;

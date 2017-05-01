@@ -36,7 +36,6 @@ export class DynamicFormService {
         }
         else {
           let extras = this.getFormGroupExtras(conf);
-          console.log('extras: ', extras);
           formGroupObject[conf['key']] = {};
           formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
         }
@@ -91,7 +90,6 @@ export class DynamicFormService {
 
     return fGExtras;
   };
-
 
   getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
 

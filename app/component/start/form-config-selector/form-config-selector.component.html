@@ -7,7 +7,9 @@
       name="formConfigSelect"
       [(ngModel)]="formModel.formConfigSelect"
       #formConfigSelect="ngModel"
+      (change)="updateFormConfig(formConfigSelect.value.formItems)"
       required>
+      <option [ngValue]="">{{noOpt || "-- noOpt --"}}</option>
       <option *ngFor="let opt of demoForms" [ngValue]="opt.key">{{opt.value}}</option>
     </select>
     <small [hidden]="formConfigSelect.valid || (formConfigSelect.pristine && !f.submitted)">

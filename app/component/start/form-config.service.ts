@@ -1,13 +1,130 @@
 import {Injectable} from "@angular/core";
+import {
+  textboxTypes,
+  controlTypes,
+  buttonTypes,
+  inputTypes,
+  IAbstractControlOptions
+} from "../../common/dynamic-form/model/item.struckts";
 
 @Injectable()
 export class FormConfigService {
 
+  static TEXTBOX_TYPES: { value: textboxTypes, name: string }[] = [
+    {value: 'text', name: 'Text'},
+    {value: 'number', name: 'Number'},
+    {value: 'email', name: 'Email'},
+    {value: 'tel', name: 'Tel'},
+    {value: 'password', name: 'Password'},
+    {value: 'date', name: 'Date'},
+    {value: 'time', name: 'Time'},
+    {value: 'datetime-local', name: 'Datetime-Local'},
+    {value: 'week', name: 'Week'},
+    {value: 'month', name: 'Month'},
+    {value: 'url', name: 'Url'},
+    {value: 'hidden', name: 'Hidden'},
+    {value: 'range', name: 'Range'},
+    {value: 'search', name: 'Search'}
+  ];
+
+  static BUTTON_TYPES: { value: buttonTypes, name: string }[] = [
+    {value: 'button', name: 'Button'},
+    {value: 'reset', name: 'Reset'},
+    {value: 'submit', name: 'Submit'}
+  ];
+
+  static INPUT_TYPES: { value: buttonTypes, name: string }[] = [].concat(FormConfigService.TEXTBOX_TYPES, FormConfigService.BUTTON_TYPES);
+
+
+  static CONTROL_TYPES: { value: controlTypes, name: string }[] = [
+    {value: 'textbox', name: 'Textbox'},
+    {value: 'select', name: 'Select'},
+    {value: 'multiselect', name: 'Multiselect'},
+    {value: 'checkbox', name: 'Checkbox'},
+    {value: 'checkboxInline', name: 'Checkbox Inline'},
+    {value: 'radioInline', name: 'Radio Inline'},
+    {value: 'textarea', name: 'Textarea'},
+    {value: 'button', name: 'Button'},
+    {value: 'formGroup', name: 'FormGroup'},
+
+  ];
+
+  static INPUT_VALIDATORS: { value: any, name: string } [] = [
+    {value: {name: 'required'}, name: 'Required'},
+    //static requiredTrue(control: AbstractControl): {[key: string]: boolean;};
+    {value: {name: 'minLength', params: []}, name: 'Min Length'},
+    {value: {name: 'maxLength', params: [4]}, name: 'Max Length'},
+    {value: {name: 'pattern', params: ["[A-Za-z]+"]}, name: 'Pattern'},
+    {value: {name: 'nullValidator', params: ["[A-Za-z]+"]}, name: 'Null Validator'},
+    //custom validators
+
+    //email
+    {value: {name: "validateEmail"}, name: 'Validate Email'},
+  ];
+
+  static INPUT_ASYNC_VALIDATORS: { value: any, name: string } [] = [
+    {value: {name: 'wait2SecToValidateRequired'}, name: 'Wait 2 Sec To Validate Required'},
+  ];
+
+  getPersonalDataConfig() {
+
+    let conf = [];
+
+    conf.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
+    conf.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
+    conf.push(this._getRandItem('Agr', 'textbox', 'number', 'Lastname', [], [], '', ''));
+    conf.push(this._getRandItem('email', 'textbox', 'email', 'Email', [], [],  '', ''));
+    conf.push(this._getRandItem('password', 'textbox', 'password', 'Password', [], [],  '', ''));
+    conf.push(this._getRandItem('passwordConfirm', 'textbox', 'password', 'Confirm Password', [], [],  '', ''));
+
+    return conf;
+  }
+
   getValidationTestConfig() {
+
+    let conf = [];
+
+    let ct:controlTypes = 'textbox';
+    let it:inputTypes = 'text';
+
+
+    return conf;
+
+    //////
+
+    let controlValidationFg = this._getRandItem('controlValidationFg', 'formGroup');
+
+    console.log('controlValidationFg', controlValidationFg);
+
+    return;
+
+    controlValidationFg.config.push(this._getRandItem('required',       ct, it, 'Required Validation',      [ { name : "required"} ],                 [], '', ''));
+    controlValidationFg.config.push(this._getRandItem('minLength2',     ct, it, 'Min Length 2 Validation',  [ { name : "minLength", params:2 } ],     [], '', ''));
+    controlValidationFg.config.push(this._getRandItem('maxLength4',     ct, it, 'Max Length 4 Validation',  [ { name : "maxLength", params:4 } ],     [], '', ''));
+    controlValidationFg.config.push(this._getRandItem('pattern[a-z]',   ct, it, 'Pattern [a-z] Validation', [ { name : "pattern", params:/[a-z]/ } ], [], '', ''));
+    controlValidationFg.config.push(this._getRandItem('nullValidator',  ct, it, 'Null Validation',          [ { name : "nullValidator" } ],           [], '', ''));
+
+    conf.push(controlValidationFg);
+
+    //////
+
+    let controlAsyncValidationFg = this._getRandItem('controlValidationFg', 'formGroup', null, null, null, 'Async Validators');
+
+    //controlAsyncValidationFg.config.push(this._getRandItem('required', 'textbox', 'text', 'Required Validation', [{ name : "required"}], [], '', ''));
+
+    conf.push(controlAsyncValidationFg);
+
+    //////
+
+    return conf;
+  }
+
+
+  getFormGroupTestConfig() {
 
     let conf = createFgConfig(2);
 
-    conf.push( {
+    conf.push({
       controlType: 'textbox',
       type: "text",
       key: "TextboxFg" + 3,
@@ -17,26 +134,26 @@ export class FormConfigService {
     return conf;
     //////////////////////////////////
 
-    function createFgConfig(count:any): any {
+    function createFgConfig(count: any): any {
 
       let conf = [
         {
           controlType: 'textbox',
           type: "text",
           key: "TextboxFg" + count,
-          label: "Textbox Item "+'.'+count +" of fG"+count
+          label: "Textbox Item " + '.' + count + " of fG" + count
         },
         {
           controlType: 'textbox',
           type: "text",
-          key: "TextboxFg" + count +'.'+count,
-          label: "Textbox Item "+'.'+count+'.'+count +" of fG"+count
+          key: "TextboxFg" + count + '.' + count,
+          label: "Textbox Item " + '.' + count + '.' + count + " of fG" + count
         },
         {
           controlType: 'textbox',
           type: "text",
-          key: "TextboxFg" + count +'.'+count+'.'+count,
-          label: "Textbox Item "+ count +'.'+count+'.'+count +" of fG"+count
+          key: "TextboxFg" + count + '.' + count + '.' + count,
+          label: "Textbox Item " + count + '.' + count + '.' + count + " of fG" + count
         }
         /*
          ,{
@@ -52,73 +169,7 @@ export class FormConfigService {
         key: "fG" + count,
         title: "Form Group " + count,
         config: conf,
-        validator: (count > 0)?{name: 'controlMatch', params:[ ["TextboxFg2"], ["TextboxFg2.2"] ] }:{}
-      };
-
-
-      if (count > 0) {
-
-        fg.config = fg.config.concat(createFgConfig(count - 1));
-      }
-
-
-      return [fg];
-
-    }
-
-  }
-
-
-  getFormGroupTestConfig() {
-
-    let conf = createFgConfig(2);
-
-    conf.push( {
-      controlType: 'textbox',
-      type: "text",
-      key: "TextboxFg" + 3,
-      label: "Textbox Item of type url"
-    });
-
-    return conf;
-    //////////////////////////////////
-
-    function createFgConfig(count:any): any {
-
-      let conf = [
-        {
-          controlType: 'textbox',
-          type: "text",
-          key: "TextboxFg" + count,
-          label: "Textbox Item "+'.'+count +" of fG"+count
-        },
-        {
-          controlType: 'textbox',
-          type: "text",
-          key: "TextboxFg" + count +'.'+count,
-          label: "Textbox Item "+'.'+count+'.'+count +" of fG"+count
-        },
-        {
-          controlType: 'textbox',
-          type: "text",
-          key: "TextboxFg" + count +'.'+count+'.'+count,
-          label: "Textbox Item "+ count +'.'+count+'.'+count +" of fG"+count
-        }
-        /*
-         ,{
-          controlType: 'button',
-          key: 'buttonButton',
-          label: 'Button',
-          type: 'button'
-        }*/
-      ];
-
-      let fg = {
-        controlType: 'formGroup',
-        key: "fG" + count,
-        title: "Form Group " + count,
-        config: conf,
-        validator: (count > 0)?{name: 'controlMatch', params:[ ["TextboxFg2"], ["TextboxFg2.2"] ] }:{}
+        validator: (count > 0) ? {name: 'controlMatch', params: [["TextboxFg2"], ["TextboxFg2.2"]]} : {}
       };
 
 
@@ -859,6 +910,107 @@ export class FormConfigService {
       }
     ];
     return formConfig;
+  }
+
+
+  ////////////////////////////////////////////////
+
+
+  _getRandItem(key: string, controlType?: controlTypes, type?: inputTypes, label?: string, validator?: any, asyncValidator?: any, placeholder?:string, helpText?:string ): any {
+
+    controlType = controlType || this._getRandControlType();
+
+    type = type || this._getRandInputType(controlType);
+
+    label = label || '';
+
+    validator = validator || this._getRandInputValidator();
+
+    asyncValidator = asyncValidator || this._getRandInputAsyncValidator();
+
+    placeholder = placeholder || '';
+
+    helpText = helpText || '';
+
+
+    let item:any = {
+      key: key,
+      label: label,
+      placeholder: placeholder,
+      helpText: helpText,
+
+      controlType: controlType,
+      type: type,
+      validator: validator,
+      asyncValidator: asyncValidator,
+
+    };
+
+    return item;
+  }
+
+  _getRandControlType(): controlTypes {
+    let controlType;
+    return this._getRandArrayItem(FormConfigService.CONTROL_TYPES).value;
+  }
+
+  _getRandInputType(controlType: controlTypes): inputTypes {
+    let set:any;
+
+    switch (controlType) {
+      case 'select':
+      case 'multiselect':
+      case 'textarea':
+        set = [];
+        break;
+      case 'textbox':
+        set = FormConfigService.TEXTBOX_TYPES;
+        break;
+      case 'button':
+        set = FormConfigService.BUTTON_TYPES;
+        break;
+      default:
+        set = FormConfigService.INPUT_TYPES;
+    }
+
+    return this._getRandArrayItem(set).value;
+  }
+
+  _getRandTextboxType(): textboxTypes {
+    let controlType;
+    return this._getRandArrayItem(FormConfigService.TEXTBOX_TYPES).value;
+  }
+
+  _getRandButtonType(): buttonTypes {
+    return this._getRandArrayItem(FormConfigService.BUTTON_TYPES).value;
+  }
+
+  _getRandInputValidator(count?: number): any {
+    return this._getArrayOfRandItemCount(() => {
+      return this._getRandArrayItem(FormConfigService.INPUT_VALIDATORS).value
+    }, count);
+  }
+
+ _getRandInputAsyncValidator(count?: number): any {
+    return this._getArrayOfRandItemCount(() => {
+      return this._getRandArrayItem(FormConfigService.INPUT_ASYNC_VALIDATORS).value
+    }, count);
+  }
+
+  _getArrayOfRandItemCount(cb: Function, count?: number) {
+    count = count || Math.floor((Math.random() + 1) * 10);
+
+    let validators = [];
+
+    for (let i = 0; i < count; i++) {
+      validators.push(cb());
+    }
+
+    return validators;
+  }
+
+  _getRandArrayItem(arr:any[]):any {
+    return arr[Math.floor(Math.random() * arr.length)]
   }
 
 }

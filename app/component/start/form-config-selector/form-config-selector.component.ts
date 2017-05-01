@@ -8,6 +8,7 @@ import {FormConfigService} from "../form-config.service";
 })
 export class FormConfigSelectorComponent {
 
+  noOpt:string = "--- none ---";
   demoForms:Array<any>;
   formModel:any= {};
 
@@ -35,6 +36,21 @@ export class FormConfigSelectorComponent {
           formItems: formConfigService.getKitchenSink()
         }
       },
+      {
+        value: 'validation Test',
+        key: {
+          formName: 'Validation ' +
+          'TesT',
+          formItems: formConfigService.getValidationTestConfig()
+        }
+      },
+      {
+        value: 'formGroup Test',
+        key: {
+          formName: 'KitchenSink',
+          formItems: formConfigService.getFormGroupTestConfig()
+        }
+      },
       {value : "generic Item",
         key : {
           formName : "",
@@ -54,8 +70,12 @@ export class FormConfigSelectorComponent {
 
   }
 
+  updateFormConfig(formItems:any) {
+    this.formConfig = formItems;
+  }
+
   onSubmit(form:any) {
-    this.formConfig = form.value.formConfigSelect.formItems;
+    this.formConfig = this.updateFormConfig(form.value.formConfigSelect.formItems);
   }
 
 }

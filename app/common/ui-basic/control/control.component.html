@@ -47,6 +47,7 @@
         [attr.aria-describedby]="config.key+'Help'"
         [attr.placeholder]="config.placeholder">
         <template ngFor let-opt [ngForOf]="config.visibleOptions">
+          <option [ngValue]="" (click)="select(opt.key)">{{config.noOpt || "-- noOpt --"}}</option>
           <optgroup *ngIf="opt.children" label="{{opt.value}}">
             <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
               {{optChild.value}}

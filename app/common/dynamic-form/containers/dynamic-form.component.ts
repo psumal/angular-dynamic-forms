@@ -18,10 +18,7 @@ export class DynamicFormComponent implements OnInit {
   set config(config: Array<any>) {
 
     let prepConfig = this.setParentId(config);
-    console.log('prepConfig: ', prepConfig);
     let formConfig = this.configToFormConfig(prepConfig);
-
-    console.log('formConfig: ', formConfig);
 
     this._config = formConfig;
 

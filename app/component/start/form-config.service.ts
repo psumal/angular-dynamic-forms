@@ -115,7 +115,7 @@ export class FormConfigService {
     //cAvFg.config.push(this._getRandItem('cAvFg1',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
     //cAvFg.config.push(this._getRandItem('cAvFg2',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
 
-    config.push(cAvFg);
+    //config.push(cAvFg);
 
 
     //config.push(controlAsyncFormGroupValidationFg);

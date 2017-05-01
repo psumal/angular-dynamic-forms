@@ -17,6 +17,7 @@ import {UI_COMPONENTS} from "../../common/dynamic-form/components/ui-components.
 import {SliderComponent} from "./customComponents/slider/slider.component";
 import {FormViewerModule} from "./form-viewer/form-viewer.module";
 import {FormBuilderModule} from "./form-builder/form-builder.module";
+import {controlMatch} from "./customValidators/controlMatchValidator";
 
 export{ StartComponent} from "./start.component";
 
@@ -31,7 +32,8 @@ const EXPORTS = [ StartComponent, SliderComponent ];
     FormConfigService,
     { provide: UI_COMPONENTS, useValue: SliderComponent, multi: true },
     { provide: CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true },
-    { provide: NG_VALIDATORS, useValue: validateEmail, multi: true }
+    { provide: NG_VALIDATORS, useValue: validateEmail, multi: true },
+    { provide: NG_VALIDATORS, useValue: controlMatch, multi: true }
   ]
 })
 export class StartModule { }

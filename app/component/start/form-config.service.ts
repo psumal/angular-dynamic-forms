@@ -110,12 +110,15 @@ export class FormConfigService {
 
     ////// Custom Async Control Validators
 
-    let controlAsyncFormGroupValidationFg:any = this._getRandItem('customControlValidationFg', 'formGroup', null, 'Custom validators', [], [], '', '');
+    let cAvFg:any = this._getRandItem('cAvFg', 'formGroup', null, 'Custom validators', [], [], '', '');
 
-    //controlAsyncFormGroupValidationFg.config.push(this._getRandItem('promiseValidator',    'textbox', 'text', 'Promise Validation', [], [{ name : "promiseValidator"}],     '', ''));
-    //controlAsyncFormGroupValidationFg.config.push(this._getRandItem('observableValidator', 'textbox', 'text', 'Observable Validation', [], [{ name : "observableValidator"}],  '', ''));
+    //cAvFg.config.push(this._getRandItem('cAvFg1',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
+    //cAvFg.config.push(this._getRandItem('cAvFg2',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
 
-   //config.push(controlAsyncFormGroupValidationFg);
+    config.push(cAvFg);
+
+
+    //config.push(controlAsyncFormGroupValidationFg);
 
     ////// Custom Group Validators
 

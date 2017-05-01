@@ -17,7 +17,7 @@ export class FormBuilderComponent implements OnInit, OnChanges {
 
 
   constructor(protected formConfServ:FormConfigService) {
-    this.config = formConfServ.getFormGroupTestConfig();
+    this.config = formConfServ.getValidationTestConfig();
   }
 
   ngOnInit(): void {

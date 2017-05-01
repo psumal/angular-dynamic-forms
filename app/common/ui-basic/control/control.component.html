@@ -1,4 +1,6 @@
-<div [formGroup]="getParentFormGroup()" *ngIf="componentRendered" [attr.class]="">
+<div [formGroup]="getParentFormGroup()" *ngIf="componentRendered" [attr.class]="getWrapperClass()">
+
+  {{group.valid}}:{{group.errors | json}} <br/>
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
     {{config.label}}
@@ -85,7 +87,7 @@
         [attr.placeholder]="config.placeholder">
        </textarea>
 
-  <item-errors [config]="config" [group]="group"></item-errors>
+  <item-errors *ngIf="currentFormItem.valid" [config]="config" [group]="group"></item-errors>
 
   <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{config.helpText}}</small>
 

@@ -82,21 +82,14 @@ export class FormConfigService {
 
   getValidationTestConfig() {
 
-    let conf = [];
+    let conf:any = [];
 
     let ct:controlTypes = 'textbox';
     let it:inputTypes = 'text';
 
-
-    return conf;
-
     //////
 
-    let controlValidationFg = this._getRandItem('controlValidationFg', 'formGroup');
-
-    console.log('controlValidationFg', controlValidationFg);
-
-    return;
+    let controlValidationFg:any = this._getRandItem('controlValidationFg', 'formGroup', null, '', [], [], '', '');
 
     controlValidationFg.config.push(this._getRandItem('required',       ct, it, 'Required Validation',      [ { name : "required"} ],                 [], '', ''));
     controlValidationFg.config.push(this._getRandItem('minLength2',     ct, it, 'Min Length 2 Validation',  [ { name : "minLength", params:2 } ],     [], '', ''));
@@ -104,15 +97,17 @@ export class FormConfigService {
     controlValidationFg.config.push(this._getRandItem('pattern[a-z]',   ct, it, 'Pattern [a-z] Validation', [ { name : "pattern", params:/[a-z]/ } ], [], '', ''));
     controlValidationFg.config.push(this._getRandItem('nullValidator',  ct, it, 'Null Validation',          [ { name : "nullValidator" } ],           [], '', ''));
 
+    console.log('controlValidationFg', controlValidationFg);
+
     conf.push(controlValidationFg);
 
     //////
 
-    let controlAsyncValidationFg = this._getRandItem('controlValidationFg', 'formGroup', null, null, null, 'Async Validators');
+    //let controlAsyncValidationFg = this._getRandItem('controlValidationFg', 'formGroup', null, null, null, 'Async Validators');
 
     //controlAsyncValidationFg.config.push(this._getRandItem('required', 'textbox', 'text', 'Required Validation', [{ name : "required"}], [], '', ''));
 
-    conf.push(controlAsyncValidationFg);
+    //conf.push(controlAsyncValidationFg);
 
     //////
 
@@ -916,7 +911,7 @@ export class FormConfigService {
   ////////////////////////////////////////////////
 
 
-  _getRandItem(key: string, controlType?: controlTypes, type?: inputTypes, label?: string, validator?: any, asyncValidator?: any, placeholder?:string, helpText?:string ): any {
+  _getRandItem(key: string, controlType?: controlTypes, type?: inputTypes, label?: string, validator?: any, asyncValidator?: any, placeholder?:string, helpText?:string, config?:any ): any {
 
     controlType = controlType || this._getRandControlType();
 
@@ -925,6 +920,8 @@ export class FormConfigService {
     label = label || '';
 
     validator = validator || this._getRandInputValidator();
+
+    config = [];
 
     asyncValidator = asyncValidator || this._getRandInputAsyncValidator();
 
@@ -944,6 +941,7 @@ export class FormConfigService {
       validator: validator,
       asyncValidator: asyncValidator,
 
+      config:config
     };
 
     return item;

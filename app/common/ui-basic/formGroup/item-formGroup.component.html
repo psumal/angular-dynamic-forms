@@ -1,5 +1,8 @@
-<fieldset [attr.class]="getWrapperClass()">
+<fieldset [attr.class]="">
   <legend>{{config.label}}</legend>
+
+  {{currentFormItem.valid}}:{{currentFormItem.errors | json}} <br/>
+
 
   <item-errors [config]="config" [group]="group"></item-errors>
 

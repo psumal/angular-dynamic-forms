@@ -11,40 +11,6 @@ import {DynamicFormUtils} from "../../common/dynamic-form/services/dynamic-form.
 })
 export class StartComponent {
 
-  demoForms: Array<any>;
-
-  form: FormGroup = new FormGroup({});
-  formName: string;
-  formItems: Array<any>;
-  formModel: {};
-
-  dynamicItems: any[] = [];
-
-  constructor(protected service: FormConfigService) {
-
-    this.formItems = service.getGenericElement();
-    this.formModel = {key: "testKEyFromModel"};
-
-  }
-
-  /*DEMO SELECT*/
-  onFormConfigSelectChange($event: {model: any}) {
-
-    if ('model' in $event && 'demo' in $event.model) {
-
-      if ('formName' in $event.model.demo) {
-        this.formName = $event.model.demo.formName;
-      }
-
-      if ('formItems' in $event.model.demo) {
-        this.formItems = $event.model.demo.formItems;
-      }
-
-      if ('formModel' in $event.model.demo) {
-        this.formModel = $event.model.demo.formModel;
-      }
-
-    }
-  }
+  constructor() { }
 
 }

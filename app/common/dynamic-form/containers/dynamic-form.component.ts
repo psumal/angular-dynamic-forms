@@ -55,7 +55,7 @@ export class DynamicFormComponent implements OnInit {
 
   }
 
-  setParentId(config:any, parentId:string = '', formPath?:string[] ):any {
+  setParentId(config:any = [], parentId:string = '', formPath?:string[] ):any {
 
     return config.map((conf:any) => {
       let newConf:any = {...conf};

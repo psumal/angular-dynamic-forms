@@ -36,7 +36,6 @@ export class BaseComponent {
     return this.group.get(newFormPath);
   }
 
-
   isLabelVisible(): boolean {
     return !!this.config['label'];
   }

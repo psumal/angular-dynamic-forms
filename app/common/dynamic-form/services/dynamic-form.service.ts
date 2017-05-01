@@ -145,8 +145,8 @@ export class DynamicFormService {
     if (!(typeof validatorFn === "function")) {
       throw new Error(`validator "${validatorName}" is not provided via NG_VALIDATORS or NG_ASYNC_VALIDATORS`);
     }
-    console.log('validatorArgs', validatorArgs);
-    return (validatorArgs) ? (c) =>  { return validatorFn(c, validatorArgs) } : validatorFn;
+
+    return (validatorArgs)?validatorFn(validatorArgs):validatorFn;
   }
 
   getValidators(config: any): ValidatorFn[] | AsyncValidatorFn[] {
@@ -154,7 +154,8 @@ export class DynamicFormService {
 
     if (config) {
       validators = config.map((validatorObj: any) => {
-        return this.getValidatorFn(validatorObj.name, config[validatorObj.params])
+        console.log('getValidators: ', validatorObj.name, validatorObj.params);
+        return this.getValidatorFn(validatorObj.name, validatorObj.params)
       })
     }
     return validators;

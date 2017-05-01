@@ -30,6 +30,7 @@ export class ControlComponent extends BaseComponent {
 
   ngOnInit() {
     this.initSubscriptionFunctions();
+    console.log('currentFormItem:', this.currentFormItem);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

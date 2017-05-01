@@ -49,7 +49,6 @@ export class FormGroupComponent extends BaseComponent {
     super(CHANGE_SUBSCRIPTIONS);
   }
 
-
   ngOnInit() {
     this.initSubscriptionFunctions();
   }

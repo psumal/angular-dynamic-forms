@@ -1,6 +1,6 @@
 <div [formGroup]="getParentFormGroup()" *ngIf="componentRendered" [attr.class]="getWrapperClass()">
 
-  {{group.valid}}:{{group.errors | json}} <br/>
+  {{currentFormItem.value | json}}:{{currentFormItem.valid}}:{{currentFormItem.error | json}} <br/>
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
     {{config.label}}

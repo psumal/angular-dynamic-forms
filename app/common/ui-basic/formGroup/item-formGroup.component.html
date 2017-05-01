@@ -1,7 +1,7 @@
 <fieldset [attr.class]="">
   <legend>{{config.label}}</legend>
 
-  {{currentFormItem.valid}}:{{currentFormItem.errors | json}} <br/>
+  {{currentFormItem.value | json}}:{{currentFormItem.valid}}:{{currentFormItem.error | json}} <br/>
 
 
   <item-errors [config]="config" [group]="group"></item-errors>

@@ -30,8 +30,6 @@ export class DynamicFormComponent implements OnInit {
     return this._config;
   }
 
-
-
   model: {} = {};
 
   group: FormGroup;
@@ -56,7 +54,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   setParentId(config:any = [], parentId:string = '', formPath?:string[] ):any {
-
     return config.map((conf:any) => {
       let newConf:any = {...conf};
       let formPathNew = formPath?[...formPath]:[];
@@ -119,9 +116,9 @@ export class DynamicFormComponent implements OnInit {
   }
 
   protected renderForm(): void {
-    console.log('renderForm!');
+    console.log('this.config: ', this.config);
     this.group = this.dfService.toFG(this.config);
-
+    console.log('this.group: ', this.group);
   }
 
 }

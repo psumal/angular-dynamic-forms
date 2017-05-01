@@ -82,7 +82,7 @@ export class FormConfigService {
 
   getValidationTestConfig() {
 
-    let conf:any = [];
+    let config:any = [];
 
     let ct:controlTypes = 'textbox';
     let it:inputTypes = 'text';
@@ -91,15 +91,17 @@ export class FormConfigService {
 
     let controlValidationFg:any = this._getRandItem('controlValidationFg', 'formGroup', null, '', [], [], '', '');
 
-    controlValidationFg.config.push(this._getRandItem('required',       ct, it, 'Required Validation',      [ { name : "required"} ],                 [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('minLength2',     ct, it, 'Min Length 2 Validation',  [ { name : "minLength", params:2 } ],     [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('maxLength4',     ct, it, 'Max Length 4 Validation',  [ { name : "maxLength", params:4 } ],     [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('pattern[a-z]',   ct, it, 'Pattern [a-z] Validation', [ { name : "pattern", params:/[a-z]/ } ], [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('nullValidator',  ct, it, 'Null Validation',          [ { name : "nullValidator" } ],           [], '', ''));
+    config.push(this._getRandItem('required',       ct, it, 'Required Validation',      [ { name : "required"} ],                 [], '', ''));
+    config.push(this._getRandItem('minLength2',     ct, it, 'Min Length 2 Validation',  [ { name : "minLength", params:[2] } ],     [], '', ''));
+    config.push(this._getRandItem('maxLength4',     ct, it, 'Max Length 4 Validation',  [ { name : "maxLength", params:[4] } ],     [], '', ''));
+    config.push(this._getRandItem('pattern[a-z]',   ct, it, 'Pattern [a-z] Validation', [ { name : "pattern", params:['/[a-z]+/'] } ], [], '', ''));
+    config.push(this._getRandItem('nullValidator',  ct, it, 'Null Validation',          [ { name : "nullValidator" } ],           [], '', ''));
+
+    //{name: "validateEmail"}
 
     console.log('controlValidationFg', controlValidationFg);
 
-    conf.push(controlValidationFg);
+    config.push(controlValidationFg);
 
     //////
 
@@ -111,7 +113,7 @@ export class FormConfigService {
 
     //////
 
-    return conf;
+    return config;
   }
 
 

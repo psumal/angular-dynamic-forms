@@ -3,6 +3,72 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class FormConfigService {
 
+  getValidationTestConfig() {
+
+    let conf = createFgConfig(2);
+
+    conf.push( {
+      controlType: 'textbox',
+      type: "text",
+      key: "TextboxFg" + 3,
+      label: "Textbox Item of type url"
+    });
+
+    return conf;
+    //////////////////////////////////
+
+    function createFgConfig(count:any): any {
+
+      let conf = [
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count,
+          label: "Textbox Item "+'.'+count +" of fG"+count
+        },
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count +'.'+count,
+          label: "Textbox Item "+'.'+count+'.'+count +" of fG"+count
+        },
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count +'.'+count+'.'+count,
+          label: "Textbox Item "+ count +'.'+count+'.'+count +" of fG"+count
+        }
+        /*
+         ,{
+         controlType: 'button',
+         key: 'buttonButton',
+         label: 'Button',
+         type: 'button'
+         }*/
+      ];
+
+      let fg = {
+        controlType: 'formGroup',
+        key: "fG" + count,
+        title: "Form Group " + count,
+        config: conf,
+        validator: (count > 0)?{name: 'controlMatch', params:[ ["TextboxFg2"], ["TextboxFg2.2"] ] }:{}
+      };
+
+
+      if (count > 0) {
+
+        fg.config = fg.config.concat(createFgConfig(count - 1));
+      }
+
+
+      return [fg];
+
+    }
+
+  }
+
+
   getFormGroupTestConfig() {
 
     let conf = createFgConfig(2);

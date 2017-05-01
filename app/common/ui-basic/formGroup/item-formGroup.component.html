@@ -1,12 +1,5 @@
-<fieldset [attr.class]="">
+<fieldset [attr.class]="getWrapperClass()">
   <legend>{{config.label}}</legend>
-
-  {{currentFormItem.value | json}}:{{currentFormItem.valid}}:{{currentFormItem.error | json}} <br/>
-
-
-  <item-errors [config]="config" [group]="group"></item-errors>
-
-  <div class="form-row">
 
     <ng-container
       *ngFor="let conf of items;"
@@ -14,8 +7,5 @@
       [config]="conf"
       [group]="group">
     </ng-container>
-
-  </div>
-
 
 </fieldset>

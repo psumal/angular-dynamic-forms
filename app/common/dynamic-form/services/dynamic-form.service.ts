@@ -81,11 +81,18 @@ export class DynamicFormService {
     let asyncValidator: AsyncValidatorFn;
 
     if ('validator' in forgGroupConfig && Object.keys(forgGroupConfig.validator).length > 0) {
-      fGExtras.validator = this.getValidatorFn(forgGroupConfig.validator.name, forgGroupConfig.validator.params);
+      const v = forgGroupConfig.validator;
+      console.log('v: ', v);
+      if('name' in v) {
+        fGExtras.validator = this.getValidatorFn(v.name, v.params);
+      }
     }
 
     if ('asyncValidator' in forgGroupConfig) {
-      //fGExtras.asyncValidator = this.getValidatorFn(forgGroupConfig.asyncValidator.name);
+      const av = forgGroupConfig.asyncValidator;
+      if('name' in av) {
+        fGExtras.asyncValidator = this.getValidatorFn(av.name. av.param);
+      }
     }
 
     return fGExtras;
@@ -117,14 +124,14 @@ export class DynamicFormService {
 
     //async validators
     if ('asyncValidator' in item) {
-      //asyncValidator = this.getValidators(item['asyncValidator']);
+      asyncValidator = this.getAsyncValidators(item['asyncValidator']);
     }
     fCParams.push(asyncValidator);
 
     return fCParams;
   };
 
-  getCustomValidatorFn(validatorName: string): ValidatorFn | AsyncValidatorFn | undefined {
+  getCustomValidatorFn(validatorName: string): ValidatorFn | undefined {
 
     let validatorFn;
 
@@ -132,33 +139,58 @@ export class DynamicFormService {
       validatorFn = this.NG_VALIDATORS.find(validatorFn => validatorName === validatorFn.name);
     }
 
-    if (!validatorFn && this.NG_ASYNC_VALIDATORS) {
-      validatorFn = this.NG_ASYNC_VALIDATORS.find(asyncValidatorFn => validatorName === asyncValidatorFn.name);
-    }
-
     return validatorFn;
   }
 
-  getValidatorFn(validatorName: string, validatorArgs?: any): ValidatorFn | AsyncValidatorFn | never {
+  getValidatorFn(validatorName: string, validatorArgs?: any): ValidatorFn {
     let validatorFn = Validators[validatorName] || this.getCustomValidatorFn(validatorName);
 
     if (!(typeof validatorFn === "function")) {
-      throw new Error(`validator "${validatorName}" is not provided via NG_VALIDATORS or NG_ASYNC_VALIDATORS`);
+      console.log('getValidatorFn: ', validatorName, validatorArgs);
+      throw new Error(`validator "${validatorName}" is not provided via NG_VALIDATORS`);
     }
 
-    return (validatorArgs)?validatorFn(validatorArgs):validatorFn;
+    return (validatorArgs)?validatorFn(...validatorArgs):validatorFn;
   }
 
-  getValidators(config: any): ValidatorFn[] | AsyncValidatorFn[] {
+  getValidators(valdators: any): ValidatorFn[] {
     let validators: any[] = [];
 
-    if (config) {
-      validators = config.map((validatorObj: any) => {
+    console.log('valdators: ', valdators);
+    if (valdators) {
+      validators = valdators.map((validatorObj: any) => {
         console.log('getValidators: ', validatorObj.name, validatorObj.params);
         return this.getValidatorFn(validatorObj.name, validatorObj.params)
       })
     }
     return validators;
+  }
+
+  getAsyncValidatorFn(validatorName: string, validatorArgs?: any): any {
+
+    let asyncValidatorFn;
+
+    if (this.NG_ASYNC_VALIDATORS) {
+      asyncValidatorFn = this.NG_ASYNC_VALIDATORS.find(validatorFn => validatorName === validatorFn.name);
+    }
+
+    if (!(typeof asyncValidatorFn === "function")) {
+      throw new Error(`validator "${validatorName}" is not provided via NG_ASYNC_VALIDATORS`);
+    }
+
+    return (validatorArgs)?asyncValidatorFn(validatorArgs):asyncValidatorFn;
+  }
+
+  getAsyncValidators(config: any): AsyncValidatorFn[] {
+    let asyncValidators: any[] = [];
+
+    if (config) {
+      asyncValidators = config.map((validatorObj: any) => {
+        console.log('getAsyncValidators: ', validatorObj.name, validatorObj.params);
+        return this.getAsyncValidatorFn(validatorObj.name, validatorObj.params)
+      })
+    }
+    return asyncValidators;
   }
 
 }

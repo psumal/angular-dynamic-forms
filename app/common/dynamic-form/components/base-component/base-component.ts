@@ -50,16 +50,22 @@ export class BaseComponent {
       classNames.push('form-group');
     }
 
-    if (this.currentFormItem.valid) {
+    return classNames.join(' ');
+
+  }
+
+  getValidationClass() {
+    let classNames: Array<string> = [];
+
+    if (this.currentFormItem.valid && this.currentFormItem.touched) {
       classNames.push('has-success');
     }
 
-    if (!this.currentFormItem.valid) {
+    if (!this.currentFormItem.valid && this.currentFormItem.dirty) {
       classNames.push('has-danger');
     }
 
     return classNames.join(' ');
-
   }
 
   initSubscriptionFunctions() {

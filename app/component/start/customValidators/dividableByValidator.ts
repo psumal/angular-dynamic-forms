@@ -1,20 +1,14 @@
-import {FormControl, Validator, ValidationErrors, AbstractControl} from "@angular/forms";
+import {FormControl, ValidatorFn} from "@angular/forms";
 
-export class dividableByValidator implements Validator{
+export function dividableBy(divider: number): ValidatorFn {
+  return (c: FormControl) => {
 
-  validate(c: AbstractControl): ValidationErrors|any {
+    let isValid = ( c.value == 0 || (c.value && c.value%divider === 0) );
 
-      return (Math.random() > 0.5) ? {
-        validateEmail: {
-          valid: true
-        }
-      } : {
-        validateEmail: {
-          valid: false
-        }
-      };
-
-  }
-
-
+    return isValid ? null : {
+      dividableBy: {
+        valid: false
+      }
+    };
+  };
 }

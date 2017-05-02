@@ -31,17 +31,27 @@ const EXPORTS = [StartComponent, SliderComponent];
     FormConfigService,
     {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},
     {provide: CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true},
-    //VALIDATORS
+
+    //VALIDATORS Control
     //customValidator for control
     {provide: NG_VALIDATORS, useValue: randomValidator, multi: true},
     //customValidator for control with params
     {provide: NG_VALIDATORS, useValue: dividableBy, multi: true},
-    //ASYNC_VALIDATORS
+
+    //ASYNC_VALIDATORS Control
     //customAsyncValidator for control
-    //{provide: NG_ASYNC_VALIDATORS, useValue: promiseValidator, multi: true},
-    //{provide: NG_VALIDATORS, useValue: observableValidator, multi: true},
-    //customValidator for group
-    {provide: NG_VALIDATORS, useValue: controlMatch, multi: true}
+    {provide: NG_ASYNC_VALIDATORS, useValue: promiseValidator, multi: true},
+    {provide: NG_ASYNC_VALIDATORS, useValue: observableValidator, multi: true},
+    //customValidator for control with params
+    //@TODO
+
+    //VALIDATORS Group
+    {provide: NG_VALIDATORS, useValue: controlMatch, multi: true},
+    //customValidator for group with params
+    //@TODO
+
+    //ASYNC_VALIDATORS Group
+    //{provide: NG_VALIDATORS, useValue: ??????, multi: true}
     //customValidator for group with params
     //@TODO
 

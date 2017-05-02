@@ -1,9 +1,9 @@
 import {ValidationErrors, AbstractControl} from "@angular/forms";
 
-export function promiseValidator(c:AbstractControl):Promise<ValidationErrors | null>  {
+export function promiseValidator(c:AbstractControl): Promise<ValidationErrors | null>  {
   return new Promise(resolve => {
     setTimeout(() => {
-      if( c.value === "unique@gmail.com" ) {
+      if( c.value !== "test" ) {
         resolve({
           promiseInvalid: true
         })

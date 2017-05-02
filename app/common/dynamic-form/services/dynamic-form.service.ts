@@ -30,73 +30,55 @@ export class DynamicFormService {
         if (conf['controlType'] !== 'formGroup' && conf['controlType'] !== 'formArray') {
           formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
         }
-        else if (conf['controlType'] === 'formArray') {
-          //formGroupObject[conf['key']] = {};
-          //formGroupObject[conf['key']] = this.toFA(conf['config'], model[conf['key']]);
-        }
         else {
-          let extras = this.getFormGroupExtras(conf);
+          //let extras = this.getFormGroupExtras(conf);
           formGroupObject[conf['key']] = {};
-          formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
+          formGroupObject[conf['key']] = this.toFG(conf['config'], {});
         }
       });
     }
 
-    return this.fb.group(formGroupObject, extras);
+    return this.fb.group(formGroupObject, {});
 
     /////////////////////////////
-
-  }
-
-  toFA(items: Array<any>, model?: {}): FormGroup {
-
-    //create formBuilder.group() params
-    let formGroupObject: {[key: string]: any;} = {};
-    let extra: {[key: string]: any} = {};
-
-    items.forEach((item: any) => {
-      if (item['controlType'] !== 'formGroup' && item['controlType'] !== 'formArray') {
-        formGroupObject[item['key']] = this.getFormControlParamsArray(item);
-      }
-      else if (item['controlType'] === 'formArray') {
-
-        formGroupObject[item['key']] = this.toFA(item['config'], model[item['key']]);
-      }
-      else {
-
-        formGroupObject[item['key']] = this.toFG(item['config'], model[item['key']]);
-      }
-    });
-
-    return this.fb.group(formGroupObject, extra);
 
   }
 
   //@TODO move to utils
   getFormGroupExtras = (forgGroupConfig: AbstractFormControlModel<any>) => {
 
+    if(!forgGroupConfig) { return null; }
+
     //define array of params
     let fGExtras: any = {};
 
-    let asyncValidator: AsyncValidatorFn;
+    if ('validator' in forgGroupConfig) {
 
+      console.log('FGV: ', forgGroupConfig);
 
-    if ('validator' in forgGroupConfig && Object.keys(forgGroupConfig.validator).length > 0) {
-      const v = forgGroupConfig.validator[0];
-      if(v && 'name' in v) {
+    //&& Object.keys(forgGroupConfig.validator).length > 0
+      let v = forgGroupConfig.validator;
+      if( v !== null && v.length > 0 && 'name' in v ) {
+        //we have only ine validator in formGroup
+        console.log('FG get Validator', v, this.getValidatorFn(v.name, v.params));
+        v = v[0];
+
         fGExtras.validator = this.getValidatorFn(v.name, v.params);
       }
     }
-
+/*
     if ('asyncValidator' in forgGroupConfig) {
-      const av = forgGroupConfig.asyncValidator[0];
-
-      if(av && 'name' in av) {
-        //fGExtras.asyncValidator = this.getValidatorFn(av.name. av.param);
-      }
+      let  av = forgGroupConfig.asyncValidator;
+      if( av !== null && av.length > 0 && 'name' in av ) {
+        //we have only ine validator in formGroup
+        console.log('FG get Async Validator', av, this.getValidatorFn(av.name, av.params));
+        av = av[0];
+        fGExtras.asyncValidator = this.getValidatorFn(av.name. av.param);
+        }
     }
+    */
 
-    return fGExtras;
+    return Object.keys(fGExtras).length >=1 ? fGExtras: null;
   };
 
   getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
@@ -107,7 +89,6 @@ export class DynamicFormService {
     let formState: any = '';
     let validator: Array<any> = [];
     let asyncValidator: Array<any> = [];
-    let changeListener: Array<any> = [];
 
     //define FormControl params in the right order in the form control config array
 
@@ -133,12 +114,13 @@ export class DynamicFormService {
   };
 
   getCustomValidatorFn(validatorName: string): ValidatorFn | undefined {
-console.log('getCustomValidatorFn', validatorName);
     let validatorFn;
 
     if (this.NG_VALIDATORS) {
-      console.log('custom: ', validatorName);
-      validatorFn = this.NG_VALIDATORS.find(validatorFn => validatorName === validatorFn.name);
+      validatorFn = this.NG_VALIDATORS.find( (validatorFn) => {
+        console.log('SYNC VALID ', validatorName, validatorFn.name);
+        return validatorName === validatorFn.name
+      });
     }
 
     return validatorFn;
@@ -149,7 +131,6 @@ console.log('getCustomValidatorFn', validatorName);
     let validatorFn = Validators[validatorName] || this.getCustomValidatorFn(validatorName);
 
     if (!(typeof validatorFn === "function")) {
-      console.log('getValidatorFn: ', validatorName, validatorArgs);
       throw new Error(`validator "${validatorName}" is not provided via NG_VALIDATORS`);
     }
 
@@ -159,10 +140,8 @@ console.log('getCustomValidatorFn', validatorName);
   getValidators(valdators: any): ValidatorFn[] {
     let validators: any[] = [];
 
-    console.log('validators: ', valdators);
     if (valdators) {
       validators = valdators.map((validatorObj: any) => {
-        console.log('getValidators: ', validatorObj.name, validatorObj.params);
         return this.getValidatorFn(validatorObj.name, validatorObj.params)
       })
     }
@@ -174,7 +153,12 @@ console.log('getCustomValidatorFn', validatorName);
     let asyncValidatorFn;
 
     if (this.NG_ASYNC_VALIDATORS) {
-      asyncValidatorFn = this.NG_ASYNC_VALIDATORS.find(validatorFn => validatorName === validatorFn.name);
+
+      asyncValidatorFn = this.NG_ASYNC_VALIDATORS.find(
+        (asyncValidatorFn) => {
+          console.log('ASYNC ', validatorName, asyncValidatorFn.name);
+          return validatorName === asyncValidatorFn.name
+        });
     }
 
     if (!(typeof asyncValidatorFn === "function")) {

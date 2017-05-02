@@ -1,25 +1,28 @@
-import {AbstractControl} from "@angular/forms";
+import {FormControl, ValidatorFn, AbstractControl} from "@angular/forms";
 
-export function controlMatch(formGroup: AbstractControl, params: any) {
+export function controlMatch(params: any): ValidatorFn {
 
-  let values = params
-    .filter((formPath: any) => {
-      const item = formGroup.get(formPath);
-      if (item && item.value) {
-        return true;
+  return (formGroup: AbstractControl) => {
+
+    let values = params
+      .filter((formPath: any) => {
+        const item = formGroup.get(formPath);
+        if (item && item.value) {
+          return true;
+        }
+        return false;
+      })
+      .map((formPath: string[]) => {
+        return formGroup.get(formPath).value;
+      });
+
+    let isValid = values.every((value: any, _: any, array: any[]) => {
+        return array[0] === value;
       }
-      return false;
-    })
-    .map((formPath:string[]) => {
-      return formGroup.get(formPath).value;
-    });
+    );
 
-  let isValid = values.every((value: any, _: any, array: any[]) => {
-      return array[0] === value;
-    }
-  );
+    if (!values || values.length == 0) return null;
+    return isValid ? null : {controlMatch: true};
 
-  if (!values || values.length == 0) return null;
-  return isValid ? null : {controlMatch: true};
-
+  }
 };

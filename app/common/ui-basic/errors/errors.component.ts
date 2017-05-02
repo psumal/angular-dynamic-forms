@@ -35,11 +35,10 @@ export class ControlErrorComponent implements OnInit {
 
   ngOnInit() {
     this.errors = this._getErrors(this.config.formPath);
-    console.log('this.config.formPath', this.config.formPath)
-    /*let $statusChanges = this.group.get(this.config.formPath).statusChanges;
+    let $statusChanges = this.group.get(this.config.formPath).statusChanges;
     $statusChanges.subscribe((status) => {
       this.errors = this._getErrors(this.config.formPath);
-    });*/
+    });
   }
 
   _getErrors(formControlName:string | string[]) : {[key:string]:string} {

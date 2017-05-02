@@ -15,10 +15,6 @@ export class FormViewerComponent implements OnInit, OnChanges {
 
   }
 
-  onFormValueChange(formValue) {
-    this.model = formValue;
-  }
-
   ngOnChanges(changes: {}): any {
 
     if('config' in changes && changes['config'] != this.config) {

@@ -89,50 +89,48 @@ export class FormConfigService {
 
     ////// Basic Control Validators
 
-    let controlValidationFg:any = this._getRandItem('controlValidationFg', 'formGroup', null, 'Default Validators', [], [], '', '');
+    let cV:any = this._getRandItem('cV', 'formGroup', null, 'Default Validators', [], [], '', '');
 
-    controlValidationFg.config.push(this._getRandItem('required',       ct, it, 'Required Validation',      [ { name : "required"} ],                    [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('minLength2',     ct, it, 'Min Length 2 Validation',  [ { name : "minLength", params:[2] } ],      [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('maxLength4',     ct, it, 'Max Length 4 Validation',  [ { name : "maxLength", params:[4] } ],      [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('pattern[a-z]',   ct, it, 'Pattern [a-z] Validation', [ { name : "pattern", params:['[a-z]+'] } ], [], '', ''));
-    controlValidationFg.config.push(this._getRandItem('nullValidator',  ct, it, 'Null Validation',          [ { name : "nullValidator" } ],              [], '', ''));
+    cV.config.push(this._getRandItem('required',       ct, it, 'Required Validation',      [ { name : "required"} ],                    [], '', ''));
+    cV.config.push(this._getRandItem('minLength2',     ct, it, 'Min Length 2 Validation',  [ { name : "minLength", params:[2] } ],      [], '', ''));
+    cV.config.push(this._getRandItem('maxLength4',     ct, it, 'Max Length 4 Validation',  [ { name : "maxLength", params:[4] } ],      [], '', ''));
+    cV.config.push(this._getRandItem('pattern[a-z]',   ct, it, 'Pattern [a-z] Validation', [ { name : "pattern", params:['[a-z]+'] } ], [], '', ''));
+    cV.config.push(this._getRandItem('nullValidator',  ct, it, 'Null Validation',          [ { name : "nullValidator" } ],              [], '', ''));
 
-    config.push(controlValidationFg);
+    config.push(cV);
 
     ////// Custom Control Validators
+    let cCV:any = this._getRandItem('cCV', 'formGroup', null, 'Custom Validators', [], [], '', '');
 
-    let customControlValidationFg:any = this._getRandItem('customControlValidationFg', 'formGroup', null, 'Custom Validators', [], [], '', '');
+    cCV.config.push(this._getRandItem('randomValidator',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
+    //cCV.config.push(this._getRandItem('dividableBy',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
 
-    //customControlValidationFg.config.push(this._getRandItem('randomValidator',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
-    //customControlValidationFg.config.push(this._getRandItem('dividableBy',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
-
-    config.push(customControlValidationFg);
+    config.push(cCV);
 
     ////// Custom Async Control Validators
 
-    let cAvFg:any = this._getRandItem('cAvFg', 'formGroup', null, 'Custom Async validators', [], [], '', '');
+    let cCAV:any = this._getRandItem('cCAV', 'formGroup', null, 'Custom Async validators', [], [], '', '');
 
-    //cAvFg.config.push(this._getRandItem('cAvFg1',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
-    //cAvFg.config.push(this._getRandItem('cAvFg2',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
+    //cCAV.config.push(this._getRandItem('promiseValidator',  ct, it, 'Promise Validator (test => true)[2s]',          [], [ { name : "promiseValidator" } ],            '', ''));
+    //cCAV.config.push(this._getRandItem('observableValidator',  ct, it, 'Observable Validator (unique@gmail => true)[0s]',          [], [ { name : "observableValidator" } ],            '', ''))
 
-    config.push(cAvFg);
+    config.push(cCAV);
 
 
     ////// Custom Group Validators
 
-    let customGroupValidationFg:any = this._getRandItem('cGAv', 'formGroup', null, 'Custom Group Validators',  [ { name : "controlMatch", params:[ ['cGAv','controlMatchPattern'],['cGAv','controlMatch'] ] } ], [], '', '');
+    let gCV:any = this._getRandItem('gCV', 'formGroup', null, 'Custom Group Validators',  [],[], '', '');
 
-     customGroupValidationFg.config.push(this._getRandItem('controlMatchPattern',  ct, 'text', 'Control Match Pattern', [],[], '', ''));
-     customGroupValidationFg.config.push(this._getRandItem('controlMatch',  ct, 'text', 'Control Match',                [],[], '', ''));
+    //gCV.config.push(this._getRandItem('controlMatchPattern',  ct, it, 'Control Match Pattern', [],[], '', ''));
+    //gCV.config.push(this._getRandItem('controlMatch',  ct, it, 'Control Match',                [],[], '', ''));
 
-    //config.push(customGroupValidationFg);
+    config.push(gCV);
 
     ////// Custom Async Group Validators
 
-    let customAsyncGroupValidationFg:any = this._getRandItem('customGroupValidationFg', 'formGroup', null, 'CustomAsync Group Validators',  [ { name : "controlMatch", params:['controlMatch1'] } ], [], '', '');
+    let gCAv:any = this._getRandItem('gCAv', 'formGroup', null, 'Custom Async Group Validators',  [],[], '', '');
 
-
-    //config.push(customAsyncGroupValidationFg);
+    config.push(gCAv);
 
     return config;
   }

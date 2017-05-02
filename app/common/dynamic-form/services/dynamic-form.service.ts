@@ -80,18 +80,19 @@ export class DynamicFormService {
 
     let asyncValidator: AsyncValidatorFn;
 
+
     if ('validator' in forgGroupConfig && Object.keys(forgGroupConfig.validator).length > 0) {
-      const v = forgGroupConfig.validator;
-      console.log('v: ', v);
-      if('name' in v) {
+      const v = forgGroupConfig.validator[0];
+      if(v && 'name' in v) {
         fGExtras.validator = this.getValidatorFn(v.name, v.params);
       }
     }
 
     if ('asyncValidator' in forgGroupConfig) {
-      const av = forgGroupConfig.asyncValidator;
-      if('name' in av) {
-        fGExtras.asyncValidator = this.getValidatorFn(av.name. av.param);
+      const av = forgGroupConfig.asyncValidator[0];
+
+      if(av && 'name' in av) {
+        //fGExtras.asyncValidator = this.getValidatorFn(av.name. av.param);
       }
     }
 
@@ -132,10 +133,11 @@ export class DynamicFormService {
   };
 
   getCustomValidatorFn(validatorName: string): ValidatorFn | undefined {
-
+console.log('getCustomValidatorFn', validatorName);
     let validatorFn;
 
     if (this.NG_VALIDATORS) {
+      console.log('custom: ', validatorName);
       validatorFn = this.NG_VALIDATORS.find(validatorFn => validatorName === validatorFn.name);
     }
 
@@ -143,6 +145,7 @@ export class DynamicFormService {
   }
 
   getValidatorFn(validatorName: string, validatorArgs?: any): ValidatorFn {
+    if(!validatorName) { return;}
     let validatorFn = Validators[validatorName] || this.getCustomValidatorFn(validatorName);
 
     if (!(typeof validatorFn === "function")) {
@@ -156,7 +159,7 @@ export class DynamicFormService {
   getValidators(valdators: any): ValidatorFn[] {
     let validators: any[] = [];
 
-    console.log('valdators: ', valdators);
+    console.log('validators: ', valdators);
     if (valdators) {
       validators = valdators.map((validatorObj: any) => {
         console.log('getValidators: ', validatorObj.name, validatorObj.params);

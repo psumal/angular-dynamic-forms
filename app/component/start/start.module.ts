@@ -41,7 +41,7 @@ const EXPORTS = [StartComponent, SliderComponent];
     //{provide: NG_ASYNC_VALIDATORS, useValue: promiseValidator, multi: true},
     //{provide: NG_VALIDATORS, useValue: observableValidator, multi: true},
     //customValidator for group
-    //{provide: NG_VALIDATORS, useValue: controlMatch, multi: true}
+    {provide: NG_VALIDATORS, useValue: controlMatch, multi: true}
     //customValidator for group with params
     //@TODO
 

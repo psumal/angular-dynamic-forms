@@ -8,6 +8,7 @@ import {AbstractFormControlModel} from "../model/base/form-control";
 @Component({
   moduleId: module.id,
   inputs: ['config', 'group', 'model'],
+  outputs: ['formValueChanged'],
   selector: 'dynamic-form-group',
   templateUrl: './dynamic-form.component.html',
   providers: [DynamicFormUtils, DynamicFormService]

@@ -89,7 +89,7 @@ export class FormConfigService {
 
     ////// Basic Control Validators
 
-    let controlValidationFg:any = this._getRandItem('controlValidationFg', 'formGroup', null, 'Built in validators', [], [], '', '');
+    let controlValidationFg:any = this._getRandItem('controlValidationFg', 'formGroup', null, 'Default Validators', [], [], '', '');
 
     controlValidationFg.config.push(this._getRandItem('required',       ct, it, 'Required Validation',      [ { name : "required"} ],                    [], '', ''));
     controlValidationFg.config.push(this._getRandItem('minLength2',     ct, it, 'Min Length 2 Validation',  [ { name : "minLength", params:[2] } ],      [], '', ''));
@@ -101,37 +101,41 @@ export class FormConfigService {
 
     ////// Custom Control Validators
 
-    let customControlValidationFg:any = this._getRandItem('customControlValidationFg', 'formGroup', null, 'Custom validators', [], [], '', '');
+    let customControlValidationFg:any = this._getRandItem('customControlValidationFg', 'formGroup', null, 'Custom Validators', [], [], '', '');
 
-    customControlValidationFg.config.push(this._getRandItem('randomValidator',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
-    customControlValidationFg.config.push(this._getRandItem('dividableBy',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
+    //customControlValidationFg.config.push(this._getRandItem('randomValidator',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
+    //customControlValidationFg.config.push(this._getRandItem('dividableBy',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
 
     config.push(customControlValidationFg);
 
     ////// Custom Async Control Validators
 
-    let cAvFg:any = this._getRandItem('cAvFg', 'formGroup', null, 'Custom validators', [], [], '', '');
+    let cAvFg:any = this._getRandItem('cAvFg', 'formGroup', null, 'Custom Async validators', [], [], '', '');
 
     //cAvFg.config.push(this._getRandItem('cAvFg1',  ct, 'number', 'Random Validator',          [ { name : "randomValidator" } ],           [], '', ''));
     //cAvFg.config.push(this._getRandItem('cAvFg2',  ct, 'number', 'Dividable By [3]',          [ { name : "dividableBy", params:[3] } ],           [], '', ''));
 
-    //config.push(cAvFg);
+    config.push(cAvFg);
 
-
-    //config.push(controlAsyncFormGroupValidationFg);
 
     ////// Custom Group Validators
 
-    let customGroupValidationFg:any = this._getRandItem('customGroupValidationFg', 'formGroup', null, 'Custom validators',  [ { name : "controlMatch", params:['controlMatch1'] } ], [], '', '');
+    let customGroupValidationFg:any = this._getRandItem('cGAv', 'formGroup', null, 'Custom Group Validators',  [ { name : "controlMatch", params:[ ['cGAv','controlMatchPattern'],['cGAv','controlMatch'] ] } ], [], '', '');
 
      customGroupValidationFg.config.push(this._getRandItem('controlMatchPattern',  ct, 'text', 'Control Match Pattern', [],[], '', ''));
-     customGroupValidationFg.config.push(this._getRandItem('controlMatch',  ct, 'text', 'Control Match', [],           [], '', ''));
+     customGroupValidationFg.config.push(this._getRandItem('controlMatch',  ct, 'text', 'Control Match',                [],[], '', ''));
 
     //config.push(customGroupValidationFg);
 
+    ////// Custom Async Group Validators
+
+    let customAsyncGroupValidationFg:any = this._getRandItem('customGroupValidationFg', 'formGroup', null, 'CustomAsync Group Validators',  [ { name : "controlMatch", params:['controlMatch1'] } ], [], '', '');
+
+
+    //config.push(customAsyncGroupValidationFg);
+
     return config;
   }
-
 
   getFormGroupTestConfig() {
 
@@ -162,12 +166,12 @@ export class FormConfigService {
           key: "TextboxFg" + count + '.' + count,
           label: "Textbox Item " + '.' + count + '.' + count + " of fG" + count
         },
-        {
+        /*{
           controlType: 'textbox',
           type: "text",
           key: "TextboxFg" + count + '.' + count + '.' + count,
           label: "Textbox Item " + count + '.' + count + '.' + count + " of fG" + count
-        }
+        }*/
         /*
          ,{
          controlType: 'button',
@@ -707,32 +711,6 @@ export class FormConfigService {
         key: 'reset-button',
         label: 'Reset',
         type: 'reset'
-      },
-      //formGroup
-      {
-        controlType: 'formGroup',
-        key: "g1",
-        label: "Form Group",
-        config: [
-
-          /**/
-          {
-            controlType: 'textbox',
-            key: 'g1T1',
-            label: 'g1T1',
-            placeholder: "The g1T1",
-            helpText: "g1T1 of the g1 froup",
-            type: 'text'
-          },
-
-          {
-            controlType: 'button',
-            key: 'reset-button',
-            label: 'Reset',
-            type: 'reset'
-          }
-
-        ]
       }
     ];
     return formConfig;
@@ -937,11 +915,13 @@ export class FormConfigService {
 
     label = label || '';
 
-    validator = validator || this._getRandInputValidator();
-
     config = [];
 
-    asyncValidator = asyncValidator || this._getRandInputAsyncValidator();
+    let numOfValidators = (controlType == 'formGroup')?1:null;
+
+    validator = validator || this._getRandInputValidator(numOfValidators);
+
+    asyncValidator = asyncValidator || this._getRandInputAsyncValidator(numOfValidators);
 
     placeholder = placeholder || '';
 

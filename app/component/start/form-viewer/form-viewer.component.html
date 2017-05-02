@@ -3,7 +3,7 @@
 <h4>Campaign on Client (app): {{formName}}</h4>
 
 
-<form (ngSubmit)="onSubmit($event)">
+<form (ngSubmit)="onSubmit($event)" (change)="onFormValueChange()">
   <dynamic-form-group
     [config]="config"
     [model]="{}">

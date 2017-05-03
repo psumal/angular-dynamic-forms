@@ -1,5 +1,5 @@
 <div [attr.class]="getClassNames()">
-  <div class="error-message"*ngFor="let key of errorKeys()">
-    {{errorMessages[key]}}
+  <pre>{{errorKeys() | json}}</pre>
+  <div class="error-message" *ngFor="let key of errorKeys()" [innerHTML]="errorMessages[key]">
   </div>
 </div>

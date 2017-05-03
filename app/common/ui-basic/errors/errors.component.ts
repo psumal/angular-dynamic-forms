@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
-import {BaseComponent} from "../../dynamic-form/components/base-component/base-component";
+import {ErrorService} from "../../dynamic-form/services/error.service";
 
 @Component({
   moduleId: module.id,
@@ -9,42 +9,58 @@ import {BaseComponent} from "../../dynamic-form/components/base-component/base-c
   selector: 'item-errors',
   templateUrl:'errors.component.html'
 })
-export class ControlErrorComponent implements OnInit {
+export class ControlErrorComponent implements OnInit, OnDestroy {
 
   config: AbstractFormControlModel<any> = <any>{};
   group: FormGroup = <any>{};
 
-  private _errors:{[key:string]:string} = {};
-
-  errorMessageMap = {
-    required:"This value is required!"
-  };
+  protected errorService:ErrorService;
 
   errorMessages:{};
+
+  private _errors:{[key:string]:string} = {};
 
   get errors(): {} {
     return this._errors;
   }
 
-  set errors(errors: {}) {
+  set errors(errors: {[key:string]:string}) {
+    console.log('errors',  errors);
     errors = errors || {};
     this._errors = errors;
-    this.errorMessages = this._getMessagesByErrors(this._errors);
+    this.errorMessages = this.errorService.getErrorMsgByErrors(errors, this.config, this.group);
   }
 
+  subscriptions:any[] = [];
+
+  constructor(errorService:ErrorService) {
+    this.errorService = errorService;
+  }
 
   ngOnInit() {
-    this.errors = this._getErrors(this.config.formPath);
-    let $statusChanges = this.group.get(this.config.formPath).statusChanges;
-    $statusChanges.subscribe((status) => {
-      this.errors = this._getErrors(this.config.formPath);
+    this.updateErrors(this.group);
+
+    if(this.group && 'statusChanges' in this.group) {
+      let sub = this.group.statusChanges
+        .subscribe((status) => {
+          console.log('status');
+          this.updateErrors(this.group);
+        });
+      this.subscriptions.push(sub);
+    }/**/
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      try { subscription.unsubscribe(); }
     });
   }
 
-  _getErrors(formControlName:string | string[]) : {[key:string]:string} {
-    let errors = {};
-    let item = this.group.get(formControlName);
-    return (item && 'errors' in item)?item.errors:{};
+
+  updateErrors(group) {
+
+    this.errors = this.errorService.getErrors(group);
   }
 
   errorKeys() : Array<string> {
@@ -53,27 +69,6 @@ export class ControlErrorComponent implements OnInit {
 
   getClassNames():string {
     return "form-control-feedback";
-  }
-
-  _getMessagesByErrors(errors:{}):{}{
-    let mappedErrors = {};
-    for (let validatorName of this.errorKeys()) {
-      //@TODO implement placeholder for:
-      // currentValue,
-      const curVal = this.group.get(this.config.formPath).value
-      // field laben,
-      const label = this.config.label;
-
-      // validation name
-
-      // validation params
-      //console.log('Validator Params: ', this.config.validator.find( (i) => i.name == key).params );
-
-      let errorMessage = `No message given for validator ${validatorName} on field ${label}`;
-
-      mappedErrors[validatorName] = this.errorMessageMap[validatorName];
-    }
-    return mappedErrors;
   }
 
 }

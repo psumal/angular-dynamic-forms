@@ -32,7 +32,6 @@ export class DynamicFormService {
         }
         else {
           let extras = this.getFormGroupExtras(conf);
-          console.log('EXTRAS: ', extras);
           formGroupObject[conf['key']] = {};
           formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
         }
@@ -55,14 +54,14 @@ export class DynamicFormService {
     if ('validator' in forgGroupConfig) {
       const v = forgGroupConfig.validator;
       if(Array.isArray(v) && v.length > 0) {
-        fGExtras.validator = this.getValidatorFn(v[0].name, v[0].params);
+        fGExtras.validator = this.getValidators(v)[0];
       }
     }
 
     if ('asyncValidator' in forgGroupConfig) {
       const av = forgGroupConfig.asyncValidator;
       if(Array.isArray(av) && av.length > 0) {
-        fGExtras.asyncValidator = this.getAsyncValidatorFn(av[0].name, av[0].params);
+        fGExtras.asyncValidator = this.getAsyncValidators(av)[0];
       }
     }
 
@@ -122,11 +121,11 @@ export class DynamicFormService {
     return (validatorArgs)?validatorFn(...validatorArgs):validatorFn;
   }
 
-  getValidators(valdators: any): ValidatorFn[] {
+  getValidators(validators: any): ValidatorFn[] {
     let validators: any[] = [];
 
-    if (valdators) {
-      validators = valdators.map((validatorObj: any) => {
+    if (validators) {
+      validators = validators.map((validatorObj: any) => {
         return this.getValidatorFn(validatorObj.name, validatorObj.params)
       })
     }

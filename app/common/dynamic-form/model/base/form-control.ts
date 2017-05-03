@@ -8,7 +8,9 @@ export class AbstractFormControlModel<T> extends ItemBase {
   required?: boolean;
   validator?:any;
   asyncValidator?:any;
+  validatorMessages?:any;
   changeListener?:changeListenerConfig[];
+
 
   constructor(options: IAbstractControlOptions<T> = <T>{}) {
     super(options);
@@ -17,6 +19,7 @@ export class AbstractFormControlModel<T> extends ItemBase {
     this.value = options.value;
     this.required = !!options.required;
     this.validator = options.validator || [];
+    this.validatorMessages = options.validatorMessages || {};
     this.asyncValidator = options.asyncValidator || [];
     this.changeListener = options.changeListener || [];
   }

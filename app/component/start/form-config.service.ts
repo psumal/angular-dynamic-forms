@@ -125,7 +125,7 @@ export class FormConfigService {
 
     config.push(gCV1);
 
-    let gCV2:any = this._getRandItem('gCV2', 'formGroup', null, 'Custom Group Validator someOf',  [ { name:'someOf', params:[ [['value1'], ['value2'], ['value3'], ['value4']], 3 ] } ],[], '', '');
+    let gCV2:any = this._getRandItem('gCV2', 'formGroup', null, 'Custom Group Validator someOf',  [ { name:'someOf', params:[ [['value1'], ['value2'], ['value3'], ['value4']] ] } ],[], '', '');
 
     gCV2.config.push(this._getRandItem('value1',  ct, itt, 'Some Value1', [],[], '', ''));
     gCV2.config.push(this._getRandItem('value2',  ct, itt, 'Some Value2', [],[], '', ''));

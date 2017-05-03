@@ -12,15 +12,12 @@ export function someOf(params: any, numOfMatches:number): ValidatorFn {
 
     let values = params
       .filter((formPath: any) => {
-        console.log('formPath:', formPath);
         const item = formGroup.get(formPath);
         return !!(item && item.value);
       })
       .map((formPath: string[]) => {
         return formGroup.get(formPath).value;
       });
-
-    console.log('values: ', values, values.length, numOfMatches);
 
     return (values.length >= numOfMatches) ? null : {someOf: true};
 

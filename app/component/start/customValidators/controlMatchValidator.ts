@@ -6,7 +6,6 @@ export function controlMatch(params: any): ValidatorFn {
 
     let values = params
       .filter((formPath: any) => {
-        console.log('formPath:', formPath);
         const item = formGroup.get(formPath);
         return !!(item && item.value);
       })
@@ -15,7 +14,6 @@ export function controlMatch(params: any): ValidatorFn {
       });
 
     let isValid = values.every((value: any, _: any, array: any[]) => {
-      console.log('value:', value);
         return array[0] === value;
       }
     );

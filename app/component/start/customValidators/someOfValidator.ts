@@ -1,8 +1,14 @@
 import {FormControl, ValidatorFn, AbstractControl} from "@angular/forms";
 
-export function controlMatch(params: any): ValidatorFn {
+export function someOf(params: any, numOfMatches:number): ValidatorFn {
+
 
   return (formGroup: AbstractControl) => {
+
+    if(params.length < 2) {return null; }
+
+    numOfMatches = (numOfMatches > params.length)?params.length:numOfMatches;
+    numOfMatches = (numOfMatches > 1)?numOfMatches:2;
 
     let values = params
       .filter((formPath: any) => {
@@ -14,14 +20,9 @@ export function controlMatch(params: any): ValidatorFn {
         return formGroup.get(formPath).value;
       });
 
-    let isValid = values.every((value: any, _: any, array: any[]) => {
-      console.log('value:', value);
-        return array[0] === value;
-      }
-    );
+    console.log('values: ', values, values.length, numOfMatches);
 
-    if (!values || values.length == 0) return null;
-    return isValid ? null : {controlMatch: true};
+    return (values.length >= numOfMatches) ? null : {someOf: true};
 
   }
 };

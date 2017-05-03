@@ -31,14 +31,15 @@ export class DynamicFormService {
           formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
         }
         else {
-          //let extras = this.getFormGroupExtras(conf);
+          let extras = this.getFormGroupExtras(conf);
+          console.log('EXTRAS: ', extras);
           formGroupObject[conf['key']] = {};
-          formGroupObject[conf['key']] = this.toFG(conf['config'], {});
+          formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
         }
       });
     }
 
-    return this.fb.group(formGroupObject, {});
+    return this.fb.group(formGroupObject, extras);
 
     /////////////////////////////
 
@@ -49,48 +50,33 @@ export class DynamicFormService {
 
     if(!forgGroupConfig) { return null; }
 
-    //define array of params
     let fGExtras: any = {};
 
     if ('validator' in forgGroupConfig) {
-
-      console.log('FGV: ', forgGroupConfig);
-
-    //&& Object.keys(forgGroupConfig.validator).length > 0
-      let v = forgGroupConfig.validator;
-      if( v !== null && v.length > 0 && 'name' in v ) {
-        //we have only ine validator in formGroup
-        console.log('FG get Validator', v, this.getValidatorFn(v.name, v.params));
-        v = v[0];
-
-        fGExtras.validator = this.getValidatorFn(v.name, v.params);
+      const v = forgGroupConfig.validator;
+      if(Array.isArray(v) && v.length > 0) {
+        fGExtras.validator = this.getValidatorFn(v[0].name, v[0].params);
       }
     }
-/*
+
     if ('asyncValidator' in forgGroupConfig) {
-      let  av = forgGroupConfig.asyncValidator;
-      if( av !== null && av.length > 0 && 'name' in av ) {
-        //we have only ine validator in formGroup
-        console.log('FG get Async Validator', av, this.getValidatorFn(av.name, av.params));
-        av = av[0];
-        fGExtras.asyncValidator = this.getValidatorFn(av.name. av.param);
-        }
+      const av = forgGroupConfig.asyncValidator;
+      if(Array.isArray(av) && av.length > 0) {
+        fGExtras.asyncValidator = this.getAsyncValidatorFn(av[0].name, av[0].params);
+      }
     }
-    */
 
     return Object.keys(fGExtras).length >=1 ? fGExtras: null;
   };
 
   getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
 
-    //define array of params
     let fCParams: Array<any> = [];
 
     let formState: any = '';
     let validator: Array<any> = [];
     let asyncValidator: Array<any> = [];
 
-    //define FormControl params in the right order in the form control config array
 
     //form state
     if (item['formState'] !== undefined) {
@@ -118,7 +104,6 @@ export class DynamicFormService {
 
     if (this.NG_VALIDATORS) {
       validatorFn = this.NG_VALIDATORS.find( (validatorFn) => {
-        console.log('SYNC VALID ', validatorName, validatorFn.name);
         return validatorName === validatorFn.name
       });
     }
@@ -149,14 +134,12 @@ export class DynamicFormService {
   }
 
   getAsyncValidatorFn(validatorName: string, validatorArgs?: any): any {
-
     let asyncValidatorFn;
 
     if (this.NG_ASYNC_VALIDATORS) {
 
       asyncValidatorFn = this.NG_ASYNC_VALIDATORS.find(
         (asyncValidatorFn) => {
-          console.log('ASYNC ', validatorName, asyncValidatorFn.name);
           return validatorName === asyncValidatorFn.name
         });
     }
@@ -173,7 +156,6 @@ export class DynamicFormService {
 
     if (config) {
       asyncValidators = config.map((validatorObj: any) => {
-        console.log('getAsyncValidators: ', validatorObj.name, validatorObj.params);
         return this.getAsyncValidatorFn(validatorObj.name, validatorObj.params)
       })
     }

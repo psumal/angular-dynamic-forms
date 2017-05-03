@@ -17,6 +17,7 @@ import {dividableBy} from "./customValidators/dividableByValidator";
 import {promiseValidator} from "./customValidators/promiseValidator";
 import {observableValidator} from "./customValidators/observableValidator";
 import {randomValidator} from "./customValidators/randomlValidator";
+import {someOf} from "./customValidators/someOfValidator";
 
 export{StartComponent} from "./start.component";
 
@@ -47,6 +48,7 @@ const EXPORTS = [StartComponent, SliderComponent];
 
     //VALIDATORS Group
     {provide: NG_VALIDATORS, useValue: controlMatch, multi: true},
+    {provide: NG_VALIDATORS, useValue: someOf, multi: true},
     //customValidator for group with params
     //@TODO
 

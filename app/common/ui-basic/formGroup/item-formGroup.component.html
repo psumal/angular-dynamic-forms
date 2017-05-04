@@ -9,5 +9,9 @@
     </ng-container>
 
   <item-errors [config]="config" [group]="currentFormItem"></item-errors>
+
+  <div *ngIf="currentFormItem.status == 'PENDING'">
+    Validation is pending...
+  </div>
   <!---->
 </fieldset>

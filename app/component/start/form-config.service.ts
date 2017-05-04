@@ -1,11 +1,5 @@
 import {Injectable} from "@angular/core";
-import {
-  textboxTypes,
-  controlTypes,
-  buttonTypes,
-  inputTypes,
-  IAbstractControlOptions
-} from "../../common/dynamic-form/model/item.struckts";
+import {textboxTypes, controlTypes, buttonTypes, inputTypes} from "../../common/dynamic-form/model/item.struckts";
 
 @Injectable()
 export class FormConfigService {
@@ -58,7 +52,10 @@ export class FormConfigService {
     {value: {name: 'nullValidator', params: ["[A-Za-z]+"]}, name: 'Null Validator'},
     //custom validators
 
-    {value: { name:'controlMatch', params:[ [['controlMatchPattern'], ['controlMatch']] ] } , name: 'Control Match Validator'},
+    {
+      value: {name: 'controlMatch', params: [[['controlMatchPattern'], ['controlMatch']]]},
+      name: 'Control Match Validator'
+    },
     //email
     {value: {name: "randomValidator"}, name: 'Validate Email'},
   ];
@@ -74,153 +71,11 @@ export class FormConfigService {
     conf.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
     conf.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
     conf.push(this._getRandItem('Agr', 'textbox', 'number', 'Lastname', [], [], '', ''));
-    conf.push(this._getRandItem('email', 'textbox', 'email', 'Email', [], [],  '', ''));
-    conf.push(this._getRandItem('password', 'textbox', 'password', 'Password', [], [],  '', ''));
-    conf.push(this._getRandItem('passwordConfirm', 'textbox', 'password', 'Confirm Password', [], [],  '', ''));
+    conf.push(this._getRandItem('email', 'textbox', 'email', 'Email', [], [], '', ''));
+    conf.push(this._getRandItem('password', 'textbox', 'password', 'Password', [], [], '', ''));
+    conf.push(this._getRandItem('passwordConfirm', 'textbox', 'password', 'Confirm Password', [], [], '', ''));
 
     return conf;
-  }
-
-  getValidationTestConfig() {
-
-    let config:any = [];
-
-    let ct:controlTypes = 'textbox';
-    let itt:inputTypes = 'text';
-    let itn:inputTypes = 'text';
-
-    ////// Basic Control Validators
-    let cV:any = this._getRandItem('cV', 'formGroup', null, 'Default Validators', [], [], '', '');
-
-    cV.config.push(this._getRandItem('required',       ct, itt, 'Required Validation',      [ { name : "required"} ],                    [], '', ''));
-    cV.config.push(this._getRandItem('minLength2',     ct, itt, 'Min Length 2 Validation',  [ { name : "minLength", params:[2] } ],      [], '', ''));
-    cV.config.push(this._getRandItem('maxLength4',     ct, itt, 'Max Length 4 Validation',  [ { name : "maxLength", params:[4] } ],      [], '', ''));
-    cV.config.push(this._getRandItem('pattern[a-z]',   ct, itt, 'Pattern [a-z] Validation', [ { name : "pattern", params:['[a-z]+'] } ], [], '', ''));
-    cV.config.push(this._getRandItem('nullValidator',  ct, itt, 'Null Validation',          [ { name : "nullValidator" } ],              [], '', ''));
-
-    config.push(cV);
-
-    ////// Custom Control Validators
-    let cCV:any = this._getRandItem('cCV', 'formGroup', null, 'Custom Validators', [], [], '', '');
-
-    cCV.config.push(this._getRandItem('randomValidator',  ct, itn, 'Random Validator', [ { name : "randomValidator" } ],           [], '', ''));
-    cCV.config.push(this._getRandItem('dividableBy',      ct, itn, 'Dividable By [3]',     [ { name : "dividableBy", params:[3] } ],   [], '', ''));
-
-    config.push(cCV);
-
-    ////// Custom Async Control Validators
-    let cCAV:any = this._getRandItem('cCAV', 'formGroup', null, 'Custom Async validators', [], [], '', '');
-
-    cCAV.config.push(this._getRandItem('promiseValidator',  ct, itt, 'Promise Validator (test => true)[2s]',               [], [ { name : "promiseValidator" } ],            '', ''));
-    cCAV.config.push(this._getRandItem('observableValidator',  ct, itt, 'Observable Validator (unique@gmail => true)[0s]', [], [ { name : "observableValidator" } ],            '', ''));
-
-    config.push(cCAV);
-
-    ////// Custom Group Validators
-
-    let gCV1:any = this._getRandItem('gCV1', 'formGroup', null, 'Custom Group Validator controlMatch',  [ { name:'controlMatch', params:[ [['controlMatchPattern'], ['controlMatch']] ] } ],[], '', '');
-
-    gCV1.config.push(this._getRandItem('controlMatchPattern',  ct, itt, 'Control Match Pattern', [],[], '', ''));
-    gCV1.config.push(this._getRandItem('controlMatch',         ct, itt, 'Control Match',         [],[], '', ''));
-
-    config.push(gCV1);
-
-    let gCV2:any = this._getRandItem('gCV2', 'formGroup', null, 'Custom Group Validator someOf',  [ { name:'someOf', params:[ [['value1'], ['value2'], ['value3'], ['value4']] ] } ],[], '', '');
-
-    gCV2.config.push(this._getRandItem('value1',  ct, itt, 'Some Value1', [],[], '', ''));
-    gCV2.config.push(this._getRandItem('value2',  ct, itt, 'Some Value2', [],[], '', ''));
-    gCV2.config.push(this._getRandItem('value3',  ct, itt, 'Some Value3', [],[], '', ''));
-    gCV2.config.push(this._getRandItem('value4',  ct, itt, 'Some Value4', [],[], '', ''));
-
-    config.push(gCV2);
-
-
-    ////// Custom Async Group Validators
-    let gCAv:any = this._getRandItem('gCAv', 'formGroup', null, 'Custom Async Group Validators',  [],[], '', '');
-
-    config.push(gCAv);
-
-    ////// Custom Validation Messages
-    let gCVM:any =this._getRandItem('gCVM', 'formGroup', null, 'Custom Validation Messages',  [ { name:'controlMatch', params:[ ['controlMatchPattern'], ['controlMatch'] ] } ],[], '', '');
-
-    gCVM.validatorMessages = { "controlMatch" : "My custom message for group %cl with %vn" };
-
-    let a = this._getRandItem('c1',  ct, itt, 'Control Match Pattern', [ { name:"required" }],[], '', '');
-    a.validatorMessages = { "required" : "My custom message for %cl with %vn" };
-    gCVM.config.push(a);
-
-    let b = this._getRandItem('c2',         ct, itt, 'Control Match',         [],[{ name:"promiseValidator" }], '', '');
-    b.validatorMessages = { "promiseValidator" : "My custom async message for %cl with %vn" };
-    gCVM.config.push(b);
-
-    config.push(gCVM);
-
-    return config;
-  }
-
-  getFormGroupTestConfig() {
-
-    let conf = createFgConfig(2);
-
-    conf.push({
-      controlType: 'textbox',
-      type: "text",
-      key: "TextboxFg" + 3,
-      label: "Textbox Item of type url"
-    });
-
-    return conf;
-    //////////////////////////////////
-
-    function createFgConfig(count: any): any {
-
-      let conf = [
-        {
-          controlType: 'textbox',
-          type: "text",
-          key: "TextboxFg" + count,
-          label: "Textbox Item " + '.' + count + " of fG" + count
-        },
-        {
-          controlType: 'textbox',
-          type: "text",
-          key: "TextboxFg" + count + '.' + count,
-          label: "Textbox Item " + '.' + count + '.' + count + " of fG" + count
-        },
-        /*{
-          controlType: 'textbox',
-          type: "text",
-          key: "TextboxFg" + count + '.' + count + '.' + count,
-          label: "Textbox Item " + count + '.' + count + '.' + count + " of fG" + count
-        }*/
-        /*
-         ,{
-         controlType: 'button',
-         key: 'buttonButton',
-         label: 'Button',
-         type: 'button'
-         }*/
-      ];
-
-      let fg = {
-        controlType: 'formGroup',
-        key: "fG" + count,
-        title: "Form Group " + count,
-        config: conf,
-        validator: (count > 0) ? {name: 'controlMatch', params: [["TextboxFg2"], ["TextboxFg2.2"]]} : {}
-      };
-
-
-      if (count > 0) {
-
-        fg.config = fg.config.concat(createFgConfig(count - 1));
-      }
-
-
-      return [fg];
-
-    }
-
   }
 
   getDynCompTestConfig() {
@@ -236,191 +91,14 @@ export class FormConfigService {
 
   }
 
-  getConfigForm() {
-
-    let bindings: Array<any> = [
-      // id
-      {
-        controlType: 'textbox',
-        key: 'id',
-        label: 'Id',
-        placeholder: "A string here",
-        helpText: "The id attribute of the component",
-        type: 'text'
-      },
-      // rating
-      {
-        controlType: 'radio',
-        key: 'rating',
-        label: 'Rating',
-        placeholder: "The rating",
-        helpText: "Number of stars selected",
-        type: 'number'
-      },
-      // showHalfStars
-      {
-        controlType: 'checkbox',
-        key: 'showHalfStars',
-        label: 'showHalfStars',
-        value: 5,
-      },
-      // numOfStars
-      {
-        controlType: 'textbox',
-        key: 'numOfStars',
-        label: 'Number of stars',
-        type: 'number',
-        value: 5,
-      },
-      // size
-      {
-        controlType: 'select',
-        key: 'size',
-        label: 'Stars size',
-        options: [
-          {key: 'small', value: 'Small'},
-          {key: 'medium', value: 'Medium'},
-          {key: 'large', value: 'Large'}
-        ]
-      },
-      // spread
-      {
-        controlType: 'select',
-        key: 'spread',
-        label: 'Stars spread',
-        options: [
-          {key: 'no', value: 'No Spread'},
-          {key: 'around', value: 'Space around'},
-          {key: 'between', value: 'Space between'}
-        ]
-      },
-      // staticColor
-      {
-        controlType: 'multiselect',
-        key: 'staticColor',
-        label: 'Static color of the stars',
-        options: [
-          {key: 'default', value: 'Default'},
-          {key: 'bad', value: 'Bad'},
-          {key: 'ok', value: 'Ok'},
-          {key: 'good', value: 'Good'}
-        ]
-      },
-      // disabled
-      {
-        controlType: 'checkbox',
-        key: 'disabled',
-        label: 'Disabled'
-      },
-      // starType
-      {
-        controlType: 'select',
-        key: 'starType',
-        label: 'Type of the stars',
-        options: [
-          {key: 'svg', value: 'Svg'},
-          {key: 'icon', value: 'Icon'},
-          {key: 'custom-icon', value: 'Custom Icon'},
-        ]
-      },
-      // text
-      {
-        controlType: 'textbox',
-        key: 'text',
-        label: 'Label text',
-        type: 'string'
-      },
-      // labelPosition
-      {
-        controlType: 'select',
-        key: 'labelPosition',
-        label: 'Label Position',
-        options: [
-          {key: 'top', value: 'Top'},
-          {key: 'right', value: 'Right'},
-          {key: 'left', value: 'Left'},
-          {key: 'bottom', value: 'Bottom'}
-        ]
-      },
-      // speed
-      {
-        controlType: 'select',
-        key: 'speed',
-        label: 'Animation Speed',
-        options: [
-          {key: 'immediately', value: 'Immediately'},
-          {key: 'noticeable', value: 'Noticeable'},
-          {key: 'slow', value: 'Slow'}
-        ]
-      },
-      // direction
-      {
-        controlType: 'select',
-        key: 'direction',
-        label: 'Direction',
-        options: [
-          {key: 'rtl', value: 'Right to left'},
-          {key: 'ltr', value: 'Left to right'}
-        ]
-      },
-      // readOnly
-      {
-        controlType: 'radio',
-        key: 'readOnly',
-        label: 'Read Only'
-      },
-      // getColor
-      //showHalfStars
-      {
-        controlType: 'radio',
-        key: 'showHalfStars',
-        label: 'Show half stars',
-        options: [
-          {key: 'yes', value: 'Yes'},
-          {key: 'no', value: 'No'},
-        ],
-      },
-      {
-        controlType: 'button',
-        key: 'submitButton',
-        label: 'Reset',
-        type: 'reset'
-      }
-      // getHalfStarVisible
-      // onClick
-      // onRatingChange
-    ];
-    return bindings.sort((a, b) => a.order - b.order);
-
-  }
-
-  getKitchenSink() {
-    let formConfig: Array<any> = [
-
+  getTextboxConfig() {
+    var conf: any = [
       // textbox text
       {
         controlType: 'textbox',
         key: "textboxItem_text",
         label: "Textbox Item of type text",
-        type: "text",
-        validator: [
-          //static required(control: AbstractControl): {[key: string]: boolean;};
-          {name: 'required'},
-          //static requiredTrue(control: AbstractControl): {[key: string]: boolean;};
-
-          //static minLength(minLength: number): ValidatorFn;
-          {name: 'minLength', params: [2]},
-          //static maxLength(maxLength: number): ValidatorFn;
-          {name: 'maxLength', params: [4]},
-          //pattern(pattern: string | RegExp): ValidatorFn;
-          {name: 'pattern', params: ["[A-Za-z]+"]},
-          //nullValidator
-          //{name:'nullValidator'}
-
-          //custom validators
-          //email
-          {name: "randomValidator"}
-        ]
+        type: "text"
       },
       //textbox email
       {
@@ -512,6 +190,284 @@ export class FormConfigService {
         key: "textboxItem_hidden",
         label: "Textbox Item of type hidden",
         type: "hidden"
+      }
+    ];
+
+    return conf;
+  }
+
+  getCheckboxConfig() {
+    var config: any = [
+      {
+        controlType: 'checkbox',
+        key: 'checkboxItem',
+        label: 'Checkbox config',
+      }
+    ];
+
+    return config;
+  }
+
+  getRadioConfig() {
+    var config: any = [
+      {
+        controlType: 'radio',
+        key: 'radioItem',
+        label: 'Radio config',
+        options: [
+          {key: 'key0', value: 'Short label'},
+          {key: 'key1', value: 'Label should always fit'},
+          {key: 'key2', value: 'Kind a long label for a radio control'},
+          {key: 'key3', value: 'This label is really long for a normal radio control!'},
+        ],
+      }
+    ];
+
+    return config;
+  }
+
+  getSelectConfig() {
+    let config: any = [
+      // select
+      {
+        controlType: 'select',
+        key: 'selectItem',
+        label: 'Select config',
+        options: [
+          {key: 'key0', value: 'Short label'},
+          {key: 'key1', value: 'Label should always fit'},
+          {key: 'key2', value: 'Kind a long label for a select box'},
+          {key: 'key3', value: 'This label is really long for a normal select box!'},
+        ]
+      },
+      // multiselect
+      {
+        controlType: 'multiselect',
+        key: 'staticColor',
+        label: 'Static color of the stars',
+        options: [
+          {key: 'default', value: 'Default'},
+          {key: 'bad', value: 'Bad'},
+          {key: 'ok', value: 'Ok'},
+          {key: 'good', value: 'Good'}
+        ]
+      }
+    ];
+
+    return config;
+  }
+
+  getTextareaConfig() {
+    let config: any = [
+      // textarea
+      {
+        controlType: 'textarea',
+        key: 'textareaItem',
+        label: 'Textarea Item'
+      }
+    ];
+
+    return config;
+  }
+
+  getButtonConfig() {
+    let config: any = [
+      //button
+      {
+        controlType: 'button',
+        key: 'buttonReset',
+        label: 'Reset',
+        type: 'reset'
+      },
+      //button
+      {
+        controlType: 'button',
+        key: 'buttonSubmit',
+        label: 'Submit',
+        type: 'submit'
+      },
+      //button
+      {
+        controlType: 'button',
+        key: 'buttonButton',
+        label: 'Button',
+        type: 'button'
+      }
+    ];
+
+    return config;
+  }
+
+  getFormGroupConfig() {
+
+    let conf = createFgConfig(2);
+
+    conf.push({
+      controlType: 'textbox',
+      type: "text",
+      key: "TextboxFg" + 3,
+      label: "Textbox Item of type url",
+      validator: [{name: "required"}]
+    });
+
+    return conf;
+    //////////////////////////////////
+
+    function createFgConfig(count: any): any {
+
+      let conf = [
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count,
+          label: "Textbox Item " + '.' + count + " of fG" + count
+        },
+        {
+          controlType: 'textbox',
+          type: "text",
+          key: "TextboxFg" + count + '.' + count,
+          label: "Textbox Item " + '.' + count + '.' + count + " of fG" + count
+        },
+        /*{
+         controlType: 'textbox',
+         type: "text",
+         key: "TextboxFg" + count + '.' + count + '.' + count,
+         label: "Textbox Item " + count + '.' + count + '.' + count + " of fG" + count
+         }*/
+        /*
+         ,{
+         controlType: 'button',
+         key: 'buttonButton',
+         label: 'Button',
+         type: 'button'
+         }*/
+      ];
+
+      let fg = {
+        controlType: 'formGroup',
+        key: "fG" + count,
+        title: "Form Group " + count,
+        config: conf,
+        validator: (count > 0) ? {name: 'controlMatch', params: [["TextboxFg2"], ["TextboxFg2.2"]]} : {}
+      };
+
+
+      if (count > 0) {
+
+        fg.config = fg.config.concat(createFgConfig(count - 1));
+      }
+
+
+      return [fg];
+
+    }
+
+  }
+
+  getValidationConfig() {
+
+    let config: any = [];
+
+    let ct: controlTypes = 'textbox';
+    let itt: inputTypes = 'text';
+    let itn: inputTypes = 'text';
+
+    ////// Basic Control Validators
+    let cV: any = this._getRandItem('cV', 'formGroup', null, 'Default Validators', [], [], '', '');
+
+    cV.config.push(this._getRandItem('required', ct, itt, 'Required Validation', [{name: "required"}], [], '', ''));
+    cV.config.push(this._getRandItem('minLength2', ct, itt, 'Min Length 2 Validation', [{
+      name: "minLength",
+      params: [2]
+    }], [], '', ''));
+    cV.config.push(this._getRandItem('maxLength4', ct, itt, 'Max Length 4 Validation', [{
+      name: "maxLength",
+      params: [4]
+    }], [], '', ''));
+    cV.config.push(this._getRandItem('pattern[a-z]', ct, itt, 'Pattern [a-z] Validation', [{
+      name: "pattern",
+      params: ['[a-z]+']
+    }], [], '', ''));
+    cV.config.push(this._getRandItem('nullValidator', ct, itt, 'Null Validation', [{name: "nullValidator"}], [], '', ''));
+
+    config.push(cV);
+
+    ////// Custom Control Validators
+    let cCV: any = this._getRandItem('cCV', 'formGroup', null, 'Custom Validators', [], [], '', '');
+
+    cCV.config.push(this._getRandItem('randomValidator', ct, itn, 'Random Validator', [{name: "randomValidator", params:[]}], [], '', ''));
+    cCV.config.push(this._getRandItem('dividableBy', ct, itn, 'Dividable By [3]',     [{name: "dividableBy", params: [3]}],   [], '', ''));
+
+    config.push(cCV);
+
+    ////// Custom Async Control Validators
+    let cCAV: any = this._getRandItem('cCAV', 'formGroup', null, 'Custom Async validators', [], [], '', '');
+
+    cCAV.config.push(this._getRandItem('promiseValidator', ct, itt, 'Promise Validator (test => true)[2s]', [], [{name: "promiseValidator"}], '', ''));
+    cCAV.config.push(this._getRandItem('observableValidator', ct, itt, 'Observable Validator (unique@gmail => true)[0s]', [], [{name: "observableValidator"}], '', ''));
+
+    config.push(cCAV);
+
+    ////// Custom Group Validators
+
+    let gCV1: any = this._getRandItem('gCV1', 'formGroup', null, 'Custom Group Validator controlMatch', [{
+      name: 'controlMatch',
+      params: [[['controlMatchPattern'], ['controlMatch']]]
+    }], [], '', '');
+
+    gCV1.config.push(this._getRandItem('controlMatchPattern', ct, itt, 'Control Match Pattern', [{name: "required"}], [], '', ''));
+    gCV1.config.push(this._getRandItem('controlMatch', ct, itt, 'Control Match', [], [], '', ''));
+
+    config.push(gCV1);
+
+    let gCV2: any = this._getRandItem('gCV2', 'formGroup', null, 'Custom Group Validator someOf', [{
+      name: 'someOf',
+      params: [[['value1'], ['value2'], ['value3'], ['value4']]]
+    }], [], '', '');
+
+    gCV2.config.push(this._getRandItem('value1', ct, itt, 'Some Value1', [], [], '', ''));
+    gCV2.config.push(this._getRandItem('value2', ct, itt, 'Some Value2', [], [], '', ''));
+    gCV2.config.push(this._getRandItem('value3', ct, itt, 'Some Value3', [], [], '', ''));
+    gCV2.config.push(this._getRandItem('value4', ct, itt, 'Some Value4', [], [], '', ''));
+
+    config.push(gCV2);
+
+
+    ////// Custom Async Group Validators
+    let gCAv: any = this._getRandItem('gCAv', 'formGroup', null, 'Custom Async Group Validators', [], [], '', '');
+
+    config.push(gCAv);
+
+    ////// Custom Validation Messages
+    let gCVM: any = this._getRandItem('gCVM', 'formGroup', null, 'Custom Validation Messages', [{
+      name: 'controlMatch',
+      params: [['controlMatchPattern'], ['controlMatch']]
+    }], [], '', '');
+
+    gCVM.validatorMessages = {"controlMatch": "My custom message for group %cl with %vn"};
+
+    let a = this._getRandItem('c1', ct, itt, 'Control Match Pattern', [{name: "required"}], [], '', '');
+    a.validatorMessages = {"required": "My custom message for %cl with %vn"};
+    gCVM.config.push(a);
+
+    let b = this._getRandItem('c2', ct, itt, 'Control Match', [], [{name: "promiseValidator"}], '', '');
+    b.validatorMessages = {"promiseValidator": "My custom async message for %cl with %vn"};
+    gCVM.config.push(b);
+
+    config.push(gCVM);
+
+    return config;
+  }
+
+  getKitchenSink() {
+    let formConfig: Array<any> = [
+
+      //textbox
+      {
+        controlType: 'textbox',
+        key: "textboxItem_text",
+        label: "Textbox Item of type text",
+        type: "text"
       },
       // checkbox
       {
@@ -563,12 +519,6 @@ export class FormConfigService {
         label: 'Textarea Item'
       },
       //button
-      {
-        controlType: 'button',
-        key: 'buttonReset',
-        label: 'Reset',
-        type: 'reset'
-      },
       //button
       {
         controlType: 'button',
@@ -576,38 +526,38 @@ export class FormConfigService {
         label: 'Submit',
         type: 'submit'
       },
-      //button
       {
         controlType: 'button',
-        key: 'buttonButton',
-        label: 'Button',
-        type: 'button'
+        key: 'buttonReset',
+        label: 'Reset',
+        type: 'reset'
       },
       //formGroup
-      /*{
-       controlType: 'formGroup',
-       key: "groupTest",
-       title: "Form Group1",
-       config: [
-       {
-       controlType: 'textbox',
-       key: "Textbox in form group 1",
-       label: "Textbox Item of type url",
-       type: "text"
-       },
-       {
-       controlType: 'button',
-       key: 'buttonButton',
-       label: 'Button',
-       type: 'button'
-       }
-       ]
-       }*/
+      {
+        controlType: 'formGroup',
+        key: "groupTest",
+        title: "Form Group1",
+        config: [
+          {
+            controlType: 'textbox',
+            key: "Textbox in form group 1",
+            label: "Textbox Item of type url",
+            type: "text"
+          },
+          {
+            controlType: 'button',
+            key: 'buttonButton',
+            label: 'Button',
+            type: 'button'
+          }
+        ]
+      }
     ];
     return formConfig;
   }
 
-  getGenericElement() {
+
+  getGenericElementConfig() {
 
     let formConfig: Array<any> = [
       /**/
@@ -928,7 +878,7 @@ export class FormConfigService {
   ////////////////////////////////////////////////
 
 
-  _getRandItem(key: string, controlType?: controlTypes, type?: inputTypes, label?: string, validator?: any[], asyncValidator?: any[], placeholder?:string, helpText?:string, config?:any[] ): any {
+  _getRandItem(key: string, controlType?: controlTypes, type?: inputTypes, label?: string, validator?: any[], asyncValidator?: any[], placeholder?: string, helpText?: string, config?: any[]): any {
 
     controlType = controlType || this._getRandControlType();
 
@@ -938,7 +888,7 @@ export class FormConfigService {
 
     config = [];
 
-    let numOfValidators = (controlType == 'formGroup')?1:null;
+    let numOfValidators = (controlType == 'formGroup') ? 1 : null;
 
     validator = validator || this._getRandInputValidator(numOfValidators);
 
@@ -949,7 +899,7 @@ export class FormConfigService {
     helpText = helpText || '';
 
 
-    let item:any = {
+    let item: any = {
       key: key,
       label: label,
       placeholder: placeholder,
@@ -960,7 +910,7 @@ export class FormConfigService {
       validator: validator,
       asyncValidator: asyncValidator,
 
-      config:config
+      config: config
     };
 
     return item;
@@ -972,7 +922,7 @@ export class FormConfigService {
   }
 
   _getRandInputType(controlType: controlTypes): inputTypes {
-    let set:any;
+    let set: any;
 
     switch (controlType) {
       case 'select':
@@ -1008,7 +958,7 @@ export class FormConfigService {
     }, count);
   }
 
- _getRandInputAsyncValidator(count?: number): any {
+  _getRandInputAsyncValidator(count?: number): any {
     return this._getArrayOfRandItemCount(() => {
       return this._getRandArrayItem(FormConfigService.INPUT_ASYNC_VALIDATORS).value
     }, count);
@@ -1026,7 +976,7 @@ export class FormConfigService {
     return validators;
   }
 
-  _getRandArrayItem(arr:any[]):any {
+  _getRandArrayItem(arr: any[]): any {
     return arr[Math.floor(Math.random() * arr.length)]
   }
 

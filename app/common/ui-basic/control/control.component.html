@@ -86,11 +86,10 @@
         [attr.placeholder]="config.placeholder">
        </textarea>
 
+  <item-errors [config]="config" [group]="currentFormItem"></item-errors>
   <div *ngIf="currentFormItem.status == 'PENDING'">
     Validation is pending...
   </div>
-
-  <item-errors [config]="config" [group]="currentFormItem"></item-errors>
   <!---->
   <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{config.helpText}}</small>
 

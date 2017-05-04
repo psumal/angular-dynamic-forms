@@ -1,5 +1,7 @@
-import {AbstractControl, Validators} from "@angular/forms";
+import {AbstractControl} from "@angular/forms";
 import {AbstractFormControlModel} from "../model/base/form-control";
+import {ErrorServiceConfig} from "./errorConfig.service";
+import {Injectable} from "@angular/core";
 
 interface ErrorReplaceKeys {
   controlValue?: string,
@@ -8,17 +10,19 @@ interface ErrorReplaceKeys {
   validatorParam?:string
 }
 
+@Injectable()
 export class ErrorService {
 
-  static REPLACE_KEYS: ErrorReplaceKeys = {
+  REPLACE_KEYS: ErrorReplaceKeys = {
     controlValue: "cv",
     controlLabel: "cl",
     validatorName: "vn",
     validatorParam: "vp"
   };
 
-  static DEFAULT_ERROR:string = 'No message given for validator %vn on field %cl is invalid';
-  static DEFAULT_ERROR_MAP: {[name: string]: string} = {
+  REPLACE_WRAPPER_TAG = "span";
+  DEFAULT_ERROR:string = 'No message given for validator %vn on field %cl is invalid';
+  DEFAULT_ERROR_MAP: {[name: string]: string} = {
     required: "The Field %cl is required",
     minLength: "The Field %cl should have a min length of %vp",
     maxLength: "The Field %cl should have a max length of %vp",
@@ -31,7 +35,12 @@ export class ErrorService {
   errorMap:{[key:string]:string};
 
   constructor() {
-    this.errorMap = ErrorService.DEFAULT_ERROR_MAP;
+    //console.log('esc', esc);
+    //this.DEFAULT_ERROR_MAP = esc.DEFAULT_ERROR_MAP || this.DEFAULT_ERROR_MAP;
+    //this.REPLACE_WRAPPER_TAG = esc.REPLACE_WRAPPER_TAG || this.REPLACE_WRAPPER_TAG;
+    //this.DEFAULT_ERROR = esc.DEFAULT_ERROR || this.DEFAULT_ERROR;
+
+    this.errorMap = this.DEFAULT_ERROR_MAP;
   }
 
   getErrors(formGroupOrControl:AbstractControl) : {[key:string]:string} {
@@ -44,7 +53,7 @@ export class ErrorService {
     let errorMessage:string;
 
     for (let validatorName in  errorKeys) {
-      errorMessage = ErrorService.DEFAULT_ERROR;
+      errorMessage = this.DEFAULT_ERROR;
 
       if(validatorName in this.errorMap) {
         errorMessage = this.errorMap[validatorName];
@@ -67,7 +76,7 @@ export class ErrorService {
   prePareMessage(error:any, replaceValues:ErrorReplaceKeys) {
     let prepMsg = error;
     for(let key in replaceValues) {
-      prepMsg = prepMsg.replace('%'+key, `<span>${replaceValues[key]}</span>`);
+      prepMsg = prepMsg.replace('%'+key, `<${this.REPLACE_WRAPPER_TAG}>${replaceValues[key]}</${this.REPLACE_WRAPPER_TAG}>`);
     }
 
     return prepMsg;
@@ -77,10 +86,10 @@ export class ErrorService {
 
     let replaceValues:ErrorReplaceKeys = <ErrorReplaceKeys>{};
 
-    replaceValues[ErrorService.REPLACE_KEYS.controlValue] = group.value;
-    replaceValues[ErrorService.REPLACE_KEYS.controlLabel] = config.label;
-    replaceValues[ErrorService.REPLACE_KEYS.validatorName] = validatorName;
-    replaceValues[ErrorService.REPLACE_KEYS.validatorParam] = errorObj;
+    replaceValues[this.REPLACE_KEYS.controlValue] = group.value;
+    replaceValues[this.REPLACE_KEYS.controlLabel] = config.label;
+    replaceValues[this.REPLACE_KEYS.validatorName] = validatorName;
+    replaceValues[this.REPLACE_KEYS.validatorParam] = errorObj;
 
     return replaceValues;
 

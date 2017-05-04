@@ -18,10 +18,10 @@ export class FormConfigSelectorComponent {
 
     this.demoForms = [
       {
-        value: 'Star Rating Config',
+        value: 'Buttons',
         key: {
-          formName: 'Star Rating Config',
-          formItems: formConfigService.getConfigForm()
+          formName: 'Buttons Config',
+          formItems: formConfigService.getButtonConfig()
           /*formModel: {
             rating: 4,
             numOfStars: 7,
@@ -39,22 +39,21 @@ export class FormConfigSelectorComponent {
       {
         value: 'validation Test',
         key: {
-          formName: 'Validation ' +
-          'TesT',
-          formItems: formConfigService.getValidationTestConfig()
+          formName: 'Validation Test',
+          formItems: formConfigService.getValidationConfig()
         }
       },
       {
         value: 'formGroup Test',
         key: {
           formName: 'KitchenSink',
-          formItems: formConfigService.getFormGroupTestConfig()
+          formItems: formConfigService.getFormGroupConfig()
         }
       },
       {value : "generic Item",
         key : {
           formName : "",
-          formItems : formConfigService.getGenericElement()
+          formItems : formConfigService.getGenericElementConfig()
         }
       },
       {
@@ -65,8 +64,6 @@ export class FormConfigSelectorComponent {
         }
       },
     ];
-
-    //this.formConfig = formConfigService.getConfigForm();
 
   }
 

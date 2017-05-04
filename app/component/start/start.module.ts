@@ -18,10 +18,16 @@ import {promiseValidator} from "./customValidators/promiseValidator";
 import {observableValidator} from "./customValidators/observableValidator";
 import {randomValidator} from "./customValidators/randomlValidator";
 import {someOf} from "./customValidators/someOfValidator";
+import {ErrorServiceConfig} from "../../common/dynamic-form/services/errorConfig.service";
+import {ErrorService} from "../../common/dynamic-form/services/error.service";
 
 export{StartComponent} from "./start.component";
 
 const EXPORTS = [StartComponent, SliderComponent];
+
+const CUSTOM_DEFAULT_ERRORMAP:ErrorServiceConfig = {
+  DEFAULT_ERROR:"Tis value is overridden globally by the ErrorConfigService"
+};
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, FormConfigSelectorModule, DynamicFormModule, UiBasicModule, FormViewerModule, FormBuilderModule],

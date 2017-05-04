@@ -24,6 +24,21 @@ export class BaseComponent {
   }
 
 
+  isNoOptPresent() {
+    return 'noOptKey' in this.config && !!this.config['noOptKey'];
+  }
+
+  getNoOptText() {
+
+    let text:string =  "-- noOpt --";
+
+    if('noOptKey' in this.config && this.config['noOptKey'] && this.config['noOptKey'] !== true) {
+      text = this.config['noOptKey'];
+    }
+
+    return text;
+  }
+
   getParentFormGroup() {
 
     let newFormPath: string[] = [...this.config.formPath];

@@ -1,7 +1,6 @@
 import {Injectable}   from '@angular/core';
 
 import {TextboxItem} from "../model/item-textbox";
-import {MultiselectItem} from "../model/item-multiselect";
 import {SelectItem} from "../model/item-select";
 import {CheckboxItem} from "../model/item-checkbox";
 import {RadioItem} from "../model/item-radio";
@@ -31,10 +30,6 @@ export class DynamicFormUtils {
 
     if (controlType === "select") {
       item = new SelectItem(config);
-    }
-
-    if (controlType === "multiselect") {
-      item = new MultiselectItem(config);
     }
 
     if (controlType === "checkbox") {

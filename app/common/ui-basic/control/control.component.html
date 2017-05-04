@@ -40,39 +40,23 @@
         </label>
       </div>
 
+  noOptKey:<pre>{{config | json}}</pre>
+
       <select
         *ngIf="isControlTypeVisible('select')"
         [id]="config.key"
         [formControlName]="config.key"
         [attr.class]="getControlClass()"
         [attr.aria-describedby]="config.key+'Help'"
-        [attr.placeholder]="config.placeholder">
+        [attr.placeholder]="config.placeholder"
+        [attr.multiple]="config.multiple ? '' : null">
+        <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
         <template ngFor let-opt [ngForOf]="config.visibleOptions">
-          <option [ngValue]="" (click)="select(opt.key)">{{config.noOpt || "-- noOpt --"}}</option>
           <optgroup *ngIf="opt.children" label="{{opt.value}}">
             <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
               {{optChild.value}}
             </option>
           </optgroup>
-          <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
-        </template>
-      </select>
-
-      <select
-        *ngIf="isControlTypeVisible('multiselect')"
-        multiple
-        [id]="config.key"
-        [formControlName]="config.key"
-        [attr.class]="'form-control'"
-        [attr.aria-describedby]="config.key+'Help'"
-        [attr.placeholder]="config.placeholder">
-        <template ngFor let-opt [ngForOf]="config.options">
-          <optgroup *ngIf="opt.children" label="{{opt.value}}">
-            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
-              {{optChild.value}}
-            </option>
-          </optgroup>
-
           <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
         </template>
       </select>

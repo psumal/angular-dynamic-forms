@@ -64,33 +64,6 @@ export class FormConfigService {
     {value: {name: 'wait2SecToValidateRequired'}, name: 'Wait 2 Sec To Validate Required'},
   ];
 
-  getPersonalDataConfig() {
-
-    let conf = [];
-
-    conf.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
-    conf.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
-    conf.push(this._getRandItem('Agr', 'textbox', 'number', 'Lastname', [], [], '', ''));
-    conf.push(this._getRandItem('email', 'textbox', 'email', 'Email', [], [], '', ''));
-    conf.push(this._getRandItem('password', 'textbox', 'password', 'Password', [], [], '', ''));
-    conf.push(this._getRandItem('passwordConfirm', 'textbox', 'password', 'Confirm Password', [], [], '', ''));
-
-    return conf;
-  }
-
-  getDynCompTestConfig() {
-    let formConfig: Array<any> = [
-      {
-        controlType: 'slider',
-        key: "slider",
-        title: "Slider Group"
-      }
-    ];
-
-    return formConfig;
-
-  }
-
   getTextboxConfig() {
     var conf: any = [
       // textbox text
@@ -227,24 +200,46 @@ export class FormConfigService {
   }
 
   getSelectConfig() {
+
+    let simpleOptions:any = [
+        {key: 'key0', value: 'Short label'},
+        {key: 'key1', value: 'Label should always fit'},
+        {key: 'key2', value: 'Kind a long label for a select box'},
+        {key: 'key3', value: 'This label is really long for a normal select box!'},
+      ];
+
+
     let config: any = [
       // select
       {
         controlType: 'select',
         key: 'selectItem',
         label: 'Select config',
-        options: [
-          {key: 'key0', value: 'Short label'},
-          {key: 'key1', value: 'Label should always fit'},
-          {key: 'key2', value: 'Kind a long label for a select box'},
-          {key: 'key3', value: 'This label is really long for a normal select box!'},
-        ]
+        options: simpleOptions
+      },
+      // select on option
+      {
+        controlType: 'select',
+        key: 'selectItem',
+        label: 'Select config',
+        noOptKey: true,
+        options: simpleOptions
+      },
+      // select custom on option
+      {
+        controlType: 'select',
+        multiple:false,
+        key: 'selectItem',
+        label: 'Select config',
+        noOptKey: "--none--",
+        options: simpleOptions
       },
       // multiselect
       {
-        controlType: 'multiselect',
+        controlType: 'select',
         key: 'staticColor',
         label: 'Static color of the stars',
+        multiple:true,
         options: [
           {key: 'default', value: 'Default'},
           {key: 'bad', value: 'Bad'},
@@ -395,7 +390,7 @@ export class FormConfigService {
     ////// Custom Control Validators
     let cCV: any = this._getRandItem('cCV', 'formGroup', null, 'Custom Validators', [], [], '', '');
 
-    cCV.config.push(this._getRandItem('randomValidator', ct, itn, 'Random Validator', [{name: "randomValidator", params:[]}], [], '', ''));
+    //cCV.config.push(this._getRandItem('randomValidator', ct, itn, 'Random Validator', [{name: "randomValidator"}], [], '', ''));
     cCV.config.push(this._getRandItem('dividableBy', ct, itn, 'Dividable By [3]',     [{name: "dividableBy", params: [3]}],   [], '', ''));
 
     config.push(cCV);
@@ -556,6 +551,32 @@ export class FormConfigService {
     return formConfig;
   }
 
+  getCustomCompomponentConfig() {
+    let formConfig: Array<any> = [
+      {
+        controlType: 'slider',
+        key: "slider",
+        title: "Slider Group"
+      }
+    ];
+
+    return formConfig;
+
+  }
+
+  getPersonalDataConfig() {
+
+    let conf = [];
+
+    conf.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
+    conf.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
+    conf.push(this._getRandItem('Agr', 'textbox', 'number', 'Lastname', [], [], '', ''));
+    conf.push(this._getRandItem('email', 'textbox', 'email', 'Email', [], [], '', ''));
+    conf.push(this._getRandItem('password', 'textbox', 'password', 'Password', [], [], '', ''));
+    conf.push(this._getRandItem('passwordConfirm', 'textbox', 'password', 'Confirm Password', [], [], '', ''));
+
+    return conf;
+  }
 
   getGenericElementConfig() {
 
@@ -641,15 +662,18 @@ export class FormConfigService {
         key: 'validator',
         label: 'Validator',
         helpText: "Select default validation for this element",
+        noOptValue :"--none--",
         options: [
           {
-            key: "builtIn", value: "built in validators", children: [
-            {key: [{name: 'required'}], value: 'Required'},
-            {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
-          ]
+            key: "builtIn", value: "built in validators",
+            children: [
+              {key: [{name: 'required'}], value: 'Required'},
+              {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
+            ]
           },
           {
-            key: "custom", value: "custom in validators", children: [
+            key: "custom", value: "custom in validators",
+            children: [
             {key: [{name: 'email'}], value: 'Email'},
           ]
           }

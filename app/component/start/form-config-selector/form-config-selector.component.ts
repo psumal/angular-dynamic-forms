@@ -18,29 +18,45 @@ export class FormConfigSelectorComponent {
 
     this.demoForms = [
       {
+        value: 'Textbox',
+        key: {
+          formName: 'Textbox Config',
+          formItems: formConfigService.getTextboxConfig()
+        }
+      },
+      {
+        value: 'Checkbox',
+        key: {
+          formName: 'Checkbox Config',
+          formItems: formConfigService.getCheckboxConfig()
+        }
+      },
+      {
+        value: 'Radio',
+        key: {
+          formName: 'Radio Config',
+          formItems: formConfigService.getRadioConfig()
+        }
+      },
+      {
+        value: 'Select',
+        key: {
+          formName: 'Select Config',
+          formItems: formConfigService.getSelectConfig()
+        }
+      },
+      {
+        value: 'Textarea',
+        key: {
+          formName: 'Textarea Config',
+          formItems: formConfigService.getTextareaConfig()
+        }
+      },
+      {
         value: 'Buttons',
         key: {
           formName: 'Buttons Config',
           formItems: formConfigService.getButtonConfig()
-          /*formModel: {
-            rating: 4,
-            numOfStars: 7,
-            size: "large",
-          }*/
-        }
-      },
-      {
-        value: 'KitchenSink',
-        key: {
-          formName: 'KitchenSink',
-          formItems: formConfigService.getKitchenSink()
-        }
-      },
-      {
-        value: 'validation Test',
-        key: {
-          formName: 'Validation Test',
-          formItems: formConfigService.getValidationConfig()
         }
       },
       {
@@ -50,6 +66,23 @@ export class FormConfigSelectorComponent {
           formItems: formConfigService.getFormGroupConfig()
         }
       },
+
+      {
+        value: 'validation Test',
+        key: {
+          formName: 'Validation Test',
+          formItems: formConfigService.getValidationConfig()
+        }
+      },
+
+      {
+        value: 'KitchenSink',
+        key: {
+          formName: 'KitchenSink',
+          formItems: formConfigService.getKitchenSink()
+        }
+      },
+
       {value : "generic Item",
         key : {
           formName : "",

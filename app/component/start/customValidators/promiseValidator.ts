@@ -5,7 +5,7 @@ export function promiseValidator(c:AbstractControl): Promise<ValidationErrors | 
     setTimeout(() => {
       if( c.value !== "test" ) {
         resolve({
-          promiseInvalid: true
+          promiseValidator: true
         })
       } else {
         resolve(null);

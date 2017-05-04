@@ -57,11 +57,11 @@ export class BaseComponent {
   getValidationClass() {
     let classNames: Array<string> = [];
 
-    if (this.currentFormItem.valid && this.currentFormItem.touched) {
+    if (this.currentFormItem.valid && (this.currentFormItem.touched && this.currentFormItem.dirty)) {
       classNames.push('has-success');
     }
 
-    if (!this.currentFormItem.valid && this.currentFormItem.dirty) {
+    if (!this.currentFormItem.valid && (this.currentFormItem.touched && this.currentFormItem.dirty)) {
       classNames.push('has-danger');
     }
 

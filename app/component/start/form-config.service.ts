@@ -140,6 +140,21 @@ export class FormConfigService {
 
     config.push(gCAv);
 
+    ////// Custom Validation Messages
+    let gCVM:any =this._getRandItem('gCVM', 'formGroup', null, 'Custom Validation Messages',  [ { name:'controlMatch', params:[ ['controlMatchPattern'], ['controlMatch'] ] } ],[], '', '');
+
+    gCVM.validatorMessages = { "controlMatch" : "My custom message for group %cl with %vn" };
+
+    let a = this._getRandItem('c1',  ct, itt, 'Control Match Pattern', [ { name:"required" }],[], '', '');
+    a.validatorMessages = { "required" : "My custom message for %cl with %vn" };
+    gCVM.config.push(a);
+
+    let b = this._getRandItem('c2',         ct, itt, 'Control Match',         [],[{ name:"promiseValidator" }], '', '');
+    b.validatorMessages = { "promiseValidator" : "My custom async message for %cl with %vn" };
+    gCVM.config.push(b);
+
+    config.push(gCVM);
+
     return config;
   }
 

@@ -20,12 +20,11 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
 
   private _errors:{[key:string]:string} = {};
 
-  get errors(): {} {
+  get errors(): {[key:string]:string} {
     return this._errors;
   }
 
   set errors(errors: {[key:string]:string}) {
-    console.log('errors',  errors);
     errors = errors || {};
     this._errors = errors;
     this.errorMessages = this.errorService.getErrorMsgByErrors(errors, this.config, this.group);
@@ -38,33 +37,38 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.updateErrors(this.group);
+    this.updateErrors();
 
     if(this.group && 'statusChanges' in this.group) {
       let sub = this.group.statusChanges
         .subscribe((status) => {
-          console.log('status');
-          this.updateErrors(this.group);
+          this.updateErrors();
         });
       this.subscriptions.push(sub);
-    }/**/
+    }
 
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => {
-      try { subscription.unsubscribe(); }
-    });
+      try{
+        subscription.unsubscribe();
+      } catch(e) {}
+    })
   }
 
 
-  updateErrors(group) {
+  updateErrors() {
 
-    this.errors = this.errorService.getErrors(group);
+    this.errors = this.errorService.getErrors(this.group);
   }
 
   errorKeys() : Array<string> {
     return Object.keys(this.errors) || [];
+  }
+
+  errorVisible() {
+    return this.group.invalid && (this.group.touched && this.group.dirty);
   }
 
   getClassNames():string {

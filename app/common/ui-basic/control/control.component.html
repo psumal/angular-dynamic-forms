@@ -4,6 +4,7 @@
     {{config.label}}
   </label>
 
+  status:{{currentFormItem.status}}
       <input
         *ngIf="isControlTypeVisible('textbox')"
         [formControlName]="config.key"
@@ -84,6 +85,10 @@
         [attr.aria-describedby]="config.key+'Help'"
         [attr.placeholder]="config.placeholder">
        </textarea>
+
+  <div *ngIf="currentFormItem.status == 'PENDING'">
+    Validation is pending...
+  </div>
 
   <item-errors [config]="config" [group]="currentFormItem"></item-errors>
   <!---->

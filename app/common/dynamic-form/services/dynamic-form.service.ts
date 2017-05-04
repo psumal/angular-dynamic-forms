@@ -54,6 +54,7 @@ export class DynamicFormService {
     if ('validator' in forgGroupConfig) {
       const v = forgGroupConfig.validator;
       if(Array.isArray(v) && v.length > 0) {
+        console.log('getValidators',v,this.getValidators(v));
         fGExtras.validator = this.getValidators(v)[0];
       }
     }
@@ -121,11 +122,11 @@ export class DynamicFormService {
     return (validatorArgs)?validatorFn(...validatorArgs):validatorFn;
   }
 
-  getValidators(validators: any): ValidatorFn[] {
+  getValidators(validatorsConfig: any): ValidatorFn[] {
     let validators: any[] = [];
 
-    if (validators) {
-      validators = validators.map((validatorObj: any) => {
+    if (validatorsConfig) {
+      validators = validatorsConfig.map((validatorObj: any) => {
         return this.getValidatorFn(validatorObj.name, validatorObj.params)
       })
     }

@@ -1,4 +1,4 @@
-import {AbstractControl} from "@angular/forms";
+import {AbstractControl, Validators} from "@angular/forms";
 import {AbstractFormControlModel} from "../model/base/form-control";
 
 interface ErrorReplaceKeys {
@@ -35,12 +35,11 @@ export class ErrorService {
   }
 
   getErrors(formGroupOrControl:AbstractControl) : {[key:string]:string} {
-    console.log('formGroupOrControl: ', formGroupOrControl.errors);
     let errors = {};
     return (formGroupOrControl && 'errors' in formGroupOrControl)?formGroupOrControl.errors:{};
   }
 
-  getErrorMsgByErrors(errorKeys:{[key:string]:string}, config:AbstractFormControlModel, group:AbstractControl):{} {
+  getErrorMsgByErrors(errorKeys:{[key:string]:string}, config:AbstractFormControlModel<any>, group:AbstractControl):{} {
     let mappedErrors:any = {};
     let errorMessage:string;
 
@@ -51,9 +50,10 @@ export class ErrorService {
         errorMessage = this.errorMap[validatorName];
       }
 
-      /*if('validatorMessages' in config && config.validatorMessages[validatorName]) {
+      if('validatorMessages' in config && config.validatorMessages[validatorName]) {
+        console.log('config.validatorMessages', config.validatorMessages, validatorName, config.validatorMessages[validatorName]);
         errorMessage = config.validatorMessages[validatorName]
-      }*/
+      }
 
 
       let replaceValues:ErrorReplaceKeys = this.getReplaceValues(config, group, validatorName, errorKeys[validatorName]);
@@ -64,7 +64,7 @@ export class ErrorService {
     return mappedErrors;
   }
 
-  prePareMessage(error, replaceValues:ErrorReplaceKeys) {
+  prePareMessage(error:any, replaceValues:ErrorReplaceKeys) {
     let prepMsg = error;
     for(let key in replaceValues) {
       prepMsg = prepMsg.replace('%'+key, `<span>${replaceValues[key]}</span>`);
@@ -73,7 +73,7 @@ export class ErrorService {
     return prepMsg;
   }
 
-  getReplaceValues(config:AbstractFormControlModel, group:AbstractControl, validatorName, errorObj):ErrorReplaceKeys {
+  getReplaceValues(config:AbstractFormControlModel<any>, group:AbstractControl, validatorName:string, errorObj:any):ErrorReplaceKeys {
 
     let replaceValues:ErrorReplaceKeys = <ErrorReplaceKeys>{};
 

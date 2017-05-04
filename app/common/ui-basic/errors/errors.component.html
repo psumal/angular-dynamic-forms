@@ -1,5 +1,4 @@
-<div [attr.class]="getClassNames()">
-  <pre>{{errorKeys() | json}}</pre>
-  <div class="error-message" *ngFor="let key of errorKeys()" [innerHTML]="errorMessages[key]">
+<div *ngIf="errorVisible()">
+  <div class="text-danger" *ngFor="let key of errorKeys()" [innerHtml]="errorMessages[key]">
   </div>
 </div>

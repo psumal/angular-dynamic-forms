@@ -13,6 +13,7 @@ export interface changeListenerParamsConfig {
 export interface IItemBaseOptions {
   key?: string,
   formPath?:string[];
+  disabled?: boolean;
   parentId?:string;
   order?: number,
   controlType?: string
@@ -20,6 +21,7 @@ export interface IItemBaseOptions {
 
 export interface IAbstractControlOptions<T> extends IItemBaseOptions{
   value?: T,
+  disabled?:boolean;
   label?:string,
   required?: boolean,
   validator?:ValidatorFn | ValidatorFn[],

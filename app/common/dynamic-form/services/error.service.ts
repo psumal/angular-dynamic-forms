@@ -60,7 +60,6 @@ export class ErrorService {
       }
 
       if('validatorMessages' in config && config.validatorMessages[validatorName]) {
-        console.log('config.validatorMessages', config.validatorMessages, validatorName, config.validatorMessages[validatorName]);
         errorMessage = config.validatorMessages[validatorName]
       }
 

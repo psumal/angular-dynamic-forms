@@ -8,69 +8,65 @@
       <input
         *ngIf="isControlTypeVisible('textbox')"
         [formControlName]="config.key"
-        [id]="config.key"
-        [type]="config.type"
-        [attr.class]="getControlClass()"
-        [attr.aria-describedby]="config.key+'Help'"
-        [attr.placeholder]="config.placeholder">
+        interactionHandler
+        attrSetter
+        [attrConf]="config"
+        [attr.class]="getControlClass()">
 
       <div *ngIf="isControlTypeVisible('radio')">
         <div class="form-check" *ngFor="let option of config.options">
           <label [attr.class]="'form-check-label'">
-            <input [type]="config.type"
-                   [id]="config.key + '--' + option.key"
-                   name="{{config.key}}"
+            <input type="radio"
+                   attrSetter
+                   [attrConf]="config"
+                   [formControlName]="config.key"
                    [attr.class]="getControlClass()"
-                   [checked]="config.formState"
-                   [value]="option.key">
+                   [value]="option.value">
             {{option.value}}
           </label>
         </div>
       </div>
 
       <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
-        <label class="form-check-label" [attr.for]="config.key">
-          <input [formControlName]="config.key"
-                 [type]="config.type"
-                 [id]="config.key"
-                 [attr.class]="getControlClass()"
-                 [attr.aria-describedby]="config.key+'Help'"
-                 [attr.placeholder]="config.placeholder">
+        <label class="form-check-label">
+          <input type="checkbox"
+            attrSetter
+            [attrConf]="config"
+            [attr.class]="getControlClass()"
+            [formControlName]="config.key">
           {{config.label}}
         </label>
       </div>
 
-  noOptKey:<pre>{{config | json}}</pre>
-
       <select
+        attrSetter
+        [attrConf]="config"
         *ngIf="isControlTypeVisible('select')"
-        [id]="config.key"
-        [formControlName]="config.key"
         [attr.class]="getControlClass()"
-        [attr.aria-describedby]="config.key+'Help'"
-        [attr.placeholder]="config.placeholder"
-        [attr.multiple]="config.multiple ? '' : null">
+        [formControlName]="config.key">
         <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
+
         <template ngFor let-opt [ngForOf]="config.visibleOptions">
           <optgroup *ngIf="opt.children" label="{{opt.value}}">
             <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
               {{optChild.value}}
             </option>
           </optgroup>
-          <option *ngIf="!opt.children" [ngValue]="opt.key" (click)="select(opt.key)">{{opt.value}}</option>
+          <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" [value]="opt.key" >{{opt.value}}</option>
         </template>
       </select>
 
       <textarea
+        attrSetter
+        [attrConf]="config"
         *ngIf="isControlTypeVisible('textarea')"
-        [id]="config.key"
         [formControlName]="config.key"
-        [attr.class]="getControlClass()"
-        [attr.aria-describedby]="config.key+'Help'"
-        [attr.placeholder]="config.placeholder">
+        [attr.class]="getControlClass()">
        </textarea>
 
-  <item-errors [config]="config" [group]="currentFormItem"></item-errors>
+  <item-errors [config]="config" [group]="currentFormItem">
+  </item-errors>
+
   <div *ngIf="currentFormItem.status == 'PENDING'">
     Validation is pending...
   </div>

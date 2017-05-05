@@ -98,6 +98,8 @@ export class FormConfigSelectorComponent {
       },
     ];
 
+    this.formConfig = formConfigService.getTextboxConfig();
+
   }
 
   updateFormConfig(formItems:any) {

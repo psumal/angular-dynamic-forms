@@ -8,7 +8,7 @@ export class FormGroupItem extends ItemBase{
   controlType:string = 'formGroup';
 
   config: ItemBase[];
-
+  disabled:boolean;
   validator?:ValidatorFn | ValidatorFn[];
   asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[];
   changeListener?:changeListenerConfig[];
@@ -16,6 +16,7 @@ export class FormGroupItem extends ItemBase{
   constructor(options: {
     key?:string;
     label?: string,
+    disabled?: boolean,
     config?: ItemBase[]
     validator?:ValidatorFn | ValidatorFn[];
     asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[];
@@ -26,6 +27,7 @@ export class FormGroupItem extends ItemBase{
 
     this.key = options.key;
     this.label = options.label || '';
+    this.disabled = !!options.disabled;
     this.config = options.config || (<ItemBase[]>[]);
     this.validator =  options.validator;
     this.asyncValidator =  options.asyncValidator;

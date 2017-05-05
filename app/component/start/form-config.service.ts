@@ -208,44 +208,69 @@ export class FormConfigService {
         {key: 'key3', value: 'This label is really long for a normal select box!'},
       ];
 
+    let groupOptions:any = [
+      {
+        key: "colors",
+        value : "Colors",
+        children: [
+          {key: 0, value: 'red'},
+          {key: 1, value: 'green'},
+          {key: 2, value: 'blue'},
+          {key: 3, value: 'yellow'}
+        ]
+      },
+      {
+        key: "shapes",
+        value : "Shapes",
+        children: [
+          {key: 0, value: 'circle'},
+          {key: 1, value: 'rectangle'},
+          {key: 2, value: 'triangle'},
+          {key: 3, value: 'hexagon'}
+        ]
+      }
+    ];
+
 
     let config: any = [
       // select
       {
         controlType: 'select',
-        key: 'selectItem',
-        label: 'Select config',
+        key: 'default_select',
+        label: 'Default select',
         options: simpleOptions
       },
       // select on option
       {
         controlType: 'select',
-        key: 'selectItem',
-        label: 'Select config',
+        key: 'noopt_select',
+        label: 'No option',
         noOptKey: true,
         options: simpleOptions
       },
       // select custom on option
       {
         controlType: 'select',
-        multiple:false,
-        key: 'selectItem',
-        label: 'Select config',
+        key: 'custom_noopt_select',
+        label: 'Custom no option',
         noOptKey: "--none--",
         options: simpleOptions
+      },
+      // select custom on option
+      {
+        controlType: 'select',
+        key: 'option_group_select',
+        label: 'Options groups',
+        options: groupOptions
       },
       // multiselect
       {
         controlType: 'select',
-        key: 'staticColor',
+        disabled: false,
+        key: 'multiselect_default',
         label: 'Static color of the stars',
         multiple:true,
-        options: [
-          {key: 'default', value: 'Default'},
-          {key: 'bad', value: 'Bad'},
-          {key: 'ok', value: 'Ok'},
-          {key: 'good', value: 'Good'}
-        ]
+        options: simpleOptions
       }
     ];
 

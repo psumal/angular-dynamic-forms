@@ -54,7 +54,6 @@ export class DynamicFormService {
     if ('validator' in forgGroupConfig) {
       const v = forgGroupConfig.validator;
       if(Array.isArray(v) && v.length > 0) {
-        console.log('getValidators',v,this.getValidators(v));
         fGExtras.validator = this.getValidators(v)[0];
       }
     }

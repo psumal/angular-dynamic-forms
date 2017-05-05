@@ -5,6 +5,7 @@ import {changeListenerConfig, IAbstractControlOptions} from "../item.struckts";
 export class AbstractFormControlModel<T> extends ItemBase {
   label?:string;
   value?: T;
+  disabled:boolean;
   required?: boolean;
   validator?:any;
   asyncValidator?:any;
@@ -17,6 +18,7 @@ export class AbstractFormControlModel<T> extends ItemBase {
 
     this.label = options.label;
     this.value = options.value;
+    this.disabled = options.disabled;
     this.required = !!options.required;
     this.validator = options.validator || [];
     this.validatorMessages = options.validatorMessages || {};

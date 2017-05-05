@@ -479,6 +479,24 @@ export class FormConfigService {
     return config;
   }
 
+  getFormatterParserConfig() {
+
+    let config:any[] = [
+      {
+        key:'format',
+        controlType:'textbox',
+        type:'text',
+        formatter:[
+          { name : "creditCard", target:2, params: [] },
+          { name : "trim", target:2, params: [' '] },
+        ]
+      }
+    ];
+
+    return config;
+
+  }
+
   getKitchenSink() {
     let formConfig: Array<any> = [
 

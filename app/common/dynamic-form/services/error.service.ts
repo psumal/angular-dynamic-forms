@@ -1,6 +1,5 @@
 import {AbstractControl} from "@angular/forms";
 import {AbstractFormControlModel} from "../model/base/form-control";
-import {ErrorServiceConfig} from "./errorConfig.service";
 import {Injectable} from "@angular/core";
 
 interface ErrorReplaceKeys {
@@ -48,7 +47,7 @@ export class ErrorService {
     return (formGroupOrControl && 'errors' in formGroupOrControl)?formGroupOrControl.errors:{};
   }
 
-  getErrorMsgByErrors(errorKeys:{[key:string]:string}, config:AbstractFormControlModel<any>, group:AbstractControl):{} {
+  getErrorMsgByErrors(errorKeys:{[key:string]:string}, config:AbstractFormControlModel, group:AbstractControl):{} {
     let mappedErrors:any = {};
     let errorMessage:string;
 
@@ -81,7 +80,7 @@ export class ErrorService {
     return prepMsg;
   }
 
-  getReplaceValues(config:AbstractFormControlModel<any>, group:AbstractControl, validatorName:string, errorObj:any):ErrorReplaceKeys {
+  getReplaceValues(config:AbstractFormControlModel, group:AbstractControl, validatorName:string, errorObj:any):ErrorReplaceKeys {
 
     let replaceValues:ErrorReplaceKeys = <ErrorReplaceKeys>{};
 

@@ -8,7 +8,7 @@ export interface IDynamicFormOnPayLoadChangeEvent {
 }
 
 export interface IDynamicFormBindings{
-  items: AbstractFormControlModel<any>[];
+  items: AbstractFormControlModel[];
   onPayloadChange:any;
 }
 

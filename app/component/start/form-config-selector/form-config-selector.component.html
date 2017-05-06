@@ -1,34 +1,33 @@
-<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f.form)">
-
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)">
   <div class="form-group">
     <label>Demo form configs</label>
     <select
       class="form-control"
       name="formConfigSelect"
-      [(ngModel)]="formModel.formConfigSelect"
-      #formConfigSelect="ngModel"
+      [formControlName]="formConfigSelect"
       (change)="updateFormConfig(formConfigSelect.value.formItems)"
       required>
       <option [ngValue]="">{{noOpt || "-- noOpt --"}}</option>
       <option *ngFor="let opt of demoForms" [ngValue]="opt.key">{{opt.value}}</option>
     </select>
-    <small [hidden]="formConfigSelect.valid || (formConfigSelect.pristine && !f.submitted)">
-      Demo is required
-    </small>
-
   </div>
 
   <button type="submit" class="btn btn-prinmary">Submit</button>
 
-</form>
 
 <div class="row">
 
   <div class="col-sm-6">
-    <dynamic-form-group
-      [config]="formConfig"
-      (onGroupValueChanged)="onDynamicFormChange($event)">
-    </dynamic-form-group>
+
+    <form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)">
+
+      <dynamic-form-group
+        [config]="formConfig"
+        [group]="form"
+        (onGroupValueChanged)="onDynamicFormChange($event)">
+      </dynamic-form-group>
+
+    </form>
   </div>
 
   <div class="col-sm-6">

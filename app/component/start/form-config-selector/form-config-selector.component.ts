@@ -1,15 +1,19 @@
-import {Component, OnInit, Input, Output, OnChanges, EventEmitter, SimpleChanges} from '@angular/core';
+import {Component, OnInit, Input, Output, OnChanges, EventEmitter, SimpleChanges, AfterViewInit} from '@angular/core';
 import {FormConfigService} from "../form-config.service";
+import {FormGroup, NgForm, FormControl} from "@angular/forms";
 
 @Component({
   moduleId: module.id,
   selector: 'form-config-selector-comp',
   templateUrl: 'form-config-selector.component.html'
 })
-export class FormConfigSelectorComponent {
+export class FormConfigSelectorComponent implements AfterViewInit{
+
 
   noOpt:string = "--- none ---";
   demoForms:Array<any>;
+
+  form:FormGroup = new FormGroup({});
   formModel:any= {};
 
   formConfig:any = [];
@@ -106,7 +110,11 @@ export class FormConfigSelectorComponent {
     this.formConfig = formItems;
   }
 
-  onDynamicFormChange($event) {
+  ngAfterViewInit() {
+
+  }
+
+  onDynamicFormChange($event:any) {
     console.log('onDynamicFormChange: ', $event);
     this.formModel = $event;
   }

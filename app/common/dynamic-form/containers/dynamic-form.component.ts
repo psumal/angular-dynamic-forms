@@ -35,7 +35,7 @@ export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscriptions:any[] = [];
 
-  onGroupValueChanged:EventEmitter = new EventEmitter();
+  onGroupValueChanged:EventEmitter<any> = new EventEmitter<any>();
 
   constructor(protected dfService: DynamicFormService, protected fb:FormBuilder) {
 
@@ -83,6 +83,7 @@ configToFormConfig(config:any) {
 
   ngOnInit(): void {
 
+    console.log('this.group: ', this.group);
     this.renderForm();
 
   }
@@ -113,6 +114,7 @@ configToFormConfig(config:any) {
   }
 
   protected renderForm(): void {
+    //this.group.addControl('test',this.dfService.toFG(this.config));
     this.group = this.dfService.toFG(this.config);
   }
 

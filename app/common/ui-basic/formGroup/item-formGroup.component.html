@@ -4,7 +4,7 @@
 
     <dynamic-form-group
       [config]="items"
-      [group]="group">
+      [group]="currentFormItem">
     </dynamic-form-group>
 
   <item-errors [config]="config" [group]="currentFormItem"></item-errors>
@@ -12,7 +12,6 @@
   <div *ngIf="currentFormItem.status == 'PENDING'">
     Validation is pending...
   </div>
-
-  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}</small>
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted"><pre>{{currentFormItem.value | json}}</pre></small>
 
 </fieldset>

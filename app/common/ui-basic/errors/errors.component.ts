@@ -11,7 +11,7 @@ import {ErrorService} from "../../dynamic-form/services/error.service";
 })
 export class ControlErrorComponent implements OnInit, OnDestroy {
 
-  config: AbstractFormControlModel<any> = <any>{};
+  config: AbstractFormControlModel = <any>{};
   group: FormGroup = <any>{};
 
   protected errorService:ErrorService;

@@ -34,7 +34,7 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
 
   constructor(private _elementRef: ElementRef,
               @Optional() @Inject(FORMATTER_PARSER) private FORMATTER_PARSER: FormatParseFn[],
-              @Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: ChangeSubscriptionFn[]) {
+              @Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: ChangeSubscriptionFn<any>[]) {
 
   }
 
@@ -75,15 +75,17 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
 
   // Formatter: Model --> View
   writeValue(value: any): void {
-    const input: HTMLInputElement = this._elementRef.nativeElement;
+    if('radio,select'.split(',').indexOf(this.config.controlType) === -1) {
+      const input: HTMLInputElement = this._elementRef.nativeElement;
 
-    //write value to view
-    const viewValue: any = this.transformAll(this.formatterParserView, value);
-    input.value = viewValue;
+      //write value to view
+      const viewValue: any = this.transformAll(this.formatterParserView, value);
+      input.value = viewValue;
 
-    //write value to model
-    const modelValue = this.transformAll(this.formatterParserModel, value);
-    this.group.setValue(modelValue);
+      //write value to model
+      const modelValue = this.transformAll(this.formatterParserModel, value);
+      this.group.patchValue(modelValue);
+    }
   }
 
 
@@ -96,7 +98,7 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
         const otherChanges$ = this.group.get(listener.controls[0]).valueChanges;
 
         this.subscriptions.push(
-          otherChanges$.subscribe(change => {
+          otherChanges$.subscribe((change:any) => {
             <null>subscriptionFn(change, listener.params, this.config, this.group);
           })
         );
@@ -142,7 +144,7 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
 
   }
 
-  getChangeSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn | undefined {
+  getChangeSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn<any> | undefined {
     let subscriptionFn;
 
     if (this.CHANGE_SUBSCRIPTIONS) {

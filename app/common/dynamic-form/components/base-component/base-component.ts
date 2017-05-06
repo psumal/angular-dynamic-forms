@@ -2,7 +2,7 @@ import {FormGroup} from "@angular/forms";
 import {AbstractFormControlModel} from "../../model/base/form-control";
 import {ItemBase} from "../../model/base/item";
 import {SubscriptionFn} from "../../../ui-basic/control/control.component";
-import {ChangeSubscriptionFn, ChangeSubscriptions} from "../../customSubscriptions/changeSubscriptions";
+import {ChangeSubscriptionFn, ChangeSubscriptions} from "../../injects/changeSubscriptions";
 
 export class BaseComponent {
 
@@ -153,6 +153,5 @@ export class BaseComponent {
   }
   return false;
 };
-
 
 }

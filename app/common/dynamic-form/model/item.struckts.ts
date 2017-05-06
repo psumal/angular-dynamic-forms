@@ -12,25 +12,24 @@ export interface changeListenerParamsConfig {
 
 export interface IItemBaseOptions {
   key?: string,
-  formPath?:string[];
-  disabled?: boolean;
+  formPath?:string[],
+  disabled?: boolean,
   parentId?:string;
   order?: number,
   controlType?: string
 }
 
 export interface IAbstractControlOptions<T> extends IItemBaseOptions{
-  value?: T,
-  formState?:any;
-  disabled?:boolean;
+  value?: T;
+  formState?:any,
+  disabled?:boolean,
   label?:string,
   required?: boolean,
   validator?:ValidatorFn | ValidatorFn[],
   asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[],
   validatorMessages?:any,
-  formatter?:any[];
-  parser?:any[]
-  changeListener?:changeListenerConfig[]
+  formatterParser?:any[],
+  changeListener?:changeListenerConfig[];
 }
 
 export type controlTypes =  'textbox' | 'select'| 'multiselect'| 'checkbox'| 'checkboxInline'| 'radioInline'| 'textarea'| 'button' | 'formGroup' | 'formArray';

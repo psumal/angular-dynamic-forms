@@ -11,8 +11,7 @@ export class AbstractFormControlModel<T> extends ItemBase {
   validator?:any;
   asyncValidator?:any;
   validatorMessages?:any;
-  formatter?:any;
-  parser?:any;
+  formatterParser?:any[];
   changeListener?:changeListenerConfig[];
 
 
@@ -27,10 +26,7 @@ export class AbstractFormControlModel<T> extends ItemBase {
     this.validator = options.validator || [];
     this.validatorMessages = options.validatorMessages || {};
     this.asyncValidator = options.asyncValidator || [];
-    this.formatter = options.formatter || [];
-    this.parser = options.parser || [];
+    this.formatterParser = options.formatterParser || [];
     this.changeListener = options.changeListener || [];
-
-    console.log('parser', this.parser);
   }
 }

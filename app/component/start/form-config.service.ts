@@ -484,41 +484,41 @@ export class FormConfigService {
 
   getFormatterParserConfig() {
 
+    let creditCardMask = {
+        name: "maskString",
+        params: [
+          "0000 0000 0000 0000",
+          {'0': /[0-9]/}],
+        target: 2
+      };
+    let replaceSpace = {
+        name: "replaceString",
+        params: [/ /g, ''],
+        target: 1
+      };
+
+      let pFA:any[] = [
+          creditCardMask,
+          replaceSpace
+        ];
+
     let config: any[] = [
       {
-        key: 'format',
+        key: 'ccn',
         controlType: 'textbox',
         type: 'text',
+        label: 'Credit Card Number',
+        formatterParser:pFA,
+        parser: pFA
+      },
+      {
+        key: 'ccn-prefilled',
+        controlType: 'textbox',
+        type: 'text',
+        label: 'Credit Card Number (pre filled with "11 112 2223 3 3344 44")',
         formState: '11 112 2223 3 3344 44',
-        formatter: [
-          {
-            name: "maskString",
-            params: [
-              "0000 0000 0000 0000",
-              {'0': /[0-9]/}],
-            target: 2
-          },
-          {
-            name: "replaceString",
-            params: [/ /g, ''],
-            target: 1
-          },
-        ],
-        parser: [
-          {
-            name: "maskString",
-            params: [
-              "0000 0000 0000 0000",
-              {'0': /[0-9]/}
-            ],
-            target: 2
-          },
-          {
-            name: "replaceString",
-            params: [/ /g, ''],
-            target: 1
-          },
-        ]/**/
+        formatterParser:pFA,
+        parser: pFA
       }
     ];
 

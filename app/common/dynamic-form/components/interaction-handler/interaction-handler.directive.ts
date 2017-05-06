@@ -25,11 +25,8 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
   onTouched = () => {
   };
 
-  formattersView: Function[] = [];
-  formattersModel: Function[] = [];
-
-  parsersView: Function[] = [];
-  parsersModel: Function[] = [];
+  formatterParserView: Function[] = [];
+  formatterParserModel: Function[] = [];
 
   constructor(private _elementRef: ElementRef,
               @Optional() @Inject(FORMATTER_PARSER) private FORMATTER_PARSER: FormatParseFn[]) {
@@ -59,11 +56,11 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
     const value: string = input.value.toString();
 
     //write value to view
-    const viewValue = this.transformAll(this.formattersView, value);
+    const viewValue = this.transformAll(this.formatterParserView, value);
     input.value = viewValue;
 
     //write value to model
-    const modelValue: any = this.transformAll(this.formattersModel, value);
+    const modelValue: any = this.transformAll(this.formatterParserModel, value);
     this.onChange(modelValue);
 
   }
@@ -73,11 +70,11 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
     const input: HTMLInputElement = this._elementRef.nativeElement;
 
     //write value to view
-    const viewValue:any = this.transformAll(this.parsersView, value);
+    const viewValue:any = this.transformAll(this.formatterParserView, value);
     input.value = viewValue;
 
     //write value to model
-    const modelValue = this.transformAll(this.parsersModel, value);
+    const modelValue = this.transformAll(this.formatterParserModel, value);
     this.group.setValue(modelValue);
   }
 
@@ -95,45 +92,22 @@ export class InteractionHandlerDirective implements ControlValueAccessor, OnInit
   setFormatterAndParser() {
     if (!this.config) { return }
 
-    if ('formatter' in this.config) {
-
-      //setup formatter and parser
-      this.config.formatter
+    if ('formatterParser' in this.config) {
+      //setup formatterParser functions for view and model values
+      this.config.formatterParser
         .forEach((formatterConfig: any) => {
+          const fPF:any = this.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
 
           if (formatterConfig.target == 0 || formatterConfig.target == 2) {
-            this.formattersView.push(this.getFormatParseFunction(formatterConfig.name, formatterConfig.params));
+            this.formatterParserView.push(fPF);
           }
 
           if (formatterConfig.target == 1 || formatterConfig.target == 2) {
-            this.formattersModel.push(this.getFormatParseFunction(formatterConfig.name, formatterConfig.params));
+            this.formatterParserModel.push(fPF);
           }
         });
-
     }
 
-    if ('parser' in this.config) {
-
-      //setup formatter and parser
-      this.config.parser
-        .forEach((parserConfig: any) => {
-
-          if (parserConfig.target == 2) {
-            this.parsersView.push(this.getFormatParseFunction(parserConfig.name, parserConfig.params));
-            this.parsersModel.push(this.getFormatParseFunction(parserConfig.name, parserConfig.params));
-          }
-
-          else if (parserConfig.target == 0) {
-            this.parsersView.push(this.getFormatParseFunction(parserConfig.name, parserConfig.params));
-          }
-
-          else if (parserConfig.target == 1 || parserConfig.target == 2) {
-            this.parsersModel.push(this.getFormatParseFunction(parserConfig.name, parserConfig.params));
-          }
-
-        });
-
-    }
   }
 
   getFormatParseFunction(functionName: string, params: any[]): FormatParseFn | undefined {

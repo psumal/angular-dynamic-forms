@@ -1,16 +1,9 @@
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)">
-  <div class="form-group">
-    <label>Demo form configs</label>
-    <select
-      class="form-control"
-      name="formConfigSelect"
-      [formControlName]="formConfigSelect"
-      (change)="updateFormConfig(formConfigSelect.value.formItems)"
-      required>
-      <option [ngValue]="">{{noOpt || "-- noOpt --"}}</option>
-      <option *ngFor="let opt of demoForms" [ngValue]="opt.key">{{opt.value}}</option>
-    </select>
-  </div>
+
+  <dynamic-form-group
+    [config]="[{ key: 'formConfigSelect', controlType : 'select', options:demoForms }]"
+    (onGroupValueChanged)="updateFormConfig($event)">
+  </dynamic-form-group>
 
   <button type="submit" class="btn btn-prinmary">Submit</button>
 
@@ -23,7 +16,6 @@
 
       <dynamic-form-group
         [config]="formConfig"
-        [group]="form"
         (onGroupValueChanged)="onDynamicFormChange($event)">
       </dynamic-form-group>
 

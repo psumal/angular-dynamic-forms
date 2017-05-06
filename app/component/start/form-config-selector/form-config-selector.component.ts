@@ -1,126 +1,128 @@
-import {Component, OnInit, Input, Output, OnChanges, EventEmitter, SimpleChanges, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from "@angular/core";
 import {FormConfigService} from "../form-config.service";
-import {FormGroup, NgForm, FormControl} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   moduleId: module.id,
   selector: 'form-config-selector-comp',
   templateUrl: 'form-config-selector.component.html'
 })
-export class FormConfigSelectorComponent implements AfterViewInit{
+export class FormConfigSelectorComponent implements AfterViewInit {
 
 
-  noOpt:string = "--- none ---";
-  demoForms:Array<any>;
+  noOpt: string = "--- none ---";
+  demoForms: Array<any>;
 
-  form:FormGroup = new FormGroup({});
-  formModel:any= {};
+  form: FormGroup = new FormGroup({});
+  formModel: any = {};
 
-  formConfig:any = [];
+  formConfig: any = [];
 
   constructor(protected formConfigService: FormConfigService) {
 
     this.demoForms = [
       {
-        value: 'Textbox',
-        key: {
+        key: 'Textbox',
+        value: {
           formName: 'Textbox Config',
           formItems: formConfigService.getTextboxConfig()
         }
       },
       {
-        value: 'Checkbox',
-        key: {
+        key: 'Checkbox',
+        value: {
           formName: 'Checkbox Config',
           formItems: formConfigService.getCheckboxConfig()
         }
       },
       {
-        value: 'Radio',
-        key: {
+        key: 'Radio',
+        value: {
           formName: 'Radio Config',
           formItems: formConfigService.getRadioConfig()
         }
       },
       {
-        value: 'Select',
-        key: {
+        key: 'Select',
+        value: {
           formName: 'Select Config',
           formItems: formConfigService.getSelectConfig()
         }
       },
       {
-        value: 'Textarea',
-        key: {
+        key: 'Textarea',
+        value: {
           formName: 'Textarea Config',
           formItems: formConfigService.getTextareaConfig()
         }
       },
       {
-        value: 'Buttons',
-        key: {
+        key: 'Buttons',
+        value: {
           formName: 'Buttons Config',
           formItems: formConfigService.getButtonConfig()
         }
       },
       {
-        value: 'formGroup Test',
-        key: {
+        key: 'formGroup Test',
+        value: {
           formName: 'KitchenSink',
           formItems: formConfigService.getFormGroupConfig()
         }
       },
 
       {
-        value: 'validation Test',
-        key: {
+        key: 'validation Test',
+        value: {
           formName: 'Validation Test',
           formItems: formConfigService.getValidationConfig()
         }
       },
 
       {
-        value: 'KitchenSink',
-        key: {
+        key: 'KitchenSink',
+        value: {
           formName: 'KitchenSink',
           formItems: formConfigService.getKitchenSink()
         }
       },
 
-      {value : "generic Item",
-        key : {
-          formName : "",
-          formItems : formConfigService.getGenericElementConfig()
+      {
+        key: "generic Item",
+        value: {
+          formName: "",
+          formItems: formConfigService.getGenericElementConfig()
         }
       },
       {
-        value: 'Donut Campaign',
-        key: {
+        key: 'Donut Campaign',
+        value: {
           formName: 'Donut Campaign',
           formItems: formConfigService.getCampaign()
         }
       },
     ];
 
-    this.formConfig = formConfigService.getFormatterParserConfig();
+    this.formConfig = formConfigService.getPersonalDataConfig();
 
   }
 
-  updateFormConfig(formItems:any) {
-    this.formConfig = formItems;
+  updateFormConfig(formItems: any) {
+    console.log('updateFormConfig: ', formItems);
+    //this.formConfig = formItems;
   }
 
   ngAfterViewInit() {
 
   }
 
-  onDynamicFormChange($event:any) {
+  onDynamicFormChange($event: any) {
     console.log('onDynamicFormChange: ', $event);
     this.formModel = $event;
   }
 
 
-  onSubmit(form:any) {
+  onSubmit(form: any) {
     this.formConfig = this.updateFormConfig(form.value.formConfigSelect.formItems);
   }
 

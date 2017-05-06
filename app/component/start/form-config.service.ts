@@ -485,22 +485,22 @@ export class FormConfigService {
   getFormatterParserConfig() {
 
     let creditCardMask = {
-        name: "maskString",
-        params: [
-          "0000 0000 0000 0000",
-          {'0': /[0-9]/}],
-        target: 2
-      };
+      name: "maskString",
+      params: [
+        "0000 0000 0000 0000",
+        {'0': /[0-9]/}],
+      target: 2
+    };
     let replaceSpace = {
-        name: "replaceString",
-        params: [/ /g, ''],
-        target: 1
-      };
+      name: "replaceString",
+      params: [/ /g, ''],
+      target: 1
+    };
 
-      let pFA:any[] = [
-          creditCardMask,
-          replaceSpace
-        ];
+    let pFA: any[] = [
+      creditCardMask,
+      replaceSpace
+    ];
 
     let config: any[] = [
       {
@@ -508,7 +508,7 @@ export class FormConfigService {
         controlType: 'textbox',
         type: 'text',
         label: 'Credit Card Number',
-        formatterParser:pFA,
+        formatterParser: pFA,
         parser: pFA
       },
       {
@@ -517,7 +517,7 @@ export class FormConfigService {
         type: 'text',
         label: 'Credit Card Number (pre filled with "11 112 2223 3 3344 44")',
         formState: '11 112 2223 3 3344 44',
-        formatterParser:pFA,
+        formatterParser: pFA,
         parser: pFA
       }
     ];
@@ -639,13 +639,70 @@ export class FormConfigService {
   getPersonalDataConfig() {
 
     let conf = [];
+    let salutation: any = {
+      controlType: 'select',
+      key: 'anrede',
+      label: 'Anrede',
+      helpText: "Anrede der Person (Herr Frau)",
+      options: [
+        {value: [{name: 'Herr'}], key: 'Herr'},
+        {value: [{name: 'Frau'}], key: 'Frau'},
+        {value: [{name: 'Firma'}], key: 'Firma'}
+      ]
+    };
+    let title: any = {
+      controlType: 'select',
+      key: 'titel',
+      label: 'Titel',
+      helpText: "Titel der Person (Dr. Prof.)",
+      options: [
+        {value: [{name: 'Dr'}], key: 'Dr'},
+        {value: [{name: 'Prof'}], key: 'Prof'}
+      ]
+    };
 
+    let geb: any = {
+      controlType: 'textbox',
+      key: 'geburtsdatum',
+      label: 'Geburtsdatum',
+      placeholder: "Geburtsdatum hier",
+      helpText: "der Geburtsdatum der Person",
+      type: 'date'
+    };
+
+    let besch: any = {
+      controlType: 'select',
+      key: 'beschaeftigung',
+      label: 'Beschäftigung',
+      helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
+      options: [
+        {key: [{name: 'Arbeiter'}], value: 'Arbeiter'},
+        {key: [{name: 'Angestellter'}], value: 'Angestellter'}
+      ]
+    };
+
+    let main_lang: any = {
+      controlType: 'select',
+      key: 'kommunikationssprache',
+      label: 'Kommunikationssprache',
+      helpText: "Kommunikationssprache der Person",
+      options: [
+        {key: [{name: 'Deutsch'}], value: 'Deutsch'},
+        {key: [{name: 'Englisch'}], value: 'Englisch'}
+      ]
+    };
+
+    conf.push(salutation);
+    conf.push(title);
     conf.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
     conf.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
-    conf.push(this._getRandItem('Agr', 'textbox', 'number', 'Lastname', [], [], '', ''));
-    conf.push(this._getRandItem('email', 'textbox', 'email', 'Email', [], [], '', ''));
-    conf.push(this._getRandItem('password', 'textbox', 'password', 'Password', [], [], '', ''));
-    conf.push(this._getRandItem('passwordConfirm', 'textbox', 'password', 'Confirm Password', [], [], '', ''));
+    conf.push(geb);
+    conf.push(besch);
+    conf.push(main_lang);
+
+
+
+
 
     return conf;
   }

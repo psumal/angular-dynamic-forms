@@ -50,13 +50,14 @@
         <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
 
         <template ngFor let-opt [ngForOf]="config.visibleOptions">
-          <optgroup *ngIf="opt.children" label="{{opt.value}}">
-            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.key" (click)="select(optChild.key)">
-              {{optChild.value}}
+          <optgroup *ngIf="opt.children" label="{{opt.key}}">
+            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.value" (click)="select(optChild.key)">
+              {{optChild.key}}
             </option>
           </optgroup>
-          <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" [value]="opt.key" >{{opt.value}}</option>
+          <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" (click)="select(opt.key)" [ngValue]="opt.value" >{{opt.key}}</option>
         </template>
+
       </select>
 
       <textarea

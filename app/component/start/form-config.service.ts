@@ -201,17 +201,17 @@ export class FormConfigService {
 
   getSelectConfig() {
 
-    let simpleOptions:any = [
-        {key: 'key0', value: 'Short label'},
-        {key: 'key1', value: 'Label should always fit'},
-        {key: 'key2', value: 'Kind a long label for a select box'},
-        {key: 'key3', value: 'This label is really long for a normal select box!'},
-      ];
+    let simpleOptions: any = [
+      {key: 'key0', value: 'Short label'},
+      {key: 'key1', value: 'Label should always fit'},
+      {key: 'key2', value: 'Kind a long label for a select box'},
+      {key: 'key3', value: 'This label is really long for a normal select box!'},
+    ];
 
-    let groupOptions:any = [
+    let groupOptions: any = [
       {
         key: "colors",
-        value : "Colors",
+        value: "Colors",
         children: [
           {key: 0, value: 'red'},
           {key: 1, value: 'green'},
@@ -221,7 +221,7 @@ export class FormConfigService {
       },
       {
         key: "shapes",
-        value : "Shapes",
+        value: "Shapes",
         children: [
           {key: 0, value: 'circle'},
           {key: 1, value: 'rectangle'},
@@ -269,7 +269,7 @@ export class FormConfigService {
         disabled: false,
         key: 'multiselect_default',
         label: 'Static color of the stars',
-        multiple:true,
+        multiple: true,
         options: simpleOptions
       }
     ];
@@ -416,7 +416,10 @@ export class FormConfigService {
     let cCV: any = this._getRandItem('cCV', 'formGroup', null, 'Custom Validators', [], [], '', '');
 
     //cCV.config.push(this._getRandItem('randomValidator', ct, itn, 'Random Validator', [{name: "randomValidator"}], [], '', ''));
-    cCV.config.push(this._getRandItem('dividableBy', ct, itn, 'Dividable By [3]',     [{name: "dividableBy", params: [3]}],   [], '', ''));
+    cCV.config.push(this._getRandItem('dividableBy', ct, itn, 'Dividable By [3]', [{
+      name: "dividableBy",
+      params: [3]
+    }], [], '', ''));
 
     config.push(cCV);
 
@@ -481,15 +484,35 @@ export class FormConfigService {
 
   getFormatterParserConfig() {
 
-    let config:any[] = [
+    let config: any[] = [
       {
-        key:'format',
-        controlType:'textbox',
-        type:'text',
-        formatter:[
-          { name : "creditCard", target:2, params: [] },
-          { name : "trim", target:2, params: [' '] },
-        ]
+        key: 'format',
+        controlType: 'textbox',
+        type: 'text',
+        //formState:'11 112 2223 3 3344 44',
+        formatter: [
+          {
+            name: "maskString",
+            params: [
+              "0000 0000 0000 0000",
+              {'0': /[0-9]/}],
+            target: 2
+          },
+          {
+            name : "replaceString",
+            params: [/ /g, ''],
+            target:1
+          },
+        ],
+        /*parser: [
+          {
+            name: "maskString",
+            params: [
+              "0000 0000 0000 0000",
+              {'0': /[0-9]/}],
+              target:2
+          }
+        ]*/
       }
     ];
 
@@ -705,7 +728,7 @@ export class FormConfigService {
         key: 'validator',
         label: 'Validator',
         helpText: "Select default validation for this element",
-        noOptValue :"--none--",
+        noOptValue: "--none--",
         options: [
           {
             key: "builtIn", value: "built in validators",
@@ -717,8 +740,8 @@ export class FormConfigService {
           {
             key: "custom", value: "custom in validators",
             children: [
-            {key: [{name: 'email'}], value: 'Email'},
-          ]
+              {key: [{name: 'email'}], value: 'Email'},
+            ]
           }
         ],
         changeListener: [{

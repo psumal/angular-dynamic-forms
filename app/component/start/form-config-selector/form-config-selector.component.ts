@@ -98,7 +98,7 @@ export class FormConfigSelectorComponent {
       },
     ];
 
-    this.formConfig = formConfigService.getTextboxConfig();
+    this.formConfig = formConfigService.getFormatterParserConfig();
 
   }
 

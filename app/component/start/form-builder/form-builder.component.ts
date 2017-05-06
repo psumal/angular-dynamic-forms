@@ -12,12 +12,12 @@ import {FormConfigService} from "../form-config.service";
 export class FormBuilderComponent implements OnInit, OnChanges {
 
   dynamicItems:any;
-  config:any = [1,2];
+  config:any = [];
   model:any={};
 
 
   constructor(protected formConfServ:FormConfigService) {
-    this.config = formConfServ.getValidationConfig();
+    this.config;// = formConfServ.getValidationConfig();
   }
 
   ngOnInit(): void {

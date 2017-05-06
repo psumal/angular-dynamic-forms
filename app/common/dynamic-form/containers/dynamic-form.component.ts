@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges} from "@angular/core";
+import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges, OnDestroy, AfterViewInit} from "@angular/core";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {DynamicFormUtils} from "../services/dynamic-form.utils";
 import {IDynamicFormOnPayLoadChangeEvent} from "../dynamic-form.scruct";
@@ -7,15 +7,15 @@ import {AbstractFormControlModel} from "../model/base/form-control";
 
 @Component({
   moduleId: module.id,
-  inputs: ['config', 'group', 'model'],
-  outputs: ['formValueChanged'],
+  inputs: ['config', 'group'],
+  outputs: ['onGroupValueChanged'],
   selector: 'dynamic-form-group',
   templateUrl: './dynamic-form.component.html',
   providers: [DynamicFormUtils, DynamicFormService]
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  private _config: AbstractFormControlModel<any>[] = [];
+  private _config: AbstractFormControlModel[] = [];
   set config(config: Array<any>) {
 
     let prepConfig = this.setParentId(config);
@@ -31,15 +31,18 @@ export class DynamicFormComponent implements OnInit {
     return this._config;
   }
 
-  model: {} = {};
-
   group: FormGroup;
+
+  subscriptions:any[] = [];
+
+  onGroupValueChanged:EventEmitter = new EventEmitter();
 
   constructor(protected dfService: DynamicFormService, protected fb:FormBuilder) {
 
+
   }
 
-  configToFormConfig(config:any) {
+configToFormConfig(config:any) {
 
     return config.map((conf:any) => {
       let newItem = {};
@@ -82,38 +85,31 @@ export class DynamicFormComponent implements OnInit {
 
     this.renderForm();
 
-    let changes = this.group.valueChanges;
-
-    changes.subscribe(
-      (next) => {
-        this.model = next;
-      },
-      () => {},
-      () => {},
-    )
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngAfterViewInit(): void {
+    const valueChanges = this.group.valueChanges;
+    this.subscriptions.push(
+      valueChanges.subscribe((change:any) => {
+        console.log('valueChanges: ', change);
+        this.onGroupValueChanged.emit(change);
+      })
+    );
+  }
 
-    let valueChanged = function (key: string, changes: SimpleChanges): boolean {
-      if (key in changes) {
-        if (changes[key].currentValue !== changes[key].previousValue) {
-          return true;
-        }
+
+
+
+  ngOnDestroy() {
+
+    this.subscriptions.forEach( (sub:any) => {
+      try{
+        sub.unsubscribe();
       }
-      return false;
-    };
+      catch(e){
 
-    //---------------------------------------
-
-    if (valueChanged('model', changes)) {
-      this.model = changes['model'].currentValue || {};
-    }
-
-    if (valueChanged('config',changes)) {
-      this.config = changes['config'].currentValue || [];
-    }
-
+      }
+    })
   }
 
   protected renderForm(): void {

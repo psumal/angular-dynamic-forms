@@ -1,8 +1,9 @@
 import {ItemBase} from "./base/item";
 import {ValidatorFn, AsyncValidatorFn} from "@angular/forms";
 import {changeListenerConfig} from "./item.struckts";
+import {AbstractFormControlModel} from "./base/form-control";
 
-export class FormGroupItem extends ItemBase{
+export class FormGroupItem extends AbstractFormControlModel {
 
   label: string;
   controlType:string = 'formGroup';

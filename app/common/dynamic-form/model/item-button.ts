@@ -1,5 +1,4 @@
-import {AbstractFormControlModel} from "./base/form-control";
-import {IAbstractControlOptions, buttonTypes, changeListenerConfig, IItemBaseOptions} from "./item.struckts";
+import {buttonTypes, changeListenerConfig, IItemBaseOptions} from "./item.struckts";
 import {ItemBase} from "./base/item";
 
 export class ButtonItem extends ItemBase {

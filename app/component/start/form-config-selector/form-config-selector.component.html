@@ -22,7 +22,18 @@
 
 </form>
 
-<dynamic-form-group
-[config]="formConfig">
+<div class="row">
 
-</dynamic-form-group>
+  <div class="col-sm-6">
+    <dynamic-form-group
+      [config]="formConfig"
+      (onGroupValueChanged)="onDynamicFormChange($event)">
+    </dynamic-form-group>
+  </div>
+
+  <div class="col-sm-6">
+    FormModel:
+    <pre>{{formModel | json}}</pre>
+  </div>
+
+</div>

@@ -1,17 +1,18 @@
 <fieldset [attr.class]="getWrapperClass()">
   <legend>{{config.label}}</legend>
   status:{{currentFormItem.status}}
-    <ng-container
-      *ngFor="let conf of items;"
-      dynamicFGItem
-      [config]="conf"
+
+    <dynamic-form-group
+      [config]="items"
       [group]="group">
-    </ng-container>
+    </dynamic-form-group>
 
   <item-errors [config]="config" [group]="currentFormItem"></item-errors>
 
   <div *ngIf="currentFormItem.status == 'PENDING'">
     Validation is pending...
   </div>
+
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}</small>
 
 </fieldset>

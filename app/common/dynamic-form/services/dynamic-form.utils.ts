@@ -13,7 +13,7 @@ import {ItemBase} from "../model/base/item";
 @Injectable()
 export class DynamicFormUtils {
 
-  static createFormItem(config: {}): AbstractFormControlModel<any> | ButtonItem| FormGroupItem {
+  static createFormItem(config: {}): AbstractFormControlModel | ButtonItem| FormGroupItem {
     //prevent side effects
     config = {...config};
 
@@ -22,7 +22,7 @@ export class DynamicFormUtils {
     }
 
     let controlType: string = config['controlType'];
-    let item: AbstractFormControlModel<any>  | ButtonItem | FormGroupItem;
+    let item: AbstractFormControlModel  | ButtonItem | FormGroupItem;
 
     if (controlType === "textbox") {
       item = new TextboxItem(<any>config);

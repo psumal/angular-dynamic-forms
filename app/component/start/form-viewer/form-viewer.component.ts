@@ -8,8 +8,8 @@ import {Component, OnInit, OnChanges, EventEmitter} from '@angular/core';
 })
 export class FormViewerComponent implements OnInit, OnChanges {
 
-  config = [1,2];
-  model={};
+  config = [];
+  formModel={};
 
   ngOnInit(): void {
 
@@ -24,6 +24,7 @@ export class FormViewerComponent implements OnInit, OnChanges {
 
 
   }
+
 
 
 }

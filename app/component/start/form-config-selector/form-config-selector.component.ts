@@ -106,6 +106,12 @@ export class FormConfigSelectorComponent {
     this.formConfig = formItems;
   }
 
+  onDynamicFormChange($event) {
+    console.log('onDynamicFormChange: ', $event);
+    this.formModel = $event;
+  }
+
+
   onSubmit(form:any) {
     this.formConfig = this.updateFormConfig(form.value.formConfigSelect.formItems);
   }

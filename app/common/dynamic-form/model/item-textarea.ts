@@ -1,8 +1,9 @@
 import {AbstractFormControlModel} from "./base/form-control";
-export class TextareaItem extends AbstractFormControlModel<string> {
+import {IAbstractControlOptions} from "./item.struckts";
+export class TextareaItem extends AbstractFormControlModel {
   controlType = 'textarea';
 
-  constructor(options:any = {}) {
+  constructor(options:IAbstractControlOptions = {}) {
     super(options);
   }
 }

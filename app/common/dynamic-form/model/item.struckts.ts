@@ -19,14 +19,14 @@ export interface IItemBaseOptions {
   controlType?: string
 }
 
-export interface IAbstractControlOptions<T> extends IItemBaseOptions{
-  value?: T;
-  formState?:any,
-  disabled?:boolean,
+export interface IAbstractControlOptions extends IItemBaseOptions{
   label?:string,
+  attrs?:any;
   required?: boolean,
+  formState?:any,
   validator?:ValidatorFn | ValidatorFn[],
   asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[],
+
   validatorMessages?:any,
   formatterParser?:any[],
   changeListener?:changeListenerConfig[];

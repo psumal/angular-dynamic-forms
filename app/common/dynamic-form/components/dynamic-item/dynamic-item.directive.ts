@@ -19,7 +19,7 @@ import {UI_COMPONENTS} from "../ui-components.token";
 })
 export class DynamicItemDirective implements DynamicItem, OnChanges, OnInit {
 
-  config: AbstractFormControlModel<any>;
+  config: AbstractFormControlModel;
   group: FormGroup;
 
   component: ComponentRef<DynamicItem>;

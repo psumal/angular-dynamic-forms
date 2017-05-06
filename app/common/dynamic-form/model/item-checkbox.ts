@@ -1,6 +1,6 @@
 import {AbstractFormControlModel} from "./base/form-control";
 
-export class CheckboxItem extends AbstractFormControlModel<string> {
+export class CheckboxItem extends AbstractFormControlModel {
   controlType = 'checkbox';
   type = 'checkbox';
 

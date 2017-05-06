@@ -45,7 +45,7 @@ export class DynamicFormService {
   }
 
   //@TODO move to utils
-  getFormGroupExtras = (forgGroupConfig: AbstractFormControlModel<any>) => {
+  getFormGroupExtras = (forgGroupConfig: AbstractFormControlModel) => {
 
     if(!forgGroupConfig) { return null; }
 
@@ -68,13 +68,13 @@ export class DynamicFormService {
     return Object.keys(fGExtras).length >=1 ? fGExtras: null;
   };
 
-  getFormControlParamsArray = (item: AbstractFormControlModel<any>): Array<any> => {
+  getFormControlParamsArray = (item: AbstractFormControlModel): Function[] => {
 
-    let fCParams: Array<any> = [];
+    let fCParams: any[] = [];
 
     let formState: any = '';
-    let validator: Array<any> = [];
-    let asyncValidator: Array<any> = [];
+    let validator: Function[] = [];
+    let asyncValidator: Function[] = [];
 
 
     //form state

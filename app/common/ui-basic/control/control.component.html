@@ -8,22 +8,21 @@
       <input
         *ngIf="isControlTypeVisible('textbox')"
         [formControlName]="config.key"
+        [attr.class]="getControlClass()"
         interactionHandler
         [config]="config"
-        [group]="currentFormItem"
-        attrSetter
-        [attrConf]="config"
-        [attr.class]="getControlClass()">
+        [group]="currentFormItem">
 
       <div *ngIf="isControlTypeVisible('radio')">
         <div class="form-check" *ngFor="let option of config.options">
           <label [attr.class]="'form-check-label'">
             <input type="radio"
-                   attrSetter
-                   [attrConf]="config"
                    [formControlName]="config.key"
                    [attr.class]="getControlClass()"
-                   [value]="option.value">
+                   [value]="option.value"
+                   interactionHandler
+                   [config]="config"
+                   [group]="currentFormItem">
             {{option.value}}
           </label>
         </div>
@@ -32,20 +31,22 @@
       <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
         <label class="form-check-label">
           <input type="checkbox"
-            attrSetter
-            [attrConf]="config"
             [attr.class]="getControlClass()"
-            [formControlName]="config.key">
+            [formControlName]="config.key"
+                 interactionHandler
+                 [config]="config"
+                 [group]="currentFormItem">
           {{config.label}}
         </label>
       </div>
 
       <select
-        attrSetter
-        [attrConf]="config"
         *ngIf="isControlTypeVisible('select')"
         [attr.class]="getControlClass()"
-        [formControlName]="config.key">
+        [formControlName]="config.key"
+        interactionHandler
+        [config]="config"
+        [group]="currentFormItem">
         <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
 
         <template ngFor let-opt [ngForOf]="config.visibleOptions">
@@ -59,11 +60,12 @@
       </select>
 
       <textarea
-        attrSetter
-        [attrConf]="config"
         *ngIf="isControlTypeVisible('textarea')"
         [formControlName]="config.key"
-        [attr.class]="getControlClass()">
+        [attr.class]="getControlClass()"
+        interactionHandler
+        [config]="config"
+        [group]="currentFormItem">
        </textarea>
 
   <item-errors [config]="config" [group]="currentFormItem">
@@ -73,6 +75,6 @@
     Validation is pending...
   </div>
   <!---->
-  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{config.helpText}}</small>
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}</small>
 
 </div>

@@ -1,10 +1,9 @@
-import {Component, SimpleChanges, Optional, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {DynamicFormUtils} from "../../dynamic-form/services/dynamic-form.utils";
 import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 import {BaseComponent} from "../../dynamic-form/components/base-component/base-component";
-import {CHANGE_SUBSCRIPTIONS} from "../../dynamic-form/injects/changeSubscriptions";
-import {SubscriptionFn} from "../control/control.component";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   moduleId: module.id,
@@ -17,7 +16,26 @@ export class FormGroupComponent extends BaseComponent {
 
   static controlTypes = ["formGroup"];
 
-  _items: AbstractFormControlModel<any>[]= [];
+  private _config: AbstractFormControlModel;
+  set config(config: AbstractFormControlModel) {
+    this._config = config;
+    this.items = config['config'];
+  }
+
+  get config(): AbstractFormControlModel {
+    return this._config;
+  }
+
+  private _group: FormGroup;
+  set group(group: FormGroup) {
+    this._group = group;
+  }
+
+  get group(): FormGroup {
+    return this._group;
+  }
+
+  private _items: AbstractFormControlModel[]= [];
   set items(value:any[]) {
     this._items = value
       .map((item: any) => {
@@ -34,37 +52,8 @@ export class FormGroupComponent extends BaseComponent {
     return this._items;
   }
 
-  private _config: AbstractFormControlModel<any>;
-
-  set config(config: AbstractFormControlModel<any>) {
-    this._config = config;
-    this.items = config['config'];
+  constructor() {
+    super();
   }
-
-  get config(): AbstractFormControlModel<any> {
-    return this._config;
-  }
-
-  constructor(@Optional() @Inject(CHANGE_SUBSCRIPTIONS) CHANGE_SUBSCRIPTIONS: SubscriptionFn[]) {
-    super(CHANGE_SUBSCRIPTIONS);
-  }
-
-  ngOnInit() {
-    this.initSubscriptionFunctions();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
-    if (this.valueChanged('group', changes, this.group )) {
-      this.group = changes['group'].currentValue || {};
-    }
-
-    if (this.valueChanged('config', changes, this.config)) {
-      this.config = changes['config'].currentValue || [];
-    }
-
-  }
-
-
 
 }

@@ -1,6 +1,6 @@
 import {AbstractFormControlModel} from "./base/form-control";
 
-export class RadioItem extends AbstractFormControlModel<string> {
+export class RadioItem extends AbstractFormControlModel {
   controlType = 'radio';
   type="radio";
   options: {key: string, value: string}[] = [];

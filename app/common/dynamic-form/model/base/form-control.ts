@@ -2,9 +2,9 @@ import {AsyncValidatorFn, ValidatorFn} from "@angular/forms";
 import {ItemBase} from "./item";
 import {changeListenerConfig, IAbstractControlOptions} from "../item.struckts";
 
-export class AbstractFormControlModel<T> extends ItemBase {
+export class AbstractFormControlModel extends ItemBase {
   label?:string;
-  value?: T;
+  attrs?:any;
   formState?:any;
   disabled:boolean;
   required?: boolean;
@@ -15,11 +15,12 @@ export class AbstractFormControlModel<T> extends ItemBase {
   changeListener?:changeListenerConfig[];
 
 
-  constructor(options: IAbstractControlOptions<T> = <T>{}) {
+  constructor(options: IAbstractControlOptions = {}) {
     super(options);
 
     this.label = options.label;
-    this.value = options.value;
+    this.attrs = options.attrs;
+    console.log('o.v: ', options['value']);
     this.formState = options.formState;
     this.disabled = options.disabled;
     this.required = !!options.required;

@@ -188,10 +188,10 @@ export class FormConfigService {
         key: 'radioItem',
         label: 'Radio config',
         options: [
-          {key: 'key0', value: 'Short label'},
-          {key: 'key1', value: 'Label should always fit'},
-          {key: 'key2', value: 'Kind a long label for a radio control'},
-          {key: 'key3', value: 'This label is really long for a normal radio control!'},
+          {label: 'key0', value: 'Short label'},
+          {label: 'key1', value: 'Label should always fit'},
+          {label: 'key2', value: 'Kind a long label for a radio control'},
+          {label: 'key3', value: 'This label is really long for a normal radio control!'},
         ],
       }
     ];
@@ -202,10 +202,10 @@ export class FormConfigService {
   getSelectConfig() {
 
     let simpleOptions: any = [
-      {key: 'key0', value: 'Short label'},
-      {key: 'key1', value: 'Label should always fit'},
-      {key: 'key2', value: 'Kind a long label for a select box'},
-      {key: 'key3', value: 'This label is really long for a normal select box!'},
+      {label: 'key0', value: 'Short label'},
+      {label: 'key1', value: 'Label should always fit'},
+      {label: 'key2', value: 'Kind a long label for a select box'},
+      {label: 'key3', value: 'This label is really long for a normal select box!'},
     ];
 
     let groupOptions: any = [
@@ -213,20 +213,20 @@ export class FormConfigService {
         key: "colors",
         value: "Colors",
         children: [
-          {key: 0, value: 'red'},
-          {key: 1, value: 'green'},
-          {key: 2, value: 'blue'},
-          {key: 3, value: 'yellow'}
+          {label: 0, value: 'red'},
+          {label: 1, value: 'green'},
+          {label: 2, value: 'blue'},
+          {label: 3, value: 'yellow'}
         ]
       },
       {
         key: "shapes",
         value: "Shapes",
         children: [
-          {key: 0, value: 'circle'},
-          {key: 1, value: 'rectangle'},
-          {key: 2, value: 'triangle'},
-          {key: 3, value: 'hexagon'}
+          {label: 0, value: 'circle'},
+          {label: 1, value: 'rectangle'},
+          {label: 2, value: 'triangle'},
+          {label: 3, value: 'hexagon'}
         ]
       }
     ];
@@ -548,10 +548,10 @@ export class FormConfigService {
         key: 'radioItem',
         label: 'Radio config',
         options: [
-          {key: 'key0', value: 'Short label'},
-          {key: 'key1', value: 'Label should always fit'},
-          {key: 'key2', value: 'Kind a long label for a radio control'},
-          {key: 'key3', value: 'This label is really long for a normal radio control!'},
+          {value: 'key0', label: 'Short label'},
+          {value: 'key1', label: 'Label should always fit'},
+          {value: 'key2', label: 'Kind a long label for a radio control'},
+          {value: 'key3', label: 'This label is really long for a normal radio control!'},
         ],
       },
 
@@ -561,22 +561,22 @@ export class FormConfigService {
         key: 'selectItem',
         label: 'Select config',
         options: [
-          {key: 'key0', value: 'Short label'},
-          {key: 'key1', value: 'Label should always fit'},
-          {key: 'key2', value: 'Kind a long label for a select box'},
-          {key: 'key3', value: 'This label is really long for a normal select box!'},
+          {value: 'key0', label: 'Short label'},
+          {value: 'key1', label: 'Label should always fit'},
+          {value: 'key2', label: 'Kind a long label for a select box'},
+          {value: 'key3', label: 'This label is really long for a normal select box!'},
         ]
       },
       // multiselect
       {
         controlType: 'multiselect',
-        key: 'staticColor',
+        label: 'staticColor',
         label: 'Static color of the stars',
         options: [
-          {key: 'default', value: 'Default'},
-          {key: 'bad', value: 'Bad'},
-          {key: 'ok', value: 'Ok'},
-          {key: 'good', value: 'Good'}
+          {label: 'default', value: 'Default'},
+          {label: 'bad', value: 'Bad'},
+          {label: 'ok', value: 'Ok'},
+          {label: 'good', value: 'Good'}
         ]
       },
       // textarea
@@ -643,21 +643,19 @@ export class FormConfigService {
       controlType: 'select',
       key: 'anrede',
       label: 'Anrede',
-      helpText: "Anrede der Person (Herr Frau)",
       options: [
-        {value: [{name: 'Herr'}], key: 'Herr'},
-        {value: [{name: 'Frau'}], key: 'Frau'},
-        {value: [{name: 'Firma'}], key: 'Firma'}
+        {label: 'Herr', value: '0'},
+        {label: 'Frau', value: '1'},
+        {label: 'Firma', value: '2'}
       ]
     };
     let title: any = {
       controlType: 'select',
       key: 'titel',
       label: 'Titel',
-      helpText: "Titel der Person (Dr. Prof.)",
       options: [
-        {value: [{name: 'Dr'}], key: 'Dr'},
-        {value: [{name: 'Prof'}], key: 'Prof'}
+        {value: 0, label: 'Dr'},
+        {value: 0, label: 'Prof'}
       ]
     };
 
@@ -676,8 +674,8 @@ export class FormConfigService {
       label: 'Beschäftigung',
       helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
       options: [
-        {key: [{name: 'Arbeiter'}], value: 'Arbeiter'},
-        {key: [{name: 'Angestellter'}], value: 'Angestellter'}
+        {label: 'Arbeiter', value: 'Arbeiter'},
+        {label: 'Angestellter', value: 'Angestellter'}
       ]
     };
 
@@ -687,8 +685,8 @@ export class FormConfigService {
       label: 'Kommunikationssprache',
       helpText: "Kommunikationssprache der Person",
       options: [
-        {key: [{name: 'Deutsch'}], value: 'Deutsch'},
-        {key: [{name: 'Englisch'}], value: 'Englisch'}
+        {label:'Deutsch', value: 'Deutsch'},
+        {label: 'Englisch', value: 'Englisch'}
       ]
     };
 
@@ -699,10 +697,6 @@ export class FormConfigService {
     conf.push(geb);
     conf.push(besch);
     conf.push(main_lang);
-
-
-
-
 
     return conf;
   }
@@ -718,14 +712,14 @@ export class FormConfigService {
         label: 'Control Type',
         helpText: "This value is used to identify the control type  of the element",
         options: [
-          {key: 'textbox', value: 'Textbox'},
-          {key: 'select', value: 'Select'},
-          {key: 'multiselect', value: 'Multiselect'},
-          {key: 'checkbox', value: 'Checkbox'},
-          {key: 'checkboxInline', value: 'Checkbox Inline'},
-          {key: 'radioInline', value: 'Radio Inline'},
-          {key: 'textarea', value: 'Textarea'},
-          {key: 'button', value: 'Button'}
+          {value: 'textbox', label: 'Textbox'},
+          {value: 'select', label: 'Select'},
+          {value: 'multiselect', label: 'Multiselect'},
+          {value: 'checkbox', label: 'Checkbox'},
+          {value: 'checkboxInline', label: 'Checkbox Inline'},
+          {value: 'radioInline', label: 'Radio Inline'},
+          {value: 'textarea', label: 'Textarea'},
+          {value: 'button', label: 'Button'}
         ],
       },
       // type
@@ -735,11 +729,11 @@ export class FormConfigService {
         label: 'type',
         helpText: "This value is used in the type attribute of the element",
         options: [
-          {key: 'text', value: 'text'},
-          {key: 'number', value: 'number'},
-          {key: 'button', value: 'button'},
-          {key: 'submit', value: 'submit'},
-          {key: 'reset', value: 'reset'}
+          {label: 'text', label: 'Text'},
+          {label: 'number', label: 'Number'},
+          {label: 'button', label: 'Button'},
+          {label: 'submit', label: 'Submit'},
+          {label: 'reset', label: 'Reset'}
         ],
         changeListener: [
           /**/{
@@ -844,70 +838,6 @@ export class FormConfigService {
 
     let formConfig: Array<any> = [
       {
-        controlType: 'select',
-        key: 'anrede',
-        label: 'Anrede',
-        helpText: "Anrede der Person (Herr Frau)",
-        options: [
-          {key: [{name: 'Herr'}], value: 'Herr'},
-          {key: [{name: 'Frau'}], value: 'Frau'}
-        ]
-      },
-      {
-        controlType: 'select',
-        key: 'titel',
-        label: 'Titel',
-        helpText: "Titel der Person (Dr. Prof.)",
-        options: [
-          {key: [{name: 'Dr'}], value: 'Dr'},
-          {key: [{name: 'Prof'}], value: 'Prof'}
-        ]
-      },
-      {
-        controlType: 'textbox',
-        key: 'vorname',
-        label: 'Vorname',
-        placeholder: "Vorname hier",
-        helpText: "der Vorname der Person",
-        type: 'text'
-      },
-      {
-        controlType: 'textbox',
-        key: 'nachname',
-        label: 'Nachname',
-        placeholder: "Nachname hier",
-        helpText: "der Nachname der Person",
-        type: 'text'
-      },
-      {
-        controlType: 'textbox',
-        key: 'geburtsdatum',
-        label: 'Geburtsdatum',
-        placeholder: "Geburtsdatum hier",
-        helpText: "der Geburtsdatum der Person",
-        type: 'date'
-      },
-      {
-        controlType: 'select',
-        key: 'beschaeftigung',
-        label: 'Beschäftigung',
-        helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
-        options: [
-          {key: [{name: 'Arbeiter'}], value: 'Arbeiter'},
-          {key: [{name: 'Angestellter'}], value: 'Angestellter'}
-        ]
-      },
-      {
-        controlType: 'select',
-        key: 'kommunikationssprache',
-        label: 'Kommunikationssprache',
-        helpText: "Kommunikationssprache der Person",
-        options: [
-          {key: [{name: 'Deutsch'}], value: 'Deutsch'},
-          {key: [{name: 'Englisch'}], value: 'Englisch'}
-        ]
-      },
-      {
         controlType: 'textbox',
         key: 'housenr',
         label: 'House Nummer',
@@ -934,16 +864,6 @@ export class FormConfigService {
         label: 'Stadt',
         placeholder: "Stadt hier",
         type: 'text'
-      },
-      {
-        controlType: 'select',
-        key: 'Land',
-        label: 'Land',
-        helpText: "Land der Adresse",
-        options: [
-          {key: [{name: 'Deutschland'}], value: 'Deutschland'},
-          {key: [{name: 'Österreich'}], value: 'Österreich'}
-        ]
       },
       {
         controlType: 'textbox',
@@ -977,8 +897,8 @@ export class FormConfigService {
         controlType: 'select',
         label: 'Sponsorships',
         options: [
-          {key: 'hund', value: 'Hund'},
-          {key: 'katze', value: 'Katze'},
+          {label: 'hund', value: 'Hund'},
+          {label: 'katze', value: 'Katze'},
         ],
       },
       {
@@ -986,8 +906,8 @@ export class FormConfigService {
         key: 'additional_amount',
         label: 'Anderer Betrag',
         options: [
-          {key: '100', value: '100'},
-          {key: '200', value: '200'},
+          {label: '100', value: '100'},
+          {label: '200', value: '200'},
         ],
       },
       {
@@ -1008,10 +928,10 @@ export class FormConfigService {
         label: 'Zahlungs Interval',
         helpText: "Intervall der Zahlung",
         options: [
-          {key: [{name: 'monatlich'}], value: 'monatlich'},
-          {key: [{name: 'vierteljährlich'}], value: 'vierteljährlich'},
-          {key: [{name: 'halbjährlich'}], value: 'halbjährlich'},
-          {key: [{name: 'jährlich'}], value: 'jährlich'}
+          {label: [{name: 'monatlich'}], value: 'monatlich'},
+          {label: [{name: 'vierteljährlich'}], value: 'vierteljährlich'},
+          {label: [{name: 'halbjährlich'}], value: 'halbjährlich'},
+          {label: [{name: 'jährlich'}], value: 'jährlich'}
         ],
         changeListener: [
           /**/{

@@ -10,64 +10,64 @@ import {FormGroup} from "@angular/forms";
 export class FormConfigSelectorComponent implements AfterViewInit {
 
 
-  noOpt: string = "--- none ---";
-  demoForms: Array<any>;
+
+
+  configSelectionForm:any[] = [];
+  formConfigs: Array<any> = [];
 
   form: FormGroup = new FormGroup({});
   formModel: any = {};
-
   formConfig: any = [];
 
   constructor(protected formConfigService: FormConfigService) {
-
-    this.demoForms = [
+    this.formConfigs = [
       {
         key: 'Textbox',
         value: {
           formName: 'Textbox Config',
-          formItems: formConfigService.getTextboxConfig()
+          config: formConfigService.getTextboxConfig()
         }
       },
       {
         key: 'Checkbox',
         value: {
           formName: 'Checkbox Config',
-          formItems: formConfigService.getCheckboxConfig()
+          config: formConfigService.getCheckboxConfig()
         }
       },
       {
         key: 'Radio',
         value: {
           formName: 'Radio Config',
-          formItems: formConfigService.getRadioConfig()
+          config: formConfigService.getRadioConfig()
         }
       },
       {
         key: 'Select',
         value: {
           formName: 'Select Config',
-          formItems: formConfigService.getSelectConfig()
+          config: formConfigService.getSelectConfig()
         }
       },
       {
         key: 'Textarea',
         value: {
           formName: 'Textarea Config',
-          formItems: formConfigService.getTextareaConfig()
+          config: formConfigService.getTextareaConfig()
         }
       },
       {
         key: 'Buttons',
         value: {
           formName: 'Buttons Config',
-          formItems: formConfigService.getButtonConfig()
+          config: formConfigService.getButtonConfig()
         }
       },
       {
         key: 'formGroup Test',
         value: {
           formName: 'KitchenSink',
-          formItems: formConfigService.getFormGroupConfig()
+          config: formConfigService.getFormGroupConfig()
         }
       },
 
@@ -75,7 +75,7 @@ export class FormConfigSelectorComponent implements AfterViewInit {
         key: 'validation Test',
         value: {
           formName: 'Validation Test',
-          formItems: formConfigService.getValidationConfig()
+          config: formConfigService.getValidationConfig()
         }
       },
 
@@ -83,7 +83,7 @@ export class FormConfigSelectorComponent implements AfterViewInit {
         key: 'KitchenSink',
         value: {
           formName: 'KitchenSink',
-          formItems: formConfigService.getKitchenSink()
+          config: formConfigService.getKitchenSink()
         }
       },
 
@@ -91,25 +91,41 @@ export class FormConfigSelectorComponent implements AfterViewInit {
         key: "generic Item",
         value: {
           formName: "",
-          formItems: formConfigService.getGenericElementConfig()
+          config: formConfigService.getGenericElementConfig()
         }
       },
       {
         key: 'Donut Campaign',
         value: {
           formName: 'Donut Campaign',
-          formItems: formConfigService.getCampaign()
+          config: formConfigService.getCampaign()
         }
       },
     ];
-
     this.formConfig = formConfigService.getPersonalDataConfig();
-
+    this.configSelectionForm = [{ controlType: 'select', key: 'configSelect', label: 'Config Select', options: this.getConfigMap() }];
   }
 
-  updateFormConfig(formItems: any) {
-    console.log('updateFormConfig: ', formItems);
-    //this.formConfig = formItems;
+  getConfigMap() {
+    let idMap:any[] = this.formConfigs.map((config) => {
+      return {label: config.key, value: config.key }
+    });
+
+    return idMap;
+  }
+
+  getConfigByKey(key:string):any {
+    return this.formConfigs
+      .filter( (config:any) => {
+        return config.key == key;
+    } )[0];
+  }
+
+  updateFormConfig(formValue: any) {
+    const configSet:any = this.getConfigByKey(formValue.configSelect);
+    this.formConfig = configSet.value.config || {};
+    console.log('updateFormConfig: ', this.formConfig);
+
   }
 
   ngAfterViewInit() {
@@ -123,7 +139,7 @@ export class FormConfigSelectorComponent implements AfterViewInit {
 
 
   onSubmit(form: any) {
-    this.formConfig = this.updateFormConfig(form.value.formConfigSelect.formItems);
+    this.formConfig = this.updateFormConfig(form.value.formConfigSelect.config);
   }
 
 }

@@ -1,12 +1,14 @@
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)">
 
+  {{getConfigMap() | json}}
   <dynamic-form-group
-    [config]="[{ key: 'formConfigSelect', controlType : 'select', options:demoForms }]"
+    [config]="configSelectionForm"
     (onGroupValueChanged)="updateFormConfig($event)">
   </dynamic-form-group>
 
   <button type="submit" class="btn btn-prinmary">Submit</button>
 
+</form>
 
 <div class="row">
 

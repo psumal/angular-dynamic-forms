@@ -6,12 +6,11 @@
 
   status:{{currentFormItem.status}}
       <input
+        [type]="config.type"
         *ngIf="isControlTypeVisible('textbox')"
         [formControlName]="config.key"
         [attr.class]="getControlClass()"
-        interactionHandler
-        [config]="config"
-        [group]="currentFormItem">
+        >
 
       <div *ngIf="isControlTypeVisible('radio')">
         <div class="form-check" *ngFor="let option of config.options">
@@ -50,12 +49,12 @@
         <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
 
         <template ngFor let-opt [ngForOf]="config.visibleOptions">
-          <optgroup *ngIf="opt.children" label="{{opt.key}}">
-            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.value" (click)="select(optChild.key)">
-              {{optChild.key}}
+          <optgroup *ngIf="opt.children" label="{{opt.label}}">
+            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.value" (click)="select(optChild.value)">
+              {{optChild.label}}
             </option>
           </optgroup>
-          <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" (click)="select(opt.key)" [ngValue]="opt.value" >{{opt.key}}</option>
+          <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" [value]="opt.value" >{{opt.label}}</option>
         </template>
 
       </select>

@@ -21,12 +21,15 @@ export interface IItemBaseOptions {
 
 export interface IAbstractControlOptions<T> extends IItemBaseOptions{
   value?: T,
+  formState?:any;
   disabled?:boolean;
   label?:string,
   required?: boolean,
   validator?:ValidatorFn | ValidatorFn[],
   asyncValidator?:AsyncValidatorFn | AsyncValidatorFn[],
   validatorMessages?:any,
+  formatter?:any[];
+  parser?:any[]
   changeListener?:changeListenerConfig[]
 }
 

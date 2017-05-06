@@ -9,6 +9,7 @@
         *ngIf="isControlTypeVisible('textbox')"
         [formControlName]="config.key"
         interactionHandler
+        [config]="config"
         attrSetter
         [attrConf]="config"
         [attr.class]="getControlClass()">

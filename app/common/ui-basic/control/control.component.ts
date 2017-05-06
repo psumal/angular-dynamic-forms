@@ -6,7 +6,7 @@ import {
   CHANGE_SUBSCRIPTIONS,
   ChangeSubscriptionFn,
   ChangeSubscriptions
-} from "../../dynamic-form/customSubscriptions/changeSubscriptions";
+} from "../../dynamic-form/injects/changeSubscriptions";
 import {BaseComponent} from "../../dynamic-form/components/base-component/base-component";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 

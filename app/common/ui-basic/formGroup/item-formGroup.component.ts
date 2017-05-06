@@ -3,7 +3,7 @@ import {DynamicFormUtils} from "../../dynamic-form/services/dynamic-form.utils";
 import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 import {BaseComponent} from "../../dynamic-form/components/base-component/base-component";
-import {CHANGE_SUBSCRIPTIONS} from "../../dynamic-form/customSubscriptions/changeSubscriptions";
+import {CHANGE_SUBSCRIPTIONS} from "../../dynamic-form/injects/changeSubscriptions";
 import {SubscriptionFn} from "../control/control.component";
 
 @Component({

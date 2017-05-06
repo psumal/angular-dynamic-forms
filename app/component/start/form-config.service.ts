@@ -489,7 +489,7 @@ export class FormConfigService {
         key: 'format',
         controlType: 'textbox',
         type: 'text',
-        //formState:'11 112 2223 3 3344 44',
+        formState: '11 112 2223 3 3344 44',
         formatter: [
           {
             name: "maskString",
@@ -499,20 +499,26 @@ export class FormConfigService {
             target: 2
           },
           {
-            name : "replaceString",
+            name: "replaceString",
             params: [/ /g, ''],
-            target:1
+            target: 1
           },
         ],
-        /*parser: [
+        parser: [
           {
             name: "maskString",
             params: [
               "0000 0000 0000 0000",
-              {'0': /[0-9]/}],
-              target:2
-          }
-        ]*/
+              {'0': /[0-9]/}
+            ],
+            target: 2
+          },
+          {
+            name: "replaceString",
+            params: [/ /g, ''],
+            target: 1
+          },
+        ]/**/
       }
     ];
 

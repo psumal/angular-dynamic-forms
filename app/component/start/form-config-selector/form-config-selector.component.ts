@@ -66,7 +66,7 @@ export class FormConfigSelectorComponent implements AfterViewInit {
       {
         key: 'formGroup Test',
         value: {
-          formName: 'KitchenSink',
+          formName: 'FormGroup',
           config: formConfigService.getFormGroupConfig()
         }
       },
@@ -80,10 +80,10 @@ export class FormConfigSelectorComponent implements AfterViewInit {
       },
 
       {
-        key: 'KitchenSink',
+        key: 'FormatterParser',
         value: {
-          formName: 'KitchenSink',
-          config: formConfigService.getKitchenSink()
+          formName: 'FormatterParser',
+          config: formConfigService.getFormatterParserConfig()
         }
       },
 
@@ -92,6 +92,13 @@ export class FormConfigSelectorComponent implements AfterViewInit {
         value: {
           formName: "",
           config: formConfigService.getGenericElementConfig()
+        }
+      },
+      {
+        key: 'Personal Data',
+        value: {
+          formName: 'Personal Data',
+          config: formConfigService.getPersonalDataConfig()
         }
       },
       {

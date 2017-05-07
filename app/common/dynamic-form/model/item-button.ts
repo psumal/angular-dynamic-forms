@@ -1,4 +1,4 @@
-import {buttonTypes, changeListenerConfig, IItemBaseOptions} from "./item.struckts";
+import {buttonTypes, changeListenerConfig, IItemBaseOptions, IAbstractControlOptions} from "./item.struckts";
 import {ItemBase} from "./base/item";
 
 export class ButtonItem extends ItemBase {
@@ -6,13 +6,15 @@ export class ButtonItem extends ItemBase {
   type: buttonTypes;
   label:string;
   disabled:boolean;
+  controlClass:string[] = [];
   changeListener?:changeListenerConfig[];
 
-  constructor(options:IItemBaseOptions = {}) {
+  constructor(options:IAbstractControlOptions = {}) {
     super(options);
     this.type = options['type'] || 'button';
     this.disabled = options.disabled;
     this.label = options = options['label'];
+    this.controlClass = options.controlClass || [];
     this.changeListener = options['changeListener'];
   }
 

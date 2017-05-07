@@ -22,6 +22,9 @@ export interface IItemBaseOptions {
 export interface IAbstractControlOptions extends IItemBaseOptions{
   label?:string,
   attrs?:any;
+  controlClass?:string[];
+  wrapperClass?:string[];
+
   required?: boolean,
   formState?:any,
   validator?:ValidatorFn | ValidatorFn[],
@@ -32,7 +35,7 @@ export interface IAbstractControlOptions extends IItemBaseOptions{
   changeListener?:changeListenerConfig[];
 }
 
-export type controlTypes =  'textbox' | 'select'| 'multiselect'| 'checkbox'| 'checkboxInline'| 'radioInline'| 'textarea'| 'button' | 'formGroup' | 'formArray';
+export type controlTypes =  'textbox' | 'select'| 'multiselect'| 'checkbox'| 'checkboxInline'| 'radioInline'| 'textarea'| 'button' | 'formGroup' | 'formArray' | 'row';
 
 //checkbox color file image radio reset submit
 export type textboxTypes = "text" | "number" | "email" | "tel" | "password" | "date" | "time" | "datetime-local" | "week" | "month" | "url" | "hidden" | "range" | "search";

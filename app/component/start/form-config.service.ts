@@ -371,12 +371,9 @@ export class FormConfigService {
         validator: (count > 0) ? {name: 'controlMatch', params: [["TextboxFg2"], ["TextboxFg2.2"]]} : {}
       };
 
-
       if (count > 0) {
-
         fg.config = fg.config.concat(createFgConfig(count - 1));
       }
-
 
       return [fg];
 
@@ -529,96 +526,7 @@ export class FormConfigService {
   getKitchenSink() {
     let formConfig: Array<any> = [
 
-      //textbox
-      {
-        controlType: 'textbox',
-        key: "textboxItem_text",
-        label: "Textbox Item of type text",
-        type: "text"
-      },
-      // checkbox
-      {
-        controlType: 'checkbox',
-        key: 'checkboxItem',
-        label: 'Checkbox config',
-      },
-      //radio
-      {
-        controlType: 'radio',
-        key: 'radioItem',
-        label: 'Radio config',
-        options: [
-          {value: 'key0', label: 'Short label'},
-          {value: 'key1', label: 'Label should always fit'},
-          {value: 'key2', label: 'Kind a long label for a radio control'},
-          {value: 'key3', label: 'This label is really long for a normal radio control!'},
-        ],
-      },
 
-      // select
-      {
-        controlType: 'select',
-        key: 'selectItem',
-        label: 'Select config',
-        options: [
-          {value: 'key0', label: 'Short label'},
-          {value: 'key1', label: 'Label should always fit'},
-          {value: 'key2', label: 'Kind a long label for a select box'},
-          {value: 'key3', label: 'This label is really long for a normal select box!'},
-        ]
-      },
-      // multiselect
-      {
-        controlType: 'multiselect',
-        label: 'staticColor',
-        label: 'Static color of the stars',
-        options: [
-          {label: 'default', value: 'Default'},
-          {label: 'bad', value: 'Bad'},
-          {label: 'ok', value: 'Ok'},
-          {label: 'good', value: 'Good'}
-        ]
-      },
-      // textarea
-      {
-        controlType: 'textarea',
-        key: 'textareaItem',
-        label: 'Textarea Item'
-      },
-      //button
-      //button
-      {
-        controlType: 'button',
-        key: 'buttonSubmit',
-        label: 'Submit',
-        type: 'submit'
-      },
-      {
-        controlType: 'button',
-        key: 'buttonReset',
-        label: 'Reset',
-        type: 'reset'
-      },
-      //formGroup
-      {
-        controlType: 'formGroup',
-        key: "groupTest",
-        title: "Form Group1",
-        config: [
-          {
-            controlType: 'textbox',
-            key: "Textbox in form group 1",
-            label: "Textbox Item of type url",
-            type: "text"
-          },
-          {
-            controlType: 'button',
-            key: 'buttonButton',
-            label: 'Button',
-            type: 'button'
-          }
-        ]
-      }
     ];
     return formConfig;
   }
@@ -638,11 +546,12 @@ export class FormConfigService {
 
   getPersonalDataConfig() {
 
-    let conf = [];
+    let config:any[] = [];
     let salutation: any = {
+      label: 'Anrede',
+      //wrapperClass:['col-sm-4'],
       controlType: 'select',
       key: 'anrede',
-      label: 'Anrede',
       options: [
         {label: 'Herr', value: '0'},
         {label: 'Frau', value: '1'},
@@ -653,6 +562,7 @@ export class FormConfigService {
       controlType: 'select',
       key: 'titel',
       label: 'Titel',
+      //wrapperClass:['col-sm-4'],
       options: [
         {value: 0, label: 'Dr'},
         {value: 0, label: 'Prof'}
@@ -663,6 +573,7 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'geburtsdatum',
       label: 'Geburtsdatum',
+      //wrapperClass:['col-sm-4'],
       placeholder: "Geburtsdatum hier",
       helpText: "der Geburtsdatum der Person",
       type: 'date'
@@ -672,6 +583,7 @@ export class FormConfigService {
       controlType: 'select',
       key: 'beschaeftigung',
       label: 'Beschäftigung',
+      //wrapperClass:['col-sm-4'],
       helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
       options: [
         {label: 'Arbeiter', value: 'Arbeiter'},
@@ -683,6 +595,7 @@ export class FormConfigService {
       controlType: 'select',
       key: 'kommunikationssprache',
       label: 'Kommunikationssprache',
+      //wrapperClass:['col-sm-4'],
       helpText: "Kommunikationssprache der Person",
       options: [
         {label:'Deutsch', value: 'Deutsch'},
@@ -690,15 +603,36 @@ export class FormConfigService {
       ]
     };
 
-    conf.push(salutation);
-    conf.push(title);
-    conf.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
-    conf.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
-    conf.push(geb);
-    conf.push(besch);
-    conf.push(main_lang);
 
-    return conf;
+    let row: any = {
+      controlType: 'row',
+      key: 'none',
+      config: []
+    };
+
+    config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
+
+    //config.push(row);
+    /*
+    let personalData:any = {
+      controlType: 'formGroup',
+      key: "personalData",
+      label: "Personal Data",
+      config: []
+    };
+
+    personalData.config.push(salutation);
+    personalData.config.push(title);
+    personalData.config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
+    personalData.config.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
+    personalData.config.push(geb);
+    personalData.config.push(besch);
+    personalData.config.push(main_lang);
+
+    config.push(personalData);
+*/
+
+    return config;
   }
 
   getGenericElementConfig() {
@@ -729,11 +663,11 @@ export class FormConfigService {
         label: 'type',
         helpText: "This value is used in the type attribute of the element",
         options: [
-          {label: 'text', label: 'Text'},
-          {label: 'number', label: 'Number'},
-          {label: 'button', label: 'Button'},
-          {label: 'submit', label: 'Submit'},
-          {label: 'reset', label: 'Reset'}
+          {value: 'text', label: 'Text'},
+          {value: 'number', label: 'Number'},
+          {value: 'button', label: 'Button'},
+          {value: 'submit', label: 'Submit'},
+          {value: 'reset', label: 'Reset'}
         ],
         changeListener: [
           /**/{

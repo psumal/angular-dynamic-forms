@@ -25,16 +25,19 @@ export class ControlComponent extends BaseComponent {
     super();
   }
 
-
   getControlClass(): string {
-    let classNames: string = "";
+    let classNames: string[] = [];
     if (this.config.controlType === 'radio' || this.config.controlType === 'checkbox') {
-      classNames = 'form-check-input';
+      classNames.push('form-check');
+    }
+    else if (this.config.controlType === 'textbox' && this.config.type === 'file') {
+      classNames.push('form-control-file');
     }
     else {
-      classNames = 'form-control';
+      classNames.push('form-control');
     }
-    return classNames;
+
+    return classNames.join('');
   }
 
   isNoOptPresent() {

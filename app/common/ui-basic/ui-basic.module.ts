@@ -8,8 +8,9 @@ import {FormGroupComponent} from "./formGroup/item-formGroup.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ControlErrorComponent} from "./errors/errors.component";
 import {DynamicFormModule} from "../dynamic-form/dynamic-form.module";
+import {RowComponent} from "./row/row.component";
 
-const ENTRY_COMPONENTS = [ ControlComponent, ButtonComponent, FormGroupComponent, ControlErrorComponent  ];
+const ENTRY_COMPONENTS = [ ControlComponent, ButtonComponent, FormGroupComponent, ControlErrorComponent, RowComponent  ];
 const EXPORTS = [ ...ENTRY_COMPONENTS  ];
 
 @NgModule({
@@ -22,7 +23,8 @@ const EXPORTS = [ ...ENTRY_COMPONENTS  ];
   providers : [
     { provide: UI_COMPONENTS, useValue: ButtonComponent, multi: true },
     { provide: UI_COMPONENTS, useValue: ControlComponent, multi: true },
-    { provide: UI_COMPONENTS, useValue: FormGroupComponent, multi: true }
+    { provide: UI_COMPONENTS, useValue: FormGroupComponent, multi: true },
+    { provide: UI_COMPONENTS, useValue: RowComponent, multi:true}
   ]
 })
 export class UiBasicModule {}

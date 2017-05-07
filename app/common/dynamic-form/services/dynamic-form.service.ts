@@ -27,7 +27,12 @@ export class DynamicFormService {
     if (config && config.length > 0) {
 
       config.forEach((conf: any) => {
-        if (conf['controlType'] !== 'formGroup' && conf['controlType'] !== 'formArray') {
+        if (conf['controlType'] === 'row') {
+          console.log('conf', conf);
+          formGroupObject[conf['config']['key']] = {};
+          formGroupObject[conf['config']['key']] = this.toFG(conf['config']['config']);
+        }
+        else if (conf['controlType'] !== 'formGroup' && conf['controlType'] !== 'formArray') {
           formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
         }
         else {

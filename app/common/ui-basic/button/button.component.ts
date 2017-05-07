@@ -10,7 +10,6 @@ import {ButtonItem} from "../../dynamic-form/model/item-button";
 })
 export class ButtonComponent {
   static controlTypes = ["button", "submit", "reset"];
-
   config: ButtonItem;
   group: FormGroup;
 

@@ -36,7 +36,7 @@ export class FormGroupComponent extends BaseComponent {
   }
 
   private _items: AbstractFormControlModel[]= [];
-  set items(value:any[]) {
+  set items(value:AbstractFormControlModel[]) {
     this._items = value
       .map((item: any) => {
 
@@ -48,7 +48,7 @@ export class FormGroupComponent extends BaseComponent {
 
   }
 
-  get items() : any[] {
+  get items() : AbstractFormControlModel[] {
     return this._items;
   }
 

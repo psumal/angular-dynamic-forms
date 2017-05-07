@@ -9,7 +9,7 @@ export class BaseComponent {
 
   componentRendered: boolean = true;
 
-  config: AbstractFormControlModel;
+  config: any;
   group: FormGroup;
 
   get currentFormItem() {
@@ -52,12 +52,9 @@ export class BaseComponent {
   getWrapperClass(): string {
 
     let classNames: Array<string> = [];
-    if (this.config.controlType === 'radio' || this.config.controlType === 'checkbox') {
-      classNames.push('form-check');
-    }
-    else {
-      classNames.push('form-group');
-    }
+    classNames.push('form-group');
+
+    classNames = [].concat(classNames, this.config.wrapperClass);
 
     return classNames.join(' ');
 

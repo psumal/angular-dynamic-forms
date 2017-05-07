@@ -13,6 +13,9 @@ export class AbstractFormControlModel extends ItemBase {
   validatorMessages?:any;
   formatterParser?:any[];
   changeListener?:changeListenerConfig[];
+  controlClass:string[];
+  wrapperClass?:string[];
+
 
 
   constructor(options: IAbstractControlOptions = {}) {
@@ -20,7 +23,6 @@ export class AbstractFormControlModel extends ItemBase {
 
     this.label = options.label;
     this.attrs = options.attrs;
-    console.log('o.v: ', options['value']);
     this.formState = options.formState;
     this.disabled = options.disabled;
     this.required = !!options.required;
@@ -29,5 +31,8 @@ export class AbstractFormControlModel extends ItemBase {
     this.asyncValidator = options.asyncValidator || [];
     this.formatterParser = options.formatterParser || [];
     this.changeListener = options.changeListener || [];
+    this.controlClass = options.controlClass || [];
+    this.wrapperClass =  options.wrapperClass || [];
+
   }
 }

@@ -18,6 +18,38 @@ export class DynamicFormService {
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
   }
 
+
+  toFG2(config: Array<any>): FormGroup {
+
+    //create formBuilder.group() params
+    let formGroupObject: {[key: string]: any;} = {};
+    let extra: {[key: string]: any} = {};
+
+    if (config && config.length > 0) {
+
+      config.forEach((conf: any) => {
+        if (conf['controlType'] === 'row') {
+          console.log('conf', conf);
+          formGroupObject[conf['config']['key']] = {};
+          formGroupObject[conf['config']['key']] = this.toFG(conf['config']['config']);
+        }
+        else if (conf['controlType'] !== 'formGroup' && conf['controlType'] !== 'formArray') {
+          formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
+        }
+        else {
+          let extras = this.getFormGroupExtras(conf);
+          formGroupObject[conf['key']] = {};
+          formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
+        }
+      });
+    }
+
+    return this.fb.group(formGroupObject);
+
+    /////////////////////////////
+
+  }
+
   toFG(config: Array<any>, extras?: any): FormGroup {
 
     //create formBuilder.group() params
@@ -50,21 +82,21 @@ export class DynamicFormService {
   }
 
   //@TODO move to utils
-  getFormGroupExtras = (forgGroupConfig: AbstractFormControlModel) => {
+  getFormGroupExtras = (formGroupConfig: AbstractFormControlModel) => {
 
-    if(!forgGroupConfig) { return null; }
+    if(!formGroupConfig) { return null; }
 
     let fGExtras: any = {};
 
-    if ('validator' in forgGroupConfig) {
-      const v = forgGroupConfig.validator;
+    if ('validator' in formGroupConfig) {
+      const v = formGroupConfig.validator;
       if(Array.isArray(v) && v.length > 0) {
         fGExtras.validator = this.getValidators(v)[0];
       }
     }
 
-    if ('asyncValidator' in forgGroupConfig) {
-      const av = forgGroupConfig.asyncValidator;
+    if ('asyncValidator' in formGroupConfig) {
+      const av = formGroupConfig.asyncValidator;
       if(Array.isArray(av) && av.length > 0) {
         fGExtras.asyncValidator = this.getAsyncValidators(av)[0];
       }

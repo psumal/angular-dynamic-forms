@@ -1,5 +1,12 @@
 import {Injectable} from "@angular/core";
-import {textboxTypes, controlTypes, buttonTypes, inputTypes} from "../../common/dynamic-form/model/item.struckts";
+import {
+  textboxTypes,
+  controlTypes,
+  buttonTypes,
+  inputTypes,
+  IAbstractFormControlModel,
+  ISelectOption
+} from "../../common/dynamic-form/model/item.struckts";
 
 @Injectable()
 export class FormConfigService {
@@ -29,17 +36,16 @@ export class FormConfigService {
 
   static INPUT_TYPES: { value: buttonTypes, name: string }[] = [].concat(FormConfigService.TEXTBOX_TYPES, FormConfigService.BUTTON_TYPES);
 
-
   static CONTROL_TYPES: { value: controlTypes, name: string }[] = [
     {value: 'textbox', name: 'Textbox'},
     {value: 'select', name: 'Select'},
-    {value: 'multiselect', name: 'Multiselect'},
     {value: 'checkbox', name: 'Checkbox'},
-    {value: 'checkboxInline', name: 'Checkbox Inline'},
-    {value: 'radioInline', name: 'Radio Inline'},
+    {value: 'radio', name: 'Radio'},
     {value: 'textarea', name: 'Textarea'},
     {value: 'button', name: 'Button'},
     {value: 'formGroup', name: 'FormGroup'},
+    {value: 'formArray', name: 'FormArray'},
+    {value: 'container', name: 'Container'}
 
   ];
 
@@ -64,175 +70,180 @@ export class FormConfigService {
     {value: {name: 'wait2SecToValidateRequired'}, name: 'Wait 2 Sec To Validate Required'},
   ];
 
-  getTextboxConfig() {
-    var conf: any = [
-      // textbox text
-      {
-        controlType: 'textbox',
-        key: "textboxItem_text",
-        label: "Textbox Item of type text",
-        type: "text"
-      },
-      //textbox email
-      {
-        controlType: 'textbox',
-        key: "textboxItem_email",
-        label: "Textbox Item of type email",
-        type: "email"
-      },
-      //textbox tel
-      {
-        controlType: 'textbox',
-        key: "textboxItem_tel",
-        label: "Textbox Item of type tel",
-        type: "tel"
-      },
-      //textbox password
-      {
-        controlType: 'textbox',
-        key: "textboxItem_password",
-        label: "Textbox Item of password",
-        type: "password"
-      },
-      // textbox number
-      {
-        controlType: 'textbox',
-        key: "textboxItem_number",
-        label: "Textbox Item of type number",
-        type: "number"
-      },
-      //textbox range
-      {
-        controlType: 'textbox',
-        key: "textboxItem_range",
-        label: "Textbox Item of type range",
-        type: "range"
-      },
-      //textbox date
-      {
-        controlType: 'textbox',
-        key: "textboxItem_date",
-        label: "Textbox Item of type date",
-        type: "date"
-      },
-      //textbox time
-      {
-        controlType: 'textbox',
-        key: "textboxItem_time",
-        label: "Textbox Item of type time",
-        type: "time"
-      },
-      //textbox datetime-local
-      {
-        controlType: 'textbox',
-        key: "textboxItem_datetime-local",
-        label: "Textbox Item of type datetime-local",
-        type: "datetime-local"
-      },
-      //textbox week
-      {
-        controlType: 'textbox',
-        key: "textboxItem_week",
-        label: "Textbox Item of type week",
-        type: "week"
-      },
-      //textbox month
-      {
-        controlType: 'textbox',
-        key: "textboxItem_month",
-        label: "Textbox Item of type month",
-        type: "month"
-      },
-      //textbox url
-      {
-        controlType: 'textbox',
-        key: "textboxItem_url",
-        label: "Textbox Item of type url",
-        type: "url"
-      },
-      //textbox search
-      {
-        controlType: 'textbox',
-        key: "textboxItem_search",
-        label: "Textbox Item of type search",
-        type: "search"
-      },
-      //hidden
-      {
-        controlType: 'textbox',
-        key: "textboxItem_hidden",
-        label: "Textbox Item of type hidden",
-        type: "hidden"
-      }
-    ];
+  getTextboxConfig(): IAbstractFormControlModel {
+    let conf: any = {
+      config: [
+        // textbox text
+        {
+          controlType: 'textbox',
+          key: "textboxItem_text",
+          label: "Textbox Item of type text",
+          inputType: "text"
+        },
+        //textbox email
+        {
+          controlType: 'textbox',
+          key: "textboxItem_email",
+          label: "Textbox Item of type email",
+          inputType: "email"
+        },
+        //textbox tel
+        {
+          controlType: 'textbox',
+          key: "textboxItem_tel",
+          label: "Textbox Item of type tel",
+          inputType: "tel"
+        },
+        //textbox password
+        {
+          controlType: 'textbox',
+          key: "textboxItem_password",
+          label: "Textbox Item of password",
+          inputType: "password"
+        },
+        // textbox number
+        {
+          controlType: 'textbox',
+          key: "textboxItem_number",
+          label: "Textbox Item of type number",
+          inputType: "number"
+        },
+        //textbox range
+        {
+          controlType: 'textbox',
+          key: "textboxItem_range",
+          label: "Textbox Item of type range",
+          inputType: "range"
+        },
+        //textbox date
+        {
+          controlType: 'textbox',
+          key: "textboxItem_date",
+          label: "Textbox Item of type date",
+          inputType: "date"
+        },
+        //textbox time
+        {
+          controlType: 'textbox',
+          key: "textboxItem_time",
+          label: "Textbox Item of type time",
+          inputType: "time"
+        },
+        //textbox datetime-local
+        {
+          controlType: 'textbox',
+          key: "textboxItem_datetime-local",
+          label: "Textbox Item of type datetime-local",
+          inputType: "datetime-local"
+        },
+        //textbox week
+        {
+          controlType: 'textbox',
+          key: "textboxItem_week",
+          label: "Textbox Item of type week",
+          inputType: "week"
+        },
+        //textbox month
+        {
+          controlType: 'textbox',
+          key: "textboxItem_month",
+          label: "Textbox Item of type month",
+          inputType: "month"
+        },
+        //textbox url
+        {
+          controlType: 'textbox',
+          key: "textboxItem_url",
+          label: "Textbox Item of type url",
+          inputType: "url"
+        },
+        //textbox search
+        {
+          controlType: 'textbox',
+          key: "textboxItem_search",
+          label: "Textbox Item of type search",
+          inputType: "search"
+        },
+        //hidden
+        {
+          controlType: 'textbox',
+          key: "textboxItem_hidden",
+          label: "Textbox Item of type hidden",
+          inputType: "hidden"
+        }
+      ]
+    };
 
     return conf;
   }
 
-  getCheckboxConfig() {
-    var config: any = [
-      {
-        controlType: 'checkbox',
-        key: 'checkboxItem',
-        label: 'Checkbox config',
-      }
-    ];
+  getCheckboxConfig(): IAbstractFormControlModel {
+    let config: any = {
+      config: [
+        {
+          controlType: 'checkbox',
+          key: 'checkboxItem',
+          label: 'Checkbox config',
+        }
+      ]
+    };
 
     return config;
   }
 
-  getRadioConfig() {
-    var config: any = [
-      {
-        controlType: 'radio',
-        key: 'radioItem',
-        label: 'Radio config',
-        options: [
-          {label: 'key0', value: 'Short label'},
-          {label: 'key1', value: 'Label should always fit'},
-          {label: 'key2', value: 'Kind a long label for a radio control'},
-          {label: 'key3', value: 'This label is really long for a normal radio control!'},
-        ],
-      }
-    ];
+  getRadioConfig(): IAbstractFormControlModel {
+    let config: any = {
+      config: [
+        {
+          controlType: 'radio',
+          key: 'radioItem',
+          label: 'Radio config',
+          options: [
+            {label: 'key0', value: 'Short label'},
+            {label: 'key1', value: 'Label should always fit'},
+            {label: 'key2', value: 'Kind a long label for a radio control'},
+            {label: 'key3', value: 'This label is really long for a normal radio control!'},
+          ],
+        }
+      ]
+    };
 
     return config;
   }
 
-  getSelectConfig() {
+  getSelectConfig(): IAbstractFormControlModel {
 
-    let simpleOptions: any = [
+    let simpleOptions: ISelectOption[] = [
       {label: 'key0', value: 'Short label'},
       {label: 'key1', value: 'Label should always fit'},
       {label: 'key2', value: 'Kind a long label for a select box'},
       {label: 'key3', value: 'This label is really long for a normal select box!'},
     ];
 
-    let groupOptions: any = [
+    let groupOptions: ISelectOption[] = [
       {
-        key: "colors",
+        label: "colors",
         value: "Colors",
-        children: [
-          {label: 0, value: 'red'},
-          {label: 1, value: 'green'},
-          {label: 2, value: 'blue'},
-          {label: 3, value: 'yellow'}
+        options: [
+          {label: 'red', value: '0'},
+          {label: 'green', value: '1'},
+          {label: 'blue', value: '2'},
+          {label: 'yellow', value: '3'}
         ]
       },
       {
-        key: "shapes",
+        label: "shapes",
         value: "Shapes",
-        children: [
-          {label: 0, value: 'circle'},
-          {label: 1, value: 'rectangle'},
-          {label: 2, value: 'triangle'},
-          {label: 3, value: 'hexagon'}
+        options: [
+          {label: 'circle', value: '0'},
+          {label: 'rectangle', value: '1'},
+          {label: 'triangle', value: '2'},
+          {label: 'hexagon', value: '3'}
         ]
       }
     ];
 
-
-    let config: any = [
+    let config: any[] = [
       // select
       {
         controlType: 'select',
@@ -274,63 +285,76 @@ export class FormConfigService {
       }
     ];
 
-    return config;
+    let formGroup: any = {
+      config: config
+    };
+
+    return formGroup;
   }
 
-  getTextareaConfig() {
-    let config: any = [
-      // textarea
-      {
-        controlType: 'textarea',
-        key: 'textareaItem',
-        label: 'Textarea Item'
-      }
-    ];
-
-    return config;
-  }
-
-  getButtonConfig() {
-    let config: any = [
-      //button
-      {
-        controlType: 'button',
-        key: 'buttonReset',
-        label: 'Reset',
-        type: 'reset'
-      },
-      //button
-      {
-        controlType: 'button',
-        key: 'buttonSubmit',
-        label: 'Submit',
-        type: 'submit'
-      },
-      //button
-      {
-        controlType: 'button',
-        key: 'buttonButton',
-        label: 'Button',
-        type: 'button'
-      }
-    ];
+  getTextareaConfig(): IAbstractFormControlModel {
+    let config: any = {
+      config: [
+        // textarea
+        {
+          controlType: 'textarea',
+          key: 'textareaItem',
+          label: 'Textarea Item'
+        }
+      ]
+    };
 
     return config;
   }
 
-  getFormGroupConfig() {
+  getButtonConfig(): IAbstractFormControlModel {
+    let config: any = {
+      config: [
+        //button
+        {
+          controlType: 'button',
+          key: 'buttonReset',
+          label: 'Reset',
+          inputType: 'reset'
+        },
+        //button
+        {
+          controlType: 'button',
+          key: 'buttonSubmit',
+          label: 'Submit',
+          inputType: 'submit'
+        },
+        //button
+        {
+          controlType: 'button',
+          key: 'buttonButton',
+          label: 'Button',
+          inputType: 'button'
+        }
+      ]
+    };
+
+    return config;
+  }
+
+  getFormGroupConfig(): IAbstractFormControlModel {
 
     let conf = createFgConfig(2);
 
     conf.push({
       controlType: 'textbox',
-      type: "text",
+      inputType: "text",
       key: "TextboxFg" + 3,
       label: "Textbox Item of type url",
       validator: [{name: "required"}]
     });
 
-    return conf;
+    let config: any = {
+      config: conf
+    };
+
+    return config;
+
     //////////////////////////////////
 
     function createFgConfig(count: any): any {
@@ -338,19 +362,19 @@ export class FormConfigService {
       let conf = [
         {
           controlType: 'textbox',
-          type: "text",
+          inputType: "text",
           key: "TextboxFg" + count,
           label: "Textbox Item " + '.' + count + " of fG" + count
         },
         {
           controlType: 'textbox',
-          type: "text",
+          inputType: "text",
           key: "TextboxFg" + count + '.' + count,
           label: "Textbox Item " + '.' + count + '.' + count + " of fG" + count
         },
         /*{
          controlType: 'textbox',
-         type: "text",
+         inputType: "text",
          key: "TextboxFg" + count + '.' + count + '.' + count,
          label: "Textbox Item " + count + '.' + count + '.' + count + " of fG" + count
          }*/
@@ -359,7 +383,7 @@ export class FormConfigService {
          controlType: 'button',
          key: 'buttonButton',
          label: 'Button',
-         type: 'button'
+         inputType: 'button'
          }*/
       ];
 
@@ -381,9 +405,9 @@ export class FormConfigService {
 
   }
 
-  getValidationConfig() {
+  getValidationConfig(): IAbstractFormControlModel {
 
-    let config: any = [];
+    let config: IAbstractFormControlModel[] = [];
 
     let ct: controlTypes = 'textbox';
     let itt: inputTypes = 'text';
@@ -476,10 +500,13 @@ export class FormConfigService {
 
     config.push(gCVM);
 
-    return config;
+    let formGrougConfig: any = {
+      config: config
+    };
+    return formGrougConfig;
   }
 
-  getFormatterParserConfig() {
+  getFormatterParserConfig(): IAbstractFormControlModel {
 
     let creditCardMask = {
       name: "maskString",
@@ -503,7 +530,7 @@ export class FormConfigService {
       {
         key: 'ccn',
         controlType: 'textbox',
-        type: 'text',
+        inputType: 'text',
         label: 'Credit Card Number',
         formatterParser: pFA,
         parser: pFA
@@ -511,7 +538,7 @@ export class FormConfigService {
       {
         key: 'ccn-prefilled',
         controlType: 'textbox',
-        type: 'text',
+        inputType: 'text',
         label: 'Credit Card Number (pre filled with "11 112 2223 3 3344 44")',
         formState: '11 112 2223 3 3344 44',
         formatterParser: pFA,
@@ -519,35 +546,32 @@ export class FormConfigService {
       }
     ];
 
+    let fgConfig: any = {
+      config: config
+    };
+
+    return fgConfig;
+
+  }
+
+  getCustomCompomponentConfig(): IAbstractFormControlModel {
+    let config: any = {
+        config: [
+          {
+            controlType: 'slider',
+            key: "slider",
+            title: "Slider Group"
+          }
+        ]
+      };
+
     return config;
 
   }
 
-  getKitchenSink() {
-    let formConfig: Array<any> = [
+  getPersonalDataConfig(): IAbstractFormControlModel {
 
-
-    ];
-    return formConfig;
-  }
-
-  getCustomCompomponentConfig() {
-    let formConfig: Array<any> = [
-      {
-        controlType: 'slider',
-        key: "slider",
-        title: "Slider Group"
-      }
-    ];
-
-    return formConfig;
-
-  }
-
-  getPersonalDataConfig() {
-
-    let config:any[] = [];
-    let salutation: any = {
+    let salutation: IAbstractFormControlModel = {
       label: 'Anrede',
       //wrapperClass:['col-sm-4'],
       controlType: 'select',
@@ -558,7 +582,8 @@ export class FormConfigService {
         {label: 'Firma', value: '2'}
       ]
     };
-    let title: any = {
+
+    let title: IAbstractFormControlModel = {
       controlType: 'select',
       key: 'titel',
       label: 'Titel',
@@ -569,17 +594,17 @@ export class FormConfigService {
       ]
     };
 
-    let geb: any = {
+    let geb: IAbstractFormControlModel = {
       controlType: 'textbox',
       key: 'geburtsdatum',
       label: 'Geburtsdatum',
       //wrapperClass:['col-sm-4'],
       placeholder: "Geburtsdatum hier",
       helpText: "der Geburtsdatum der Person",
-      type: 'date'
+      inputType: 'date'
     };
 
-    let besch: any = {
+    let besch: IAbstractFormControlModel = {
       controlType: 'select',
       key: 'beschaeftigung',
       label: 'Beschäftigung',
@@ -591,30 +616,27 @@ export class FormConfigService {
       ]
     };
 
-    let main_lang: any = {
+    let main_lang: IAbstractFormControlModel = {
       controlType: 'select',
       key: 'kommunikationssprache',
       label: 'Kommunikationssprache',
       //wrapperClass:['col-sm-4'],
       helpText: "Kommunikationssprache der Person",
       options: [
-        {label:'Deutsch', value: 'Deutsch'},
+        {label: 'Deutsch', value: 'Deutsch'},
         {label: 'Englisch', value: 'Englisch'}
       ]
     };
 
-
-    let row: any = {
-      controlType: 'row',
+    let row: IAbstractFormControlModel = {
+      controlType: 'container',
       key: 'none',
       config: []
     };
 
-    config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
+    //formGroup.config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
 
-    //config.push(row);
-    /*
-    let personalData:any = {
+    let personalData: IAbstractFormControlModel = {
       controlType: 'formGroup',
       key: "personalData",
       label: "Personal Data",
@@ -629,267 +651,351 @@ export class FormConfigService {
     personalData.config.push(besch);
     personalData.config.push(main_lang);
 
-    config.push(personalData);
-*/
-
-    return config;
+    return personalData;
   }
 
-  getGenericElementConfig() {
+  getGenericElementConfig(): IAbstractFormControlModel {
 
-    let formConfig: Array<any> = [
-      /**/
-      // controlType
-      {
-        controlType: 'select',
-        key: 'controlType',
-        label: 'Control Type',
-        helpText: "This value is used to identify the control type  of the element",
-        options: [
-          {value: 'textbox', label: 'Textbox'},
-          {value: 'select', label: 'Select'},
-          {value: 'multiselect', label: 'Multiselect'},
-          {value: 'checkbox', label: 'Checkbox'},
-          {value: 'checkboxInline', label: 'Checkbox Inline'},
-          {value: 'radioInline', label: 'Radio Inline'},
-          {value: 'textarea', label: 'Textarea'},
-          {value: 'button', label: 'Button'}
-        ],
-      },
-      // type
-      {
-        controlType: 'select',
-        key: 'type',
-        label: 'type',
-        helpText: "This value is used in the type attribute of the element",
-        options: [
-          {value: 'text', label: 'Text'},
-          {value: 'number', label: 'Number'},
-          {value: 'button', label: 'Button'},
-          {value: 'submit', label: 'Submit'},
-          {value: 'reset', label: 'Reset'}
-        ],
-        changeListener: [
-          /**/{
-            controls: ['controlType'], name: "filteredOptions",
-            params: [
-              {key: 'textbox', optionsKeys: ['text', 'number']},
-              {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
-            ]
-          },
-          {
-            controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
-          }
-        ]
-      },
-      //key
-      {
-        controlType: 'textbox',
-        key: "key",
-        label: "Key",
-        placeholder: "The element key",
-        helpText: "This value is used in the id and name attribute of the element",
-        type: "text",
-        validator: [{name: 'required'}]
-      },
-      // label
-      {
-        controlType: 'textbox',
-        key: 'label',
-        label: 'Label',
-        placeholder: "The element label",
-        helpText: "This value is used in the lable of the element",
-        type: 'text'
-      },
-      // placeholder
-      {
-        controlType: 'textbox',
-        key: 'placeholder',
-        label: 'Placeholder',
-        placeholder: "The element placeholder",
-        helpText: "This value is used in the placeholder of the element",
-        type: 'text',
-        validator: [
-          {name: "randomValidator"}
-        ]
-      },
-      //validator
-      {
-        controlType: 'select',
-        key: 'validator',
-        label: 'Validator',
-        helpText: "Select default validation for this element",
-        noOptValue: "--none--",
-        options: [
-          {
-            key: "builtIn", value: "built in validators",
-            children: [
-              {key: [{name: 'required'}], value: 'Required'},
-              {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
-            ]
-          },
-          {
-            key: "custom", value: "custom in validators",
-            children: [
-              {key: [{name: 'email'}], value: 'Email'},
-            ]
-          }
-        ],
-        changeListener: [{
-          controls: ['controlType'],
-          name: "isRendered",
-          params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
-        }]
-      },
-      // help
-      {
-        controlType: 'textbox',
-        key: 'help',
-        label: 'Help',
-        placeholder: "The element help",
-        helpText: "This value is used in the help of the element",
-        type: 'text'
-      },
-      //submit button
-      {
-        controlType: 'button',
-        key: 'submit-button',
-        label: 'Update',
-        type: 'submit'
-      },
-      //reset button
-      {
-        controlType: 'button',
-        key: 'reset-button',
-        label: 'Reset',
-        type: 'reset'
-      }
-    ];
+    let formConfig: any =
+    {
+      config: [
+        /**/
+        // controlType
+        {
+          controlType: 'select',
+          key: 'controlType',
+          label: 'Control Type',
+          helpText: "This value is used to identify the control type  of the element",
+          options: [
+            {value: 'textbox', label: 'Textbox'},
+            {value: 'select', label: 'Select'},
+            {value: 'multiselect', label: 'Multiselect'},
+            {value: 'checkbox', label: 'Checkbox'},
+            {value: 'checkboxInline', label: 'Checkbox Inline'},
+            {value: 'radioInline', label: 'Radio Inline'},
+            {value: 'textarea', label: 'Textarea'},
+            {value: 'button', label: 'Button'}
+          ],
+        },
+        // type
+        {
+          controlType: 'select',
+          key: 'type',
+          label: 'type',
+          helpText: "This value is used in the type attribute of the element",
+          options: [
+            {value: 'text', label: 'Text'},
+            {value: 'number', label: 'Number'},
+            {value: 'button', label: 'Button'},
+            {value: 'submit', label: 'Submit'},
+            {value: 'reset', label: 'Reset'}
+          ],
+          changeListener: [
+            /**/{
+              controls: ['controlType'], name: "filteredOptions",
+              params: [
+                {key: 'textbox', optionsKeys: ['text', 'number']},
+                {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
+              ]
+            },
+            {
+              controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
+            }
+          ]
+        },
+        //key
+        {
+          controlType: 'textbox',
+          key: "key",
+          label: "Key",
+          placeholder: "The element key",
+          helpText: "This value is used in the id and name attribute of the element",
+          inputType: "text",
+          validator: [{name: 'required'}]
+        },
+        // label
+        {
+          controlType: 'textbox',
+          key: 'label',
+          label: 'Label',
+          placeholder: "The element label",
+          helpText: "This value is used in the lable of the element",
+          inputType: 'text'
+        },
+        // placeholder
+        {
+          controlType: 'textbox',
+          key: 'placeholder',
+          label: 'Placeholder',
+          placeholder: "The element placeholder",
+          helpText: "This value is used in the placeholder of the element",
+          inputType: 'text',
+          validator: [
+            {name: "randomValidator"}
+          ]
+        },
+        //validator
+        {
+          controlType: 'select',
+          key: 'validator',
+          label: 'Validator',
+          helpText: "Select default validation for this element",
+          noOptValue: "--none--",
+          options: [
+            {
+              key: "builtIn", value: "built in validators",
+              children: [
+                {key: [{name: 'required'}], value: 'Required'},
+                {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
+              ]
+            },
+            {
+              key: "custom", value: "custom in validators",
+              children: [
+                {key: [{name: 'email'}], value: 'Email'},
+              ]
+            }
+          ],
+          changeListener: [{
+            controls: ['controlType'],
+            name: "isRendered",
+            params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
+          }]
+        },
+        // help
+        {
+          controlType: 'textbox',
+          key: 'help',
+          label: 'Help',
+          placeholder: "The element help",
+          helpText: "This value is used in the help of the element",
+          inputType: 'text'
+        },
+        //submit button
+        {
+          controlType: 'button',
+          key: 'submit-button',
+          label: 'Update',
+          inputType: 'submit'
+        },
+        //reset button
+        {
+          controlType: 'button',
+          key: 'reset-button',
+          label: 'Reset',
+          inputType: 'reset'
+        }
+      ]
+    };
     return formConfig;
   }
 
-  getCampaign() {
+  getCampaign(): any {
 
-    let formConfig: Array<any> = [
-      {
-        controlType: 'textbox',
-        key: 'housenr',
-        label: 'House Nummer',
-        placeholder: "House Nummer hier",
-        type: 'text'
-      },
-      {
-        controlType: 'textbox',
-        key: 'strasse',
-        label: 'Strasse',
-        placeholder: "Strassenname hier",
-        type: 'text'
-      },
-      {
-        controlType: 'textbox',
-        key: 'plz',
-        label: 'PLZ',
-        placeholder: "PLZ hier",
-        type: 'text'
-      },
-      {
-        controlType: 'textbox',
-        key: 'stadt',
-        label: 'Stadt',
-        placeholder: "Stadt hier",
-        type: 'text'
-      },
-      {
-        controlType: 'textbox',
-        key: 'email',
-        label: 'Email',
-        placeholder: "Email hier",
-        type: 'mail',
-        validator: [
-          {name: 'required'},
-          {name: 'randomValidator'},
-        ]
-      },
-      {
-        controlType: 'checkbox',
-        key: 'emailkontakt',
-        label: 'Daf mich per Email kontaktieren'
-      },
-      {
-        controlType: 'textbox',
-        key: 'telefonnummer',
-        label: 'Telefonnummer',
-        type: 'tel',
-      },
-      {
-        controlType: 'textbox',
-        key: 'mobilenummer',
-        label: 'Mobilenummer',
-        type: 'tel',
-      },
-      {
-        controlType: 'select',
-        label: 'Sponsorships',
-        options: [
-          {label: 'hund', value: 'Hund'},
-          {label: 'katze', value: 'Katze'},
-        ],
-      },
-      {
-        controlType: 'radio',
-        key: 'additional_amount',
-        label: 'Anderer Betrag',
-        options: [
-          {label: '100', value: '100'},
-          {label: '200', value: '200'},
-        ],
-      },
-      {
-        controlType: 'textbox',
-        key: 'monatsbetrag',
-        label: 'Monatsbetrag',
-        type: 'number',
-      },
-      {
-        controlType: 'textbox',
-        key: 'jahresbetrag',
-        label: 'Jahresbetrag',
-        type: 'number',
-      },
-      {
-        controlType: 'select',
-        key: 'zahlungs_interval',
-        label: 'Zahlungs Interval',
-        helpText: "Intervall der Zahlung",
-        options: [
-          {label: [{name: 'monatlich'}], value: 'monatlich'},
-          {label: [{name: 'vierteljährlich'}], value: 'vierteljährlich'},
-          {label: [{name: 'halbjährlich'}], value: 'halbjährlich'},
-          {label: [{name: 'jährlich'}], value: 'jährlich'}
-        ],
-        changeListener: [
-          /**/{
-            controls: ['sponsorship'], name: "filteredOptions",
-            params: [
-              {key: 'hund', optionsKeys: ['monatlich', 'jährlich']},
-              {key: 'katze', optionsKeys: ['vierteljährlich', 'halbjährlich']}
-            ]
-          }
-        ]
-      }
-    ];
+    let formConfig: any =
+    {
+      config: [
+        {
+          controlType: 'textbox',
+          key: 'housenr',
+          label: 'House Nummer',
+          placeholder: "House Nummer hier",
+          inputType: 'text'
+        },
+        {
+          controlType: 'textbox',
+          key: 'strasse',
+          label: 'Strasse',
+          placeholder: "Strassenname hier",
+          inputType: 'text'
+        },
+        {
+          controlType: 'textbox',
+          key: 'plz',
+          label: 'PLZ',
+          placeholder: "PLZ hier",
+          inputType: 'text'
+        },
+        {
+          controlType: 'textbox',
+          key: 'stadt',
+          label: 'Stadt',
+          placeholder: "Stadt hier",
+          inputType: 'text'
+        },
+        {
+          controlType: 'textbox',
+          key: 'email',
+          label: 'Email',
+          placeholder: "Email hier",
+          inputType: 'mail',
+          validator: [
+            {name: 'required'},
+            {name: 'randomValidator'},
+          ]
+        },
+        {
+          controlType: 'checkbox',
+          key: 'emailkontakt',
+          label: 'Daf mich per Email kontaktieren'
+        },
+        {
+          controlType: 'textbox',
+          key: 'telefonnummer',
+          label: 'Telefonnummer',
+          inputType: 'tel',
+        },
+        {
+          controlType: 'textbox',
+          key: 'mobilenummer',
+          label: 'Mobilenummer',
+          inputType: 'tel',
+        },
+        {
+          controlType: 'select',
+          label: 'Sponsorships',
+          options: [
+            {label: 'hund', value: 'Hund'},
+            {label: 'katze', value: 'Katze'},
+          ],
+        },
+        {
+          controlType: 'radio',
+          key: 'additional_amount',
+          label: 'Anderer Betrag',
+          options: [
+            {label: '100', value: '100'},
+            {label: '200', value: '200'},
+          ],
+        },
+        {
+          controlType: 'textbox',
+          key: 'monatsbetrag',
+          label: 'Monatsbetrag',
+          inputType: 'number',
+        },
+        {
+          controlType: 'textbox',
+          key: 'jahresbetrag',
+          label: 'Jahresbetrag',
+          inputType: 'number',
+        },
+        {
+          controlType: 'select',
+          key: 'zahlungs_interval',
+          label: 'Zahlungs Interval',
+          helpText: "Intervall der Zahlung",
+          options: [
+            {label: 'monatlich', value: 'monatlich'},
+            {label: 'vierteljährlich', value: 'vierteljährlich'},
+            {label: 'halbjährlich', value: 'halbjährlich'},
+            {label: 'jährlich', value: 'jährlich'}
+          ],
+          changeListener: [
+            /**/{
+              controls: ['sponsorship'], name: "filteredOptions",
+              params: [
+                {key: 'hund', options: ['monatlich', 'jährlich']},
+                {key: 'katze', options: ['vierteljährlich', 'halbjährlich']}
+              ]
+            }
+          ]
+        }
+      ]
+    };
     return formConfig;
   }
 
 
-  ////////////////////////////////////////////////
+//ALL
+  getAllFormConfigs(): {
+    id: number,
+    title: string,
+    config: IAbstractFormControlModel
+  }[] {
+
+    let allConfigs: {
+      id: number,
+      title: string,
+      config: IAbstractFormControlModel
+    }[] = [
+      {
+        id: 0,
+        title: 'Textbox',
+        config: this.getTextboxConfig()
+      },
+      {
+        title: 'Checkbox',
+        id: 1,
+        config: this.getCheckboxConfig(),
+      },
+      {
+        title: 'Radio',
+        id: 2,
+        config: this.getRadioConfig()
+      },
+      {
+        title: 'Select',
+        id: 3,
+        config: this.getSelectConfig()
+      },
+      {
+        title: 'Textarea',
+        id: 4,
+        config: this.getTextareaConfig()
+      },
+      {
+        title: 'Buttons',
+        id: 5,
+        config: this.getButtonConfig()
+      },
+      {
+        title: 'formGroup Test',
+        id: 6,
+        config: this.getFormGroupConfig()
+      },
+
+      {
+        title: 'validation Test',
+        id: 7,
+        config: this.getValidationConfig()
+      },
+
+      {
+        title: 'FormatterParser',
+        id: 8,
+        config: this.getFormatterParserConfig()
+      },
+
+      {
+        title: "generic Item",
+        id: 9,
+        config: this.getGenericElementConfig()
+      },
+      {
+        title: 'Personal Data',
+        id: 10,
+        config: this.getPersonalDataConfig()
+      },
+      {
+        title: 'Donut Campaign',
+        id: 11,
+        config: this.getCampaign()
+      },
+    ];
+
+    return allConfigs;
+
+  }
+
+////////////////////////////////////////////////
 
 
-  _getRandItem(key: string, controlType?: controlTypes, type?: inputTypes, label?: string, validator?: any[], asyncValidator?: any[], placeholder?: string, helpText?: string, config?: any[]): any {
+  _getRandItem(key: string, controlType ?: controlTypes, inputType ?: inputTypes, label ?: string, validator ?: any[], asyncValidator ?: any[], placeholder ?: string, helpText ?: string, config ?: any[]): any {
 
     controlType = controlType || this._getRandControlType();
 
-    type = type || this._getRandInputType(controlType);
+    inputType = inputType || this._getRandInputType(controlType);
 
     label = label || '';
 
@@ -913,7 +1019,7 @@ export class FormConfigService {
       helpText: helpText,
 
       controlType: controlType,
-      type: type,
+      inputType: inputType,
       validator: validator,
       asyncValidator: asyncValidator,
 
@@ -933,7 +1039,6 @@ export class FormConfigService {
 
     switch (controlType) {
       case 'select':
-      case 'multiselect':
       case 'textarea':
         set = [];
         break;
@@ -959,19 +1064,19 @@ export class FormConfigService {
     return this._getRandArrayItem(FormConfigService.BUTTON_TYPES).value;
   }
 
-  _getRandInputValidator(count?: number): any {
+  _getRandInputValidator(count ?: number): any {
     return this._getArrayOfRandItemCount(() => {
       return this._getRandArrayItem(FormConfigService.INPUT_VALIDATORS).value
     }, count);
   }
 
-  _getRandInputAsyncValidator(count?: number): any {
+  _getRandInputAsyncValidator(count ?: number): any {
     return this._getArrayOfRandItemCount(() => {
       return this._getRandArrayItem(FormConfigService.INPUT_ASYNC_VALIDATORS).value
     }, count);
   }
 
-  _getArrayOfRandItemCount(cb: Function, count?: number) {
+  _getArrayOfRandItemCount(cb: Function, count ?: number) {
     count = count || Math.floor((Math.random() + 1) * 10);
 
     let validators = [];

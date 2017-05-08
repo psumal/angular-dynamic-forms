@@ -1,16 +1,15 @@
 import {Component} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
-import {BaseComponent} from "../../dynamic-form/components/base-component/base-component";
 
 @Component({
   moduleId: module.id,
   inputs: ['config', 'group'],
   selector: 'twb-row',
-  templateUrl: 'row.component.html',
+  templateUrl: 'container.component.html',
 })
-export class RowComponent extends BaseComponent{
-  static controlTypes = ["row"];
+export class ContainerComponent {
+  static controlTypes = ["container"];
 
   private _config: AbstractFormControlModel;
   set config(config: AbstractFormControlModel) {
@@ -31,7 +30,7 @@ export class RowComponent extends BaseComponent{
   }
 
   constructor() {
-    super();
+
   }
 
 }

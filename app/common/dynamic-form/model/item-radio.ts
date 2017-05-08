@@ -1,12 +1,13 @@
 import {AbstractFormControlModel} from "./base/form-control";
+import {IAbstractFormControlModel} from "./item.struckts";
 
 export class RadioItem extends AbstractFormControlModel {
-  controlType = 'radio';
-  type="radio";
-  options: {key: string, value: string}[] = [];
 
-  constructor(options: any = {}) {
+  inputType:string;
+
+  constructor(options:IAbstractFormControlModel = {}) {
     super(options);
-    this.options = options['options'] || [];
+    this.inputType = 'radio';
+    this.controlType = 'radio';
   }
 }

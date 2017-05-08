@@ -1,17 +1,20 @@
 import {AbstractFormControlModel} from "./base/form-control";
-import {IAbstractControlOptions} from "./item.struckts";
+import {IAbstractFormControlModel, ISelectOption} from "./item.struckts";
 
 export class SelectItem extends AbstractFormControlModel {
-  controlType = 'select';
-  options: {key: string, value: string}[] = [];
-  visibleOptions:{key: string, value: string}[] = [];
+
+  options: ISelectOption[] = [];
+  visibleOptions:ISelectOption[] = [];
   noOptKey:string;
   multiple:boolean;
 
-  constructor(options:any = {}) {
+  constructor(options:IAbstractFormControlModel = {}) {
     super(options);
-    this.noOptKey = options['noOptKey'] || false;
-    this.options = options['options'] || [];
+    this.controlType = 'select';
+
+    this.noOptKey = options.noOptKey || '';
+
+    this.options = options.options || [];
     this.visibleOptions = this.options;
 
     this.multiple = !!options.multiple;

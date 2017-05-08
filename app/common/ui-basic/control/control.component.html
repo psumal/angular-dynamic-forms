@@ -1,80 +1,78 @@
-<div [formGroup]="getParentFormGroup()" *ngIf="componentRendered" [attr.class]="getWrapperClass() + ' ' + getValidationClass()">
+<div [formGroup]="group">
 
-  <label [attr.for]="config.key" [attr.class]="'form-control-label'" *ngIf="isLabelVisible()">
+  <label [attr.for]="config.key" [attr.class]="'form-control-label'">
     {{config.label}}
   </label>
 
- item class:{{getWrapperClass()}}
       <input
-        [type]="config.type"
+        [type]="config.inputType"
         *ngIf="isControlTypeVisible('textbox')"
         [formControlName]="config.key"
-        [attr.class]="getControlClass()"
-        >
+        [attr.class]="'form-control'">
 
-      <div *ngIf="isControlTypeVisible('radio')">
-        <div class="form-check" *ngFor="let option of config.options">
-          <label [attr.class]="'form-check-label'">
-            <input type="radio"
-                   [formControlName]="config.key"
-                   [attr.class]="getControlClass()"
-                   [value]="option.value"
+        <div *ngIf="isControlTypeVisible('radio')">
+          <div class="form-check" *ngFor="let option of config.options">
+            <label [attr.class]="'form-check-label'">
+              <input type="radio"
+                     [formControlName]="config.key"
+                     [attr.class]="getControlClass()"
+                     [value]="option.value"
+                     interactionHandler
+                     [config]="config"
+                     [group]="currentFormItem">
+              {{option.value}}
+            </label>
+          </div>
+        </div>
+
+        <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
+          <label class="form-check-label">
+            <input type="checkbox"
+              [attr.class]="getControlClass()"
+              [formControlName]="config.key"
                    interactionHandler
                    [config]="config"
                    [group]="currentFormItem">
-            {{option.value}}
+            {{config.label}}
           </label>
         </div>
-      </div>
+<!---->
+        <select
+          *ngIf="isControlTypeVisible('select')"
+          [attr.class]="getControlClass()"
+          [formControlName]="config.key"
+          interactionHandler
+          [config]="config"
+          [group]="currentFormItem">
 
-      <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
-        <label class="form-check-label">
-          <input type="checkbox"
-            [attr.class]="getControlClass()"
-            [formControlName]="config.key"
-                 interactionHandler
-                 [config]="config"
-                 [group]="currentFormItem">
-          {{config.label}}
-        </label>
-      </div>
+          <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
+          <template ngFor let-opt [ngForOf]="config.visibleOptions">
+            <optgroup *ngIf="opt.children" label="{{opt.label}}">
+              <option *ngFor="let optChild of opt.options" [ngValue]="optChild.value" (click)="select(optChild.value)">
+                {{optChild.label}}
+              </option>
+            </optgroup>
+            <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" [value]="opt.value" >{{opt.label}}</option>
+          </template>
 
-      <select
-        *ngIf="isControlTypeVisible('select')"
-        [attr.class]="getControlClass()"
-        [formControlName]="config.key"
-        interactionHandler
-        [config]="config"
-        [group]="currentFormItem">
-        <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
+        </select>
 
-        <template ngFor let-opt [ngForOf]="config.visibleOptions">
-          <optgroup *ngIf="opt.children" label="{{opt.label}}">
-            <option *ngFor="let optChild of opt.children" [ngValue]="optChild.value" (click)="select(optChild.value)">
-              {{optChild.label}}
-            </option>
-          </optgroup>
-          <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" [value]="opt.value" >{{opt.label}}</option>
-        </template>
+        <textarea
+          *ngIf="isControlTypeVisible('textarea')"
+          [formControlName]="config.key"
+          [attr.class]="getControlClass()"
+          interactionHandler
+          [config]="config"
+          [group]="currentFormItem">
+         </textarea>
 
-      </select>
+    <item-errors [config]="config" [group]="currentFormItem">
+    </item-errors>
 
-      <textarea
-        *ngIf="isControlTypeVisible('textarea')"
-        [formControlName]="config.key"
-        [attr.class]="getControlClass()"
-        interactionHandler
-        [config]="config"
-        [group]="currentFormItem">
-       </textarea>
+    <div *ngIf="currentFormItem.status == 'PENDING'">
+      Validation is pending...
+    </div>
 
-  <item-errors [config]="config" [group]="currentFormItem">
-  </item-errors>
-
-  <div *ngIf="currentFormItem.status == 'PENDING'">
-    Validation is pending...
-  </div>
-  <!---->
   <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}</small>
 
 </div>

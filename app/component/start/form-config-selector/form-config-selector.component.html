@@ -1,8 +1,10 @@
-<!---->
-  <form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)">
+<!--
+-->
+  <form novalidate [formGroup]="configSelectionForm" (ngSubmit)="onSubmit(form)">
 
   <dynamic-form-group
-    [config]="configSelectionForm"
+    [config]="configSelectionConfig"
+    [group]="configSelectionForm"
     (onGroupValueChanged)="updateFormConfig($event)">
   </dynamic-form-group>
 
@@ -14,6 +16,7 @@
 
   <div class="col-sm-6">
 <!--
+-->
     <div novalidate>
 
       <div class="form-group">
@@ -44,10 +47,11 @@
       <button type="submit" class="btn btn-primary">Submit</button>
 
     </div>
--->
-    <form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)">
+
+    <form novalidate [formGroup]="dynamicForm" (ngSubmit)="onSubmit(form)">
 
       <dynamic-form-group
+        [group]="dynamicForm"
         [config]="formConfig"
         (onGroupValueChanged)="onDynamicFormChange($event)">
       </dynamic-form-group>

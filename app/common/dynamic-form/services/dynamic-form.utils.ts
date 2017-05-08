@@ -8,13 +8,14 @@ import {ButtonItem} from "../model/item-button";
 import {TextareaItem} from "../model/item-textarea";
 import {FormGroupItem} from "../model/item-formGroup";
 import {AbstractFormControlModel} from "../model/base/form-control";
+import {IAbstractFormControlModel} from "../model/item.struckts";
 
 @Injectable()
 export class DynamicFormUtils {
 
-  static createFormItem(config: {}): AbstractFormControlModel | ButtonItem| FormGroupItem {
+  static createFormItem(config: IAbstractFormControlModel): AbstractFormControlModel {
     //prevent side effects
-    config = {...config};
+    config= {...config};
 
     if(!('controlType' in config)) {
       config['controlType'] = guessControlType(config);
@@ -59,10 +60,10 @@ export class DynamicFormUtils {
 
     /////////////////////////////
 
-    function guessControlType(struct:{}):string {
+    function guessControlType(struct:IAbstractFormControlModel):string {
       let controlType:string;
 
-      controlType = "row";
+      controlType = "container";
 
       return controlType;
 

@@ -11,11 +11,26 @@ import {ErrorService} from "../../dynamic-form/services/error.service";
 })
 export class ControlErrorComponent implements OnInit, OnDestroy {
 
-  config: AbstractFormControlModel = <any>{};
-  group: FormGroup = <any>{};
 
-  protected errorService:ErrorService;
+  private _config: AbstractFormControlModel;
+  set config(config: AbstractFormControlModel) {
+    this._config = config;
+  }
 
+  get config(): AbstractFormControlModel {
+    return this._config;
+  }
+
+  private _group: FormGroup;
+  set group(group: FormGroup) {
+    this._group = group;
+  }
+
+  get group(): FormGroup {
+    return this._group;
+  }
+
+  errorService:ErrorService;
   errorMessages:{};
 
   private _errors:{[key:string]:string} = {};

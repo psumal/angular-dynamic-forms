@@ -1,15 +1,13 @@
 import {AbstractFormControlModel} from "./base/form-control";
-import {IAbstractControlOptions, textboxTypes} from "./item.struckts";
+import {IAbstractFormControlModel} from "./item.struckts";
 
 export class TextboxItem extends AbstractFormControlModel {
-  controlType = 'textbox';
-  type: textboxTypes;
-  placeholder?:string;
+  inputType: string;
 
-  constructor(options:IAbstractControlOptions= {}) {
+  constructor(options:IAbstractFormControlModel= {}) {
     super(options);
-    this.placeholder = options['placeholder'];
-    this.type = options['type'] || 'text';
+    this.controlType = 'textbox';
+    this.inputType = options['type'] || 'text';
   }
 
 }

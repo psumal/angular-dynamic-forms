@@ -1,12 +1,11 @@
-<fieldset [attr.class]="getWrapperClass()">
+<fieldset>
   <legend>{{config.label}}</legend>
-  group class:{{getWrapperClass()}}
 
   <ng-container
     *ngFor="let conf of items;"
     dynamicItem
     [config]="conf"
-    [group]="group">
+    [group]="currentFormItem">
   </ng-container>
 
   <item-errors [config]="config" [group]="currentFormItem"></item-errors>

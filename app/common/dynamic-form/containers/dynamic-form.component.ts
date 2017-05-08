@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder} from "@angular/forms";
 import {DynamicFormUtils} from "../services/dynamic-form.utils";
 import {DynamicFormService} from "../services/dynamic-form.service";
 import {AbstractFormControlModel} from "../model/base/form-control";
+import {IAbstractFormControlModel} from "../model/item.struckts";
 
 @Component({
   moduleId: module.id,
@@ -14,30 +15,38 @@ import {AbstractFormControlModel} from "../model/base/form-control";
 })
 export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  private _config: AbstractFormControlModel[] = [];
-  set config(config: Array<any>) {
-
-    let prepConfig = this.setParentId(config);
-    let formConfig = this.configToFormConfig(prepConfig);
-
-    this._config = formConfig;
-
-    this.renderForm();
-
+  private _config: AbstractFormControlModel;
+  set config(config: AbstractFormControlModel) {
+    this._config = config;
+    this.items = config.config;
   }
 
-  get config(): Array<any> {
+  get config(): AbstractFormControlModel {
     return this._config;
   }
 
-  group: FormGroup;
+  protected _items:AbstractFormControlModel[];
+  get items(): AbstractFormControlModel[] {
+    return this._items;
+  }
+  set items(items: AbstractFormControlModel[]) {
+    this._items = items || [];
+  }
+
+  private _group: FormGroup;
+  set group(group: FormGroup) {
+    this._group = group;
+  }
+
+  get group(): FormGroup {
+    return this._group;
+  }
 
   subscriptions: any[] = [];
 
   onGroupValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(protected dfService: DynamicFormService, protected fb: FormBuilder) {
-
+  constructor() {
 
   }
 
@@ -56,63 +65,29 @@ export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  setParentId(config: any = [], parentId: string = '', formPath?: string[]): any {
-    return config.map((conf: any) => {
-      let newConf: any = {...conf};
-      let formPathNew = formPath ? [...formPath] : [];
-
-      newConf.parentId = parentId;
-      newConf.formPath = [];
-
-      if (newConf.parentId) {
-        newConf.formPath = formPathNew;
-        newConf.formPath.push(newConf.key)
-      } else {
-        newConf.formPath.push(newConf.key);
-      }
-
-
-      if (newConf.controlType === 'formGroup') {
-        newConf.config = this.setParentId(newConf.config, newConf.key, newConf.formPath);
-      }
-
-      return newConf;
-    });
-  }
-
   ngOnInit(): void {
-
-    console.log('this.group: ', this.group);
-    this.renderForm();
 
   }
 
   ngAfterViewInit(): void {
-    const valueChanges = this.group.valueChanges;
-    this.subscriptions.push(
-      valueChanges.subscribe((change: any) => {
-        console.log('valueChanges: ', change);
-        this.onGroupValueChanged.emit(change);
-      })
-    );
+    /*
+     const valueChanges = this.group.valueChanges;
+     this.subscriptions.push(
+     valueChanges.subscribe((change: any) => {
+     console.log('valueChanges: ', change);
+     this.onGroupValueChanged.emit(change);
+     })
+     );
+     */
   }
 
-
   ngOnDestroy() {
-
     this.subscriptions.forEach((sub: any) => {
       try {
         sub.unsubscribe();
       }
-      catch (e) {
-
-      }
+      catch (e) {}
     })
-  }
-
-  protected renderForm(): void {
-    //this.group.addControl('test',this.dfService.toFG(this.config));
-    this.group = this.dfService.toFG(this.config);
   }
 
 }

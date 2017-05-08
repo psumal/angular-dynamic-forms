@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {DynamicFormUtils} from "../../dynamic-form/services/dynamic-form.utils";
 import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
-import {BaseComponent} from "../../dynamic-form/components/base-component/base-component";
-import {FormGroup} from "@angular/forms";
+import {FormGroup, FormBuilder} from "@angular/forms";
 
 @Component({
   moduleId: module.id,
@@ -12,7 +11,7 @@ import {FormGroup} from "@angular/forms";
   templateUrl: 'item-formGroup.component.html',
   providers: [DynamicFormUtils, DynamicFormService]
 })
-export class FormGroupComponent extends BaseComponent {
+export class FormGroupComponent implements OnInit {
 
   static controlTypes = ["formGroup"];
 
@@ -35,25 +34,41 @@ export class FormGroupComponent extends BaseComponent {
     return this._group;
   }
 
-  private _items: AbstractFormControlModel[]= [];
-  set items(value:AbstractFormControlModel[]) {
+  private _items: AbstractFormControlModel[] = [];
+  set items(value: AbstractFormControlModel[]) {
     this._items = value
       .map((item: any) => {
-
         let newItem = DynamicFormUtils.createFormItem(item);
         if (newItem) {
           return newItem;
         }
       });
+  }
+
+  get currentFormItem() {
+    return this.group.get(this.config.key);
+  }
+
+  get items(): AbstractFormControlModel[] {
+    return this._items || [];
+  }
+
+  constructor(protected dfs: DynamicFormService,
+              protected dfb: FormBuilder) {
 
   }
 
-  get items() : AbstractFormControlModel[] {
-    return this._items;
+  ngOnInit() {
+    this.addConfigToGroup();
   }
 
-  constructor() {
-    super();
+  addConfigToGroup() {
+    let frExtras: any[] = this.dfs.getFormGroupExtras(this.config);
+    let group = this.dfb.group({}, frExtras);
+    this.group.addControl(this.config.key, group);
   }
 
+  removeConfigFromGroup() {
+    this.group.removeControl(this.config.key);
+  }
 }

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {ItemBase} from "../../../../../common/dynamic-form/model/base/item";
+import {IAbstractFormControlModel} from "../../../../../common/dynamic-form/model/item.struckts";
 
 @Component({
   moduleId: module.id,
@@ -10,6 +10,6 @@ import {ItemBase} from "../../../../../common/dynamic-form/model/base/item";
 })
 export class SliderComponent {
   static controlTypes = ['slider'];
-  config: ItemBase;
+  config: IAbstractFormControlModel;
   group: FormGroup;
 }

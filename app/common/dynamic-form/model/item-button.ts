@@ -1,21 +1,15 @@
-import {buttonTypes, changeListenerConfig, IItemBaseOptions, IAbstractControlOptions} from "./item.struckts";
-import {ItemBase} from "./base/item";
+import {AbstractFormControlModel} from "./base/form-control";
+import {IAbstractFormControlModel} from "./item.struckts";
 
-export class ButtonItem extends ItemBase {
-  controlType = 'button';
-  type: buttonTypes;
-  label:string;
-  disabled:boolean;
-  controlClass:string[] = [];
-  changeListener?:changeListenerConfig[];
+export class ButtonItem extends AbstractFormControlModel {
 
-  constructor(options:IAbstractControlOptions = {}) {
+  inputType:string;
+
+  constructor(options:IAbstractFormControlModel) {
     super(options);
-    this.type = options['type'] || 'button';
-    this.disabled = options.disabled;
-    this.label = options = options['label'];
-    this.controlClass = options.controlClass || [];
-    this.changeListener = options['changeListener'];
+
+    this.controlType = 'button';
+    this.inputType = options['type'] || 'button';
   }
 
 }

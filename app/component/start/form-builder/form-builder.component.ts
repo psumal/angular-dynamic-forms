@@ -16,8 +16,8 @@ export class FormBuilderComponent implements OnInit, OnChanges {
   model:any={};
 
 
-  constructor(protected formConfServ:FormConfigService) {
-    this.config;// = formConfServ.getValidationConfig();
+  constructor() {
+
   }
 
   ngOnInit(): void {
@@ -30,10 +30,7 @@ export class FormBuilderComponent implements OnInit, OnChanges {
 
 
   onSubmitted($event: {}) {
-    let item: any | FormGroupItem = DynamicFormService.createFormItem($event['payLoad']);
-    if (item) {
-      this.dynamicItems = this.dynamicItems.concat(item, []);
-    }
+
   }
 
 

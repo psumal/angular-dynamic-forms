@@ -10,6 +10,8 @@ export class SelectItem extends AbstractFormControlModel {
 
   constructor(options:IAbstractFormControlModel = {}) {
     super(options);
+    console.log('options:', options);
+
     this.controlType = 'select';
 
     this.noOptKey = options.noOptKey || '';

@@ -37,7 +37,7 @@ export class FormGroupComponent implements OnInit {
   set items(value: AbstractFormControlModel[]) {
     this._items = value
       .map((item: any) => {
-        let newItem = DynamicFormService.createFormItem(item);
+        let newItem = this.dfs.createFormItem(item);
         if (newItem) {
           return newItem;
         }

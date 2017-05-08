@@ -26,7 +26,7 @@ export class DynamicFormService {
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
   }
 
-  static createFormItem(config: IAbstractFormControlModel): AbstractFormControlModel {
+  createFormItem(config: IAbstractFormControlModel): AbstractFormControlModel {
     //prevent side effects
     config= {...config};
 
@@ -37,7 +37,7 @@ export class DynamicFormService {
     let controlType: string = config['controlType'];
     let item: AbstractFormControlModel  | ButtonItem | FormGroupItem;
 
-    if (controlType === "row") {
+    if (controlType === "container") {
       item = config as AbstractFormControlModel;
     }
 

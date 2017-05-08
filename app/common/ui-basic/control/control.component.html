@@ -37,6 +37,11 @@
           </label>
         </div>
 <!---->
+
+  <div  *ngIf="isControlTypeVisible('select')">
+    <div *ngFor="let opt of config.visibleOptions">{{opt | json}}</div>
+  </div>
+
         <select
           *ngIf="isControlTypeVisible('select')"
           [attr.class]="getControlClass()"
@@ -47,12 +52,12 @@
 
           <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
           <template ngFor let-opt [ngForOf]="config.visibleOptions">
-            <optgroup *ngIf="opt.children" label="{{opt.label}}">
+            <optgroup *ngIf="opt.options" label="{{opt.label}}">
               <option *ngFor="let optChild of opt.options" [ngValue]="optChild.value" (click)="select(optChild.value)">
                 {{optChild.label}}
               </option>
             </optgroup>
-            <option *ngIf="!opt.children" [attr.disabled]="opt.disabled?'':null" [value]="opt.value" >{{opt.label}}</option>
+            <option *ngIf="!opt.options" [attr.disabled]="opt.disabled?'':null" [value]="opt.value" >{{opt.label}}</option>
           </template>
 
         </select>

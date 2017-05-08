@@ -45,7 +45,7 @@ export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onGroupValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {
+  constructor(private dfs:DynamicFormService) {
 
   }
 
@@ -54,10 +54,10 @@ export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
     return config.map((conf: any) => {
       let newItem = {};
       if (conf['controlType'] == "formGroup") {
-        newItem = DynamicFormService.createFormItem(conf);
+        newItem = this.dfs.createFormItem(conf);
         newItem['config'] = this.configToFormConfig(conf.config);
       } else {
-        newItem = DynamicFormService.createFormItem(conf);
+        newItem = this.dfs.createFormItem(conf);
       }
       return newItem;
     });

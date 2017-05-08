@@ -82,7 +82,6 @@ export function maskString(mask: string, maskPatterns: {[key: string]: RegExp}):
       }
     }
 
-    console.log('mask: ', value, ' to ', maskedValue);
     return maskedValue;
   }
 

@@ -18,11 +18,13 @@ export class ControlComponent implements OnInit {
 
   private _config: TextboxItem;
   set config(config: TextboxItem) {
-    this._config = config;
+    this._config = this.dfs.createFormItem(config) as TextboxItem;
   }
 
   get config(): TextboxItem {
+
     return this._config;
+
   }
 
   private _group: FormGroup;
@@ -49,7 +51,6 @@ export class ControlComponent implements OnInit {
   addConfigToGroup() {
       let configParams:any[] = this.dfs.getFormControlParamsArray(this.config);
       let control:any = (<any>this.dfb).control(...configParams);
-console.log('control: ', control, configParams);
       this.group.addControl(this.config.key, control);
   }
 

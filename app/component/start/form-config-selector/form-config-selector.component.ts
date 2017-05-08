@@ -52,7 +52,6 @@ export class FormConfigSelectorComponent implements AfterViewInit {
   updateFormConfig(formValue: any) {
     const configSet: any = this.getConfigByKey(formValue.configSelect);
     this.formConfig = configSet.value.config || {};
-    console.log('updateFormConfig: ', this.formConfig);
   }
 
   ngAfterViewInit() {

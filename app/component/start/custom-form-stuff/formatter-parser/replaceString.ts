@@ -4,7 +4,6 @@ export function replaceString(searchValue: RegExp, replaceValue: string): Format
 
   return (value: any) => {
     let replacedValue = value.replace(searchValue, replaceValue);
-    console.log('replace ', value, ' to ', replacedValue);
     return replacedValue;
   }
 

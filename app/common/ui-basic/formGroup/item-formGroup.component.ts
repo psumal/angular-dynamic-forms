@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {DynamicFormUtils} from "../../dynamic-form/services/dynamic-form.utils";
 import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
 import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
 import {FormGroup, FormBuilder} from "@angular/forms";
@@ -9,7 +8,7 @@ import {FormGroup, FormBuilder} from "@angular/forms";
   inputs: ['config', 'group'],
   selector: 'df-form-group',
   templateUrl: 'item-formGroup.component.html',
-  providers: [DynamicFormUtils, DynamicFormService]
+  providers: [DynamicFormService]
 })
 export class FormGroupComponent implements OnInit {
 
@@ -38,7 +37,7 @@ export class FormGroupComponent implements OnInit {
   set items(value: AbstractFormControlModel[]) {
     this._items = value
       .map((item: any) => {
-        let newItem = DynamicFormUtils.createFormItem(item);
+        let newItem = DynamicFormService.createFormItem(item);
         if (newItem) {
           return newItem;
         }

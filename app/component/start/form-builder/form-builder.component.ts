@@ -1,7 +1,7 @@
 import {Component, OnInit, OnChanges, EventEmitter} from '@angular/core';
 import {FormGroupItem} from "../../../common/dynamic-form/model/item-formGroup";
-import {DynamicFormUtils} from "../../../common/dynamic-form/services/dynamic-form.utils";
 import {FormConfigService} from "../form-config.service";
+import {DynamicFormService} from "../../../common/dynamic-form/services/dynamic-form.service";
 
 @Component({
   moduleId: module.id,
@@ -30,7 +30,7 @@ export class FormBuilderComponent implements OnInit, OnChanges {
 
 
   onSubmitted($event: {}) {
-    let item: any | FormGroupItem = DynamicFormUtils.createFormItem($event['payLoad']);
+    let item: any | FormGroupItem = DynamicFormService.createFormItem($event['payLoad']);
     if (item) {
       this.dynamicItems = this.dynamicItems.concat(item, []);
     }

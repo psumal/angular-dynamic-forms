@@ -9,6 +9,14 @@ import {
   NG_ASYNC_VALIDATORS
 } from "@angular/forms";
 import {AbstractFormControlModel} from "../model/base/form-control";
+import {IAbstractFormControlModel} from "../model/item.struckts";
+import {ButtonItem} from "../model/item-button";
+import {FormGroupItem} from "../model/item-formGroup";
+import {TextboxItem} from "../model/item-textbox";
+import {SelectItem} from "../model/item-select";
+import {CheckboxItem} from "../model/item-checkbox";
+import {RadioItem} from "../model/item-radio";
+import {TextareaItem} from "../model/item-textarea";
 
 @Injectable()
 export class DynamicFormService {
@@ -18,69 +26,62 @@ export class DynamicFormService {
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
   }
 
+  static createFormItem(config: IAbstractFormControlModel): AbstractFormControlModel {
+    //prevent side effects
+    config= {...config};
 
-  toFG2(config: Array<any>): FormGroup {
-
-    //create formBuilder.group() params
-    let formGroupObject: {[key: string]: any;} = {};
-    let extra: {[key: string]: any} = {};
-
-    if (config && config.length > 0) {
-
-      config.forEach((conf: any) => {
-        if (conf['controlType'] === 'row') {
-          console.log('conf', conf);
-          formGroupObject[conf['config']['key']] = {};
-          formGroupObject[conf['config']['key']] = this.toFG(conf['config']['config']);
-        }
-        else if (conf['controlType'] !== 'formGroup' && conf['controlType'] !== 'formArray') {
-          formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
-        }
-        else {
-          let extras = this.getFormGroupExtras(conf);
-          formGroupObject[conf['key']] = {};
-          formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
-        }
-      });
+    if(!('controlType' in config)) {
+      config['controlType'] = guessControlType(config);
     }
 
-    return this.fb.group(formGroupObject);
+    let controlType: string = config['controlType'];
+    let item: AbstractFormControlModel  | ButtonItem | FormGroupItem;
+
+    if (controlType === "row") {
+      item = config as AbstractFormControlModel;
+    }
+
+    if (controlType === "textbox") {
+      item = new TextboxItem(<any>config);
+    }
+
+    if (controlType === "select") {
+      item = new SelectItem(config);
+    }
+
+    if (controlType === "checkbox") {
+      item = new CheckboxItem(config);
+    }
+
+    if (controlType === "radio") {
+      item = new RadioItem(config);
+    }
+
+    if (controlType === "textarea") {
+      item = new TextareaItem(config);
+    }
+
+    if (controlType === "button") {
+      item = new ButtonItem(config);
+    }
+
+    if(controlType === "formGroup") {
+      item = new FormGroupItem(config);
+    }
+
+    return item;
 
     /////////////////////////////
 
-  }
+    function guessControlType(struct:IAbstractFormControlModel):string {
+      let controlType:string;
 
-  toFG(config: Array<any>, extras?: any): FormGroup {
+      controlType = "container";
 
-    //create formBuilder.group() params
-    let formGroupObject: {[key: string]: any;} = {};
-    let extra: {[key: string]: any} = {};
+      return controlType;
 
-    if (config && config.length > 0) {
-
-      config.forEach((conf: any) => {
-        if (conf['controlType'] === 'row') {
-          console.log('conf', conf);
-          formGroupObject[conf['config']['key']] = {};
-          formGroupObject[conf['config']['key']] = this.toFG(conf['config']['config']);
-        }
-        else if (conf['controlType'] !== 'formGroup' && conf['controlType'] !== 'formArray') {
-          formGroupObject[conf['key']] = this.getFormControlParamsArray(conf);
-        }
-        else {
-          let extras = this.getFormGroupExtras(conf);
-          formGroupObject[conf['key']] = {};
-          formGroupObject[conf['key']] = this.toFG(conf['config'], extras);
-        }
-      });
     }
-
-    return this.fb.group(formGroupObject, extras);
-
-    /////////////////////////////
-
   }
-
   //@TODO move to utils
   getFormGroupExtras = (formGroupConfig: AbstractFormControlModel) => {
 
@@ -169,7 +170,7 @@ export class DynamicFormService {
     return validators;
   }
 
-  getAsyncValidatorFn(validatorName: string, validatorArgs?: any): any {
+  getCustomAsyncValidatorFn(validatorName: string, validatorArgs?: any): any {
     let asyncValidatorFn;
 
     if (this.NG_ASYNC_VALIDATORS) {
@@ -192,7 +193,7 @@ export class DynamicFormService {
 
     if (config) {
       asyncValidators = config.map((validatorObj: any) => {
-        return this.getAsyncValidatorFn(validatorObj.name, validatorObj.params)
+        return this.getCustomAsyncValidatorFn(validatorObj.name, validatorObj.params)
       })
     }
     return asyncValidators;

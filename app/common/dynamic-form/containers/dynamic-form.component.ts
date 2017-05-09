@@ -1,8 +1,7 @@
-import {Component, OnInit, EventEmitter, OnDestroy, AfterViewInit} from "@angular/core";
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {Component, OnInit, EventEmitter, OnDestroy, AfterViewInit, OnChanges, SimpleChanges} from "@angular/core";
+import {FormGroup} from "@angular/forms";
 import {DynamicFormService} from "../services/dynamic-form.service";
 import {AbstractFormControlModel} from "../model/base/form-control";
-import {IAbstractFormControlModel} from "../model/item.struckts";
 
 @Component({
   moduleId: module.id,
@@ -12,11 +11,11 @@ import {IAbstractFormControlModel} from "../model/item.struckts";
   templateUrl: './dynamic-form.component.html',
   providers: [DynamicFormService]
 })
-export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DynamicFormComponent implements OnInit, OnDestroy {
 
   private _config: AbstractFormControlModel;
   set config(config: AbstractFormControlModel) {
-    this._config = config;
+    this._config = {...config} as AbstractFormControlModel;
     this.items = config.config;
   }
 
@@ -24,10 +23,11 @@ export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
     return this._config;
   }
 
-  protected _items:AbstractFormControlModel[];
+  protected _items: AbstractFormControlModel[];
   get items(): AbstractFormControlModel[] {
     return this._items;
   }
+
   set items(items: AbstractFormControlModel[]) {
     this._items = items || [];
   }
@@ -45,12 +45,11 @@ export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onGroupValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private dfs:DynamicFormService) {
+  constructor(private dfs: DynamicFormService) {
 
   }
 
   configToFormConfig(config: any) {
-
     return config.map((conf: any) => {
       let newItem = {};
       if (conf['controlType'] == "formGroup") {
@@ -61,32 +60,37 @@ export class DynamicFormComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       return newItem;
     });
-
   }
 
   ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
-    /*
-     const valueChanges = this.group.valueChanges;
-     this.subscriptions.push(
-     valueChanges.subscribe((change: any) => {
-     console.log('valueChanges: ', change);
-     this.onGroupValueChanged.emit(change);
-     })
-     );
-     */
+    this.initSubscriptions();
   }
 
   ngOnDestroy() {
+   this.destroySubscriptions();
+  }
+
+  initSubscriptions(){
+    if(this.group) {
+    const valueChanges = this.group.valueChanges;
+    this.subscriptions.push(
+      valueChanges.subscribe((change: any) => {
+        console.log('valueChanges: ', change);
+        this.onGroupValueChanged.emit({change:change});
+      })
+    );
+    }
+  }
+
+  destroySubscriptions() {
     this.subscriptions.forEach((sub: any) => {
       try {
         sub.unsubscribe();
       }
-      catch (e) {}
-    })
+      catch (e) {
+      }
+    });
+    this.subscriptions = [];
   }
 
 }

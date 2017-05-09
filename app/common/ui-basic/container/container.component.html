@@ -1,7 +1,10 @@
 <div class="row">
 
-  <div *ngFor="let conf of config;">
-    {{conf | json}}
-  </div>
+  <ng-container
+    *ngFor="let conf of items;"
+    dynamicItem
+    [config]="conf"
+    [group]="currentFormItem">
+  </ng-container>
 
 </div>

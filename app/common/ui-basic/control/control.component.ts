@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, OnDestroy, EventEmitter} from "@angular/core";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/merge";
@@ -9,12 +9,18 @@ import {TextboxItem} from "../../dynamic-form/model/item-textbox";
 @Component({
   moduleId: module.id,
   inputs: ['config', 'group'],
+  outputs: ['onGroupValueChanged'],
   selector: 'df-item',
   templateUrl: 'control.component.html',
 })
-export class ControlComponent implements OnInit {
+export class ControlComponent implements OnInit, OnDestroy {
 
   static controlTypes = ["select", "checkbox", "radio", "textbox", "textarea"];
+
+  subscriptions:any[] = [];
+
+  onGroupValueChanged: EventEmitter<any> = new EventEmitter<any>();
+
 
   private _config: TextboxItem;
   set config(config: TextboxItem) {
@@ -37,7 +43,10 @@ export class ControlComponent implements OnInit {
   }
 
   get currentFormItem():AbstractControl {
-    return this.group.get(this.config.key);
+    if(this.group.get(this.config.key)) {
+      return this.group.get(this.config.key);
+    }
+
   }
 
   constructor( protected dfs:DynamicFormService,
@@ -48,6 +57,11 @@ export class ControlComponent implements OnInit {
     this.addConfigToGroup();
   }
 
+  ngOnDestroy() {
+    this.removeConfigFromGroup();
+    this.initSubscriptions();
+  }
+
   addConfigToGroup() {
       let configParams:any[] = this.dfs.getFormControlParamsArray(this.config);
       let control:any = (<any>this.dfb).control(...configParams);
@@ -56,6 +70,18 @@ export class ControlComponent implements OnInit {
 
   removeConfigFromGroup() {
     this.group.removeControl(this.config.key);
+  }
+
+  initSubscriptions(){
+    if(this.group) {
+      const valueChanges = this.group.valueChanges;
+      this.subscriptions.push(
+        valueChanges.subscribe((change: any) => {
+          console.log('valueChanges: ', change);
+          this.onGroupValueChanged.emit(change);
+        })
+      );
+    }
   }
 
   getControlClass(): string {
@@ -93,15 +119,6 @@ export class ControlComponent implements OnInit {
     return this.config.controlType === controlType;
   }
 
-  valueChanged(key: string, changes: any, currentValue: any): boolean {
-    if (key in changes) {
-      if (changes[key].currentValue !== currentValue) {
-        return true;
-      }
-    }
-    return false;
-  };
-
   getValidationClass() {
     let classNames: Array<string> = [];
 
@@ -116,4 +133,15 @@ export class ControlComponent implements OnInit {
     return classNames.join(' ');
   }
 
+  getCurrentValue() {
+    if(this.currentFormItem && 'value' in this.currentFormItem) {
+      return this.currentFormItem.value;
+    }
+  }
+
+  getCurrentStatus() {
+    if(this.currentFormItem && 'status' in this.currentFormItem) {
+      return this.currentFormItem.status;
+    }
+  }
 }

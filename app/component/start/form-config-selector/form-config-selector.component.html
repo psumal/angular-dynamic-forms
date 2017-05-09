@@ -1,6 +1,6 @@
 <!--
 -->
-  <form novalidate [formGroup]="configSelectionForm" (ngSubmit)="onSubmit(form)">
+  <form novalidate [formGroup]="configSelectionForm" (ngSubmit)="onSubmitConfigSelection(form)">
 
   <dynamic-form-group
     [config]="configSelectionConfig"
@@ -14,55 +14,17 @@
 
 <div class="row">
 
-  <div class="col-sm-6">
-<!--
--->
-    <div novalidate>
-
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-      </div>
-
-      <fieldset class="form-group row">
-        <legend>Personal Data</legend>
-        <div class="form-group col-sm-6">
-          <label for="firstname">First name</label>
-          <input type="text" class="form-control" id="firstname" placeholder="Password">
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="firstname">First name</label>
-          <input type="text" class="form-control" id="firstname" placeholder="Password">
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="firstname">First name</label>
-          <input type="text" class="form-control" id="firstname" placeholder="Password">
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="firstname">First name</label>
-          <input type="text" class="form-control" id="firstname" placeholder="Password">
-        </div>
-      </fieldset>
-
-      <button type="submit" class="btn btn-primary">Submit</button>
-
-    </div>
+  <div class="col-sm-12">
 
     <form novalidate [formGroup]="dynamicForm" (ngSubmit)="onSubmit(form)">
-
       <dynamic-form-group
         [group]="dynamicForm"
         [config]="formConfig"
         (onGroupValueChanged)="onDynamicFormChange($event)">
       </dynamic-form-group>
-
     </form>
 
   </div>
 
-  <div class="col-sm-6">
-    FormModel:
-    <pre>{{formModel | json}}</pre>
-  </div>
 
 </div>

@@ -573,7 +573,7 @@ export class FormConfigService {
 
     let salutation: IAbstractFormControlModel = {
       label: 'Anrede',
-      //wrapperClass:['col-sm-4'],
+      wrapperClass:['col-sm-3'],
       controlType: 'select',
       key: 'anrede',
       options: [
@@ -583,11 +583,25 @@ export class FormConfigService {
       ]
     };
 
+    let isCompany: IAbstractFormControlModel = {
+      label: 'Als Firma',
+      wrapperClass:['col-sm-3'],
+      controlType: 'checkbox',
+      key: 'isCompany'
+    };
+
+    let companyName: IAbstractFormControlModel = {
+      label: 'Firma',
+      wrapperClass:['col-sm-3'],
+      controlType: 'textbox',
+      key: 'company'
+    };
+
     let title: IAbstractFormControlModel = {
       controlType: 'select',
       key: 'titel',
       label: 'Titel',
-      //wrapperClass:['col-sm-4'],
+      wrapperClass:['col-sm-4'],
       options: [
         {value: 0, label: 'Dr'},
         {value: 0, label: 'Prof'}
@@ -598,7 +612,7 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'geburtsdatum',
       label: 'Geburtsdatum',
-      //wrapperClass:['col-sm-4'],
+      wrapperClass:['col-sm-4'],
       placeholder: "Geburtsdatum hier",
       helpText: "der Geburtsdatum der Person",
       inputType: 'date'
@@ -608,7 +622,7 @@ export class FormConfigService {
       controlType: 'select',
       key: 'beschaeftigung',
       label: 'Beschäftigung',
-      //wrapperClass:['col-sm-4'],
+      wrapperClass:['col-sm-4'],
       helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
       options: [
         {label: 'Arbeiter', value: 'Arbeiter'},
@@ -628,13 +642,40 @@ export class FormConfigService {
       ]
     };
 
-    let row: IAbstractFormControlModel = {
+    let gender: IAbstractFormControlModel = {
       controlType: 'container',
-      key: 'none',
-      config: []
+      key: 'pd-c-gender',
+      config : []
+    };
+    let company: IAbstractFormControlModel = {
+      controlType: 'container',
+      key: 'pd-c-company',
+      config : []
+    };
+    let name: IAbstractFormControlModel = {
+      controlType: 'container',
+      key: 'pd-c-name',
+      config : []
+    };
+    let bottom: IAbstractFormControlModel = {
+      controlType: 'container',
+      key: 'pd-c-bottom',
+      config : []
     };
 
-    //formGroup.config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
+
+
+    company.config.push(isCompany);
+    company.config.push(companyName);
+
+    name.config.push(salutation);
+    name.config.push(title);
+    name.config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
+    name.config.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
+
+    bottom.config.push(geb);
+    bottom.config.push(besch);
+    bottom.config.push(main_lang);
 
     let personalData: IAbstractFormControlModel = {
       controlType: 'formGroup',
@@ -643,13 +684,9 @@ export class FormConfigService {
       config: []
     };
 
-    personalData.config.push(salutation);
-    personalData.config.push(title);
-    personalData.config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
-    personalData.config.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
-    personalData.config.push(geb);
-    personalData.config.push(besch);
-    personalData.config.push(main_lang);
+    personalData.config.push(company);
+    personalData.config.push(name);
+    personalData.config.push(bottom);
 
     return personalData;
   }
@@ -908,78 +945,70 @@ export class FormConfigService {
 
 
 //ALL
-  getAllFormConfigs(): {
-    id: number,
-    title: string,
-    config: IAbstractFormControlModel
-  }[] {
+  getAllFormConfigs(): any[] {
 
-    let allConfigs: {
-      id: number,
-      title: string,
-      config: IAbstractFormControlModel
-    }[] = [
+    let allConfigs:any[] = [
       {
-        id: 0,
-        title: 'Textbox',
+        key: 0,
+        label: 'Textbox',
         config: this.getTextboxConfig()
       },
       {
-        title: 'Checkbox',
-        id: 1,
+        label: 'Checkbox',
+        key: 1,
         config: this.getCheckboxConfig(),
       },
       {
-        title: 'Radio',
-        id: 2,
+        label: 'Radio',
+        key: 2,
         config: this.getRadioConfig()
       },
       {
-        title: 'Select',
-        id: 3,
+        label: 'Select',
+        key: 3,
         config: this.getSelectConfig()
       },
       {
-        title: 'Textarea',
-        id: 4,
+        label: 'Textarea',
+        key: 4,
         config: this.getTextareaConfig()
       },
       {
-        title: 'Buttons',
-        id: 5,
+        label: 'Buttons',
+        key: 5,
         config: this.getButtonConfig()
       },
       {
-        title: 'formGroup Test',
-        id: 6,
+        label: 'formGroup Test',
+        key: 6,
         config: this.getFormGroupConfig()
       },
 
       {
-        title: 'validation Test',
-        id: 7,
+        label: 'validation Test',
+        key: 7,
         config: this.getValidationConfig()
       },
 
       {
-        title: 'FormatterParser',
-        id: 8,
+        label: 'FormatterParser',
+        key: 8,
         config: this.getFormatterParserConfig()
       },
 
       {
-        title: "generic Item",
-        id: 9,
+        label: "generic Item",
+        key: 9,
         config: this.getGenericElementConfig()
       },
       {
-        title: 'Personal Data',
-        id: 10,
+        label: 'Personal Data',
+        key: 10,
         config: this.getPersonalDataConfig()
       },
       {
-        title: 'Donut Campaign',
-        id: 11,
+        label: 'Donut Campaign',
+        key: 11,
         config: this.getCampaign()
       },
     ];

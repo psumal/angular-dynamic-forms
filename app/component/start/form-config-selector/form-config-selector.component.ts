@@ -8,19 +8,19 @@ import {IAbstractFormControlModel, ISelectOption} from "../../../common/dynamic-
   selector: 'form-config-selector-comp',
   templateUrl: 'form-config-selector.component.html'
 })
-export class FormConfigSelectorComponent implements AfterViewInit {
+export class FormConfigSelectorComponent {
 
   configSelectionConfig: IAbstractFormControlModel = {};
   configSelectionForm: FormGroup = new FormGroup({});
   formConfigs: Array<any> = [];
 
+  formConfig: IAbstractFormControlModel = [];
   dynamicForm: FormGroup = new FormGroup({});
   formModel: any = {};
-  formConfig: any = [];
 
   constructor(protected formConfigService: FormConfigService) {
 
-    this.formConfig = formConfigService.getPersonalDataConfig();
+
     this.formConfigs = formConfigService.getAllFormConfigs();
     this.configSelectionConfig = {
       config: [
@@ -32,11 +32,12 @@ export class FormConfigSelectorComponent implements AfterViewInit {
         }
       ]
     };
+
   }
 
   getConfigMap(): ISelectOption[] {
     let idMap: ISelectOption[] = this.formConfigs.map((config: any) => {
-      return {label: config.key, value: config.key}
+      return {label: config.label, value: config.key}
     });
 
     return idMap;
@@ -50,21 +51,22 @@ export class FormConfigSelectorComponent implements AfterViewInit {
   }
 
   updateFormConfig(formValue: any) {
-    const configSet: any = this.getConfigByKey(formValue.configSelect);
-    this.formConfig = configSet.value.config || {};
-  }
+      if(formValue.change.configSelect || formValue.change.configSelect.toString() === '0') {
+        const configSet: any = this.getConfigByKey(formValue.change.configSelect);
+        this.formConfig = configSet.config || {};
+      }
+    }
 
-  ngAfterViewInit() {
-
+  getModel() {
+    return this.formModel;
   }
 
   onDynamicFormChange($event: any) {
-    console.log('onDynamicFormChange: ', $event);
-    this.formModel = $event;
+    this.formModel = $event.change;
   }
 
-  onSubmit(form: any) {
-    this.formConfig = this.updateFormConfig(form.value.formConfigSelect.config);
+  onSubmitConfigSelection(form: any) {
+    this.updateFormConfig(form.value.formConfigSelect.config);
   }
 
 }

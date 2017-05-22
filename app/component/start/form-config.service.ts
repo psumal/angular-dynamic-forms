@@ -556,14 +556,14 @@ export class FormConfigService {
 
   getCustomCompomponentConfig(): IAbstractFormControlModel {
     let config: any = {
-        config: [
-          {
-            controlType: 'slider',
-            key: "slider",
-            title: "Slider Group"
-          }
-        ]
-      };
+      config: [
+        {
+          controlType: 'slider',
+          key: "slider",
+          title: "Slider Group"
+        }
+      ]
+    };
 
     return config;
 
@@ -573,7 +573,7 @@ export class FormConfigService {
 
     let salutation: IAbstractFormControlModel = {
       label: 'Anrede',
-      wrapperClass:['col-sm-3'],
+      wrapperClass: ['col-sm-3'],
       controlType: 'select',
       key: 'anrede',
       options: [
@@ -585,23 +585,24 @@ export class FormConfigService {
 
     let isCompany: IAbstractFormControlModel = {
       label: 'Als Firma',
-      wrapperClass:['col-sm-3'],
+      wrapperClass: ['col-sm-3'],
       controlType: 'checkbox',
       key: 'isCompany'
     };
 
     let companyName: IAbstractFormControlModel = {
       label: 'Firma',
-      wrapperClass:['col-sm-3'],
+      wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
-      key: 'company'
+      key: 'company',
+      changeListener: [{name:"isRendered", controls:['isCompany'], params:[true]}]
     };
 
     let title: IAbstractFormControlModel = {
       controlType: 'select',
       key: 'titel',
       label: 'Titel',
-      wrapperClass:['col-sm-4'],
+      wrapperClass: ['col-sm-4'],
       options: [
         {value: 0, label: 'Dr'},
         {value: 0, label: 'Prof'}
@@ -612,7 +613,7 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'geburtsdatum',
       label: 'Geburtsdatum',
-      wrapperClass:['col-sm-4'],
+      wrapperClass: ['col-sm-4'],
       placeholder: "Geburtsdatum hier",
       helpText: "der Geburtsdatum der Person",
       inputType: 'date'
@@ -622,7 +623,7 @@ export class FormConfigService {
       controlType: 'select',
       key: 'beschaeftigung',
       label: 'Beschäftigung',
-      wrapperClass:['col-sm-4'],
+      wrapperClass: ['col-sm-4'],
       helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
       options: [
         {label: 'Arbeiter', value: 'Arbeiter'},
@@ -645,28 +646,36 @@ export class FormConfigService {
     let gender: IAbstractFormControlModel = {
       controlType: 'container',
       key: 'pd-c-gender',
-      config : []
+      config: []
     };
     let company: IAbstractFormControlModel = {
       controlType: 'container',
       key: 'pd-c-company',
-      config : []
+      config: []
     };
     let name: IAbstractFormControlModel = {
       controlType: 'container',
       key: 'pd-c-name',
-      config : []
+      config: []
     };
     let bottom: IAbstractFormControlModel = {
       controlType: 'container',
       key: 'pd-c-bottom',
-      config : []
+      config: []
     };
 
 
+    let container: IAbstractFormControlModel = {
+      controlType: 'container',
+      key: 'pd-c-gender',
+      config: [],
+      changeListener: [{name:"isRendered", controls:['isCompany'], params:[true]}]
+    };
 
     company.config.push(isCompany);
     company.config.push(companyName);
+
+    name.config.push(container);
 
     name.config.push(salutation);
     name.config.push(title);
@@ -947,7 +956,7 @@ export class FormConfigService {
 //ALL
   getAllFormConfigs(): any[] {
 
-    let allConfigs:any[] = [
+    let allConfigs: any[] = [
       {
         key: 0,
         label: 'Textbox',

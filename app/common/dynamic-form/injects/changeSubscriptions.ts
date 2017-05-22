@@ -1,4 +1,4 @@
-import {FormGroup} from "@angular/forms";
+import {FormGroup, FormControl} from "@angular/forms";
 import {InjectionToken} from "@angular/core";
 
 export type ChangeSubscriptionResult = {
@@ -6,13 +6,13 @@ export type ChangeSubscriptionResult = {
 };
 
 export interface ChangeSubscriptionFn<T>{
-  (change: any, param?: any, item?: any, form?: FormGroup) : T;
+  (change: any, param?: any, item?: any, form?: FormGroup | FormControl) : T;
 }
 
 export class ChangeSubscriptions {
 
   static isRendered:ChangeSubscriptionFn<boolean> = (change:any, param: any):boolean => {
-    //console.log('is ',change, ' present in ', param, ' => ',  param.indexOf(change) !== -1);
+    console.log('is ',change, ' present in ', param, ' => ',  param.indexOf(change) !== -1);
     //check if the change is present in params. If true display it.
     return param.indexOf(change) !== -1;
   };

@@ -1,60 +1,37 @@
-import {Directive, HostListener, forwardRef, ElementRef, Inject, Optional, OnInit} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {FORMATTER_PARSER, FormatParseFn} from "../../injects/formatterParser";
+import {Directive, ElementRef, Inject, Optional, OnInit, EventEmitter} from "@angular/core";
 import {AbstractFormControlModel} from "../../model/base/form-control";
 import {ChangeSubscriptionFn, ChangeSubscriptions, CHANGE_SUBSCRIPTIONS} from "../../injects/changeSubscriptions";
-
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import 'rxjs/Rx'
+import {Observable} from "rxjs/Rx";
 
 @Directive({
   inputs: ['config', 'group'],
-  selector: '[interactionHandler]'
+  outputs: ['valueSubscriptionChanged'],
+  selector: '[interactionHandler]',
+  exportAs:'interactionHandl'
 })
 export class InteractionHandlerDirective implements OnInit {
 
   config: AbstractFormControlModel;
-  group: any;
+  group: FormControl | FormGroup;
 
-  subscriptions: any[];
-
-  constructor(private _elementRef: ElementRef,
-              @Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: ChangeSubscriptionFn<any>[]) {
-
+  constructor(private _elementRef: ElementRef) {
   }
 
-  ngOnInit(): void {
-
-  }
-
-  initSubscriptionFunctions() {
-    if (this.config.changeListener) {
-      const listener = this.config.changeListener;
-      listener.forEach((listener) => {
-
-        const subscriptionFn: ChangeSubscriptionFn<any> = this.getSubscriptionFn(listener.name);
-        const otherChanges$ = this.group.get(listener.controls[0]).valueChanges;
-
-        this.subscriptions.push(
-          otherChanges$.subscribe((change:any) => {
-            <null>subscriptionFn(change, listener.params, this.config, this.group);
-          })
-        );
-
-        }
-      );
-    }
-  }
+  ngOnInit(): void {}
 
   updateAttributes() {
     const el: any = this._elementRef.nativeElement;
 
     let set = (attr: string, value: any, isBoolAttr?: boolean) => {
 
-      if(isBoolAttr) {
-        !!value?el.setAttribute(attr, ''):el.removeAttribute(attr);
+      if (isBoolAttr) {
+        !!value ? el.setAttribute(attr, '') : el.removeAttribute(attr);
         return;
       }
 
-      value === undefined ? el.removeAttribute(attr):el.setAttribute(attr, value);
+      value === undefined ? el.removeAttribute(attr) : el.setAttribute(attr, value);
     };
 
     set('accept', this.config.attrs['accept']);
@@ -79,27 +56,4 @@ export class InteractionHandlerDirective implements OnInit {
     set('type', this.config.attrs['type']);
 
   }
-
-  getChangeSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn<any> | undefined {
-    let subscriptionFn;
-
-    if (this.CHANGE_SUBSCRIPTIONS) {
-      subscriptionFn = this.CHANGE_SUBSCRIPTIONS.find(subscriptionFn => {
-        return subscriptionName === subscriptionFn.name;
-      });
-    }
-
-    return subscriptionFn;
-  }
-
-  getSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn<any> | never {
-    let subscriptionFn = ChangeSubscriptions[subscriptionName] || this.getChangeSubscriptionFn(subscriptionName);
-
-    if (!(typeof subscriptionFn === "function")) {
-      throw new Error(`validator "${subscriptionName}" is not provided via CHANGE_SUBSCRIPTIONS`);
-    }
-
-    return subscriptionFn;
-  }
-
 }

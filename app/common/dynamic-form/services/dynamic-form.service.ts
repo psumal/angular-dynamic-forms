@@ -6,7 +6,7 @@ import {
   AsyncValidatorFn,
   Validators,
   NG_VALIDATORS,
-  NG_ASYNC_VALIDATORS
+  NG_ASYNC_VALIDATORS, FormArray
 } from "@angular/forms";
 import {AbstractFormControlModel} from "../model/base/form-control";
 import {IAbstractFormControlModel} from "../model/item.struckts";
@@ -17,13 +17,25 @@ import {SelectItem} from "../model/item-select";
 import {CheckboxItem} from "../model/item-checkbox";
 import {RadioItem} from "../model/item-radio";
 import {TextareaItem} from "../model/item-textarea";
+import {CHANGE_SUBSCRIPTIONS, ChangeSubscriptionFn, ChangeSubscriptions} from "../injects/changeSubscriptions";
+import {Subscription} from "rxjs/Subscription";
+
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/merge";
+import "rxjs/add/operator/startWith"
+
+import 'rxjs/Rx'
+import {Observable} from "rxjs/Rx";
+
 
 @Injectable()
 export class DynamicFormService {
 
   constructor(private fb: FormBuilder,
               @Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
-              @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[]) {
+              @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[],
+              @Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: ChangeSubscriptionFn<any>[]) {
   }
 
   createFormItem(config: IAbstractFormControlModel): AbstractFormControlModel {
@@ -136,6 +148,24 @@ export class DynamicFormService {
     return fCParams;
   };
 
+  getParentForm(group:any):FormGroup|FormArray {
+    let parent = group.parent;
+    if(parent !== undefined) {
+      return this.getParentForm(parent);
+    }
+    return group;
+  }
+
+  addConfigToGroup(group:FormGroup, config:AbstractFormControlModel) {
+    let configParams:any[] = this.getFormControlParamsArray(config);
+    let control:any = (<any>this.fb).control(...configParams);
+    group.addControl(config.key, control);
+  }
+
+  removeConfigFromGroup(group:FormGroup, config:IAbstractFormControlModel) {
+    group.removeControl(config.key);
+  }
+
   getCustomValidatorFn(validatorName: string): ValidatorFn | undefined {
     let validatorFn;
 
@@ -188,6 +218,28 @@ export class DynamicFormService {
     return (validatorArgs)?asyncValidatorFn(validatorArgs):asyncValidatorFn;
   }
 
+  getChangeSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn<any> | undefined {
+    let subscriptionFn;
+
+    if (this.CHANGE_SUBSCRIPTIONS) {
+      subscriptionFn = this.CHANGE_SUBSCRIPTIONS.find(subscriptionFn => {
+        return subscriptionName === subscriptionFn.name;
+      });
+    }
+
+    return subscriptionFn;
+  }
+
+  getSubscriptionFn(subscriptionName: string): ChangeSubscriptionFn<any> | never {
+    let subscriptionFn = ChangeSubscriptions[subscriptionName] || this.getChangeSubscriptionFn(subscriptionName);
+
+    if (!(typeof subscriptionFn === "function")) {
+      throw new Error(`Subscription "${subscriptionName}" is not provided via CHANGE_SUBSCRIPTIONS`);
+    }
+
+    return subscriptionFn;
+  }
+
   getAsyncValidators(config: any): AsyncValidatorFn[] {
     let asyncValidators: any[] = [];
 
@@ -199,4 +251,34 @@ export class DynamicFormService {
     return asyncValidators;
   }
 
+  initValueChangeSubscriptions(config:IAbstractFormControlModel, group:FormGroup, sideEffect:Function):Subscription[] {
+    let subscriptions:Subscription[] = [];
+
+    if ('changeListener' in config) {
+      const listenerConfig = config.changeListener || [];
+
+      listenerConfig.forEach((listener) => {
+
+        const subscriptionFn: ChangeSubscriptionFn<any> = this.getSubscriptionFn(listener.name);
+
+        let form = this.getParentForm(group);
+        let subs = [];
+        subs = listener.controls.map(cName => form.get(cName).valueChanges);
+
+        //subscribe to changes
+        const initialValues = listener.controls.map(cName => form.get(cName).value);
+        const controlChanges$ = Observable.merge(...subs);
+        subscriptions.push(
+          controlChanges$
+            .startWith(...initialValues)
+            .subscribe((change: any) => {
+              const result = subscriptionFn(change, listener.params, config, group);
+              sideEffect({name:listener.name, result:result})
+            })
+        );
+      });
+    }
+
+    return subscriptions;
+  }
 }

@@ -1,14 +1,9 @@
 import {ValidatorFn, AsyncValidatorFn} from '@angular/forms';
 
-export interface changeListenerParamsConfig {
-  key:string;
-  optionsKeys: string[];
-}
-
 export interface IChangeListenerConfig {
   name:string;
   controls: string[];
-  params: changeListenerParamsConfig[];
+  params: any[];
 }
 
 export interface IValidatorConfig {

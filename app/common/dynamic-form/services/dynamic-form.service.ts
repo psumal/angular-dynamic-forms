@@ -27,6 +27,7 @@ import "rxjs/add/operator/startWith"
 
 import 'rxjs/Rx'
 import {Observable} from "rxjs/Rx";
+import {FormatParseFn, FORMATTER_PARSER} from "../injects/formatterParser";
 
 
 @Injectable()
@@ -35,7 +36,8 @@ export class DynamicFormService {
   constructor(private fb: FormBuilder,
               @Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[],
-              @Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: ChangeSubscriptionFn<any>[]) {
+              @Optional() @Inject(CHANGE_SUBSCRIPTIONS) private CHANGE_SUBSCRIPTIONS: ChangeSubscriptionFn<any>[],
+              @Optional() @Inject(FORMATTER_PARSER) private FORMATTER_PARSER: FormatParseFn[]) {
   }
 
   createFormItem(config: IAbstractFormControlModel): AbstractFormControlModel {
@@ -251,11 +253,29 @@ export class DynamicFormService {
     return asyncValidators;
   }
 
+  getFormatParseFunction(functionName: string, params: any[]): FormatParseFn | undefined {
+    let formatParseFunction: Function;
+
+    if (this.FORMATTER_PARSER) {
+      formatParseFunction = this.FORMATTER_PARSER.find(formParsFunc => {
+        return functionName === formParsFunc.name;
+      });
+    } else {
+      throw new Error(`No function provided via FORMATTER_PARSER`);
+    }
+
+    if (!(typeof formatParseFunction === "function")) {
+      throw new Error(`Formatter or Parser with name ${functionName} is not provided via FORMATTER_PARSER.`);
+    }
+
+    return (params) ? formatParseFunction(...params) : formatParseFunction;
+  }
+
   initValueChangeSubscriptions(config:IAbstractFormControlModel, group:FormGroup, sideEffect:Function):Subscription[] {
     let subscriptions:Subscription[] = [];
 
-    if ('changeListener' in config) {
-      const listenerConfig = config.changeListener || [];
+    if ('valueChangeSubscriptions' in config) {
+      const listenerConfig = config.valueChangeSubscriptions || [];
 
       listenerConfig.forEach((listener) => {
 

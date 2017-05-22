@@ -595,7 +595,12 @@ export class FormConfigService {
       wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
       key: 'company',
-      changeListener: [{name:"isRendered", controls:['isCompany'], params:[true]}]
+      formatterParser:[
+        {name:'toCapitalized', target: 2}
+      ],
+      valueChangeSubscriptions: [
+        {name:"isRendered", controls:['isCompany'], params:[true]}
+      ]
     };
 
     let title: IAbstractFormControlModel = {
@@ -669,9 +674,24 @@ export class FormConfigService {
       controlType: 'container',
       key: 'pd-c-gender',
       config: [],
-      changeListener: [{name:"isRendered", controls:['isCompany'], params:[true]}]
+      valueChangeSubscriptions: [{name:"isRendered", controls:['isCompany'], params:[true]}]
     };
 
+    let firstName = {
+      controlType:"textbox",
+      type:"text",
+      key: 'firstName',
+     label:'Firstname',
+      formatterParser:[
+        {name:'toCapitalized' ,target: 2}
+      ]
+    };
+    let lastName = {
+      controlType:"textbox",
+      type:"text",
+      key: 'lastName',
+      label:'Lastname'
+    };
     company.config.push(isCompany);
     company.config.push(companyName);
 
@@ -679,8 +699,8 @@ export class FormConfigService {
 
     name.config.push(salutation);
     name.config.push(title);
-    name.config.push(this._getRandItem('firstName', 'textbox', 'text', 'Firstname', [], [], '', ''));
-    name.config.push(this._getRandItem('lastName', 'textbox', 'text', 'Lastname', [], [], '', ''));
+    name.config.push(firstName);
+    name.config.push(lastName);
 
     bottom.config.push(geb);
     bottom.config.push(besch);
@@ -736,7 +756,7 @@ export class FormConfigService {
             {value: 'submit', label: 'Submit'},
             {value: 'reset', label: 'Reset'}
           ],
-          changeListener: [
+          valueChangeSubscriptions: [
             /**/{
               controls: ['controlType'], name: "filteredOptions",
               params: [
@@ -802,7 +822,7 @@ export class FormConfigService {
               ]
             }
           ],
-          changeListener: [{
+          valueChangeSubscriptions: [{
             controls: ['controlType'],
             name: "isRendered",
             params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
@@ -937,7 +957,7 @@ export class FormConfigService {
             {label: 'halbjährlich', value: 'halbjährlich'},
             {label: 'jährlich', value: 'jährlich'}
           ],
-          changeListener: [
+          valueChangeSubscriptions: [
             /**/{
               controls: ['sponsorship'], name: "filteredOptions",
               params: [

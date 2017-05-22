@@ -2,6 +2,7 @@ import {Directive, HostListener, forwardRef, ElementRef, Inject, Optional, OnIni
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, FormGroup} from "@angular/forms";
 import {FORMATTER_PARSER, FormatParseFn} from "../../injects/formatterParser";
 import {AbstractFormControlModel} from "../../model/base/form-control";
+import {DynamicFormService} from "../../services/dynamic-form.service";
 
 const CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -11,9 +12,10 @@ const CONTROL_ACCESSOR = {
 
 @Directive({
   inputs: ['config', 'group'],
-  selector: '[select]',
+  selector: '[formatterParser]',
   providers: [
-    CONTROL_ACCESSOR]
+    CONTROL_ACCESSOR
+  ]
 })
 export class FormatterParserDirective implements ControlValueAccessor, OnInit {
 
@@ -26,11 +28,10 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   onChange = (value: any) => {
     return value;
   };
-  onTouched = () => {
-  };
+  onTouched = () => {};
 
   constructor(private elementRef: ElementRef,
-              @Optional() @Inject(FORMATTER_PARSER) private FORMATTER_PARSER: FormatParseFn[]) {
+              private dfs:DynamicFormService) {
   }
 
   registerOnChange(fn: (_: any) => void): void {
@@ -51,8 +52,9 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   }
 
   // Parser: View --> Model
-  @HostListener('change', ['$event'])
+  @HostListener('input', ['$event'])
   onControlInput($event: KeyboardEvent) {
+
     const input = $event.target as HTMLInputElement;
     const value: string = input.value.toString();
 
@@ -62,7 +64,6 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     //write value to model
     const modelValue = value ? value:null;
     this.onChange(modelValue);
-
   }
 
   // Formatter: Model --> View
@@ -85,31 +86,18 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
       //setup formatterParser functions for view and model values
       this.config.formatterParser
         .forEach((formatterConfig: any) => {
-          const fPF: any = this.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
+          const fPF: any = this.dfs.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
           const t = formatterConfig.target;
 
           if (t == 0 || t == 2) { this.formatterParserView.push(fPF); }
           if (t == 1 || t == 2) { this.formatterParserModel.push(fPF); }
         });
     }
+
+    console.log('this.formatterParserView: ', this.formatterParserView);
+    console.log('this.formatterParserModel: ', this.formatterParserModel);
+
   }
 
-  getFormatParseFunction(functionName: string, params: any[]): FormatParseFn | undefined {
-    let formatParseFunction: Function;
-
-    if (this.FORMATTER_PARSER) {
-      formatParseFunction = this.FORMATTER_PARSER.find(formParsFunc => {
-        return functionName === formParsFunc.name;
-      });
-    } else {
-      throw new Error(`No function provided via FORMATTER_PARSER`);
-    }
-
-    if (!(typeof formatParseFunction === "function")) {
-      throw new Error(`Formatter or Parser with name ${functionName} is not provided via FORMATTER_PARSER.`);
-    }
-
-    return (formatParseFunction) ? formatParseFunction(...params) : formatParseFunction;
-  }
 
 }

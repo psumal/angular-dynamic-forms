@@ -38,7 +38,7 @@ export interface IAbstractFormControlModel {
   asyncValidator?: IValidatorConfig[];
   validatorMessages?: {[validationName:string]:string};
   formatterParser?: any[];
-  changeListener?: IChangeListenerConfig[];
+  valueChangeSubscriptions?: IChangeListenerConfig[];
 
   label?: string;
   helpText?:string;

@@ -15,7 +15,7 @@ export class AbstractFormControlModel {
   asyncValidator?: any;
   validatorMessages?: any;
   formatterParser?: any[];
-  changeListener?: IChangeListenerConfig[];
+  valueChangeSubscriptions?: IChangeListenerConfig[];
 
   label?: string;
   attrs?: any;
@@ -37,7 +37,7 @@ export class AbstractFormControlModel {
     this.validatorMessages = options.validatorMessages || {};
     this.asyncValidator = options.asyncValidator || [];
     this.formatterParser = options.formatterParser || [];
-    this.changeListener = options.changeListener || [];
+    this.valueChangeSubscriptions = options.valueChangeSubscriptions || [];
     this.controlClass = options.controlClass || [];
     this.wrapperClass = options.wrapperClass || [];
   }

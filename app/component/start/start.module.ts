@@ -22,6 +22,7 @@ import {ErrorServiceConfig} from "../../common/dynamic-form/services/errorConfig
 import {FORMATTER_PARSER} from "../../common/dynamic-form/injects/formatterParser";
 import {maskString} from "./custom-form-stuff/formatter-parser/maskString";
 import {replaceString} from "./custom-form-stuff/formatter-parser/replaceString";
+import {toCapitalized} from "./custom-form-stuff/formatter-parser/toCapitalized";
 
 export{StartComponent} from "./start.component";
 
@@ -66,6 +67,7 @@ const CUSTOM_DEFAULT_ERRORMAP:ErrorServiceConfig = {
     //
     {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},
     {provide: CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true},
+    {provide: FORMATTER_PARSER, useValue: toCapitalized, multi: true},
     {provide: FORMATTER_PARSER, useValue: maskString, multi: true},
     {provide: FORMATTER_PARSER, useValue: replaceString, multi: true},
 

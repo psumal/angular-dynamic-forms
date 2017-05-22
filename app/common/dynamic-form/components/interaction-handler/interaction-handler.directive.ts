@@ -1,15 +1,11 @@
-import {Directive, ElementRef, Inject, Optional, OnInit, EventEmitter} from "@angular/core";
+import {Directive, ElementRef, OnInit} from "@angular/core";
 import {AbstractFormControlModel} from "../../model/base/form-control";
-import {ChangeSubscriptionFn, ChangeSubscriptions, CHANGE_SUBSCRIPTIONS} from "../../injects/changeSubscriptions";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import 'rxjs/Rx'
-import {Observable} from "rxjs/Rx";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Directive({
   inputs: ['config', 'group'],
   outputs: ['valueSubscriptionChanged'],
-  selector: '[interactionHandler]',
-  exportAs:'interactionHandl'
+  selector: '[interactionHandler]'
 })
 export class InteractionHandlerDirective implements OnInit {
 
@@ -19,7 +15,9 @@ export class InteractionHandlerDirective implements OnInit {
   constructor(private _elementRef: ElementRef) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //this.updateAttributes();
+  }
 
   updateAttributes() {
     const el: any = this._elementRef.nativeElement;

@@ -7,7 +7,7 @@ export class TextboxItem extends AbstractFormControlModel {
   constructor(options:IAbstractFormControlModel= {}) {
     super(options);
     this.controlType = 'textbox';
-    this.inputType = options['type'] || 'text';
+    this.inputType = options.inputType || 'text';
   }
 
 }

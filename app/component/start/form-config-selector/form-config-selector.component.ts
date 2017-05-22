@@ -20,7 +20,7 @@ export class FormConfigSelectorComponent {
 
   constructor(protected formConfigService: FormConfigService) {
 
-    this.formConfig = formConfigService.getPersonalDataConfig();
+    this.formConfig = formConfigService.getAddressDataConfig();
     this.formConfigs = formConfigService.getAllFormConfigs();
     this.configSelectionConfig = {
       config: [
@@ -45,14 +45,16 @@ export class FormConfigSelectorComponent {
 
   getConfigByKey(key: string): any {
     return this.formConfigs
-      .filter((config: any) => {
+      .find((config: any) => {
         return config.key == key;
-      })[0];
+      });
   }
 
   updateFormConfig(formValue: any) {
-      if(formValue.change.configSelect || formValue.change.configSelect.toString() === '0') {
-        const configSet: any = this.getConfigByKey(formValue.change.configSelect);
+    console.log('formValue: ', formValue);
+      if(formValue || formValue.toString() === '0') {
+        const configSet: any = this.getConfigByKey(formValue);
+        console.log('configSet: ', configSet);
         this.formConfig = configSet.config || {};
       }
     }
@@ -66,7 +68,11 @@ export class FormConfigSelectorComponent {
   }
 
   onSubmitConfigSelection(form: any) {
-    this.updateFormConfig(form.value.formConfigSelect.config);
+
+    if(form.valid) {
+      this.updateFormConfig(form.value.configSelect);
+    }
+
   }
 
 }

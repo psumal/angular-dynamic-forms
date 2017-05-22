@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, EventEmitter, Inject, Optional} from "@angular/core";
+import {Component, OnInit, OnDestroy, EventEmitter, Inject, Optional, AfterViewInit} from "@angular/core";
 
 import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
 import {FormGroup, AbstractControl} from "@angular/forms";
@@ -56,7 +56,7 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dfs.addConfigToGroup(this.group, this.config);
-    this.subscriptions = this.dfs.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
+    //this.subscriptions = this.dfs.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
 
   ngOnDestroy() {
@@ -110,7 +110,6 @@ export class ControlComponent implements OnInit, OnDestroy {
     return classNames.join(' ');
   }
 
-  //
   isNoOptPresent() {
     return 'noOptKey' in this.config && !!this.config['noOptKey'];
   }

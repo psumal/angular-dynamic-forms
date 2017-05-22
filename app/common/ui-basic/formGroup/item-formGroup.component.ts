@@ -52,22 +52,12 @@ export class FormGroupComponent implements OnInit {
     return this._items || [];
   }
 
-  constructor(protected dfs: DynamicFormService,
-              protected dfb: FormBuilder) {
+  constructor(protected dfs: DynamicFormService) {
 
   }
 
   ngOnInit() {
-    this.addConfigToGroup();
+    this.dfs.addConfigToGroup(this.group, this.config);
   }
 
-  addConfigToGroup() {
-    let frExtras: any[] = this.dfs.getFormGroupExtras(this.config);
-    let group = this.dfb.group({}, frExtras);
-    this.group.addControl(this.config.key, group);
-  }
-
-  removeConfigFromGroup() {
-    this.group.removeControl(this.config.key);
-  }
 }

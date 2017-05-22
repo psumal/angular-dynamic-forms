@@ -580,6 +580,9 @@ export class FormConfigService {
         {label: 'Herr', value: '0'},
         {label: 'Frau', value: '1'},
         {label: 'Firma', value: '2'}
+      ],
+      validator: [
+        {name:"required"}
       ]
     };
 
@@ -600,6 +603,9 @@ export class FormConfigService {
       ],
       valueChangeSubscriptions: [
         {name:"isRendered", controls:['isCompany'], params:[true]}
+      ],
+      validator: [
+        {name:"required"}
       ]
     };
 
@@ -621,7 +627,10 @@ export class FormConfigService {
       wrapperClass: ['col-sm-4'],
       placeholder: "Geburtsdatum hier",
       helpText: "der Geburtsdatum der Person",
-      inputType: 'date'
+      inputType: 'date',
+      validator: [
+        {name:"required"}
+      ]
     };
 
     let besch: IAbstractFormControlModel = {
@@ -643,8 +652,8 @@ export class FormConfigService {
       //wrapperClass:['col-sm-4'],
       helpText: "Kommunikationssprache der Person",
       options: [
-        {label: 'Deutsch', value: 'Deutsch'},
-        {label: 'Englisch', value: 'Englisch'}
+        {label: 'Deutsch', value: 'DE'},
+        {label: 'Englisch', value: 'EN'}
       ]
     };
 
@@ -681,7 +690,7 @@ export class FormConfigService {
       controlType:"textbox",
       type:"text",
       key: 'firstName',
-     label:'Firstname',
+      label:'Firstname',
       formatterParser:[
         {name:'toCapitalized' ,target: 2}
       ]
@@ -719,6 +728,113 @@ export class FormConfigService {
 
     return personalData;
   }
+
+  getAddressDataConfig(): IAbstractFormControlModel {
+
+    let googleAddressSearch: IAbstractFormControlModel = {
+      label: "Google Address Search",
+      controlType: 'textbox',
+      key: "googleAddressSearch"
+    };
+
+    let houseNumber: IAbstractFormControlModel = {
+      label: 'Housenumber',
+      wrapperClass: ['col-sm-6'],
+      controlType: 'textbox',
+      key: 'house_number',
+      validator: [
+        {name:"required"}
+      ]
+    };
+
+    let street: IAbstractFormControlModel = {
+      label: 'Street',
+      wrapperClass: ['col-sm-6'],
+      controlType: 'textbox',
+      key: 'street',
+      formatterParser:[
+        {name:'toCapitalized' ,target: 2}
+      ],
+      validator: [
+        {name:"required"}
+      ]
+    };
+
+    let zipCode: IAbstractFormControlModel = {
+      label: 'Zip Code',
+      wrapperClass: ['col-sm-3'],
+      controlType: 'textbox',
+      key: 'zip_code',
+      validator: [
+        {name:"required"}
+      ]
+    };
+
+    let city: IAbstractFormControlModel = {
+      label: 'city',
+      wrapperClass: ['col-sm-5'],
+      controlType: 'textbox',
+      key: 'city',
+      formatterParser:[
+        {name:'toCapitalized' ,target: 2}
+      ],
+      validator: [
+        {name:"required"}
+      ]
+    };
+
+    let country: IAbstractFormControlModel = {
+      label: 'Country',
+      wrapperClass: ['col-sm-4'],
+      controlType: 'select',
+      key: 'country',
+      formState:"DE",
+      options: [
+        {label: 'Deutsch', value: 'DE'},
+        {label: 'Englisch', value: 'EN'},
+        {label: 'Französisch', value: 'FR'},
+        {label: 'Italienisch', value: 'IT'}
+      ],
+      validator: [
+        {name:"required"}
+      ]
+    };
+
+    let row0:IAbstractFormControlModel = {
+      controlType: 'container',
+      key: 'ad-row0',
+      config: []
+    };
+    row0.config.push(googleAddressSearch);
+
+    let row1:IAbstractFormControlModel = {
+      controlType: 'container',
+      key: 'ad-row1',
+      config: []
+    };
+    row1.config.push(houseNumber);
+    row1.config.push(street);
+
+    let row2:IAbstractFormControlModel = {
+      controlType: 'container',
+      key: 'ad-row2',
+      config: []
+    };
+    row2.config.push(zipCode);
+    row2.config.push(city);
+    row2.config.push(country);
+
+    let addressData: IAbstractFormControlModel = {
+      controlType: 'formGroup',
+      key: "addressData",
+      label: "Address Data",
+      config: []
+    };
+    addressData.config.push(row0, row1, row2);
+
+    return addressData;
+  }
+
 
   getGenericElementConfig(): IAbstractFormControlModel {
 
@@ -1034,6 +1150,11 @@ export class FormConfigService {
         label: 'Personal Data',
         key: 10,
         config: this.getPersonalDataConfig()
+      },
+      {
+        label: 'Address Data',
+        key : 11,
+        config : this.getAddressDataConfig()
       },
       {
         label: 'Donut Campaign',

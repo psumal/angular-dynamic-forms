@@ -23,6 +23,8 @@ import {FORMATTER_PARSER} from "../../common/dynamic-form/injects/formatterParse
 import {maskString} from "./custom-form-stuff/formatter-parser/maskString";
 import {replaceString} from "./custom-form-stuff/formatter-parser/replaceString";
 import {toCapitalized} from "./custom-form-stuff/formatter-parser/toCapitalized";
+import {AgmCoreModule} from "@agm/core";
+import {GoogleAddressSearchComponent} from "./custom-form-stuff/components/google-address-search/google-address-search.component";
 
 export{StartComponent} from "./start.component";
 
@@ -33,7 +35,15 @@ const CUSTOM_DEFAULT_ERRORMAP:ErrorServiceConfig = {
 };
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, FormConfigSelectorModule, DynamicFormModule, UiBasicModule, FormViewerModule, FormBuilderModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormConfigSelectorModule,
+    DynamicFormModule,
+    UiBasicModule,
+    FormViewerModule,
+    FormBuilderModule
+  ],
   exports: [EXPORTS],
   declarations: [EXPORTS],
   entryComponents: [SliderComponent],

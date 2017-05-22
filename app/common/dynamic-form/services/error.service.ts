@@ -34,7 +34,6 @@ export class ErrorService {
   errorMap:{[key:string]:string};
 
   constructor() {
-    //console.log('esc', esc);
     //this.DEFAULT_ERROR_MAP = esc.DEFAULT_ERROR_MAP || this.DEFAULT_ERROR_MAP;
     //this.REPLACE_WRAPPER_TAG = esc.REPLACE_WRAPPER_TAG || this.REPLACE_WRAPPER_TAG;
     //this.DEFAULT_ERROR = esc.DEFAULT_ERROR || this.DEFAULT_ERROR;

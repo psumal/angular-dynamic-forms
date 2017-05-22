@@ -1,14 +1,14 @@
 <!--
 -->
-  <form novalidate [formGroup]="configSelectionForm" (ngSubmit)="onSubmitConfigSelection(form)">
+  <form novalidate [formGroup]="configSelectionForm" (ngSubmit)="onSubmitConfigSelection(configSelectionForm);">
 
   <dynamic-form-group
     [config]="configSelectionConfig"
-    [group]="configSelectionForm"
-    (onGroupValueChanged)="updateFormConfig($event)">
+    [group]="configSelectionForm">
   </dynamic-form-group>
 
-  <button type="submit" class="btn btn-prinmary">Submit</button>
+    <!-- (click)="$event.stopPropagation()" -->
+  <button type="submit" class="btn btn-prinmary" >Submit</button>
 
 </form>
 
@@ -16,13 +16,14 @@
 
   <div class="col-sm-12">
 
-    <form novalidate [formGroup]="dynamicForm" (ngSubmit)="onSubmit(form)">
+    <div novalidate >
+      <!-- -->
       <dynamic-form-group
         [group]="dynamicForm"
-        [config]="formConfig"
-        (onGroupValueChanged)="onDynamicFormChange($event)">
+        [config]="formConfig">
       </dynamic-form-group>
-    </form>
+
+    </div>
 
   </div>
 

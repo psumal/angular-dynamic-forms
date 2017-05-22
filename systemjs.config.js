@@ -27,8 +27,7 @@
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       'angular-star-rating':       'npm:angular-star-rating@2.0.0-beta.0',
-      "@ng2-dynamic-forms/core":    'npm:@ng2-dynamic-forms/core/bundles/core.umd.js',
-      "@ng2-dynamic-forms/ui-bootstrap": 'npm:@ng2-dynamic-forms/ui-bootstrap/bundles/ui-bootstrap.umd.js'
+      '@agm/core':       'npm:@agm/core/index.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

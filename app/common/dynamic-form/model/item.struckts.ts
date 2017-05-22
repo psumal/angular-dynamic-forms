@@ -1,4 +1,7 @@
-import {ValidatorFn, AsyncValidatorFn} from '@angular/forms';
+export interface IFormState {
+  value: any,
+  disabled: boolean
+}
 
 export interface IChangeListenerConfig {
   name:string;
@@ -8,7 +11,7 @@ export interface IChangeListenerConfig {
 
 export interface IValidatorConfig {
   name:string;
-  params: any[];
+  params?: any[];
 }
 
 export interface ISelectOption {
@@ -31,7 +34,7 @@ export interface IAbstractFormControlModel {
   noOptKey?:string;
   multiple?:boolean;
 
-  formState?: any;
+  formState?: IFormState | any;
   disabled?: boolean;
 
   validator?: IValidatorConfig[];

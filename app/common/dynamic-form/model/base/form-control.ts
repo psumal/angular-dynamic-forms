@@ -29,7 +29,7 @@ export class AbstractFormControlModel {
     this.controlType = options.controlType || '';
 
     this.label = options.label;
-    this.attrs = options.attrs;
+    this.attrs = options.attrs || {};
     this.formState = options.formState;
     this.disabled = options.disabled;
 

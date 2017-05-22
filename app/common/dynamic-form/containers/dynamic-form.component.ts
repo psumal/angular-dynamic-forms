@@ -75,7 +75,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     const valueChanges = this.group.valueChanges;
     this.subscriptions.push(
       valueChanges.subscribe((change: any) => {
-        console.log('valueChanges: ', change);
         this.onGroupValueChanged.emit({change:change});
       })
     );

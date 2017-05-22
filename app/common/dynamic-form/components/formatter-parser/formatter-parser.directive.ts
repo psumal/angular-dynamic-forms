@@ -94,9 +94,6 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
         });
     }
 
-    console.log('this.formatterParserView: ', this.formatterParserView);
-    console.log('this.formatterParserModel: ', this.formatterParserModel);
-
   }
 
 

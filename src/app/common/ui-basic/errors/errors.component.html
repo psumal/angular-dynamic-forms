@@ -1,0 +1,4 @@
+<div *ngIf="errorVisible()">
+  <div class="text-danger" *ngFor="let key of errorKeys()" [innerHtml]="errorMessages[key]">
+  </div>
+</div>

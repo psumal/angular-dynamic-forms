@@ -1,0 +1,12 @@
+<p>Config from Server</p>
+<pre style="height:200px; overflow-y: scroll;">{{config | json}}</pre>
+<h4>Campaign on Client (app): {{formName}}</h4>
+
+
+<form (ngSubmit)="onSubmit($event)">
+
+    <dynamic-form-group
+      [config]="config">
+    </dynamic-form-group>
+
+</form>

@@ -1,0 +1,8 @@
+
+  <button
+    *ngIf="config.controlType === 'button'"
+    [id]="config.key"
+    [type]="config.type"
+    class="btn">
+    {{config.label}}
+  </button>

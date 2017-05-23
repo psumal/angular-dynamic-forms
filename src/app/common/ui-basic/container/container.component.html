@@ -1,4 +1,4 @@
-<div class="row" *ngIf="isRendered">
+<div [ngClass]="getWrapperClass()" *ngIf="isRendered">
 
   <ng-container
     *ngFor="let conf of items;"

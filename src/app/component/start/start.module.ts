@@ -4,8 +4,6 @@ import {ReactiveFormsModule, NG_VALIDATORS, NG_ASYNC_VALIDATORS} from "@angular/
 import {StartComponent} from "./start.component";
 import {FormConfigService} from "./form-config.service";
 import {FormConfigSelectorModule} from "./form-config-selector/form-config-selector.module";
-import {CHANGE_SUBSCRIPTIONS} from "../../common/dynamic-form/injects/changeSubscriptions";
-import {UI_COMPONENTS} from "../../common/dynamic-form/components/ui-components.token";
 import {filteredOptions} from "./custom-form-stuff/change-subscriptions/filteredOptionsSubscription";
 import {DynamicFormModule} from "../../common/dynamic-form/dynamic-form.module";
 import {UiBasicModule} from "../../common/ui-basic/ui-basic.module";
@@ -19,17 +17,19 @@ import {observableValidator} from "./custom-form-stuff/validators/observableVali
 import {randomValidator} from "./custom-form-stuff/validators/randomlValidator";
 import {someOf} from "./custom-form-stuff/validators/someOfValidator";
 import {ErrorServiceConfig} from "../../common/dynamic-form/services/errorConfig.service";
-import {FORMATTER_PARSER} from "../../common/dynamic-form/injects/formatterParser";
 import {maskString} from "./custom-form-stuff/formatter-parser/maskString";
 import {replaceString} from "./custom-form-stuff/formatter-parser/replaceString";
 import {toCapitalized} from "./custom-form-stuff/formatter-parser/toCapitalized";
+import {GoogleAddressSearchComponent} from "./custom-form-stuff/components/google-address-search/google-address-search.component";
+import {AgmCoreModule, } from "@agm/core";
+import {FORMATTER_PARSER} from "../../common/dynamic-form/injects/formatterParser";
+import {CHANGE_SUBSCRIPTIONS} from "../../common/dynamic-form/injects/changeSubscriptions";
+import {UI_COMPONENTS} from "../../common/dynamic-form/components/ui-components.token";
 
-export{StartComponent} from "./start.component";
-
-const EXPORTS = [StartComponent, SliderComponent];
+const EXPORTS = [StartComponent, SliderComponent, GoogleAddressSearchComponent];
 
 const CUSTOM_DEFAULT_ERRORMAP:ErrorServiceConfig = {
-  DEFAULT_ERROR:"Tis value is overridden globally by the ErrorConfigService"
+  DEFAULT_ERROR:"This value is overridden globally by the ErrorConfigService"
 };
 
 @NgModule({
@@ -40,14 +40,20 @@ const CUSTOM_DEFAULT_ERRORMAP:ErrorServiceConfig = {
     DynamicFormModule,
     UiBasicModule,
     FormViewerModule,
-    FormBuilderModule
+    FormBuilderModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCfHTTcmCwTe3rFnt6eYeV9gALdoZvGfZQ',
+      libraries:['places']
+    })
   ],
   exports: [EXPORTS],
   declarations: [EXPORTS],
-  entryComponents: [SliderComponent],
+  entryComponents: [
+    SliderComponent,
+    GoogleAddressSearchComponent
+  ],
   providers: [
     FormConfigService,
-
     //VALIDATORS Control
     //customValidator for control
     {provide: NG_VALIDATORS, useValue: randomValidator, multi: true},
@@ -72,13 +78,17 @@ const CUSTOM_DEFAULT_ERRORMAP:ErrorServiceConfig = {
     //customValidator for group with params
     //@TODO
 
-    //
-    {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},
-    {provide: CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true},
+    //Custom Formatter and Parser
     {provide: FORMATTER_PARSER, useValue: toCapitalized, multi: true},
     {provide: FORMATTER_PARSER, useValue: maskString, multi: true},
     {provide: FORMATTER_PARSER, useValue: replaceString, multi: true},
 
+    //Custom Components
+    {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},
+    {provide: UI_COMPONENTS, useValue: GoogleAddressSearchComponent, multi: true},
+
+    //Custom Value Change Subscriptions
+    {provide: CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true},
 
   ]
 })

@@ -30,8 +30,8 @@ export class AbstractFormControlModel {
 
     this.label = options.label;
     this.attrs = options.attrs || {};
-    this.formState = options.formState;
-    this.disabled = options.disabled;
+    this.formState = options.formState || null;
+    this.disabled = options.disabled || null;
 
     this.validator = options.validator || [];
     this.validatorMessages = options.validatorMessages || {};

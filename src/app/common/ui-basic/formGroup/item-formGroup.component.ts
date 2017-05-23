@@ -34,21 +34,15 @@ export class FormGroupComponent implements OnInit {
 
   private _items: AbstractFormControlModel[] = [];
   set items(value: AbstractFormControlModel[]) {
-    this._items = value
-      .map((item: any) => {
-        let newItem = this.dfs.createFormItem(item);
-        if (newItem) {
-          return newItem;
-        }
-      });
-  }
-
-  get currentFormItem() {
-    return this.group.get(this.config.key);
+    this._items = value;
   }
 
   get items(): AbstractFormControlModel[] {
     return this._items || [];
+  }
+
+  get currentFormItem() {
+    return this.group.get(this.config.key);
   }
 
   constructor(protected dfs: DynamicFormService) {
@@ -56,6 +50,7 @@ export class FormGroupComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('GROUP addConfigToGroup', this.config);
     this.dfs.addConfigToGroup(this.group, this.config);
   }
 

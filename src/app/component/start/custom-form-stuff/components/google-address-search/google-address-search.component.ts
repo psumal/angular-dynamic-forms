@@ -1,23 +1,32 @@
-import {Component, OnInit, OnDestroy, EventEmitter, Inject, Optional, AfterViewInit} from "@angular/core";
+import {Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup} from "@angular/forms";
+import {GoogleMapsAPIWrapper, MapsAPILoader} from '@agm/core'
+import {DynamicFormService} from "../../../../../common/dynamic-form/services/dynamic-form.service";
+import {TextboxItem} from "../../../../../common/dynamic-form/model/item-textbox";
+import {IAbstractFormControlModel} from "../../../../../common/dynamic-form/model/item.struckts";
 
-import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
-import {FormGroup, AbstractControl} from "@angular/forms";
-import {TextboxItem} from "../../dynamic-form/model/item-textbox";
+declare var google:any;
 
 @Component({
   inputs: ['config', 'group'],
-  selector: 'df-control',
-  templateUrl: 'control.component.html',
+  selector: 'google-address-search',
+  templateUrl: 'google-address-search.component.html'
 })
-export class ControlComponent implements OnInit, OnDestroy {
+export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
 
-  static controlTypes = ["select", "checkbox", "radio", "textbox", "textarea"];
+  static controlTypes = ["google-address-search"];
+  static createConfig(config):IAbstractFormControlModel {
+    return new TextboxItem(config);
+  }
+
+  @ViewChild("search")
+  searchElementRef: ElementRef;
 
   subscriptions:any[] = [];
 
   private _config: TextboxItem;
   set config(config: TextboxItem) {
-    this._config = this.dfs.createFormItem(config) as TextboxItem;
+    this._config = new TextboxItem(config);
   }
 
   get config(): TextboxItem {
@@ -49,12 +58,17 @@ export class ControlComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor( protected dfs:DynamicFormService) {
+  constructor(private dfs:DynamicFormService,
+              private mAL:MapsAPILoader,
+              private ngZone:NgZone) {
 
   }
 
   ngOnInit() {
+
     this.dfs.addConfigToGroup(this.group, this.config);
+    console.log('GOOGLE addConfigToGroup', this.config);
+    this.initGoogleAutocomplete();
     //this.subscriptions = this.dfs.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
 
@@ -73,6 +87,7 @@ export class ControlComponent implements OnInit, OnDestroy {
     classNames.push(...this.config.wrapperClass);
     return classNames.join(' ');
   }
+
 
   getControlClass(): string {
     let classNames: string[] = [];
@@ -142,5 +157,34 @@ export class ControlComponent implements OnInit, OnDestroy {
     }
 
   }
+
+
+  initGoogleAutocomplete() {
+    this.mAL.load().then(() => {
+
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: any = autocomplete.getPlace();
+          console.log('place', place);
+
+           //verify result
+           if (place.geometry === undefined || place.geometry === null) {
+           return;
+           }
+          /*
+           //set latitude, longitude and zoom
+           //this.latitude = place.geometry.location.lat();
+           //this.longitude = place.geometry.location.lng();
+           //this.zoom = 12;
+           */
+        });
+      });
+    })
+  }
+
 
 }

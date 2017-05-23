@@ -36,12 +36,6 @@ export class ContainerComponent implements OnInit {
   private _items: AbstractFormControlModel[] = [];
   set items(value: AbstractFormControlModel[]) {
     this._items = value
-      .map((item: any) => {
-        let newItem = this.dfs.createFormItem(item);
-        if (newItem) {
-          return newItem;
-        }
-      });
   }
 
   get items(): AbstractFormControlModel[] {
@@ -75,6 +69,13 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit(){
     //this.subscriptions = this.dfs.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
+  }
+
+  getWrapperClass():string {
+    let classNames: string[] = [];
+    classNames.push('row');
+    classNames.push(...this.config.wrapperClass);
+    return classNames.join(' ');
   }
 
   onValueSubscriptionChanged = ($event:any) => {

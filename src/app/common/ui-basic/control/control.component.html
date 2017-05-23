@@ -1,4 +1,4 @@
-<div [formGroup]="group" *ngIf="isRendered">
+<div [formGroup]="group" *ngIf="isRendered" class="{{getWrapperClass()}}">
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'">
     {{config.label}}
@@ -8,14 +8,14 @@
     [type]="config.inputType"
     *ngIf="isControlTypeVisible('textbox')"
     [formControlName]="config.key"
-    [attr.class]="'form-control'"
+    [ngClass]="getControlClass()"
     formatterParser
     interactionHandler
     [config]="config"
     [group]="currentFormItem">
 
   <div *ngIf="isControlTypeVisible('radio')">
-    <div class="form-check" *ngFor="let option of config.options">
+    <div [ngClass]="getControlClass()" *ngFor="let option of config.options">
       <label [attr.class]="'form-check-label'">
         <input type="radio"
                [formControlName]="config.key"
@@ -32,7 +32,7 @@
   <div class="form-check" *ngIf="isControlTypeVisible('checkbox')">
     <label class="form-check-label">
       <input type="checkbox"
-             [attr.class]="getControlClass()"
+             [ngClass]="getControlClass()"
 
              [formControlName]="config.key"
              name="{{config.key}}"
@@ -46,7 +46,7 @@
 
   <select
     *ngIf="isControlTypeVisible('select')"
-    [attr.class]="getControlClass()"
+    [ngClass]="getControlClass()"
     [formControlName]="config.key"
     interactionHandler
     [config]="config"
@@ -67,7 +67,7 @@
   <textarea
     *ngIf="isControlTypeVisible('textarea')"
     [formControlName]="config.key"
-    [attr.class]="getControlClass()"
+    [ngClass]="getControlClass()"
     formatterParser
     interactionHandler
     [config]="config"

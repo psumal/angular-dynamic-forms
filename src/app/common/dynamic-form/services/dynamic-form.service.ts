@@ -56,7 +56,7 @@ export class DynamicFormService {
     }
 
     if (controlType === "textbox") {
-      item = new TextboxItem(<any>config);
+      item = new TextboxItem(config);
     }
 
     if (controlType === "select") {
@@ -159,6 +159,7 @@ export class DynamicFormService {
   }
 
   addConfigToGroup(group:FormGroup, config:AbstractFormControlModel) {
+    console.log('addConfigToGroup', config);
     let configParams:any[] = this.getFormControlParamsArray(config);
     let control:any = (<any>this.fb).control(...configParams);
     group.addControl(config.key, control);

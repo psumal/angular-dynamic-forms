@@ -8,6 +8,7 @@ import {DynamicItemDirective} from "./components/dynamic-item/dynamic-item.direc
 import {ErrorService} from "./services/error.service";
 import {InteractionHandlerDirective} from "./components/interaction-handler/interaction-handler.directive";
 import {FormatterParserDirective} from "./components/formatter-parser/formatter-parser.directive";
+import {DynamicFormService} from "./services/dynamic-form.service";
 
 export{DynamicFormComponent} from "./containers/dynamic-form.component";
 
@@ -17,6 +18,6 @@ const EXPORTS = [DynamicFormComponent, DynamicItemDirective, InteractionHandlerD
   imports: [CommonModule, ReactiveFormsModule],
   exports: [EXPORTS],
   declarations: [EXPORTS],
-  providers: [ErrorService]
+  providers: [ErrorService, DynamicFormService]
 })
 export class DynamicFormModule {}

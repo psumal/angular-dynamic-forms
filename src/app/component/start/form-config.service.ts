@@ -560,7 +560,12 @@ export class FormConfigService {
         {
           controlType: 'slider',
           key: "slider",
-          title: "Slider Group"
+          label: "Slider Group"
+        },
+        {
+          controlType: 'google-address-search',
+          key: "gAS",
+          label: "Google Address Search"
         }
       ]
     };
@@ -731,15 +736,15 @@ export class FormConfigService {
 
   getAddressDataConfig(): IAbstractFormControlModel {
 
-    let googleAddressSearch: IAbstractFormControlModel = {
-      label: "Google Address Search",
-      controlType: 'textbox',
-      key: "googleAddressSearch"
-    };
+    let googleAddressSearch:IAbstractFormControlModel = {
+      controlType: 'google-address-search',
+      key: "googleAddressSearch",
+      label: "Google Address Search"
+    }
 
     let houseNumber: IAbstractFormControlModel = {
       label: 'Housenumber',
-      wrapperClass: ['col-sm-6'],
+      wrapperClass: ['col'],
       controlType: 'textbox',
       key: 'house_number',
       validator: [
@@ -749,7 +754,7 @@ export class FormConfigService {
 
     let street: IAbstractFormControlModel = {
       label: 'Street',
-      wrapperClass: ['col-sm-6'],
+      wrapperClass: ['col'],
       controlType: 'textbox',
       key: 'street',
       formatterParser:[
@@ -762,7 +767,7 @@ export class FormConfigService {
 
     let zipCode: IAbstractFormControlModel = {
       label: 'Zip Code',
-      wrapperClass: ['col-sm-3'],
+      wrapperClass: ['col'],
       controlType: 'textbox',
       key: 'zip_code',
       validator: [
@@ -772,7 +777,7 @@ export class FormConfigService {
 
     let city: IAbstractFormControlModel = {
       label: 'city',
-      wrapperClass: ['col-sm-5'],
+      wrapperClass: ['col'],
       controlType: 'textbox',
       key: 'city',
       formatterParser:[
@@ -785,7 +790,7 @@ export class FormConfigService {
 
     let country: IAbstractFormControlModel = {
       label: 'Country',
-      wrapperClass: ['col-sm-4'],
+      wrapperClass: ['col'],
       controlType: 'select',
       key: 'country',
       formState:"DE",
@@ -834,7 +839,6 @@ export class FormConfigService {
 
     return addressData;
   }
-
 
   getGenericElementConfig(): IAbstractFormControlModel {
 
@@ -1158,8 +1162,13 @@ export class FormConfigService {
       },
       {
         label: 'Donut Campaign',
-        key: 11,
+        key: 12,
         config: this.getCampaign()
+      },
+      {
+        label: 'Custom Components',
+        key: 13,
+        config: this.getCustomCompomponentConfig()
       },
     ];
 

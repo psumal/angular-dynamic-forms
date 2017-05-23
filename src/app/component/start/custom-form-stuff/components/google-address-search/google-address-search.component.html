@@ -1,9 +1,27 @@
-<div class="container">
-  <h1>Angular 2 + Google Maps Places Autocomplete</h1>
-  <div class="form-group">
-    <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+<div [formGroup]="group" *ngIf="isRendered" class="{{getWrapperClass()}}">
+
+  <label [attr.for]="config.key" [attr.class]="'form-control-label'">
+    {{config.label}}
+  </label>
+
+  <input
+    [type]="config.inputType"
+    #search [formControlName]="config.key"
+    [ngClass]="getControlClass()"
+    formatterParser
+    interactionHandler
+    [config]="config"
+    [group]="currentFormItem">
+
+  <!--
+  <item-errors [config]="config" [group]="currentFormItem">
+  </item-errors>
+
+  <div *ngIf="getCurrentStatus() == 'PENDING'">
+    Validation is pending...
   </div>
-  <sebm-google-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <sebm-google-map-marker [latitude]="latitude" [longitude]="longitude"></sebm-google-map-marker>
-  </sebm-google-map>
+
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{getCurrentValue()}}</small>
+  -->
+
 </div>

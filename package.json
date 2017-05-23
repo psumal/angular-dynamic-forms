@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/core": "^4.0.0",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@angular/cli": "1.0.3",
     "@angular/compiler-cli": "^4.0.0",
+    "@types/googlemaps": "^3.26.11",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "bootstrap": "^4.0.0-alpha.6",

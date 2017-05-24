@@ -2,9 +2,7 @@ import {IAbstractFormControlModel, IChangeListenerConfig} from "../item.struckts
 
 export class AbstractFormControlModel {
 
-  parentId?: string;
   key: string;
-  formPath: string[] = [];
   controlType: string;
   config?: any[];
 
@@ -23,8 +21,6 @@ export class AbstractFormControlModel {
   wrapperClass?: string[];
 
   constructor(options: IAbstractFormControlModel = {}) {
-    this.formPath = options.formPath || [];
-    this.parentId = options.parentId || '';
     this.key = options.key || '';
     this.controlType = options.controlType || '';
 

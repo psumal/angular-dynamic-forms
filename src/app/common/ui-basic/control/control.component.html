@@ -7,12 +7,13 @@
   <input
     [type]="config.inputType"
     *ngIf="isControlTypeVisible('textbox')"
-    [formControlName]="config.key"
+    [formControl]="currentFormItem"
     [ngClass]="getControlClass()"
     formatterParser
     interactionHandler
     [config]="config"
-    [group]="currentFormItem">
+    [group]="currentFormItem"
+  >
 
   <div *ngIf="isControlTypeVisible('radio')">
     <div [ngClass]="getControlClass()" *ngFor="let option of config.options">

@@ -86,6 +86,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
         sub.unsubscribe();
       }
       catch (e) {
+
       }
     });
     this.subscriptions = [];

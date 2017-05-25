@@ -44,10 +44,6 @@ export class ControlComponent implements OnInit, OnDestroy {
     return this._isRendered;
   }
 
-
-  @ViewChild("textbox")
-  textbox: ElementRef;
-
   get currentFormItem(): AbstractControl {
     if (this.group.get(this.config.key)) {
       return this.group.get(this.config.key);
@@ -61,7 +57,6 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('TEXTBOX!!!!!', this.textbox);
     this.dfes.addConfigToGroup(this.group, this.config);
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
@@ -161,7 +156,9 @@ export class ControlComponent implements OnInit, OnDestroy {
         break;
       //@TODO we need a way to import this custom actions
       case 'syncWithAddressComponent':
-        this.currentFormItem.setValue($event.result)
+        if($event.result) {
+          this.currentFormItem.setValue($event.result)
+        }
         break;
     }
 

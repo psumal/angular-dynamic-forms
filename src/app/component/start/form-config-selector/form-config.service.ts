@@ -795,6 +795,9 @@ export class FormConfigService {
       validator: [
         {name: "required"}
       ],
+      formatterParser: [
+        {name: 'toUppercase', target: 2}
+      ],
       valueChangeSubscriptions: [
         {
           name: "syncWithAddressComponent",

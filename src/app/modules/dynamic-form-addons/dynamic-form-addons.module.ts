@@ -19,6 +19,7 @@ import {filteredOptions} from "./change-subscriptions/filteredOptionsSubscriptio
 import {AgmCoreModule} from "@agm/core";
 import {syncWithAddressComponent} from "./change-subscriptions/syncWithAddressComponent";
 import {focusFirstEmpty} from "./change-subscriptions/focusFirstEmpty";
+import {toUppercase} from "./formatter-parser/toUppercase";
 
 const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
 
@@ -63,6 +64,7 @@ const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
     {provide: FORMATTER_PARSER, useValue: toCapitalized, multi: true},
     {provide: FORMATTER_PARSER, useValue: maskString, multi: true},
     {provide: FORMATTER_PARSER, useValue: replaceString, multi: true},
+    {provide: FORMATTER_PARSER, useValue: toUppercase, multi: true},
 
     //Custom Components
     {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},
@@ -72,6 +74,7 @@ const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
     {provide: VALUE_CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true},
     {provide: VALUE_CHANGE_SUBSCRIPTIONS, useValue: syncWithAddressComponent, multi: true},
     {provide: VALUE_CHANGE_SUBSCRIPTIONS, useValue: focusFirstEmpty, multi: true},
+
   ]
 })
 export class DynamicFormElementAddonModule {

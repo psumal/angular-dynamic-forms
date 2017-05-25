@@ -48,13 +48,13 @@ export class DynamicFormElementComponent implements OnInit, OnDestroy, AfterCont
 
   ngOnInit(): void {
 
+    this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
     this.initSubscriptions();
   }
 
   ngAfterContentInit() {
     console.log('ROOT ngAfterContentInit config', this.config);
-    this.subscriptions = [...this.subscriptions , ...this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)];
-  }
+     }
 
   ngAfterViewChecked() {
 

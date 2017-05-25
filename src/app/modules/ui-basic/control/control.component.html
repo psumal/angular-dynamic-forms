@@ -9,7 +9,8 @@
     *ngIf="isControlTypeVisible('textbox')"
     [formControlName]="config.key"
     [ngClass]="getControlClass()"
-    #textbox>
+    formatterParser
+    [config]="config">
 
   <div *ngIf="isControlTypeVisible('radio')">
     <div [ngClass]="getControlClass()" *ngFor="let option of config.options">
@@ -33,7 +34,6 @@
       {{config.label}}
     </label>
   </div>
-  {{config.key}}
 
   <select
     *ngIf="isControlTypeVisible('select')"

@@ -1,7 +1,8 @@
-import {Component, AfterViewInit} from "@angular/core";
-import {FormConfigService} from "../form-config.service";
+import {Component} from "@angular/core";
+import {FormConfigService} from "./form-config.service";
 import {FormGroup} from "@angular/forms";
-import {IAbstractFormControlModel, ISelectOption} from "../../../common/dynamic-form/model/item.struckts";
+import {IDynamicFormElementModel} from "../../../common/dymanic-form-element/model/base/form-control-options";
+import {ISelectOption} from "../../../common/dymanic-form-element/model/base/objects/select-option";
 
 @Component({
   selector: 'form-config-selector-comp',
@@ -9,17 +10,17 @@ import {IAbstractFormControlModel, ISelectOption} from "../../../common/dynamic-
 })
 export class FormConfigSelectorComponent {
 
-  configSelectionConfig: IAbstractFormControlModel = {};
+  configSelectionConfig: IDynamicFormElementModel = {};
   configSelectionForm: FormGroup = new FormGroup({});
   formConfigs: Array<any> = [];
 
-  formConfig: IAbstractFormControlModel = [];
+  formConfig: IDynamicFormElementModel = {};
   dynamicForm: FormGroup = new FormGroup({});
   formModel: any = {};
 
   constructor(protected formConfigService: FormConfigService) {
 
-    this.formConfig = formConfigService.getFormatterParserConfig();
+    this.formConfig = formConfigService.getAddressDataConfig();
     this.formConfigs = formConfigService.getAllFormConfigs();
     this.configSelectionConfig = {
       config: [

@@ -1,16 +1,8 @@
-import {Component, Inject, OnInit, Optional} from "@angular/core";
-import {FormArray, FormGroup} from "@angular/forms";
-import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
-import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
-import {
-  CHANGE_SUBSCRIPTIONS, ChangeSubscriptionFn,
-  ChangeSubscriptions
-} from "../../dynamic-form/injects/changeSubscriptions";
-import 'rxjs/Rx'
-import {Observable} from "rxjs/Rx";
-import {Subscription} from "rxjs/Subscription";
-import {IAbstractFormControlModel} from "../../dynamic-form/model/item.struckts";
-
+import {Component, OnInit} from "@angular/core";
+import {FormGroup} from "@angular/forms";
+import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
+import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
+import {ValueChangeSubscriptionService} from "../../reactive-utils/value-change-subscription.service";
 
 @Component({
   moduleId: module.id,
@@ -23,22 +15,22 @@ export class ContainerComponent implements OnInit {
 
   subscriptions: any[] = [];
 
-  private _config: AbstractFormControlModel;
-  set config(config: AbstractFormControlModel) {
+  private _config: IDynamicFormElementModel;
+  set config(config: IDynamicFormElementModel) {
     this._config = config;
     this.items = this._config.config;
   }
 
-  get config(): AbstractFormControlModel {
+  get config(): IDynamicFormElementModel {
     return this._config;
   }
 
-  private _items: AbstractFormControlModel[] = [];
-  set items(value: AbstractFormControlModel[]) {
+  private _items: IDynamicFormElementModel[] = [];
+  set items(value: IDynamicFormElementModel[]) {
     this._items = value
   }
 
-  get items(): AbstractFormControlModel[] {
+  get items(): IDynamicFormElementModel[] {
     return this._items || [];
   }
 
@@ -64,11 +56,12 @@ export class ContainerComponent implements OnInit {
     return this._isRendered;
   }
 
-  constructor(private dfs:DynamicFormService) {
+  constructor(private dfes:DynamicFormElementService,
+  private vcss:ValueChangeSubscriptionService) {
   }
 
   ngOnInit(){
-    //this.subscriptions = this.dfs.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
+    this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
   }
 
   getWrapperClass():string {

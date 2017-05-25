@@ -1,8 +1,9 @@
-import {Component, OnInit, OnDestroy, EventEmitter, Inject, Optional, AfterViewInit} from "@angular/core";
+import {Component, OnInit, OnDestroy, ElementRef} from "@angular/core";
 
-import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
+import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {FormGroup, AbstractControl} from "@angular/forms";
-import {TextboxItem} from "../../dynamic-form/model/item-textbox";
+import {ValueChangeSubscriptionService} from "../../reactive-utils/value-change-subscription.service";
+import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
 
 @Component({
   inputs: ['config', 'group'],
@@ -15,12 +16,12 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   subscriptions:any[] = [];
 
-  private _config: TextboxItem;
-  set config(config: TextboxItem) {
-    this._config = this.dfs.createFormItem(config) as TextboxItem;
+  private _config: IDynamicFormElementModel;
+  set config(config: IDynamicFormElementModel) {
+    this._config = this.dfes.createFormItem(config) as IDynamicFormElementModel;
   }
 
-  get config(): TextboxItem {
+  get config(): IDynamicFormElementModel {
     return this._config;
   }
 
@@ -49,17 +50,32 @@ export class ControlComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor( protected dfs:DynamicFormService) {
+  constructor( protected _elementRef:ElementRef,
+               protected dfes:DynamicFormElementService,
+               protected vcss:ValueChangeSubscriptionService) {
 
   }
 
   ngOnInit() {
-    this.dfs.addConfigToGroup(this.group, this.config);
-    //this.subscriptions = this.dfs.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
+    this.dfes.addConfigToGroup(this.group, this.config);
+    this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
 
   ngOnDestroy() {
-    this.dfs.removeConfigFromGroup(this.group, this.config);
+    this.destroySubscriptions();
+    this.dfes.removeConfigFromGroup(this.group, this.config);
+  }
+
+  destroySubscriptions() {
+    this.subscriptions.forEach((sub: any) => {
+      try {
+        sub.unsubscribe();
+      }
+      catch (e) {
+        console.log(new Error(e));
+      }
+    });
+    this.subscriptions = [];
   }
 
   //View helper
@@ -124,7 +140,7 @@ export class ControlComponent implements OnInit, OnDestroy {
 
     let text: string = "-- noOpt --";
 
-    if ('noOptKey' in this.config && this.config['noOptKey'] && this.config['noOptKey'] !== true) {
+    if ('noOptKey' in this.config && this.config['noOptKey'] && this.config['noOptKey'] !== '') {
       text = this.config['noOptKey'];
     }
 
@@ -140,6 +156,42 @@ export class ControlComponent implements OnInit, OnDestroy {
         this.isRendered = $event.result;
         break;
     }
+
+  }
+
+  updateAttributes() {
+    const el: any = this._elementRef.nativeElement;
+
+    let set = (attr: string, value: any, isBoolAttr?: boolean) => {
+
+      if (isBoolAttr) {
+        !!value ? el.setAttribute(attr, '') : el.removeAttribute(attr);
+        return;
+      }
+
+      value === undefined ? el.removeAttribute(attr) : el.setAttribute(attr, value);
+    };
+
+    set('accept', this.config.attrs['accept']);
+    set('autoComplete', this.config.attrs['autoComplete']);
+    set('aria-describedby', this.config.attrs['aria-describedby']);
+    set('disabled', this.config.attrs['disabled'], true);
+    set('list', this.config.attrs['list']);
+    set('max', this.config.attrs['max']);
+    set('min', this.config.attrs['min']);
+    set('multiple', this.config.attrs['multiple'], true);
+    set('step', this.config.attrs['step']);
+    set('tabindex', this.config.attrs['tabindex']);
+    set('autofocus', this.config.attrs['autofocus']);
+    set('maxlength', this.config.attrs['maxlength'], true);
+    set('minlength', this.config.attrs['minlength'], true);
+    set('name', this.config.attrs['kez']);
+    set('ngClass', this.config.attrs['ngClass']);
+    set('placeholder', this.config.attrs['placeholder']);
+    set('readonly', this.config.attrs['readonly'], true);
+    set('required', this.config.attrs['required'], true);
+    set('spellcheck', this.config.attrs['spellcheck']);
+    set('type', this.config.attrs['type']);
 
   }
 

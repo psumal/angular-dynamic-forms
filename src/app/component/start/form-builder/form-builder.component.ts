@@ -1,7 +1,4 @@
-import {Component, OnInit, OnChanges, EventEmitter} from '@angular/core';
-import {FormGroupItem} from "../../../common/dynamic-form/model/item-formGroup";
-import {FormConfigService} from "../form-config.service";
-import {DynamicFormService} from "../../../common/dynamic-form/services/dynamic-form.service";
+import {Component, OnInit, OnChanges} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 
 @Component({

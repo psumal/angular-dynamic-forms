@@ -1,25 +1,25 @@
-import {Component, OnInit} from "@angular/core";
-import {DynamicFormService} from "../../dynamic-form/services/dynamic-form.service";
-import {AbstractFormControlModel} from "../../dynamic-form/model/base/form-control";
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {Component, OnDestroy, OnInit} from "@angular/core";
+import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
+import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   inputs: ['config', 'group'],
   selector: 'df-form-group',
   templateUrl: 'item-formGroup.component.html',
-  providers: [DynamicFormService]
+  providers: [DynamicFormElementService]
 })
-export class FormGroupComponent implements OnInit {
+export class FormGroupComponent implements OnInit, OnDestroy {
 
   static controlTypes = ["formGroup"];
 
-  private _config: AbstractFormControlModel;
-  set config(config: AbstractFormControlModel) {
+  private _config: IDynamicFormElementModel;
+  set config(config: IDynamicFormElementModel) {
     this._config = config;
-    this.items = config['config'];
+    this.items = config.config;
   }
 
-  get config(): AbstractFormControlModel {
+  get config(): IDynamicFormElementModel {
     return this._config;
   }
 
@@ -32,12 +32,12 @@ export class FormGroupComponent implements OnInit {
     return this._group;
   }
 
-  private _items: AbstractFormControlModel[] = [];
-  set items(value: AbstractFormControlModel[]) {
+  private _items: IDynamicFormElementModel[] = [];
+  set items(value: IDynamicFormElementModel[]) {
     this._items = value;
   }
 
-  get items(): AbstractFormControlModel[] {
+  get items(): IDynamicFormElementModel[] {
     return this._items || [];
   }
 
@@ -45,13 +45,16 @@ export class FormGroupComponent implements OnInit {
     return this.group.get(this.config.key);
   }
 
-  constructor(protected dfs: DynamicFormService) {
+  constructor(protected dfes: DynamicFormElementService) {
 
   }
 
   ngOnInit() {
-    console.log('GROUP addConfigToGroup', this.config);
-    this.dfs.addConfigToGroup(this.group, this.config);
+    this.dfes.addConfigToGroup(this.group, this.config);
+  }
+
+  ngOnDestroy() {
+    this.dfes.removeConfigFromGroup(this.group, this.config);
   }
 
 }

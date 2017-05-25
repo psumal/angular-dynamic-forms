@@ -1,4 +1,4 @@
-<div [formGroup]="group" *ngIf="isRendered" class="{{getWrapperClass()}}">
+<div [formGroup]="group"  class="{{getWrapperClass()}}">
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'">
     {{config.label}}
@@ -7,13 +7,10 @@
   <input
     [type]="config.inputType"
     *ngIf="isControlTypeVisible('textbox')"
-    [formControl]="currentFormItem"
+    [formControlName]="config.key"
     [ngClass]="getControlClass()"
     formatterParser
-    interactionHandler
-    [config]="config"
-    [group]="currentFormItem"
-  >
+    [config]="config">
 
   <div *ngIf="isControlTypeVisible('radio')">
     <div [ngClass]="getControlClass()" *ngFor="let option of config.options">
@@ -21,10 +18,7 @@
         <input type="radio"
                [formControlName]="config.key"
                [attr.class]="getControlClass()"
-               [value]="option.label"
-               interactionHandler
-               [config]="config"
-               [group]="currentFormItem">
+               [value]="option.label">
         {{option.value}}
       </label>
     </div>
@@ -36,10 +30,7 @@
              [ngClass]="getControlClass()"
 
              [formControlName]="config.key"
-             name="{{config.key}}"
-             interactionHandler
-             [config]="config"
-             [group]="currentFormItem">
+             name="{{config.key}}">
       {{config.label}}
     </label>
   </div>
@@ -48,10 +39,7 @@
   <select
     *ngIf="isControlTypeVisible('select')"
     [ngClass]="getControlClass()"
-    [formControlName]="config.key"
-    interactionHandler
-    [config]="config"
-    [group]="currentFormItem">
+    [formControlName]="config.key">
 
     <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
     <template ngFor let-opt [ngForOf]="config.visibleOptions">
@@ -70,10 +58,8 @@
     [formControlName]="config.key"
     [ngClass]="getControlClass()"
     formatterParser
-    interactionHandler
-    [config]="config"
-    [group]="currentFormItem">
-                   </textarea>
+    [config]="config">
+  </textarea>
 
   <!--
   <item-errors [config]="config" [group]="currentFormItem">

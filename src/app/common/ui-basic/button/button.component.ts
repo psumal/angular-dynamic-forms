@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {ButtonItem} from "../../dynamic-form/model/item-button";
+import {ButtonItem} from "../../dymanic-form-element/model/item-button";
 
 @Component({
   moduleId: module.id,

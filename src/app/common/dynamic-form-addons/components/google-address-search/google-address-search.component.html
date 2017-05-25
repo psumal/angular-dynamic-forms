@@ -1,0 +1,27 @@
+<div [formGroup]="group" class="{{getWrapperClass()}}"
+     (mouseenter)="focus = true"
+     (mouseleave)="focus = false; this.place = null">
+
+  <label [attr.for]="config.key" [attr.class]="'form-control-label'">
+    {{config.label}}
+  </label>
+
+  <input
+    [type]="config.inputType"
+    [formControlName]="config.key"
+    name="{{config.key}}"
+    [ngClass]="getControlClass()"
+    #searchInput>
+
+  <!--
+  <item-errors [config]="config" [group]="currentFormItem">
+  </item-errors>
+
+  <div *ngIf="getCurrentStatus() == 'PENDING'">
+    Validation is pending...
+  </div>
+
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{getCurrentValue()}}</small>
+  -->
+
+</div>

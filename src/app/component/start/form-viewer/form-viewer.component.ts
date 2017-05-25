@@ -1,4 +1,4 @@
-import {Component, OnInit, OnChanges, EventEmitter} from '@angular/core';
+import {Component, OnInit, OnChanges} from '@angular/core';
 
 @Component({
   inputs : ['config', 'model'],

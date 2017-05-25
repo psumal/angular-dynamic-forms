@@ -1,8 +1,8 @@
-<div [ngClass]="getWrapperClass()" *ngIf="isRendered">
+<div [ngClass]="getWrapperClass()" >
 
   <ng-container
     *ngFor="let conf of items;"
-    dynamicItem
+    dynamicFormElement
     [config]="conf"
     [group]="currentFormItem">
   </ng-container>

@@ -19,7 +19,7 @@ SliderComponent = __decorate([
     moduleId: module.id,
     inputs: ['config', 'group'],
     selector: 'df-slider',
-    templateUrl: 'src/app/common/dynamic-form-addons/components/slider/slider.component.html',
+    templateUrl: 'src/app/modules/dynamic-form-addons/components/slider/slider.component.html',
   })
 ], SliderComponent);
 exports.SliderComponent = SliderComponent;

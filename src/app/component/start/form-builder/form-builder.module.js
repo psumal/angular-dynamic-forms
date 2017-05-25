@@ -10,7 +10,7 @@ var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var forms_1 = require("@angular/forms");
 var form_builder_component_1 = require("./form-builder.component");
-var dynamic_form_module_1 = require("../../../common/dynamic-form/dynamic-form.module");
+var dynamic_form_module_1 = require("../../../modules/dynamic-form/dynamic-form.module");
 var EXPORTS = [form_builder_component_1.FormBuilderComponent];
 var FormBuilderModule = (function () {
   function FormBuilderModule() {

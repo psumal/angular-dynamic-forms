@@ -89,7 +89,7 @@ ControlErrorComponent = __decorate([
     moduleId: module.id,
     inputs: ['config', 'group'],
     selector: 'item-errors',
-    templateUrl: 'src/app/common/validation-utils/errors/errors.component.html'
+    templateUrl: 'src/app/modules/validation-utils/errors/errors.component.html'
   }),
   __metadata("design:paramtypes", [error_service_1.ErrorService])
 ], ControlErrorComponent);

@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {FormConfigService} from "./form-config.service";
 import {FormGroup} from "@angular/forms";
-import {IDynamicFormElementModel} from "../../../common/dymanic-form-element/model/base/form-control-options";
-import {ISelectOption} from "../../../common/dymanic-form-element/model/base/objects/select-option";
+import {IDynamicFormElementModel} from "../../../modules/dymanic-form-element/model/base/form-control-options";
+import {ISelectOption} from "../../../modules/dymanic-form-element/model/base/objects/select-option";
 
 @Component({
   selector: 'form-config-selector-comp',

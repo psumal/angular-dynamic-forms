@@ -4,9 +4,9 @@ import {
   controlTypes,
   inputTypes,
   textboxTypes
-} from "../../../common/dymanic-form-element/model/item.types";
-import {IDynamicFormElementModel} from "../../../common/dymanic-form-element/model/base/form-control-options";
-import {ISelectOption} from "../../../common/dymanic-form-element/model/base/objects/select-option";
+} from "../../../modules/dymanic-form-element/model/item.types";
+import {IDynamicFormElementModel} from "../../../modules/dymanic-form-element/model/base/form-control-options";
+import {ISelectOption} from "../../../modules/dymanic-form-element/model/base/objects/select-option";
 
 @Injectable()
 export class FormConfigService {

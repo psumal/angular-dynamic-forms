@@ -4,11 +4,11 @@ import {IDynamicFormElementModel} from "./base/form-control-options";
 
 export class RadioItem extends DynamicFormElementModel {
 
-  inputType:string;
+  inputType: string;
   options: ISelectOption[] = [];
-  visibleOptions:ISelectOption[] = [];
+  visibleOptions: ISelectOption[] = [];
 
-  constructor(options:IDynamicFormElementModel) {
+  constructor(options: IDynamicFormElementModel) {
     super(options);
 
     options = options || {} as IDynamicFormElementModel;

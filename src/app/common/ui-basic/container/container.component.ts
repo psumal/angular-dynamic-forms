@@ -47,34 +47,34 @@ export class ContainerComponent implements OnInit {
     return this._group;
   }
 
-  _isRendered:boolean = true;
-  set isRendered(value:boolean) {
+  _isRendered: boolean = true;
+  set isRendered(value: boolean) {
     this._isRendered = value;
   }
 
-  get isRendered():boolean {
+  get isRendered(): boolean {
     return this._isRendered;
   }
 
-  constructor(private dfes:DynamicFormElementService,
-  private vcss:ValueChangeSubscriptionService) {
+  constructor(private dfes: DynamicFormElementService,
+              private vcss: ValueChangeSubscriptionService) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
   }
 
-  getWrapperClass():string {
+  getWrapperClass(): string {
     let classNames: string[] = [];
     classNames.push('row');
     classNames.push(...this.config.wrapperClass);
     return classNames.join(' ');
   }
 
-  onValueSubscriptionChanged = ($event:any) => {
+  onValueSubscriptionChanged = ($event: any) => {
 
     const name = $event.name;
-    switch(name) {
+    switch (name) {
       case 'isRendered':
         this.isRendered = $event.result;
         break;

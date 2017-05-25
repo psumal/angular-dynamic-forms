@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 
 import {ButtonComponent} from "./button/button.component";
@@ -13,21 +13,22 @@ import {ChangeSubscriptionsModule} from "../reactive-utils/value-change-subscrip
 import {DynamicFormElementModule} from "../dymanic-form-element/dynamic-form-element.module";
 import {UI_COMPONENTS} from "../dymanic-form-element/dynamic-form-element.injectonToken";
 
-const ENTRY_COMPONENTS = [ ControlComponent, ButtonComponent, FormGroupComponent, ContainerComponent ];
-const EXPORTS = [ ...ENTRY_COMPONENTS  ];
+const ENTRY_COMPONENTS = [ControlComponent, ButtonComponent, FormGroupComponent, ContainerComponent];
+const EXPORTS = [...ENTRY_COMPONENTS];
 
 @NgModule({
-  imports: [ CommonModule, ReactiveFormsModule, DynamicFormElementModule, FormatterParserModule, ValidationUtilsModule, ChangeSubscriptionsModule],
-  exports:      [ EXPORTS],
-  declarations: [ EXPORTS],
+  imports: [CommonModule, ReactiveFormsModule, DynamicFormElementModule, FormatterParserModule, ValidationUtilsModule, ChangeSubscriptionsModule],
+  exports: [EXPORTS],
+  declarations: [EXPORTS],
   entryComponents: [
     ENTRY_COMPONENTS
   ],
-  providers : [
-    { provide: UI_COMPONENTS, useValue: ButtonComponent, multi: true },
-    { provide: UI_COMPONENTS, useValue: ControlComponent, multi: true },
-    { provide: UI_COMPONENTS, useValue: FormGroupComponent, multi: true },
-    { provide: UI_COMPONENTS, useValue: ContainerComponent, multi:true}
+  providers: [
+    {provide: UI_COMPONENTS, useValue: ButtonComponent, multi: true},
+    {provide: UI_COMPONENTS, useValue: ControlComponent, multi: true},
+    {provide: UI_COMPONENTS, useValue: FormGroupComponent, multi: true},
+    {provide: UI_COMPONENTS, useValue: ContainerComponent, multi: true}
   ]
 })
-export class UiBasicModule {}
+export class UiBasicModule {
+}

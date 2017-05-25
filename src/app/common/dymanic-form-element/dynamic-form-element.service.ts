@@ -16,8 +16,8 @@ import {IDynamicFormElementModel} from "./model/base/form-control-options";
 @Injectable()
 export class DynamicFormElementService {
 
-  constructor(private fb:FormBuilder,
-              private vs:ValidationService,
+  constructor(private fb: FormBuilder,
+              private vs: ValidationService,
               @Optional() @Inject(UI_COMPONENTS) private UI_COMPONENTS: Function[]) {
 
   }
@@ -55,12 +55,12 @@ export class DynamicFormElementService {
     //prevent side effects
     config = {...config};
 
-    if(!('controlType' in config)) {
+    if (!('controlType' in config)) {
       config['controlType'] = guessControlType(config);
     }
 
     let controlType: string = config['controlType'];
-    let item: DynamicFormElementModel  | ButtonItem | FormGroupItem;
+    let item: DynamicFormElementModel | ButtonItem | FormGroupItem;
 
     if (controlType === "container") {
       item = config as DynamicFormElementModel;
@@ -90,7 +90,7 @@ export class DynamicFormElementService {
       item = new ButtonItem(config);
     }
 
-    if(controlType === "formGroup") {
+    if (controlType === "formGroup") {
       item = new FormGroupItem(config);
     }
 
@@ -98,8 +98,8 @@ export class DynamicFormElementService {
 
     /////////////////////////////
 
-    function guessControlType(struct:IDynamicFormElementModel):string {
-      let controlType:string;
+    function guessControlType(struct: IDynamicFormElementModel): string {
+      let controlType: string;
 
       controlType = "container";
 
@@ -107,28 +107,31 @@ export class DynamicFormElementService {
 
     }
   }
+
   //@TODO move to utils
   getFormGroupExtras = (formGroupConfig: IDynamicFormElementModel) => {
 
-    if(!formGroupConfig) { return null; }
+    if (!formGroupConfig) {
+      return null;
+    }
 
     let fGExtras: any = {};
 
     if ('validator' in formGroupConfig) {
       const v = formGroupConfig.validator;
-      if(Array.isArray(v) && v.length > 0) {
+      if (Array.isArray(v) && v.length > 0) {
         fGExtras.validator = this.vs.getValidators(v)[0];
       }
     }
 
     if ('asyncValidator' in formGroupConfig) {
       const av = formGroupConfig.asyncValidator;
-      if(Array.isArray(av) && av.length > 0) {
+      if (Array.isArray(av) && av.length > 0) {
         fGExtras.asyncValidator = this.vs.getAsyncValidators(av)[0];
       }
     }
 
-    return Object.keys(fGExtras).length >=1 ? fGExtras: null;
+    return Object.keys(fGExtras).length >= 1 ? fGExtras : null;
   };
 
   getFormControlParamsArray = (item: IDynamicFormElementModel): Function[] => {
@@ -161,14 +164,14 @@ export class DynamicFormElementService {
     return fCParams;
   };
 
-  addConfigToGroup(group:FormGroup, config:IDynamicFormElementModel) {
+  addConfigToGroup(group: FormGroup, config: IDynamicFormElementModel) {
     console.log('addConfigToGroup', config);
-    let configParams:any[] = this.getFormControlParamsArray(config);
-    let control:any = (<any>this.fb).control(...configParams);
+    let configParams: any[] = this.getFormControlParamsArray(config);
+    let control: any = (<any>this.fb).control(...configParams);
     group.addControl(config.key, control);
   }
 
-  removeConfigFromGroup(group:FormGroup, config:IDynamicFormElementModel) {
+  removeConfigFromGroup(group: FormGroup, config: IDynamicFormElementModel) {
     group.removeControl(config.key);
   }
 

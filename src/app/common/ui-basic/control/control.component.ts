@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy, ElementRef} from "@angular/core";
+import {Component, ElementRef, OnDestroy, OnInit} from "@angular/core";
 
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
-import {FormGroup, AbstractControl} from "@angular/forms";
+import {AbstractControl, FormGroup} from "@angular/forms";
 import {ValueChangeSubscriptionService} from "../../reactive-utils/value-change-subscription.service";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
 
@@ -14,7 +14,7 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   static controlTypes = ["select", "checkbox", "radio", "textbox", "textarea"];
 
-  subscriptions:any[] = [];
+  subscriptions: any[] = [];
 
   private _config: IDynamicFormElementModel;
   set config(config: IDynamicFormElementModel) {
@@ -34,25 +34,25 @@ export class ControlComponent implements OnInit, OnDestroy {
     return this._group;
   }
 
-  _isRendered:boolean = true;
+  _isRendered: boolean = true;
 
-  set isRendered(value:boolean) {
+  set isRendered(value: boolean) {
     this._isRendered = value;
   }
 
-  get isRendered():boolean {
+  get isRendered(): boolean {
     return this._isRendered;
   }
 
-  get currentFormItem():AbstractControl {
-    if(this.group.get(this.config.key)) {
+  get currentFormItem(): AbstractControl {
+    if (this.group.get(this.config.key)) {
       return this.group.get(this.config.key);
     }
   }
 
-  constructor( protected _elementRef:ElementRef,
-               protected dfes:DynamicFormElementService,
-               protected vcss:ValueChangeSubscriptionService) {
+  constructor(protected _elementRef: ElementRef,
+              protected dfes: DynamicFormElementService,
+              protected vcss: ValueChangeSubscriptionService) {
 
   }
 
@@ -83,7 +83,7 @@ export class ControlComponent implements OnInit, OnDestroy {
     return this.config.controlType === controlType;
   }
 
-  getWrapperClass():string {
+  getWrapperClass(): string {
     let classNames: string[] = []
     classNames.push('form-group')
     classNames.push(...this.config.wrapperClass);
@@ -107,13 +107,13 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   getCurrentValue() {
-    if(this.currentFormItem && 'value' in this.currentFormItem) {
+    if (this.currentFormItem && 'value' in this.currentFormItem) {
       return this.currentFormItem.value;
     }
   }
 
   getCurrentStatus() {
-    if(this.currentFormItem && 'status' in this.currentFormItem) {
+    if (this.currentFormItem && 'status' in this.currentFormItem) {
       return this.currentFormItem.status;
     }
   }
@@ -148,10 +148,10 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   //sideEffects
-  onValueSubscriptionChanged = ($event:any) => {
+  onValueSubscriptionChanged = ($event: any) => {
 
     const name = $event.name;
-    switch(name) {
+    switch (name) {
       case 'isRendered':
         this.isRendered = $event.result;
         break;

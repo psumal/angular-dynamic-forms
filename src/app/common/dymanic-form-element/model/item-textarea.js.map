@@ -1,1 +1,10 @@
-{"version":3,"file":"item-textarea.js","sourceRoot":"","sources":["item-textarea.ts"],"names":[],"mappings":";;;;;;AAAA,oDAA6D;AAE7D;IAAkC,gCAAwB;IAExD,sBAAY,OAAsC;QAAtC,wBAAA,EAAA,YAAsC;QAAlD,YACE,kBAAM,OAAO,CAAC,SAEf;QADC,KAAI,CAAC,WAAW,GAAG,UAAU,CAAC;;IAChC,CAAC;IACH,mBAAC;AAAD,CAAC,AAND,CAAkC,uCAAwB,GAMzD;AANY,oCAAY"}
+{
+  "version": 3,
+  "file": "item-textarea.js",
+  "sourceRoot": "",
+  "sources": [
+    "item-textarea.ts"
+  ],
+  "names": [],
+  "mappings": ";;;;;;AAAA,oDAA6D;AAE7D;IAAkC,gCAAwB;IAExD,sBAAY,OAAsC;QAAtC,wBAAA,EAAA,YAAsC;QAAlD,YACE,kBAAM,OAAO,CAAC,SAEf;QADC,KAAI,CAAC,WAAW,GAAG,UAAU,CAAC;;IAChC,CAAC;IACH,mBAAC;AAAD,CAAC,AAND,CAAkC,uCAAwB,GAMzD;AANY,oCAAY"
+}

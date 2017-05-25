@@ -1,9 +1,9 @@
-import {ValidationErrors, AbstractControl} from "@angular/forms";
+import {AbstractControl, ValidationErrors} from "@angular/forms";
 
-export function promiseValidator(c:AbstractControl): Promise<ValidationErrors | null>  {
+export function promiseValidator(c: AbstractControl): Promise<ValidationErrors | null> {
   return new Promise(resolve => {
     setTimeout(() => {
-      if( c.value !== "test" ) {
+      if (c.value !== "test") {
         resolve({
           promiseValidator: true
         })

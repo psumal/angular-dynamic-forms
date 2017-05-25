@@ -1,14 +1,14 @@
-import {Component, OnInit, OnChanges} from '@angular/core';
+import {Component, OnChanges, OnInit} from "@angular/core";
 
 @Component({
-  inputs : ['config', 'model'],
+  inputs: ['config', 'model'],
   selector: 'form-viewer-comp',
   templateUrl: 'form-viewer.component.html'
 })
 export class FormViewerComponent implements OnInit, OnChanges {
 
-  config:any = [];
-  formModel:any={};
+  config: any = [];
+  formModel: any = {};
 
   ngOnInit(): void {
 
@@ -16,14 +16,13 @@ export class FormViewerComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {}): any {
 
-    if('config' in changes && changes['config'] != this.config) {
+    if ('config' in changes && changes['config'] != this.config) {
 
       this.config = changes['config'].currentValue;
     }
 
 
   }
-
 
 
 }

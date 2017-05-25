@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {DynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control";
 import {ErrorService} from "./error.service";
@@ -6,7 +6,7 @@ import {ErrorService} from "./error.service";
 @Component({
   inputs: ['config', 'group'],
   selector: 'item-errors',
-  templateUrl:'./errors.component.html'
+  templateUrl: './errors.component.html'
 })
 export class ControlErrorComponent implements OnInit, OnDestroy {
 
@@ -29,31 +29,31 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
     return this._group;
   }
 
-  errorService:ErrorService;
-  errorMessages:{};
+  errorService: ErrorService;
+  errorMessages: {};
 
-  private _errors:{[key:string]:string} = {};
+  private _errors: { [key: string]: string } = {};
 
-  get errors(): {[key:string]:string} {
+  get errors(): { [key: string]: string } {
     return this._errors;
   }
 
-  set errors(errors: {[key:string]:string}) {
+  set errors(errors: { [key: string]: string }) {
     errors = errors || {};
     this._errors = errors;
     this.errorMessages = this.errorService.getErrorMsgByErrors(errors, this.config, this.group);
   }
 
-  subscriptions:any[] = [];
+  subscriptions: any[] = [];
 
-  constructor(errorService:ErrorService) {
+  constructor(errorService: ErrorService) {
     this.errorService = errorService;
   }
 
   ngOnInit() {
     this.updateErrors();
 
-    if(this.group && 'statusChanges' in this.group) {
+    if (this.group && 'statusChanges' in this.group) {
       let sub = this.group.statusChanges
         .subscribe((status) => {
           this.updateErrors();
@@ -65,9 +65,10 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => {
-      try{
+      try {
         subscription.unsubscribe();
-      } catch(e) {}
+      } catch (e) {
+      }
     })
   }
 
@@ -77,7 +78,7 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
     this.errors = this.errorService.getErrors(this.group);
   }
 
-  errorKeys() : Array<string> {
+  errorKeys(): Array<string> {
     return Object.keys(this.errors) || [];
   }
 
@@ -85,7 +86,7 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
     return this.group.invalid && (this.group.touched && this.group.dirty);
   }
 
-  getClassNames():string {
+  getClassNames(): string {
     return "form-control-feedback";
   }
 

@@ -1,7 +1,7 @@
 import {Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {AbstractControl, FormGroup} from "@angular/forms";
 import {TextboxItem} from "../../../dymanic-form-element/model/item-textbox";
-import {AgmCoreModule, MapsAPILoader} from "@agm/core";
+import {MapsAPILoader} from "@agm/core";
 import {DynamicFormElementService} from "../../../dymanic-form-element/dynamic-form-element.service";
 import {ValueChangeSubscriptionService} from "../../../reactive-utils/value-change-subscription.service";
 
@@ -11,7 +11,7 @@ declare var google: any;
   inputs: ['config', 'group'],
   selector: 'google-address-search',
   templateUrl: './google-address-search.component.html',
-  providers : []
+  providers: []
 })
 export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
 
@@ -58,7 +58,7 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
   }
 
   constructor(private dfs: DynamicFormElementService,
-              private vcss:ValueChangeSubscriptionService,
+              private vcss: ValueChangeSubscriptionService,
               private mAL: MapsAPILoader,
               private ngZone: NgZone) {
   }
@@ -86,7 +86,7 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
       });
 
 
-      input.value= 'this.place.formatted_address';
+      input.value = 'this.place.formatted_address';
 
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {

@@ -3,9 +3,9 @@ import {IDynamicFormElementModel} from "./base/form-control-options";
 
 export class ButtonItem extends DynamicFormElementModel {
 
-  inputType:string;
+  inputType: string;
 
-  constructor(options:IDynamicFormElementModel) {
+  constructor(options: IDynamicFormElementModel) {
     super(options);
 
     options = options || {} as IDynamicFormElementModel;

@@ -6,12 +6,12 @@ import {Component, Input} from "@angular/core";
     <div class="tooltip-container">
       TID: {{id}}
       <pre>{{tooltip | json}}</pre>
-      <agm-map 
+      <agm-map
         *ngIf="tooltip"
-        class="my-tooltip" 
-        style="height:300px; width:300px;" 
-        [latitude]="latitude" 
-        [longitude]="longitude" 
+        class="my-tooltip"
+        style="height:300px; width:300px;"
+        [latitude]="latitude"
+        [longitude]="longitude"
         [zoom]="zoom">
       </agm-map>
     </div>
@@ -62,15 +62,15 @@ export class TooltipContainerComponent {
 
   }
 
-  get ref():any {
-    return 'ref' in this.tooltip?this.tooltip.ref:null;
+  get ref(): any {
+    return 'ref' in this.tooltip ? this.tooltip.ref : null;
   }
 
-  get title():any {
-    return 'title' in this.tooltip?this.tooltip.title:null;
+  get title(): any {
+    return 'title' in this.tooltip ? this.tooltip.title : null;
   }
 
-  get tooltip():any {
+  get tooltip(): any {
     return this.tooltipService.components.find(i => i.id == this._id)
   }
 

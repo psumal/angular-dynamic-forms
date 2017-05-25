@@ -1,24 +1,28 @@
-import {Component, OnInit, OnChanges} from '@angular/core';
+import {Component, OnChanges, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 
 @Component({
-  inputs : [],
+  inputs: [],
   selector: 'form-builder-comp',
   templateUrl: 'form-builder.component.html'
 })
 export class FormBuilderComponent implements OnInit, OnChanges {
 
-  dynamicItems:any;
-  group:FormGroup  = new FormGroup({});
-  config:any = {};
-  model:any={};
+  dynamicItems: any;
+  group: FormGroup = new FormGroup({});
+  config: any = {};
+  model: any = {};
 
-  constructor() { }
+  constructor() {
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
-  ngOnChanges(changes: {}): any { }
+  ngOnChanges(changes: {}): any {
+  }
 
-  onSubmitted($event: {}) { }
+  onSubmitted($event: {}) {
+  }
 
 }

@@ -15,22 +15,22 @@ export class DynamicFormElementModel {
 
   validator?: IValidatorConfig[];
   asyncValidator?: IValidatorConfig[];
-  validatorMessages?: {[validationName:string]:string};
+  validatorMessages?: { [validationName: string]: string };
   formatterParser?: IFormatterParserConfig[];
   valueChangeSubscriptions?: IValueChangeSubscriptionConfig[];
 
   label?: string;
-  helpText?:string;
-  attrs?: {[attr:string]:string}[];
+  helpText?: string;
+  attrs?: { [attr: string]: string }[];
   controlClass?: string[];
   wrapperClass?: string[];
 
   constructor(options?: IDynamicFormElementModel) {
     options = options || {} as IDynamicFormElementModel;
 
-    this.key = options.key  || null;
+    this.key = options.key || null;
     this.controlType = options.controlType || null;
-    this.config =  options.config || null;
+    this.config = options.config || null;
 
     this.label = options.label || null;
     this.helpText = options.helpText || null;

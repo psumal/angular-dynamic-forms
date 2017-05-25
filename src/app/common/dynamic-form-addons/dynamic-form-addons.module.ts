@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {NG_ASYNC_VALIDATORS, NG_VALIDATORS, ReactiveFormsModule} from "@angular/forms";
 import {VALUE_CHANGE_SUBSCRIPTIONS} from "../reactive-utils/value-change-subscriptions.injectionToken";
 import {UI_COMPONENTS} from "../dymanic-form-element/dynamic-form-element.injectonToken";
@@ -18,21 +18,21 @@ import {GoogleAddressSearchComponent} from "./components/google-address-search/g
 import {filteredOptions} from "./change-subscriptions/filteredOptionsSubscription";
 import {AgmCoreModule} from "@agm/core";
 
-const EXPORTS = [ SliderComponent, GoogleAddressSearchComponent];
+const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
 
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCfHTTcmCwTe3rFnt6eYeV9gALdoZvGfZQ',
-      libraries:['places']
+      libraries: ['places']
     }),
     CommonModule, ReactiveFormsModule],
-  exports:      [ EXPORTS],
-  declarations: [ EXPORTS],
+  exports: [EXPORTS],
+  declarations: [EXPORTS],
   entryComponents: [
     EXPORTS
   ],
-  providers : [
+  providers: [
     //VALIDATORS Control
     //customValidator for control
     {provide: NG_VALIDATORS, useValue: randomValidator, multi: true},

@@ -1,17 +1,10 @@
 import {Inject, Injectable, Optional} from "@angular/core";
-import {
-  ValidatorFn,
-  AsyncValidatorFn,
-  Validators,
-  NG_VALIDATORS,
-  NG_ASYNC_VALIDATORS
-} from "@angular/forms";
+import {AsyncValidatorFn, NG_ASYNC_VALIDATORS, NG_VALIDATORS, ValidatorFn, Validators} from "@angular/forms";
 @Injectable()
 export class ValidationService {
 
-  constructor( @Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
-               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[],
-  ) {
+  constructor(@Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
+              @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[],) {
 
   }
 
@@ -27,21 +20,23 @@ export class ValidationService {
   }
 
   getValidatorFn(validatorName: string, validatorArgs?: any): ValidatorFn {
-    if(!validatorName) { return;}
+    if (!validatorName) {
+      return;
+    }
     let validatorFn = Validators[validatorName] || this.getCustomValidatorFn(validatorName);
 
     if (!(typeof validatorFn === "function")) {
       throw new Error(`validator "${validatorName}" is not provided via NG_VALIDATORS`);
     }
 
-    return (validatorArgs)?validatorFn(...validatorArgs):validatorFn;
+    return (validatorArgs) ? validatorFn(...validatorArgs) : validatorFn;
   }
 
   getCustomValidatorFn(validatorName: string): ValidatorFn | undefined {
     let validatorFn;
 
     if (this.NG_VALIDATORS) {
-      validatorFn = this.NG_VALIDATORS.find( (validatorFn) => {
+      validatorFn = this.NG_VALIDATORS.find((validatorFn) => {
         return validatorName === validatorFn.name
       });
     }
@@ -75,7 +70,7 @@ export class ValidationService {
       throw new Error(`validator "${validatorName}" is not provided via NG_ASYNC_VALIDATORS`);
     }
 
-    return (validatorArgs)?asyncValidatorFn(validatorArgs):asyncValidatorFn;
+    return (validatorArgs) ? asyncValidatorFn(validatorArgs) : asyncValidatorFn;
   }
 
 }

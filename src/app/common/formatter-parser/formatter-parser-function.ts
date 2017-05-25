@@ -1,3 +1,3 @@
 export interface FormatParseFn {
-  (value: any) : any;
+  (value: any): any;
 }

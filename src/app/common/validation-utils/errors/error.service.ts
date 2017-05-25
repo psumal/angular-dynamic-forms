@@ -6,7 +6,7 @@ interface ErrorReplaceKeys {
   controlValue?: string,
   controlLabel?: string,
   validatorName?: string,
-  validatorParam?:string
+  validatorParam?: string
 }
 
 @Injectable()
@@ -20,8 +20,8 @@ export class ErrorService {
   };
 
   REPLACE_WRAPPER_TAG = "span";
-  DEFAULT_ERROR:string = 'No message given for validator %vn on field %cl is invalid';
-  DEFAULT_ERROR_MAP: {[name: string]: string} = {
+  DEFAULT_ERROR: string = 'No message given for validator %vn on field %cl is invalid';
+  DEFAULT_ERROR_MAP: { [name: string]: string } = {
     required: "The Field %cl is required",
     minLength: "The Field %cl should have a min length of %vp",
     maxLength: "The Field %cl should have a max length of %vp",
@@ -31,7 +31,7 @@ export class ErrorService {
     someOf: "The Field %cl is should be equal with all of %vpn"
   };
 
-  errorMap:{[key:string]:string};
+  errorMap: { [key: string]: string };
 
   constructor() {
     //this.DEFAULT_ERROR_MAP = esc.DEFAULT_ERROR_MAP || this.DEFAULT_ERROR_MAP;
@@ -41,47 +41,47 @@ export class ErrorService {
     this.errorMap = this.DEFAULT_ERROR_MAP;
   }
 
-  getErrors(formGroupOrControl:AbstractControl) : {[key:string]:string} {
+  getErrors(formGroupOrControl: AbstractControl): { [key: string]: string } {
     let errors = {};
-    return (formGroupOrControl && 'errors' in formGroupOrControl)?formGroupOrControl.errors:{};
+    return (formGroupOrControl && 'errors' in formGroupOrControl) ? formGroupOrControl.errors : {};
   }
 
-  getErrorMsgByErrors(errorKeys:{[key:string]:string}, config:DynamicFormElementModel, group:AbstractControl):{} {
-    let mappedErrors:any = {};
-    let errorMessage:string;
+  getErrorMsgByErrors(errorKeys: { [key: string]: string }, config: DynamicFormElementModel, group: AbstractControl): {} {
+    let mappedErrors: any = {};
+    let errorMessage: string;
 
     for (let validatorName in  errorKeys) {
       errorMessage = this.DEFAULT_ERROR;
 
-      if(validatorName in this.errorMap) {
+      if (validatorName in this.errorMap) {
         errorMessage = this.errorMap[validatorName];
       }
 
-      if('validatorMessages' in config && config.validatorMessages[validatorName]) {
+      if ('validatorMessages' in config && config.validatorMessages[validatorName]) {
         errorMessage = config.validatorMessages[validatorName]
       }
 
 
-      let replaceValues:ErrorReplaceKeys = this.getReplaceValues(config, group, validatorName, errorKeys[validatorName]);
-        mappedErrors[validatorName] = this.prePareMessage(errorMessage, replaceValues);
+      let replaceValues: ErrorReplaceKeys = this.getReplaceValues(config, group, validatorName, errorKeys[validatorName]);
+      mappedErrors[validatorName] = this.prePareMessage(errorMessage, replaceValues);
 
     }
 
     return mappedErrors;
   }
 
-  prePareMessage(error:any, replaceValues:ErrorReplaceKeys) {
+  prePareMessage(error: any, replaceValues: ErrorReplaceKeys) {
     let prepMsg = error;
-    for(let key in replaceValues) {
-      prepMsg = prepMsg.replace('%'+key, `<${this.REPLACE_WRAPPER_TAG}>${replaceValues[key]}</${this.REPLACE_WRAPPER_TAG}>`);
+    for (let key in replaceValues) {
+      prepMsg = prepMsg.replace('%' + key, `<${this.REPLACE_WRAPPER_TAG}>${replaceValues[key]}</${this.REPLACE_WRAPPER_TAG}>`);
     }
 
     return prepMsg;
   }
 
-  getReplaceValues(config:DynamicFormElementModel, group:AbstractControl, validatorName:string, errorObj:any):ErrorReplaceKeys {
+  getReplaceValues(config: DynamicFormElementModel, group: AbstractControl, validatorName: string, errorObj: any): ErrorReplaceKeys {
 
-    let replaceValues:ErrorReplaceKeys = <ErrorReplaceKeys>{};
+    let replaceValues: ErrorReplaceKeys = <ErrorReplaceKeys>{};
 
     replaceValues[this.REPLACE_KEYS.controlValue] = group.value;
     replaceValues[this.REPLACE_KEYS.controlLabel] = config.label;

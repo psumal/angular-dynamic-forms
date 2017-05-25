@@ -1,11 +1,4 @@
-import {
-  ComponentFactoryResolver,
-  ComponentRef,
-  Directive,
-  OnChanges,
-  OnInit,
-  ViewContainerRef
-} from "@angular/core";
+import {ComponentFactoryResolver, ComponentRef, Directive, OnChanges, OnInit, ViewContainerRef} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 
 import {DynamicFormElementModel} from "./model/base/form-control";
@@ -25,7 +18,7 @@ export class DynamicFormElementDirective implements DynamicFormElementBindings, 
 
   constructor(private resolver: ComponentFactoryResolver,
               private container: ViewContainerRef,
-              private dfes:DynamicFormElementService) {
+              private dfes: DynamicFormElementService) {
   }
 
   ngOnChanges() {

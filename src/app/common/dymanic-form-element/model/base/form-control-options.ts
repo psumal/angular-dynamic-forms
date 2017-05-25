@@ -9,24 +9,24 @@ export interface IDynamicFormElementModel {
   controlType?: string;
   config?: IDynamicFormElementModel[];
   inputType?: string;
-  placeholder?:string;
+  placeholder?: string;
 
-  options?:ISelectOption[];
-  noOptKey?:string;
-  multiple?:boolean;
+  options?: ISelectOption[];
+  noOptKey?: string;
+  multiple?: boolean;
 
   formState?: IFormState | any;
   disabled?: boolean;
 
   validator?: IValidatorConfig[];
   asyncValidator?: IValidatorConfig[];
-  validatorMessages?: {[validationName:string]:string};
+  validatorMessages?: { [validationName: string]: string };
   formatterParser?: IFormatterParserConfig[];
   valueChangeSubscriptions?: IValueChangeSubscriptionConfig[];
 
   label?: string;
-  helpText?:string;
-  attrs?: {[attr:string]:string}[];
+  helpText?: string;
+  attrs?: { [attr: string]: string }[];
   controlClass?: string[];
   wrapperClass?: string[];
 }

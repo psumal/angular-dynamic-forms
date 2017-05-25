@@ -1,4 +1,4 @@
 export interface IValidatorConfig {
-  name:string;
+  name: string;
   params?: any[];
 }

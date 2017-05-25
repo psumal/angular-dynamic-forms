@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
+import {NgModule} from "@angular/core";
 
-import {ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 import {DynamicFormElementService} from "./dynamic-form-element.service";
 import {DynamicFormElementComponent} from "./dynamic-form-element.component";
@@ -15,4 +15,5 @@ const EXPORTS = [DynamicFormElementComponent, DynamicFormElementDirective];
   declarations: [EXPORTS],
   providers: [DynamicFormElementService]
 })
-export class DynamicFormElementModule {}
+export class DynamicFormElementModule {
+}

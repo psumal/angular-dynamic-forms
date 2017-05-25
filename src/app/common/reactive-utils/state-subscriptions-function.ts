@@ -3,6 +3,6 @@ export type StateSubscriptionResult = {
   [key: string]: any;
 };
 
-export interface StateSubscriptionFn<T>{
-  (change: any, param?: any, item?: any, form?: FormGroup | FormArray | FormControl) : StateSubscriptionResult;
+export interface StateSubscriptionFn<T> {
+  (change: any, param?: any, item?: any, form?: FormGroup | FormArray | FormControl): StateSubscriptionResult;
 }

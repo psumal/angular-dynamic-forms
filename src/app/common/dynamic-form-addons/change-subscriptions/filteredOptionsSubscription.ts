@@ -1,4 +1,4 @@
-export function filteredOptions(change?:any,params?:any, item?:any, form?:any):any {
+export function filteredOptions(change?: any, params?: any, item?: any, form?: any): any {
   //determine options to filter
   let filterConfig = params.filter((param: any) => {
     return change == param['key'];

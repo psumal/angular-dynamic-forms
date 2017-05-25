@@ -3,10 +3,10 @@ import {IDynamicFormElementModel} from "./base/form-control-options";
 
 export class FormGroupItem extends DynamicFormElementModel {
 
-  controlType:string = 'formGroup';
+  controlType: string = 'formGroup';
 
-  constructor(options:IDynamicFormElementModel) {
-   super(options);
+  constructor(options: IDynamicFormElementModel) {
+    super(options);
   }
 
 }

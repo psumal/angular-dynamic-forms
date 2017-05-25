@@ -1,6 +1,5 @@
-
 import {FormatParseFn} from "../../formatter-parser/formatter-parser-function";
-export function maskString(mask: string, maskPatterns: {[key: string]: RegExp}): FormatParseFn {
+export function maskString(mask: string, maskPatterns: { [key: string]: RegExp }): FormatParseFn {
   return (value: any) => {
 
     value = value || '';

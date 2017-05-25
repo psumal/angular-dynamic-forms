@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {
-  textboxTypes,
-  controlTypes,
   buttonTypes,
+  controlTypes,
   inputTypes,
+  textboxTypes
 } from "../../../common/dymanic-form-element/model/item.types";
 import {IDynamicFormElementModel} from "../../../common/dymanic-form-element/model/base/form-control-options";
 import {ISelectOption} from "../../../common/dymanic-form-element/model/base/objects/select-option";
@@ -587,7 +587,7 @@ export class FormConfigService {
         {label: 'Firma', value: '2'}
       ],
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
@@ -603,14 +603,14 @@ export class FormConfigService {
       wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
       key: 'company',
-      formatterParser:[
-        {name:'toCapitalized', target: 2}
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
       ],
       valueChangeSubscriptions: [
-        {name:"isRendered", controls:['isCompany'], params:[true]}
+        {name: "isRendered", controls: ['isCompany'], params: [true]}
       ],
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
@@ -634,7 +634,7 @@ export class FormConfigService {
       helpText: "der Geburtsdatum der Person",
       inputType: 'date',
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
@@ -688,23 +688,23 @@ export class FormConfigService {
       controlType: 'container',
       key: 'pd-c-gender',
       config: [],
-      valueChangeSubscriptions: [{name:"isRendered", controls:['isCompany'], params:[true]}]
+      valueChangeSubscriptions: [{name: "isRendered", controls: ['isCompany'], params: [true]}]
     };
 
     let firstName = {
-      controlType:"textbox",
-      type:"text",
+      controlType: "textbox",
+      type: "text",
       key: 'firstName',
-      label:'Firstname',
-      formatterParser:[
-        {name:'toCapitalized' ,target: 2}
+      label: 'Firstname',
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
       ]
     };
     let lastName = {
-      controlType:"textbox",
-      type:"text",
+      controlType: "textbox",
+      type: "text",
       key: 'lastName',
-      label:'Lastname'
+      label: 'Lastname'
     };
     company.config.push(isCompany);
     company.config.push(companyName);
@@ -736,7 +736,7 @@ export class FormConfigService {
 
   getAddressDataConfig(): IDynamicFormElementModel {
 
-    let googleAddressSearch:IDynamicFormElementModel = {
+    let googleAddressSearch: IDynamicFormElementModel = {
       controlType: 'google-address-search',
       key: "googleAddressSearch",
       label: "Google Address Search"
@@ -748,7 +748,7 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'house_number',
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
@@ -757,11 +757,11 @@ export class FormConfigService {
       wrapperClass: ['col'],
       controlType: 'textbox',
       key: 'street',
-      formatterParser:[
-        {name:'toCapitalized' ,target: 2}
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
       ],
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
@@ -771,7 +771,7 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'zip_code',
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
@@ -780,11 +780,11 @@ export class FormConfigService {
       wrapperClass: ['col'],
       controlType: 'textbox',
       key: 'city',
-      formatterParser:[
-        {name:'toCapitalized' ,target: 2}
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
       ],
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
@@ -793,7 +793,7 @@ export class FormConfigService {
       wrapperClass: ['col'],
       controlType: 'select',
       key: 'country',
-      formState:"DE",
+      formState: "DE",
       options: [
         {label: 'Deutsch', value: 'DE'},
         {label: 'Englisch', value: 'EN'},
@@ -801,18 +801,18 @@ export class FormConfigService {
         {label: 'Italienisch', value: 'IT'}
       ],
       validator: [
-        {name:"required"}
+        {name: "required"}
       ]
     };
 
-    let row0:IDynamicFormElementModel = {
+    let row0: IDynamicFormElementModel = {
       controlType: 'container',
       key: 'ad-row0',
       config: []
     };
     row0.config.push(googleAddressSearch);
 
-    let row1:IDynamicFormElementModel = {
+    let row1: IDynamicFormElementModel = {
       controlType: 'container',
       key: 'ad-row1',
       config: []
@@ -820,7 +820,7 @@ export class FormConfigService {
     row1.config.push(houseNumber);
     row1.config.push(street);
 
-    let row2:IDynamicFormElementModel = {
+    let row2: IDynamicFormElementModel = {
       controlType: 'container',
       key: 'ad-row2',
       config: []
@@ -843,252 +843,252 @@ export class FormConfigService {
   getGenericElementConfig(): IDynamicFormElementModel {
 
     let formConfig: any =
-    {
-      config: [
-        /**/
-        // controlType
-        {
-          controlType: 'select',
-          key: 'controlType',
-          label: 'Control Type',
-          helpText: "This value is used to identify the control type  of the element",
-          options: [
-            {value: 'textbox', label: 'Textbox'},
-            {value: 'select', label: 'Select'},
-            {value: 'multiselect', label: 'Multiselect'},
-            {value: 'checkbox', label: 'Checkbox'},
-            {value: 'checkboxInline', label: 'Checkbox Inline'},
-            {value: 'radioInline', label: 'Radio Inline'},
-            {value: 'textarea', label: 'Textarea'},
-            {value: 'button', label: 'Button'}
-          ],
-        },
-        // type
-        {
-          controlType: 'select',
-          key: 'type',
-          label: 'type',
-          helpText: "This value is used in the type attribute of the element",
-          options: [
-            {value: 'text', label: 'Text'},
-            {value: 'number', label: 'Number'},
-            {value: 'button', label: 'Button'},
-            {value: 'submit', label: 'Submit'},
-            {value: 'reset', label: 'Reset'}
-          ],
-          valueChangeSubscriptions: [
-            /**/{
-              controls: ['controlType'], name: "filteredOptions",
-              params: [
-                {key: 'textbox', optionsKeys: ['text', 'number']},
-                {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
-              ]
-            },
-            {
-              controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
-            }
-          ]
-        },
-        //key
-        {
-          controlType: 'textbox',
-          key: "key",
-          label: "Key",
-          placeholder: "The element key",
-          helpText: "This value is used in the id and name attribute of the element",
-          inputType: "text",
-          validator: [{name: 'required'}]
-        },
-        // label
-        {
-          controlType: 'textbox',
-          key: 'label',
-          label: 'Label',
-          placeholder: "The element label",
-          helpText: "This value is used in the lable of the element",
-          inputType: 'text'
-        },
-        // placeholder
-        {
-          controlType: 'textbox',
-          key: 'placeholder',
-          label: 'Placeholder',
-          placeholder: "The element placeholder",
-          helpText: "This value is used in the placeholder of the element",
-          inputType: 'text',
-          validator: [
-            {name: "randomValidator"}
-          ]
-        },
-        //validator
-        {
-          controlType: 'select',
-          key: 'validator',
-          label: 'Validator',
-          helpText: "Select default validation for this element",
-          noOptValue: "--none--",
-          options: [
-            {
-              key: "builtIn", value: "built in validators",
-              children: [
-                {key: [{name: 'required'}], value: 'Required'},
-                {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
-              ]
-            },
-            {
-              key: "custom", value: "custom in validators",
-              children: [
-                {key: [{name: 'email'}], value: 'Email'},
-              ]
-            }
-          ],
-          valueChangeSubscriptions: [{
-            controls: ['controlType'],
-            name: "isRendered",
-            params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
-          }]
-        },
-        // help
-        {
-          controlType: 'textbox',
-          key: 'help',
-          label: 'Help',
-          placeholder: "The element help",
-          helpText: "This value is used in the help of the element",
-          inputType: 'text'
-        },
-        //submit button
-        {
-          controlType: 'button',
-          key: 'submit-button',
-          label: 'Update',
-          inputType: 'submit'
-        },
-        //reset button
-        {
-          controlType: 'button',
-          key: 'reset-button',
-          label: 'Reset',
-          inputType: 'reset'
-        }
-      ]
-    };
+      {
+        config: [
+          /**/
+          // controlType
+          {
+            controlType: 'select',
+            key: 'controlType',
+            label: 'Control Type',
+            helpText: "This value is used to identify the control type  of the element",
+            options: [
+              {value: 'textbox', label: 'Textbox'},
+              {value: 'select', label: 'Select'},
+              {value: 'multiselect', label: 'Multiselect'},
+              {value: 'checkbox', label: 'Checkbox'},
+              {value: 'checkboxInline', label: 'Checkbox Inline'},
+              {value: 'radioInline', label: 'Radio Inline'},
+              {value: 'textarea', label: 'Textarea'},
+              {value: 'button', label: 'Button'}
+            ],
+          },
+          // type
+          {
+            controlType: 'select',
+            key: 'type',
+            label: 'type',
+            helpText: "This value is used in the type attribute of the element",
+            options: [
+              {value: 'text', label: 'Text'},
+              {value: 'number', label: 'Number'},
+              {value: 'button', label: 'Button'},
+              {value: 'submit', label: 'Submit'},
+              {value: 'reset', label: 'Reset'}
+            ],
+            valueChangeSubscriptions: [
+              /**/{
+                controls: ['controlType'], name: "filteredOptions",
+                params: [
+                  {key: 'textbox', optionsKeys: ['text', 'number']},
+                  {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
+                ]
+              },
+              {
+                controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
+              }
+            ]
+          },
+          //key
+          {
+            controlType: 'textbox',
+            key: "key",
+            label: "Key",
+            placeholder: "The element key",
+            helpText: "This value is used in the id and name attribute of the element",
+            inputType: "text",
+            validator: [{name: 'required'}]
+          },
+          // label
+          {
+            controlType: 'textbox',
+            key: 'label',
+            label: 'Label',
+            placeholder: "The element label",
+            helpText: "This value is used in the lable of the element",
+            inputType: 'text'
+          },
+          // placeholder
+          {
+            controlType: 'textbox',
+            key: 'placeholder',
+            label: 'Placeholder',
+            placeholder: "The element placeholder",
+            helpText: "This value is used in the placeholder of the element",
+            inputType: 'text',
+            validator: [
+              {name: "randomValidator"}
+            ]
+          },
+          //validator
+          {
+            controlType: 'select',
+            key: 'validator',
+            label: 'Validator',
+            helpText: "Select default validation for this element",
+            noOptValue: "--none--",
+            options: [
+              {
+                key: "builtIn", value: "built in validators",
+                children: [
+                  {key: [{name: 'required'}], value: 'Required'},
+                  {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
+                ]
+              },
+              {
+                key: "custom", value: "custom in validators",
+                children: [
+                  {key: [{name: 'email'}], value: 'Email'},
+                ]
+              }
+            ],
+            valueChangeSubscriptions: [{
+              controls: ['controlType'],
+              name: "isRendered",
+              params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
+            }]
+          },
+          // help
+          {
+            controlType: 'textbox',
+            key: 'help',
+            label: 'Help',
+            placeholder: "The element help",
+            helpText: "This value is used in the help of the element",
+            inputType: 'text'
+          },
+          //submit button
+          {
+            controlType: 'button',
+            key: 'submit-button',
+            label: 'Update',
+            inputType: 'submit'
+          },
+          //reset button
+          {
+            controlType: 'button',
+            key: 'reset-button',
+            label: 'Reset',
+            inputType: 'reset'
+          }
+        ]
+      };
     return formConfig;
   }
 
   getCampaign(): any {
 
     let formConfig: any =
-    {
-      config: [
-        {
-          controlType: 'textbox',
-          key: 'housenr',
-          label: 'House Nummer',
-          placeholder: "House Nummer hier",
-          inputType: 'text'
-        },
-        {
-          controlType: 'textbox',
-          key: 'strasse',
-          label: 'Strasse',
-          placeholder: "Strassenname hier",
-          inputType: 'text'
-        },
-        {
-          controlType: 'textbox',
-          key: 'plz',
-          label: 'PLZ',
-          placeholder: "PLZ hier",
-          inputType: 'text'
-        },
-        {
-          controlType: 'textbox',
-          key: 'stadt',
-          label: 'Stadt',
-          placeholder: "Stadt hier",
-          inputType: 'text'
-        },
-        {
-          controlType: 'textbox',
-          key: 'email',
-          label: 'Email',
-          placeholder: "Email hier",
-          inputType: 'mail',
-          validator: [
-            {name: 'required'},
-            {name: 'randomValidator'},
-          ]
-        },
-        {
-          controlType: 'checkbox',
-          key: 'emailkontakt',
-          label: 'Daf mich per Email kontaktieren'
-        },
-        {
-          controlType: 'textbox',
-          key: 'telefonnummer',
-          label: 'Telefonnummer',
-          inputType: 'tel',
-        },
-        {
-          controlType: 'textbox',
-          key: 'mobilenummer',
-          label: 'Mobilenummer',
-          inputType: 'tel',
-        },
-        {
-          controlType: 'select',
-          label: 'Sponsorships',
-          options: [
-            {label: 'hund', value: 'Hund'},
-            {label: 'katze', value: 'Katze'},
-          ],
-        },
-        {
-          controlType: 'radio',
-          key: 'additional_amount',
-          label: 'Anderer Betrag',
-          options: [
-            {label: '100', value: '100'},
-            {label: '200', value: '200'},
-          ],
-        },
-        {
-          controlType: 'textbox',
-          key: 'monatsbetrag',
-          label: 'Monatsbetrag',
-          inputType: 'number',
-        },
-        {
-          controlType: 'textbox',
-          key: 'jahresbetrag',
-          label: 'Jahresbetrag',
-          inputType: 'number',
-        },
-        {
-          controlType: 'select',
-          key: 'zahlungs_interval',
-          label: 'Zahlungs Interval',
-          helpText: "Intervall der Zahlung",
-          options: [
-            {label: 'monatlich', value: 'monatlich'},
-            {label: 'vierteljährlich', value: 'vierteljährlich'},
-            {label: 'halbjährlich', value: 'halbjährlich'},
-            {label: 'jährlich', value: 'jährlich'}
-          ],
-          valueChangeSubscriptions: [
-            /**/{
-              controls: ['sponsorship'], name: "filteredOptions",
-              params: [
-                {key: 'hund', options: ['monatlich', 'jährlich']},
-                {key: 'katze', options: ['vierteljährlich', 'halbjährlich']}
-              ]
-            }
-          ]
-        }
-      ]
-    };
+      {
+        config: [
+          {
+            controlType: 'textbox',
+            key: 'housenr',
+            label: 'House Nummer',
+            placeholder: "House Nummer hier",
+            inputType: 'text'
+          },
+          {
+            controlType: 'textbox',
+            key: 'strasse',
+            label: 'Strasse',
+            placeholder: "Strassenname hier",
+            inputType: 'text'
+          },
+          {
+            controlType: 'textbox',
+            key: 'plz',
+            label: 'PLZ',
+            placeholder: "PLZ hier",
+            inputType: 'text'
+          },
+          {
+            controlType: 'textbox',
+            key: 'stadt',
+            label: 'Stadt',
+            placeholder: "Stadt hier",
+            inputType: 'text'
+          },
+          {
+            controlType: 'textbox',
+            key: 'email',
+            label: 'Email',
+            placeholder: "Email hier",
+            inputType: 'mail',
+            validator: [
+              {name: 'required'},
+              {name: 'randomValidator'},
+            ]
+          },
+          {
+            controlType: 'checkbox',
+            key: 'emailkontakt',
+            label: 'Daf mich per Email kontaktieren'
+          },
+          {
+            controlType: 'textbox',
+            key: 'telefonnummer',
+            label: 'Telefonnummer',
+            inputType: 'tel',
+          },
+          {
+            controlType: 'textbox',
+            key: 'mobilenummer',
+            label: 'Mobilenummer',
+            inputType: 'tel',
+          },
+          {
+            controlType: 'select',
+            label: 'Sponsorships',
+            options: [
+              {label: 'hund', value: 'Hund'},
+              {label: 'katze', value: 'Katze'},
+            ],
+          },
+          {
+            controlType: 'radio',
+            key: 'additional_amount',
+            label: 'Anderer Betrag',
+            options: [
+              {label: '100', value: '100'},
+              {label: '200', value: '200'},
+            ],
+          },
+          {
+            controlType: 'textbox',
+            key: 'monatsbetrag',
+            label: 'Monatsbetrag',
+            inputType: 'number',
+          },
+          {
+            controlType: 'textbox',
+            key: 'jahresbetrag',
+            label: 'Jahresbetrag',
+            inputType: 'number',
+          },
+          {
+            controlType: 'select',
+            key: 'zahlungs_interval',
+            label: 'Zahlungs Interval',
+            helpText: "Intervall der Zahlung",
+            options: [
+              {label: 'monatlich', value: 'monatlich'},
+              {label: 'vierteljährlich', value: 'vierteljährlich'},
+              {label: 'halbjährlich', value: 'halbjährlich'},
+              {label: 'jährlich', value: 'jährlich'}
+            ],
+            valueChangeSubscriptions: [
+              /**/{
+                controls: ['sponsorship'], name: "filteredOptions",
+                params: [
+                  {key: 'hund', options: ['monatlich', 'jährlich']},
+                  {key: 'katze', options: ['vierteljährlich', 'halbjährlich']}
+                ]
+              }
+            ]
+          }
+        ]
+      };
     return formConfig;
   }
 
@@ -1157,8 +1157,8 @@ export class FormConfigService {
       },
       {
         label: 'Address Data',
-        key : 11,
-        config : this.getAddressDataConfig()
+        key: 11,
+        config: this.getAddressDataConfig()
       },
       {
         label: 'Donut Campaign',

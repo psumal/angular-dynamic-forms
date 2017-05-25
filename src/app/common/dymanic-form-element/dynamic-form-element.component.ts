@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, OnDestroy} from "@angular/core";
+import {Component, EventEmitter, OnDestroy, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {IDynamicFormElementModel} from "./model/base/form-control-options";
 
@@ -42,24 +42,25 @@ export class DynamicFormElementComponent implements OnInit, OnDestroy {
 
   onGroupValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.initSubscriptions();
   }
 
   ngOnDestroy() {
-   this.destroySubscriptions();
+    this.destroySubscriptions();
   }
 
-  initSubscriptions(){
-    if(this.group) {
-    const valueChanges = this.group.valueChanges;
-    this.subscriptions.push(
-      valueChanges.subscribe((change: any) => {
-        this.onGroupValueChanged.emit({change:change});
-      })
-    );
+  initSubscriptions() {
+    if (this.group) {
+      const valueChanges = this.group.valueChanges;
+      this.subscriptions.push(
+        valueChanges.subscribe((change: any) => {
+          this.onGroupValueChanged.emit({change: change});
+        })
+      );
     }
   }
 

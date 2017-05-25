@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
+import {NgModule} from "@angular/core";
 
-import {CommonModule} from '@angular/common';
+import {CommonModule} from "@angular/common";
 import {ValidationService} from "./validation.service";
 import {ControlErrorComponent} from "./errors/errors.component";
 import {ErrorService} from "./errors/error.service";
@@ -14,4 +14,5 @@ const EXPORTS = [ControlErrorComponent];
   declarations: [EXPORTS],
   providers: [ValidationService, ErrorService]
 })
-export class ValidationUtilsModule {}
+export class ValidationUtilsModule {
+}

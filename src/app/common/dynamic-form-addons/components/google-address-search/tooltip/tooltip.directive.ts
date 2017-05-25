@@ -1,7 +1,7 @@
 import {Directive, ElementRef, HostListener, Input, OnDestroy} from "@angular/core";
 import {TooltipService} from "./tooltip.service";
 
-@Directive({ selector: '[myTooltip]' })
+@Directive({selector: '[myTooltip]'})
 export class TooltipDirective implements OnDestroy {
 
   @Input('tooltipConfig') config: any;
@@ -14,7 +14,7 @@ export class TooltipDirective implements OnDestroy {
   @HostListener('mouseenter')
   @HostListener('focus')
   onMouseEnter(): void {
-    if(this.config) {
+    if (this.config) {
       console.log('add new Tooltip', this.config);
       this.tooltipService.components.push({
         id: this.id,

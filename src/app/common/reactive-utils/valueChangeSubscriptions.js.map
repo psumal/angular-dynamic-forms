@@ -1,1 +1,10 @@
-{"version":3,"file":"changeSubscriptions.js","sourceRoot":"","sources":["changeSubscriptions.ts"],"names":[],"mappings":";AACA,sCAA6C;AAU7C;IAAA;IAOA,CAAC;IAAD,0BAAC;AAAD,CAAC,AAPD;AAES,8BAAU,GAAiC,UAAC,MAAU,EAAE,KAAU;IACvE,+DAA+D;IAC/D,MAAM,CAAC,KAAK,CAAC,OAAO,CAAC,MAAM,CAAC,KAAK,CAAC,CAAC,CAAC;AACtC,CAAC,CAAC;AALS,kDAAmB;AASnB,QAAA,oBAAoB,GAAuD,IAAI,qBAAc,CAAqC,qBAAqB,CAAC,CAAC"}
+{
+  "version": 3,
+  "file": "changeSubscriptions.js",
+  "sourceRoot": "",
+  "sources": [
+    "changeSubscriptions.ts"
+  ],
+  "names": [],
+  "mappings": ";AACA,sCAA6C;AAU7C;IAAA;IAOA,CAAC;IAAD,0BAAC;AAAD,CAAC,AAPD;AAES,8BAAU,GAAiC,UAAC,MAAU,EAAE,KAAU;IACvE,+DAA+D;IAC/D,MAAM,CAAC,KAAK,CAAC,OAAO,CAAC,MAAM,CAAC,KAAK,CAAC,CAAC,CAAC;AACtC,CAAC,CAAC;AALS,kDAAmB;AASnB,QAAA,oBAAoB,GAAuD,IAAI,qBAAc,CAAqC,qBAAqB,CAAC,CAAC"
+}

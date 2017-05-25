@@ -5,11 +5,11 @@ import {IDynamicFormElementModel} from "./base/form-control-options";
 export class SelectItem extends DynamicFormElementModel {
 
   options: ISelectOption[] = [];
-  visibleOptions:ISelectOption[] = [];
-  noOptKey:string;
-  multiple:boolean;
+  visibleOptions: ISelectOption[] = [];
+  noOptKey: string;
+  multiple: boolean;
 
-  constructor(options:IDynamicFormElementModel) {
+  constructor(options: IDynamicFormElementModel) {
     super(options);
 
     options = options || {} as IDynamicFormElementModel;

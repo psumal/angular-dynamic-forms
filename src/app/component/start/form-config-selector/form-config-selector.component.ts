@@ -52,12 +52,12 @@ export class FormConfigSelectorComponent {
 
   updateFormConfig(formValue: any) {
     console.log('formValue: ', formValue);
-      if(formValue || formValue.toString() === '0') {
-        const configSet: any = this.getConfigByKey(formValue);
-        console.log('configSet: ', configSet);
-        this.formConfig = configSet.config || {};
-      }
+    if (formValue || formValue.toString() === '0') {
+      const configSet: any = this.getConfigByKey(formValue);
+      console.log('configSet: ', configSet);
+      this.formConfig = configSet.config || {};
     }
+  }
 
   getModel() {
     return this.formModel;
@@ -69,7 +69,7 @@ export class FormConfigSelectorComponent {
 
   onSubmitConfigSelection(form: any) {
 
-    if(form.valid) {
+    if (form.valid) {
       this.updateFormConfig(form.value.configSelect);
     }
 

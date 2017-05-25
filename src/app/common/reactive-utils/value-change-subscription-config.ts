@@ -1,5 +1,5 @@
 export interface IValueChangeSubscriptionConfig {
-  name:string;
+  name: string;
   controls: string[];
   params: any[];
 }

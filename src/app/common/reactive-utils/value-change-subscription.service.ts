@@ -5,9 +5,9 @@ import {FormArray, FormGroup} from "@angular/forms";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/merge";
-import "rxjs/add/operator/startWith"
+import "rxjs/add/operator/startWith";
 
-import 'rxjs/Rx'
+import "rxjs/Rx";
 import {Observable} from "rxjs/Rx";
 import {Subscription} from "rxjs/Subscription";
 import {IValueChangeSubscriptionConfig} from "./value-change-subscription-config";
@@ -43,8 +43,8 @@ export class ValueChangeSubscriptionService {
     return subscriptionFn;
   }
 
-  initValueChangeSubscriptions(config:{valueChangeSubscriptions?:IValueChangeSubscriptionConfig[]}, group:FormGroup, sideEffect:Function):Subscription[] {
-    let subscriptions:Subscription[] = [];
+  initValueChangeSubscriptions(config: { valueChangeSubscriptions?: IValueChangeSubscriptionConfig[] }, group: FormGroup, sideEffect: Function): Subscription[] {
+    let subscriptions: Subscription[] = [];
 
     if ('valueChangeSubscriptions' in config) {
       const listenerConfig = config.valueChangeSubscriptions || [];
@@ -65,7 +65,7 @@ export class ValueChangeSubscriptionService {
             .startWith(...initialValues)
             .subscribe((change: any) => {
               const result = subscriptionFn(change, listener.params, config, group);
-              sideEffect({name:listener.name, result:result})
+              sideEffect({name: listener.name, result: result})
             })
         );
       });
@@ -74,14 +74,13 @@ export class ValueChangeSubscriptionService {
     return subscriptions;
   }
 
-  getParentForm(group:any):FormGroup|FormArray {
+  getParentForm(group: any): FormGroup | FormArray {
     let parent = group.parent;
-    if(parent !== undefined) {
+    if (parent !== undefined) {
       return this.getParentForm(parent);
     }
     return group;
   }
-
 
 
 }

@@ -12,5 +12,4 @@ function observableValidator(c) {
   });
 }
 exports.observableValidator = observableValidator;
-;
 //# sourceMappingURL=observableValidator.js.map

@@ -84,8 +84,8 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   getWrapperClass(): string {
-    let classNames: string[] = []
-    classNames.push('form-group')
+    let classNames: string[] = [];
+    classNames.push('form-group');
     classNames.push(...this.config.wrapperClass);
     return classNames.join(' ');
   }
@@ -157,7 +157,7 @@ export class ControlComponent implements OnInit, OnDestroy {
         break;
     }
 
-  }
+  };
 
   updateAttributes() {
     const el: any = this._elementRef.nativeElement;

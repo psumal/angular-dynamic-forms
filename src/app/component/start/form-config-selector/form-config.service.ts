@@ -740,7 +740,7 @@ export class FormConfigService {
       controlType: 'google-address-search',
       key: "googleAddressSearch",
       label: "Google Address Search"
-    }
+    };
 
     let houseNumber: IDynamicFormElementModel = {
       label: 'Housenumber',

@@ -22,4 +22,4 @@ export function controlMatch(params: any): ValidatorFn {
     return isValid ? null : {controlMatch: true};
 
   }
-};
+}

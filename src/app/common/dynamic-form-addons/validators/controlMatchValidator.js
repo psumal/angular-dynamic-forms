@@ -18,5 +18,4 @@ function controlMatch(params) {
   };
 }
 exports.controlMatch = controlMatch;
-;
 //# sourceMappingURL=controlMatchValidator.js.map

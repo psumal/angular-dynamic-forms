@@ -13,4 +13,4 @@ export function observableValidator(c: AbstractControl): Observable<ValidationEr
     }
   });
 
-};
+}

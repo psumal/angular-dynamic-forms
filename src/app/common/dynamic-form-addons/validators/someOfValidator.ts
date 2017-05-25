@@ -24,4 +24,4 @@ export function someOf(params: any, numOfMatches: number): ValidatorFn {
     return (values.length >= numOfMatches) ? null : {someOf: true};
 
   }
-};
+}

@@ -12,5 +12,4 @@ function filteredOptions(change, params, item, form) {
   });
 }
 exports.filteredOptions = filteredOptions;
-;
 //# sourceMappingURL=filteredOptionsSubscription.js.map

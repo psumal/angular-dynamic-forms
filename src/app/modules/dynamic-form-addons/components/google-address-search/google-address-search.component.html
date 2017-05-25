@@ -7,9 +7,14 @@
   </label>
 
   <input
-    [type]="config.inputType"
+    [type]="hidden"
     [formControlName]="config.key"
     name="{{config.key}}"
+    style="display:none;"
+    #formInput>
+
+  <input
+    [type]="config.inputType"
     [ngClass]="getControlClass()"
     #searchInput>
 

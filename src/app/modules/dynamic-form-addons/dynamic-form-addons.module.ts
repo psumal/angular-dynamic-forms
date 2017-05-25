@@ -6,8 +6,8 @@ import {UI_COMPONENTS} from "../dymanic-form-element/dynamic-form-element.inject
 import {FORMATTER_PARSER} from "../formatter-parser/formatter-parser.injectionToken";
 import {randomValidator} from "./validators/randomlValidator";
 import {dividableBy} from "./validators/dividableByValidator";
-import {promiseValidator} from "./asyncValidators/promiseValidator";
-import {observableValidator} from "./asyncValidators/observableValidator";
+import {promiseValidator} from "./async-validators/promiseValidator";
+import {observableValidator} from "./async-validators/observableValidator";
 import {controlMatch} from "./validators/controlMatchValidator";
 import {toCapitalized} from "./formatter-parser/toCapitalized";
 import {maskString} from "./formatter-parser/maskString";
@@ -17,6 +17,8 @@ import {SliderComponent} from "./components/slider/slider.component";
 import {GoogleAddressSearchComponent} from "./components/google-address-search/google-address-search.component";
 import {filteredOptions} from "./change-subscriptions/filteredOptionsSubscription";
 import {AgmCoreModule} from "@agm/core";
+import {syncWithAddressComponent} from "./change-subscriptions/syncWithAddressComponent";
+import {focusFirstEmpty} from "./change-subscriptions/focusFirstEmpty";
 
 const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
 
@@ -68,7 +70,8 @@ const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
 
     //Custom Value Change Subscriptions
     {provide: VALUE_CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true},
-
+    {provide: VALUE_CHANGE_SUBSCRIPTIONS, useValue: syncWithAddressComponent, multi: true},
+    {provide: VALUE_CHANGE_SUBSCRIPTIONS, useValue: focusFirstEmpty, multi: true},
   ]
 })
 export class DynamicFormElementAddonModule {

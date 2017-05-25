@@ -165,7 +165,6 @@ export class DynamicFormElementService {
   };
 
   addConfigToGroup(group: FormGroup, config: IDynamicFormElementModel) {
-    console.log('addConfigToGroup', config);
     let configParams: any[] = this.getFormControlParamsArray(config);
     let control: any = (<any>this.fb).control(...configParams);
     group.addControl(config.key, control);

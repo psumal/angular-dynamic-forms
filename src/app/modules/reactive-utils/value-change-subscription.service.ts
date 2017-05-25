@@ -54,8 +54,11 @@ export class ValueChangeSubscriptionService {
         const subscriptionFn: ValueChangeSubscriptionFn = this.getSubscriptionFn(listener.name);
 
         let form = this.getParentForm(group);
-        let subs = [];
-        subs = listener.controls.map(cName => form.get(cName).valueChanges);
+        let subs = listener.controls
+          .filter(cName => form.get(cName))
+          .map(cName => form.get(cName).valueChanges);
+
+        console.log('SUB: ', config['key'],listener.name);
 
         //subscribe to changes
         const initialValues = listener.controls.map(cName => form.get(cName).value);
@@ -65,6 +68,7 @@ export class ValueChangeSubscriptionService {
             .startWith(...initialValues)
             .subscribe((change: any) => {
               const result = subscriptionFn(change, listener.params, config, group);
+              console.log('in sub:::', listener.name);
               sideEffect({name: listener.name, result: result})
             })
         );

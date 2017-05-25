@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnDestroy, OnInit} from "@angular/core";
+import {AfterContentInit, AfterViewChecked, Component, EventEmitter, OnDestroy, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {IDynamicFormElementModel} from "./model/base/form-control-options";
+import {ValueChangeSubscriptionService} from "../reactive-utils/value-change-subscription.service";
 
 @Component({
   inputs: ['config', 'group'],
@@ -8,7 +9,7 @@ import {IDynamicFormElementModel} from "./model/base/form-control-options";
   selector: 'dynamic-form-group',
   templateUrl: './dynamic-form-element.component.html'
 })
-export class DynamicFormElementComponent implements OnInit, OnDestroy {
+export class DynamicFormElementComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewChecked {
 
   private _config: IDynamicFormElementModel;
   set config(config: IDynamicFormElementModel) {
@@ -42,11 +43,21 @@ export class DynamicFormElementComponent implements OnInit, OnDestroy {
 
   onGroupValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {
+  constructor(private vcss:ValueChangeSubscriptionService) {
   }
 
   ngOnInit(): void {
+
     this.initSubscriptions();
+  }
+
+  ngAfterContentInit() {
+    console.log('ROOT ngAfterContentInit config', this.config);
+    this.subscriptions = [...this.subscriptions , ...this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)];
+  }
+
+  ngAfterViewChecked() {
+
   }
 
   ngOnDestroy() {
@@ -75,5 +86,15 @@ export class DynamicFormElementComponent implements OnInit, OnDestroy {
     });
     this.subscriptions = [];
   }
+
+  //sideEffects
+  public onValueSubscriptionChanged:Function = ($event: any) => {
+    const name = $event.name;
+    switch (name) {
+      case 'focusFirstEmpty':
+        console.log('focusFirstEmpty SIDE EFFECT');
+        break;
+    }
+  };
 
 }

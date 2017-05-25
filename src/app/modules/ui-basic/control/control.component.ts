@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit} from "@angular/core";
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
 
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {AbstractControl, FormGroup} from "@angular/forms";
@@ -44,6 +44,10 @@ export class ControlComponent implements OnInit, OnDestroy {
     return this._isRendered;
   }
 
+
+  @ViewChild("textbox")
+  textbox: ElementRef;
+
   get currentFormItem(): AbstractControl {
     if (this.group.get(this.config.key)) {
       return this.group.get(this.config.key);
@@ -57,6 +61,7 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('TEXTBOX!!!!!', this.textbox);
     this.dfes.addConfigToGroup(this.group, this.config);
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
@@ -148,12 +153,15 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   //sideEffects
-  onValueSubscriptionChanged = ($event: any) => {
-
+  public onValueSubscriptionChanged:Function = ($event: any) => {
     const name = $event.name;
     switch (name) {
       case 'isRendered':
         this.isRendered = $event.result;
+        break;
+      //@TODO we need a way to import this custom actions
+      case 'syncWithAddressComponent':
+        this.currentFormItem.setValue($event.result)
         break;
     }
 

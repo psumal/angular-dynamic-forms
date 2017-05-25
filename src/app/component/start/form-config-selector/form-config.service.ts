@@ -7,6 +7,7 @@ import {
 } from "../../../modules/dymanic-form-element/model/item.types";
 import {IDynamicFormElementModel} from "../../../modules/dymanic-form-element/model/base/form-control-options";
 import {ISelectOption} from "../../../modules/dymanic-form-element/model/base/objects/select-option";
+import {GoogleAddressSearchModel} from "../../../modules/dynamic-form-addons/components/google-address-search/google-address-search";
 
 @Injectable()
 export class FormConfigService {
@@ -736,10 +737,17 @@ export class FormConfigService {
 
   getAddressDataConfig(): IDynamicFormElementModel {
 
-    let googleAddressSearch: IDynamicFormElementModel = {
+    let googleAddressSearch: GoogleAddressSearchModel = {
       controlType: 'google-address-search',
       key: "googleAddressSearch",
-      label: "Google Address Search"
+      label: "Google Address Search",
+      addressComponentControls: [
+        {component: "street_number", control: 'house_number'},
+        {component: "street", control: 'street'},
+        {component: "postal_code", control: 'zip_code'},
+        {component: "locality", control: 'city'},
+        {component: "country", control: 'country'}
+      ]
     };
 
     let houseNumber: IDynamicFormElementModel = {
@@ -749,6 +757,13 @@ export class FormConfigService {
       key: 'house_number',
       validator: [
         {name: "required"}
+      ],
+      valueChangeSubscriptions: [
+        {
+          name: "syncWithAddressComponent",
+          controls: ["googleAddressSearch"],
+          params: ["street_number"]
+        }
       ]
     };
 
@@ -762,6 +777,13 @@ export class FormConfigService {
       ],
       validator: [
         {name: "required"}
+      ],
+      valueChangeSubscriptions: [
+        {
+          name: "syncWithAddressComponent",
+          controls: ["googleAddressSearch"],
+          params: ["route"]
+        }
       ]
     };
 
@@ -772,6 +794,13 @@ export class FormConfigService {
       key: 'zip_code',
       validator: [
         {name: "required"}
+      ],
+      valueChangeSubscriptions: [
+        {
+          name: "syncWithAddressComponent",
+          controls: ["googleAddressSearch"],
+          params: ["postal_code"]
+        }
       ]
     };
 
@@ -785,6 +814,13 @@ export class FormConfigService {
       ],
       validator: [
         {name: "required"}
+      ],
+      valueChangeSubscriptions: [
+        {
+          name: "syncWithAddressComponent",
+          controls: ["googleAddressSearch"],
+          params: ["locality"]
+        }
       ]
     };
 
@@ -795,13 +831,21 @@ export class FormConfigService {
       key: 'country',
       formState: "DE",
       options: [
-        {label: 'Deutsch', value: 'DE'},
-        {label: 'Englisch', value: 'EN'},
-        {label: 'Französisch', value: 'FR'},
-        {label: 'Italienisch', value: 'IT'}
+        {label: 'Österreich', value: 'AT'},
+        {label: 'Deutschlang', value: 'DE'},
+        {label: 'England', value: 'EN'},
+        {label: 'Frankreich', value: 'FR'},
+        {label: 'Italien', value: 'IT'}
       ],
       validator: [
         {name: "required"}
+      ],
+      valueChangeSubscriptions: [
+        {
+          name: "syncWithAddressComponent",
+          controls: ["googleAddressSearch"],
+          params: ["country"]
+        }
       ]
     };
 
@@ -833,7 +877,13 @@ export class FormConfigService {
       controlType: 'formGroup',
       key: "addressData",
       label: "Address Data",
-      config: []
+      config: [],
+      valueChangeSubscriptions:[
+        {
+          name:'focusFirstEmpty',
+          controls:['house_number','street','zip_code','city','country']
+        }
+      ]
     };
     addressData.config.push(row0, row1, row2);
 

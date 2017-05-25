@@ -1,9 +1,9 @@
 import {Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {AbstractControl, FormGroup} from "@angular/forms";
-import {TextboxItem} from "../../../dymanic-form-element/model/item-textbox";
 import {MapsAPILoader} from "@agm/core";
 import {DynamicFormElementService} from "../../../dymanic-form-element/dynamic-form-element.service";
 import {ValueChangeSubscriptionService} from "../../../reactive-utils/value-change-subscription.service";
+import {GoogleAddressSearchModel} from "./google-address-search";
 
 declare var google: any;
 
@@ -20,16 +20,19 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
   @ViewChild("searchInput")
   searchElementRef: ElementRef;
 
+  @ViewChild("formInput")
+  formInput: ElementRef;
+
   subscriptions: any[] = [];
 
   place: any;
 
-  private _config: TextboxItem;
-  set config(config: TextboxItem) {
+  private _config: GoogleAddressSearchModel;
+  set config(config: GoogleAddressSearchModel) {
     this._config = this.createConfig(config);
   }
 
-  get config(): TextboxItem {
+  get config(): GoogleAddressSearchModel {
     return this._config;
   }
 
@@ -57,6 +60,18 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  //sideEffects
+  onValueSubscriptionChanged = ($event: any) => {
+    const name = $event.name;
+    switch (name) {
+      case 'isRendered':
+        this.isRendered = $event.result;
+        break;
+    }
+
+  }
+
   constructor(private dfs: DynamicFormElementService,
               private vcss: ValueChangeSubscriptionService,
               private mAL: MapsAPILoader,
@@ -65,16 +80,67 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dfs.addConfigToGroup(this.group, this.config);
-    this.initGoogleAutocomplete();
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
+    this.initGoogleAutocomplete();
   }
 
   ngOnDestroy() {
     this.dfs.removeConfigFromGroup(this.group, this.config);
   }
 
-  createConfig(config): TextboxItem {
-    return new TextboxItem(config);
+  createConfig(config): GoogleAddressSearchModel {
+    return new GoogleAddressSearchModel(config);
+  }
+
+  initAddressCopySubscription() {
+    this.currentFormItem.valueChanges.subscribe((change) => {
+      console.log('initAddressCopySubscription');
+      this.explodeAddressIntoFormGroup(change);
+
+      for(let key in this.group.value) {
+        console.log('key', key);
+        console.log('value', this.group.value.key)
+      }
+
+    })
+  }
+
+  explodeAddressIntoFormGroup(place: any) {
+    place = {...place};
+    let street_number: string;
+    let route: string;
+    let postal_code: string;
+    let locality: string;
+    let country: string;
+
+    console.log('place', place.address_components);
+
+    if (typeof place === 'object' && 'address_components' in place) {
+      place.address_components.forEach(function (component) {
+        component.types.forEach(function (addressComponentType) {
+          console.log('addressComponentType', addressComponentType)
+          if (addressComponentType == 'country') {
+            country = component.short_name.toLowerCase()
+          }
+          if (addressComponentType == 'locality') {
+            locality = component.long_name
+          }
+          if (addressComponentType == 'postal_code') {
+            postal_code = component.long_name
+          }
+          if (addressComponentType == 'route') {
+            route = component.long_name
+          } else {
+
+          }
+          if (addressComponentType == 'street_number') {
+            street_number = component.long_name
+          }
+        });
+
+      });
+    }
+
   }
 
   initGoogleAutocomplete() {
@@ -85,9 +151,6 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
         types: ["address"]
       });
 
-
-      input.value = 'this.place.formatted_address';
-
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
@@ -97,8 +160,6 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
           this.currentFormItem.setValue(this.place);
           //write to view
           input.value = this.place.formatted_address;
-
-          console.log(this.place.formatted_address);
         });
       });
       /**/
@@ -116,15 +177,7 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
   getControlClass(): string {
     let classNames: string[] = [];
 
-    if (this.config.controlType === 'radio' || this.config.controlType === 'checkbox') {
-      classNames.push('form-check');
-    }
-    else if (this.config.controlType === 'textbox' && this.config.inputType === 'file') {
-      classNames.push('form-control-file');
-    }
-    else {
-      classNames.push('form-control');
-    }
+    classNames.push('form-control');
 
     return classNames.join(' ');
   }
@@ -154,18 +207,5 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
 
     return classNames.join(' ');
   }
-
-  //sideEffects
-  onValueSubscriptionChanged = ($event: any) => {
-
-    const name = $event.name;
-    switch (name) {
-      case 'isRendered':
-        this.isRendered = $event.result;
-        break;
-    }
-
-  }
-
 
 }

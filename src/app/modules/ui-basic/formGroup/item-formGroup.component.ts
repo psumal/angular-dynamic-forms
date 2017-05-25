@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
 import {FormGroup} from "@angular/forms";
+import {ValueChangeSubscriptionService} from "../../reactive-utils/value-change-subscription.service";
 
 @Component({
   inputs: ['config', 'group'],
@@ -12,6 +13,8 @@ import {FormGroup} from "@angular/forms";
 export class FormGroupComponent implements OnInit, OnDestroy {
 
   static controlTypes = ["formGroup"];
+
+  private subscriptions: any[] = [];
 
   private _config: IDynamicFormElementModel;
   set config(config: IDynamicFormElementModel) {
@@ -41,20 +44,61 @@ export class FormGroupComponent implements OnInit, OnDestroy {
     return this._items || [];
   }
 
+  _isRendered: boolean = true;
+
+  set isRendered(value: boolean) {
+    this._isRendered = value;
+  }
+
+  get isRendered(): boolean {
+    return this._isRendered;
+  }
+
   get currentFormItem() {
     return this.group.get(this.config.key);
   }
 
-  constructor(protected dfes: DynamicFormElementService) {
+  constructor(protected dfes: DynamicFormElementService,
+              protected vcss: ValueChangeSubscriptionService) {
 
   }
 
   ngOnInit() {
     this.dfes.addConfigToGroup(this.group, this.config);
+    this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
 
   ngOnDestroy() {
+    this.destroySubscriptions();
     this.dfes.removeConfigFromGroup(this.group, this.config);
   }
+
+  destroySubscriptions() {
+    this.subscriptions.forEach((sub: any) => {
+      try {
+        sub.unsubscribe();
+      }
+      catch (e) {
+        console.log(new Error(e));
+      }
+    });
+    this.subscriptions = [];
+  }
+
+  //sideEffects
+  public onValueSubscriptionChanged:Function = ($event: any) => {
+    const name = $event.name;
+    switch (name) {
+      case 'isRendered':
+        this.isRendered = $event.result;
+        break;
+      //@TODO we need a way to import this custom actions
+      case 'syncWithAddressComponent':
+        this.currentFormItem.setValue($event.result)
+        break;
+    }
+
+  };
+
 
 }

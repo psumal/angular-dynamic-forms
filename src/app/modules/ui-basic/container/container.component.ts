@@ -75,6 +75,7 @@ export class ContainerComponent implements OnInit {
 
     const name = $event.name;
     switch (name) {
+      //list of default actions
       case 'isRendered':
         this.isRendered = $event.result;
         break;

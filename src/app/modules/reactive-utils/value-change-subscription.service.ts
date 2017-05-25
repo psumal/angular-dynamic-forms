@@ -56,12 +56,12 @@ export class ValueChangeSubscriptionService {
         let form = this.getParentForm(group);
         let subs = listener.controls
           .filter(cName => form.get(cName))
-          .map(cName => form.get(cName).valueChanges);
-
-        console.log('SUB: ', config['key'],listener.name);
+          .map(cName => (cName == '[self]')?group.valueChanges:form.get(cName).valueChanges);
 
         //subscribe to changes
-        const initialValues = listener.controls.map(cName => form.get(cName).value);
+        const initialValues = listener.controls
+          .map(cName => (cName == '[self]')?group.value:form.get(cName).value);
+
         const controlChanges$ = Observable.merge(...subs);
         subscriptions.push(
           controlChanges$

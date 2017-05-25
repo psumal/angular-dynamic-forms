@@ -877,13 +877,7 @@ export class FormConfigService {
       controlType: 'formGroup',
       key: "addressData",
       label: "Address Data",
-      config: [],
-      valueChangeSubscriptions:[
-        {
-          name:'focusFirstEmpty',
-          controls:['house_number','street','zip_code','city','country']
-        }
-      ]
+      config: []
     };
     addressData.config.push(row0, row1, row2);
 

@@ -1,4 +1,4 @@
-<div [formGroup]="group" class="{{getWrapperClass()}}">
+<div [formGroup]="group" class="{{getWrapperClass()}}" *ngIf="isRendered">
 
   <label [attr.for]="config.key" [attr.class]="'form-control-label'">
     {{config.label}}

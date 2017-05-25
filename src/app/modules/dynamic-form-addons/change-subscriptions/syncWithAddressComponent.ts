@@ -1,4 +1,5 @@
-export function syncWithAddressComponent(addressData?: any, params?: any, item?: any, form?: any): any {
+import {ChangeSubscriptionResult} from "../../reactive-utils/value-change-subscriptions-function";
+export function syncWithAddressComponent(addressData?: any, params?: any, item?: any, form?: any): ChangeSubscriptionResult {
   const targetComponent: any = params[0];
 
   addressData = {...addressData};
@@ -21,5 +22,9 @@ export function syncWithAddressComponent(addressData?: any, params?: any, item?:
       }
     }
   }
-  return componentValue;
+
+  return {
+    key: "syncWithAddressComponent",
+    result: componentValue
+  };
 }

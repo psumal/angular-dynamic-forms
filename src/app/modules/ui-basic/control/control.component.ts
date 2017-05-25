@@ -152,6 +152,7 @@ export class ControlComponent implements OnInit, OnDestroy {
     const name = $event.name;
     switch (name) {
       case 'isRendered':
+        console.log('isRenderedisRendered', $event);
         this.isRendered = $event.result;
         break;
       //@TODO we need a way to import this custom actions

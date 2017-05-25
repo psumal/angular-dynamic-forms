@@ -579,7 +579,6 @@ export class FormConfigService {
 
     let salutation: IDynamicFormElementModel = {
       label: 'Anrede',
-      wrapperClass: ['col-sm-3'],
       controlType: 'select',
       key: 'anrede',
       options: [
@@ -594,14 +593,12 @@ export class FormConfigService {
 
     let isCompany: IDynamicFormElementModel = {
       label: 'Als Firma',
-      wrapperClass: ['col-sm-3'],
       controlType: 'checkbox',
       key: 'isCompany'
     };
 
     let companyName: IDynamicFormElementModel = {
       label: 'Firma',
-      wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
       key: 'company',
       formatterParser: [
@@ -619,7 +616,6 @@ export class FormConfigService {
       controlType: 'select',
       key: 'titel',
       label: 'Titel',
-      wrapperClass: ['col-sm-4'],
       options: [
         {value: 0, label: 'Dr'},
         {value: 0, label: 'Prof'}
@@ -630,7 +626,6 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'geburtsdatum',
       label: 'Geburtsdatum',
-      wrapperClass: ['col-sm-4'],
       placeholder: "Geburtsdatum hier",
       helpText: "der Geburtsdatum der Person",
       inputType: 'date',
@@ -643,7 +638,6 @@ export class FormConfigService {
       controlType: 'select',
       key: 'beschaeftigung',
       label: 'Beschäftigung',
-      wrapperClass: ['col-sm-4'],
       helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
       options: [
         {label: 'Arbeiter', value: 'Arbeiter'},

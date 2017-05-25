@@ -68,8 +68,8 @@ export class ValueChangeSubscriptionService {
             .startWith(...initialValues)
             .subscribe((change: any) => {
               const result = subscriptionFn(change, listener.params, config, group);
-              console.log('in sub:::', listener.name);
-              sideEffect({name: listener.name, result: result})
+              console.log('in sub:::', listener.name, result);
+              sideEffect(result)
             })
         );
       });

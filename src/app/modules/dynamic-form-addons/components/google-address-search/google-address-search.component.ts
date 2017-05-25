@@ -79,7 +79,7 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dfs.addConfigToGroup(this.group, this.config);
+    this.dfs.addControlConfigToGroup(this.group, this.config);
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
     this.initGoogleAutocomplete();
   }

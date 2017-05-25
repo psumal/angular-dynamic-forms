@@ -68,7 +68,7 @@ var ControlComponent = (function () {
     configurable: true
   });
   ControlComponent.prototype.ngOnInit = function () {
-    this.dfs.addConfigToGroup(this.group, this.config);
+    this.dfs.addControlConfigToGroup(this.group, this.config);
     //this.subscriptions = this.dfes.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   };
   ControlComponent.prototype.ngOnDestroy = function () {

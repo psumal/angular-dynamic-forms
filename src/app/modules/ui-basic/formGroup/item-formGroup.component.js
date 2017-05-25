@@ -63,7 +63,7 @@ var FormGroupComponent = (function () {
     configurable: true
   });
   FormGroupComponent.prototype.ngOnInit = function () {
-    this.dfs.addConfigToGroup(this.group, this.config);
+    this.dfs.addControlConfigToGroup(this.group, this.config);
   };
   return FormGroupComponent;
 }());

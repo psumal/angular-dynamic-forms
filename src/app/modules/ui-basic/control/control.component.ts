@@ -57,7 +57,7 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dfes.addConfigToGroup(this.group, this.config);
+    this.dfes.addControlConfigToGroup(this.group, this.config);
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
 

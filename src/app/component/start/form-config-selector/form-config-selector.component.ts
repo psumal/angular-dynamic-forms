@@ -20,7 +20,7 @@ export class FormConfigSelectorComponent {
 
   constructor(protected formConfigService: FormConfigService) {
 
-    this.formConfig = formConfigService.getAddressDataConfig();
+    this.formConfig = formConfigService.getContactData();
     this.formConfigs = formConfigService.getAllFormConfigs();
     this.configSelectionConfig = {
       config: [

@@ -887,6 +887,42 @@ export class FormConfigService {
     return addressData;
   }
 
+  getContactData() {
+    const contactData = {
+      config: [
+        {
+          controlType: 'textbox',
+          key: 'email',
+          label: 'Email',
+          inputType: 'mail',
+          validator: [
+            {name: 'required'},
+            {name: 'email'},
+          ]
+        },
+        {
+          controlType: 'checkbox',
+          key: 'emailkontakt',
+          label: 'Daf mich per Email kontaktieren'
+        },
+        {
+          controlType: 'textbox',
+          key: 'telefonnummer',
+          label: 'Telefonnummer',
+          inputType: 'tel',
+        },
+        {
+          controlType: 'textbox',
+          key: 'mobilenummer',
+          label: 'Mobilenummer',
+          inputType: 'tel',
+        }
+      ],
+    };
+
+    return contactData;
+  }
+
   getGenericElementConfig(): IDynamicFormElementModel {
 
     let formConfig: any =

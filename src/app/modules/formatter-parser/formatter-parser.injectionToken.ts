@@ -1,4 +1,4 @@
 import {InjectionToken} from "@angular/core";
-import {FormatParseFn} from "./formatter-parser-function";
+import {IFormatterParserFn} from "./struct/formatter-parser-function";
 
-export const FORMATTER_PARSER: InjectionToken<(FormatParseFn)[]> = new InjectionToken<(FormatParseFn)[]>('formatterParser');
+export const FORMATTER_PARSER: InjectionToken<(IFormatterParserFn)[]> = new InjectionToken<(IFormatterParserFn)[]>('formatterParser');

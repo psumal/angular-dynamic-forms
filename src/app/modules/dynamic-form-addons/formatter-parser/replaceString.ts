@@ -1,10 +1,13 @@
-import {FormatParseFn} from "../../formatter-parser/formatter-parser-function";
+import {IFormatterParserFn} from "../../formatter-parser/struct/formatter-parser-function";
 
-export function replaceString(searchValue: RegExp, replaceValue: string): FormatParseFn {
+export function replaceString(searchValue: RegExp, replaceValue: string): IFormatterParserFn {
 
   return (value: any) => {
     let replacedValue = value.replace(searchValue, replaceValue);
-    return replacedValue;
+    return {
+      name: "replaceString",
+      result: replacedValue
+    };
   }
 
 }

@@ -1,4 +1,5 @@
-export function toUppercase(value: string): string {
+import {IFormatterParserResult} from "../../formatter-parser/struct/formatter-parser-result";
+export function toUppercase(value: string): IFormatterParserResult {
 
   if (typeof value === "string") {
     value = value.toLowerCase().replace(/[a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć]/g, function (str) {
@@ -9,7 +10,10 @@ export function toUppercase(value: string): string {
     value = "";
   }
 
-  return value;
+  return {
+    name: "toUppercase",
+    result: value
+  }
 
 }
 

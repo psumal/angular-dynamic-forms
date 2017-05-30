@@ -1,4 +1,5 @@
-export function toCapitalized(value: string): string {
+import {IFormatterParserResult} from "../../formatter-parser/struct/formatter-parser-result";
+export function toCapitalized(value: string): IFormatterParserResult {
 
   if (typeof value === "string") {
     value = value.toLowerCase().replace(/[^a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć]./g, function (str) {
@@ -9,7 +10,10 @@ export function toCapitalized(value: string): string {
     value = "";
   }
 
-  return value.charAt(0).toUpperCase() + value.slice(1);
+  return {
+    name: "toCapitalized",
+    result: value.charAt(0).toUpperCase() + value.slice(1)
+  }
 
 }
 

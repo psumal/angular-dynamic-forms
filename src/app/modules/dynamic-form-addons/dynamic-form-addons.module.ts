@@ -9,7 +9,6 @@ import {dividableBy} from "./validators/dividableByValidator";
 import {promiseValidator} from "./async-validators/promiseValidator";
 import {observableValidator} from "./async-validators/observableValidator";
 import {controlMatch} from "./validators/controlMatchValidator";
-import {toCapitalized} from "./formatter-parser/toCapitalized";
 import {maskString} from "./formatter-parser/maskString";
 import {replaceString} from "./formatter-parser/replaceString";
 import {someOf} from "./validators/someOfValidator";
@@ -19,7 +18,6 @@ import {filteredOptions} from "./change-subscriptions/filteredOptionsSubscriptio
 import {AgmCoreModule} from "@agm/core";
 import {syncWithAddressComponent} from "./change-subscriptions/syncWithAddressComponent";
 import {focusFirstEmpty} from "./change-subscriptions/focusFirstEmpty";
-import {toUppercase} from "./formatter-parser/toUppercase";
 
 const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
 
@@ -61,10 +59,8 @@ const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
     //@TODO
 
     //Custom Formatter and Parser
-    {provide: FORMATTER_PARSER, useValue: toCapitalized, multi: true},
     {provide: FORMATTER_PARSER, useValue: maskString, multi: true},
     {provide: FORMATTER_PARSER, useValue: replaceString, multi: true},
-    {provide: FORMATTER_PARSER, useValue: toUppercase, multi: true},
 
     //Custom Components
     {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},

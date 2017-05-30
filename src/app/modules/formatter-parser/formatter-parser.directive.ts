@@ -2,6 +2,7 @@ import {Directive, ElementRef, forwardRef, Host, HostListener, OnInit, Optional,
 import {ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
 import {FormatterParserService} from "./formatter-parser.service";
+import {IFormatterParserFn} from "./struct/formatter-parser-function";
 
 const CONTROL_VALUE_ACCESSOR = {
   name: 'formatterParserValueAccessor',
@@ -65,10 +66,10 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     const value: any = input.value;
 
     //write value to view (visible text of the form control)
-    input.value = this.formatterParserView.reduce((state, transform) => transform(state), value || null);
+    input.value = this.formatterParserView.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value || null);
 
     //write value to model (value stored in FormControl)
-    const modelValue = this.formatterParserModel.reduce((state, transform) => transform(state), value || null);
+    const modelValue = this.formatterParserModel.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value || null);
     this.onChange(modelValue);
   }
 
@@ -77,10 +78,10 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     const input: HTMLInputElement = this._elementRef.nativeElement;
 
     //write value to view (visible text of the form control)
-    input.value = this.formatterParserView.reduce((state, transform) => transform(state), value);
+    input.value = this.formatterParserView.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
 
     //write value to model (value stored in FormControl)
-    const modelValue = this.formatterParserModel.reduce((state, transform) => transform(state), value);
+    const modelValue = this.formatterParserModel.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
     this.formControl.patchValue(modelValue);
   }
 
@@ -91,7 +92,7 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     this.formatterParserModel = [];
 
     if (!this.config) {
-      return
+      return;
     }
 
     if ('formatterParser' in this.config) {

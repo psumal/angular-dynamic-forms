@@ -1,7 +1,7 @@
 import {IValueChangeSubscriptionConfig} from "../../../reactive-utils/value-change-subscription-config";
 import {IFormState} from "./objects/form-state";
 import {IValidatorConfig} from "../../../validation-utils/validator-config";
-import {IFormatterParserConfig} from "../../../formatter-parser/formatter-parser-config";
+import {IFormatterParserConfig} from "../../../formatter-parser/struct/formatter-parser-config";
 import {IDynamicFormElementModel} from "./form-control-options";
 
 export class DynamicFormElementModel {

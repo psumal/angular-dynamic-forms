@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, HostBinding, OnDestroy, OnInit} from "@angular/core";
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
 import {FormGroup} from "@angular/forms";
@@ -15,6 +15,9 @@ export class FormGroupComponent implements OnInit, OnDestroy {
   static controlTypes = ["formGroup"];
 
   private subscriptions: any[] = [];
+
+  @HostBinding('class')
+  hostClass:string;
 
   private _config: IDynamicFormElementModel;
   set config(config: IDynamicFormElementModel) {

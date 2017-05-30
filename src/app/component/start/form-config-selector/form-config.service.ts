@@ -735,6 +735,7 @@ export class FormConfigService {
       controlType: 'google-address-search',
       key: "googleAddressSearch",
       label: "Google Address Search",
+      wrapperClass: ['col-sm-12'],
       addressComponentControls: [
         {component: "street_number", control: 'house_number'},
         {component: "street", control: 'street'},
@@ -746,7 +747,7 @@ export class FormConfigService {
 
     let houseNumber: IDynamicFormElementModel = {
       label: 'Housenumber',
-      wrapperClass: ['col'],
+      wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
       key: 'house_number',
       validator: [
@@ -763,7 +764,7 @@ export class FormConfigService {
 
     let street: IDynamicFormElementModel = {
       label: 'Street',
-      wrapperClass: ['col'],
+      wrapperClass: ['col-sm-6'],
       controlType: 'textbox',
       key: 'street',
       formatterParser: [
@@ -783,14 +784,14 @@ export class FormConfigService {
 
     let zipCode: IDynamicFormElementModel = {
       label: 'Zip Code',
-      wrapperClass: ['col'],
+      wrapperClass: ['col-sm-4'],
       controlType: 'textbox',
       key: 'zip_code',
       validator: [
         {name: "required"}
       ],
       formatterParser: [
-        {name: 'toUppercase', target: 2}
+        {name: 'toUpperCase', target: 2}
       ],
       valueChangeSubscriptions: [
         {
@@ -803,7 +804,7 @@ export class FormConfigService {
 
     let city: IDynamicFormElementModel = {
       label: 'city',
-      wrapperClass: ['col'],
+      wrapperClass: ['col-sm-4'],
       controlType: 'textbox',
       key: 'city',
       formatterParser: [
@@ -823,13 +824,13 @@ export class FormConfigService {
 
     let country: IDynamicFormElementModel = {
       label: 'Country',
-      wrapperClass: ['col'],
+      wrapperClass: ['col-sm-4'],
       controlType: 'select',
       key: 'country',
       formState: "DE",
       options: [
         {label: 'Österreich', value: 'AT'},
-        {label: 'Deutschlang', value: 'DE'},
+        {label: 'Deutschland', value: 'DE'},
         {label: 'England', value: 'EN'},
         {label: 'Frankreich', value: 'FR'},
         {label: 'Italien', value: 'IT'}

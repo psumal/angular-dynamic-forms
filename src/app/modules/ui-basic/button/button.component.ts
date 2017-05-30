@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, HostBinding} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {ButtonItem} from "../../dymanic-form-element/model/item-button";
 
@@ -10,7 +10,6 @@ import {ButtonItem} from "../../dymanic-form-element/model/item-button";
 })
 export class ButtonComponent {
   static controlTypes = ["button", "submit", "reset"];
-
 
   private _config: ButtonItem;
   set config(config: ButtonItem) {

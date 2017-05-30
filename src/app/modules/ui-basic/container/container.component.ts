@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, HostBinding, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
@@ -14,6 +14,19 @@ export class ContainerComponent implements OnInit {
   static controlTypes = ["container"];
 
   subscriptions: any[] = [];
+
+  @HostBinding('class')
+  hostClass:string;
+
+  getHostClass(): string {
+    let classNames: string[] = [];
+    classNames.push('row');
+    if(this.config) {
+      classNames.push(...this.config.wrapperClass);
+    }
+    return classNames.join(' ');
+  }
+
 
   private _config: IDynamicFormElementModel;
   set config(config: IDynamicFormElementModel) {
@@ -56,20 +69,14 @@ export class ContainerComponent implements OnInit {
     return this._isRendered;
   }
 
-  constructor(private dfes: DynamicFormElementService,
-              private vcss: ValueChangeSubscriptionService) {
+  constructor(private vcss: ValueChangeSubscriptionService) {
   }
 
   ngOnInit() {
+    this.hostClass = this.getHostClass();
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
   }
 
-  getWrapperClass(): string {
-    let classNames: string[] = [];
-    classNames.push('row');
-    classNames.push(...this.config.wrapperClass);
-    return classNames.join(' ');
-  }
 
   onValueSubscriptionChanged = ($event: any) => {
 

@@ -1,10 +1,6 @@
-<div [ngClass]="getWrapperClass()">
-
-  <ng-container
-    *ngFor="let conf of items;"
-    dynamicFormElement
-    [config]="conf"
-    [group]="currentFormItem">
-  </ng-container>
-
-</div>
+<ng-container
+  *ngFor="let conf of items;"
+  dynamicFormElement
+  [config]="conf"
+  [group]="currentFormItem">
+</ng-container>

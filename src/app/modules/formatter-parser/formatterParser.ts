@@ -4,10 +4,10 @@ export class FormatterParser {
 
   static charsInLowerAndUppercase = 'a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć';
 
-  static toCapitalized: IFormatterParserFn = (value: string): IFormatterParserResult => {
+  static toCapitalized: IFormatterParserFn = (value: any): IFormatterParserResult => {
 
-    if (typeof value === "string") {
-      value = value.toLowerCase().replace(/[^a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć]./g, function (str) {
+    if (value && (typeof value === "string" || "toString" in value)) {
+      value = value.toString().toLowerCase().replace(/[^a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć]./g, function (str) {
         return str.toUpperCase();
       });
     }
@@ -25,7 +25,7 @@ export class FormatterParser {
   static toUpperCase: IFormatterParserFn = (value: any): IFormatterParserResult => {
 
     let transformedValue;
-    if (typeof value === "string" || "toString" in value) {
+    if (value && (typeof value === "string" || "toString" in value)) {
       transformedValue = value.toString().toLowerCase().replace(/[a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć]/g, function (str) {
         return str.toUpperCase();
       });

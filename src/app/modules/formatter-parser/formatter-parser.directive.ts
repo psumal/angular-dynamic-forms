@@ -1,8 +1,12 @@
-import {Directive, ElementRef, forwardRef, Host, HostListener, OnInit, Optional, SkipSelf} from "@angular/core";
+import {
+  Directive, ElementRef, forwardRef, Host, HostListener, InjectionToken, OnInit, Optional,
+  SkipSelf
+} from "@angular/core";
 import {ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
 import {FormatterParserService} from "./formatter-parser.service";
 import {IFormatterParserFn} from "./struct/formatter-parser-function";
+import createTextMaskInputElement from "./text-mask-core/createTextMaskInputElement";
 
 const CONTROL_VALUE_ACCESSOR = {
   name: 'formatterParserValueAccessor',
@@ -11,11 +15,16 @@ const CONTROL_VALUE_ACCESSOR = {
   multi: true
 };
 
+export const FORMATTER_PARSER: InjectionToken<(IFormatterParserFn)[]> = new InjectionToken<(IFormatterParserFn)[]>('formatterParser');
+
+const TEXT_MASK:InjectionToken<Function> = new InjectionToken<Function>('text-mask');
+
 @Directive({
   inputs: ['config', 'formControlName'],
   selector: '[formatterParser]',
   providers: [
-    CONTROL_VALUE_ACCESSOR
+    CONTROL_VALUE_ACCESSOR,
+    {provide:TEXT_MASK, useValue: '' }
   ]
 })
 export class FormatterParserDirective implements ControlValueAccessor, OnInit {
@@ -38,6 +47,7 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit(): void {
+    console.log('createTextMaskInputElement', createTextMaskInputElement);
     this.formControl = (<any>this.fcd).form.controls[this.formControlName];
     this.updateFormatterAndParser();
   }
@@ -76,10 +86,9 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   // Formatter: Model to View
   writeValue(value: any): void {
     const input: HTMLInputElement = this._elementRef.nativeElement;
-
     //write value to view (visible text of the form control)
-    input.value = this.formatterParserView.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
-
+    input.value = value;//this.formatterParserView.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
+    console.log('this.formatterParserView', (this.formatterParserView[0])?this.formatterParserView[0](value):'nix');
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
     this.formControl.patchValue(modelValue);
@@ -99,10 +108,11 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
       //setup formatterParser functions for view and model values
       this.config.formatterParser
         .forEach((formatterConfig: any) => {
-          const fPF: any = this.fps.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
-          const t = formatterConfig.target;
+          const targetBoth:number = 2;
+          const fPF: IFormatterParserFn = this.fps.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
+          const t = (formatterConfig.target === undefined)?targetBoth:formatterConfig.target;
 
-          if (t == 0 || t == 2) {
+          if ( (t == 0 || t == 2)) {
             this.formatterParserView.push(fPF);
           }
           if (t == 1 || t == 2) {
@@ -112,5 +122,7 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     }
 
   }
+
+
 
 }

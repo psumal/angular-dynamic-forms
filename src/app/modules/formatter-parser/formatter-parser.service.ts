@@ -13,6 +13,7 @@ export class FormatterParserService {
     let formatParseFunction: Function;
 
     if (functionName in FormatterParser) {
+      console.log('found in Core: ', functionName, params);
       formatParseFunction = FormatterParser[functionName];
     }
     else if (this.FORMATTER_PARSER) {
@@ -27,6 +28,7 @@ export class FormatterParserService {
       throw new Error(`Formatter or Parser with name ${functionName} is not provided as a function via FormatterParser service or FORMATTER_PARSER InjectionToken.`);
     }
 
+    console.log('formatParseFunctionCompose: ', formatParseFunction(...params));
     return (params) ? formatParseFunction(...params) : formatParseFunction;
   }
 

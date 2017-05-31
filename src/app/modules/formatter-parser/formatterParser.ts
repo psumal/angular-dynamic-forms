@@ -1,5 +1,8 @@
 import {IFormatterParserFn} from "./struct/formatter-parser-function";
 import {IFormatterParserResult} from "./struct/formatter-parser-result";
+
+
+
 export class FormatterParser {
 
   static charsInLowerAndUppercase = 'a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć';
@@ -39,6 +42,20 @@ export class FormatterParser {
       result: transformedValue
     };
   };
+
+  static maskAndPlaceholdString(mask: string, config: any): IFormatterParserFn {
+
+    return (rawValue: string) => {
+      console.log('in maskAndPlaceholdString', rawValue);
+      rawValue = rawValue || '';
+      console.log('efore conformedValue', rawValue);
+
+      return {
+        name: 'maskAndPlaceholdString',
+        result: rawValue
+      }
+    }
+  }
 
 }
 

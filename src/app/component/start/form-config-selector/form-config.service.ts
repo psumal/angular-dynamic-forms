@@ -883,7 +883,7 @@ export class FormConfigService {
   }
 
   getContactData() {
-    const contactData = {
+    const contactData:IDynamicFormElementModel = {
       config: [
         {
           controlType: 'textbox',
@@ -892,7 +892,10 @@ export class FormConfigService {
           inputType: 'mail',
           validator: [
             {name: 'required'},
-            {name: 'email'},
+            {name: 'email'}
+          ],
+          formatterParser: [
+            {name: "maskAndPlaceholdString", params: [''], target: 0}
           ]
         },
         {

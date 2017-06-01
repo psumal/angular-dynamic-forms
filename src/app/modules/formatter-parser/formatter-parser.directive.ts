@@ -47,7 +47,6 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit(): void {
-    console.log('createTextMaskInputElement', createTextMaskInputElement);
     this.formControl = (<any>this.fcd).form.controls[this.formControlName];
     this.updateFormatterAndParser();
   }
@@ -72,6 +71,7 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   @HostListener('input', ['$event'])
   onControlInput($event: KeyboardEvent) {
 
+    console.log('onControlInput: ', $event);
     const input = $event.target as HTMLInputElement;
     const value: any = input.value;
 
@@ -85,13 +85,17 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
 
   // Formatter: Model to View
   writeValue(value: any): void {
+    console.log('formatter model change: ', this.formControlName, value);
     const input: HTMLInputElement = this._elementRef.nativeElement;
     //write value to view (visible text of the form control)
     input.value = value;//this.formatterParserView.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
-    console.log('this.formatterParserView', (this.formatterParserView[0])?this.formatterParserView[0](value):'nix');
+
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
-    this.formControl.patchValue(modelValue);
+    // prevent cyclic function calls @TODO consider other way to call patchValue
+    if(value !== modelValue) {
+      this.formControl.patchValue(modelValue);
+    }
   }
 
   //fetch formatter and parser form config and update props

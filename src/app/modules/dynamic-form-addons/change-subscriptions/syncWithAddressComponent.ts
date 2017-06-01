@@ -1,5 +1,4 @@
-import {ChangeSubscriptionResult} from "../../reactive-utils/value-change-subscriptions-function";
-export function syncWithAddressComponent(addressData?: any, params?: any, item?: any, form?: any): ChangeSubscriptionResult {
+export function syncWithAddressComponent(addressData?: any, params?: any, item?: any, form?: any): any {
   const targetComponent: any = params[0];
 
   addressData = {...addressData};
@@ -10,8 +9,6 @@ export function syncWithAddressComponent(addressData?: any, params?: any, item?:
       .find((component) => {
         return component.types.indexOf(targetComponent) !== -1;
       });
-
-    console.log('targetComponent', targetComponent, component);
 
     if(component) {
       if(targetComponent == 'country') {
@@ -24,7 +21,7 @@ export function syncWithAddressComponent(addressData?: any, params?: any, item?:
   }
 
   return {
-    key: "syncWithAddressComponent",
+    name: "syncWithAddressComponent",
     result: componentValue
   };
 }

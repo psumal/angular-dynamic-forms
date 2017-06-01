@@ -1,5 +1,5 @@
-<div [formGroup]="group" >
-
+<div [formGroup]="group" *ngIf="isRendered">
+  isRendered:{{isRendered}}
   <label [attr.for]="config.key" [attr.class]="'form-control-label'">
     {{config.label}}
   </label>

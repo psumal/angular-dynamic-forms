@@ -2,8 +2,9 @@ import {Component, ElementRef, HostBinding, OnDestroy, OnInit} from "@angular/co
 
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {AbstractControl, FormGroup} from "@angular/forms";
-import {ValueChangeSubscriptionService} from "../../reactive-utils/value-change-subscription.service";
+import {ValueChangeSubscriptionService} from "../../value-change-subscriptions/value-change-subscription.service";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
+import {IValueChangeSubscriptionConfig} from "../../value-change-subscriptions/value-change-subscription-config";
 
 @Component({
   inputs: ['config', 'group'],
@@ -62,7 +63,9 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.hostClass = this.getHostClass();
+    console.log('add element: ', this.config.key);
     this.dfes.addControlConfigToGroup(this.group, this.config);
+    console.log('initValueChangeSubscriptions element: ', this.config.key);
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
 
@@ -89,7 +92,6 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   getHostClass(): string {
-    console.log('getHostClass in control', this.config);
     let classNames: string[] = [];
     classNames.push('form-group');
     if (this.config) {
@@ -157,10 +159,10 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   //sideEffects
   public onValueSubscriptionChanged: Function = ($event: any) => {
+    console.log('control onValueSubscriptionChanged: ', $event);
     const name = $event.name;
     switch (name) {
       case 'isRendered':
-        console.log('isRenderedisRendered', $event);
         this.isRendered = $event.result;
         break;
       //@TODO we need a way to import this custom actions

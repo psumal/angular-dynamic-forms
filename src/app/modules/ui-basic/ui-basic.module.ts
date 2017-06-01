@@ -9,7 +9,7 @@ import {ContainerComponent} from "./container/container.component";
 
 import {FormatterParserModule} from "../formatter-parser/formatter-parser.module";
 import {ValidationUtilsModule} from "../validation-utils/validation-utils.module";
-import {ChangeSubscriptionsModule} from "../reactive-utils/value-change-subscriptions.module";
+import {ChangeSubscriptionsModule} from "../value-change-subscriptions/value-change-subscriptions.module";
 import {DynamicFormElementModule} from "../dymanic-form-element/dynamic-form-element.module";
 import {UI_COMPONENTS} from "../dymanic-form-element/dynamic-form-element.injectonToken";
 

@@ -729,6 +729,32 @@ export class FormConfigService {
     return personalData;
   }
 
+  getValueChangesData() {
+    const valueChangesConfig:IDynamicFormElementModel = {
+      config: [
+        {
+          controlType: 'textbox',
+          key: 'isRenderedIndicator',
+          label: 'isRendered Indicator',
+          inputType: 'text',
+        },
+        {
+          controlType: 'textbox',
+          key: 'isRenderedTarget',
+          label: 'isRendered Target',
+          inputType: 'text',
+          valueChangeSubscriptions: [
+            {name: "isRendered", controls: ['isRenderedIndicator'], params: []}
+          ],
+        },
+
+      ],
+    };
+
+    return valueChangesConfig;
+  }
+
+
   getAddressDataConfig(): IDynamicFormElementModel {
 
     let googleAddressSearch: GoogleAddressSearchModel = {
@@ -1251,6 +1277,11 @@ export class FormConfigService {
         key: 13,
         config: this.getCustomCompomponentConfig()
       },
+      {
+        label: 'Value Changes',
+        kex: 14,
+        config: this.getValueChangesData()
+      }
     ];
 
     return allConfigs;

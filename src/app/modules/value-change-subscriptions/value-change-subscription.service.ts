@@ -1,5 +1,4 @@
 import {Inject, Injectable, Optional} from "@angular/core";
-import {ValueChangeSubscriptionFn} from "./value-change-subscriptions-function";
 import {FormArray, FormGroup} from "@angular/forms";
 
 import "rxjs/add/operator/map";
@@ -13,6 +12,7 @@ import {Subscription} from "rxjs/Subscription";
 import {IValueChangeSubscriptionConfig} from "./value-change-subscription-config";
 import {ValueChangeSubscriptions} from "./valueChangeSubscriptions";
 import {VALUE_CHANGE_SUBSCRIPTIONS} from "./value-change-subscriptions.injectionToken";
+import {ValueChangeSubscriptionFn} from "./value-change-subscriptions-function";
 
 @Injectable()
 export class ValueChangeSubscriptionService {
@@ -65,10 +65,9 @@ export class ValueChangeSubscriptionService {
         const controlChanges$ = Observable.merge(...subs);
         subscriptions.push(
           controlChanges$
-            .startWith(...initialValues)
+           //.startWith(...initialValues)
             .subscribe((change: any) => {
-              const result = subscriptionFn(change, listener.params, config, group);
-              console.log('in sub:::', listener.name, result);
+              const result:any = subscriptionFn(change, listener.params, config, group);
               sideEffect(result)
             })
         );

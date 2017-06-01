@@ -1,4 +1,4 @@
-import {IValueChangeSubscriptionConfig} from "../../../reactive-utils/value-change-subscription-config";
+import {IValueChangeSubscriptionConfig} from "../../../value-change-subscriptions/value-change-subscription-config";
 import {ISelectOption} from "./objects/select-option";
 import {IFormState} from "./objects/form-state";
 import {IValidatorConfig} from "../../../validation-utils/validator-config";

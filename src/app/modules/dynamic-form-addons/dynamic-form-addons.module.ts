@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {NG_ASYNC_VALIDATORS, NG_VALIDATORS, ReactiveFormsModule} from "@angular/forms";
-import {VALUE_CHANGE_SUBSCRIPTIONS} from "../reactive-utils/value-change-subscriptions.injectionToken";
+import {VALUE_CHANGE_SUBSCRIPTIONS} from "../value-change-subscriptions/value-change-subscriptions.injectionToken";
 import {UI_COMPONENTS} from "../dymanic-form-element/dynamic-form-element.injectonToken";
 import {FORMATTER_PARSER} from "../formatter-parser/formatter-parser.injectionToken";
 import {randomValidator} from "./validators/randomlValidator";

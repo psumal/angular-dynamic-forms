@@ -2,7 +2,7 @@ import {Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from "@angu
 import {AbstractControl, FormGroup} from "@angular/forms";
 import {MapsAPILoader} from "@agm/core";
 import {DynamicFormElementService} from "../../../dymanic-form-element/dynamic-form-element.service";
-import {ValueChangeSubscriptionService} from "../../../reactive-utils/value-change-subscription.service";
+import {ValueChangeSubscriptionService} from "../../../value-change-subscriptions/value-change-subscription.service";
 import {GoogleAddressSearchModel} from "./google-address-search";
 
 declare var google: any;

@@ -1,5 +1,4 @@
-import {ChangeSubscriptionResult} from "../../reactive-utils/value-change-subscriptions-function";
-export function filteredOptions(change?: any, params?: any, item?: any, form?: any): ChangeSubscriptionResult {
+export function filteredOptions(change?: any, params?: any, item?: any, form?: any): any {
   //determine options to filter
   let filterConfig = params.filter((param: any) => {
     return change == param['key'];
@@ -13,7 +12,7 @@ export function filteredOptions(change?: any, params?: any, item?: any, form?: a
   })
 
   return {
-    key: "filteredOptions",
+    name: "filteredOptions",
     result: item.visibleOptions
   };
 }

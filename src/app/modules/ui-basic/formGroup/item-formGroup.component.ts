@@ -2,7 +2,7 @@ import {Component, HostBinding, OnDestroy, OnInit} from "@angular/core";
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
 import {FormGroup} from "@angular/forms";
-import {ValueChangeSubscriptionService} from "../../reactive-utils/value-change-subscription.service";
+import {ValueChangeSubscriptionService} from "../../value-change-subscriptions/value-change-subscription.service";
 
 @Component({
   inputs: ['config', 'group'],
@@ -90,6 +90,7 @@ export class FormGroupComponent implements OnInit, OnDestroy {
 
   //sideEffects
   public onValueSubscriptionChanged:Function = ($event: any) => {
+    console.log('formGroup onValueSubscriptionChanged: ', $event);
     const name = $event.name;
     switch (name) {
       case 'isRendered':

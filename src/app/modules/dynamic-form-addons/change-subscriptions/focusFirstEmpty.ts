@@ -1,5 +1,4 @@
-import {ChangeSubscriptionResult} from "../../reactive-utils/value-change-subscriptions-function";
-export function focusFirstEmpty(changes?: any, params?: any, config?: any, form?: any): ChangeSubscriptionResult {
+export function focusFirstEmpty(changes?: any, params?: any, config?: any, form?: any): any {
   const targetComponents: any = params;
 
   console.log('focusFirstEmpty', targetComponents, changes, form, config);
@@ -9,5 +8,8 @@ export function focusFirstEmpty(changes?: any, params?: any, config?: any, form?
     console.log('change', change);
   }
 
-  return changes;
+  return {
+    name: "focuseFirstEmpty",
+    result: ''
+  };
 }

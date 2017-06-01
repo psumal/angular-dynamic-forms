@@ -1,7 +1,7 @@
 import {AfterContentInit, AfterViewChecked, Component, EventEmitter, OnDestroy, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {IDynamicFormElementModel} from "./model/base/form-control-options";
-import {ValueChangeSubscriptionService} from "../reactive-utils/value-change-subscription.service";
+import {ValueChangeSubscriptionService} from "../value-change-subscriptions/value-change-subscription.service";
 
 @Component({
   inputs: ['config', 'group'],
@@ -84,6 +84,7 @@ export class DynamicFormElementComponent implements OnInit, OnDestroy, AfterCont
 
   //sideEffects
   public onValueSubscriptionChanged:Function = ($event: any) => {
+    console.log('element onValueSubscriptionChanged: ', $event);
     const name = $event.name;
     switch (name) {
       case 'focusFirstEmpty':

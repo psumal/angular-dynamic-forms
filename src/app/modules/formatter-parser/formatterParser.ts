@@ -1,6 +1,7 @@
 import {IFormatterParserFn} from "./struct/formatter-parser-function";
 import {IFormatterParserResult} from "./struct/formatter-parser-result";
-
+import {IConformToMaskConfigOptions, IConformToMaskResult} from "./text-mask-core/conformToMask/conformToMask-struckt";
+import {conformToMask as realConformToMask} from "./text-mask-core/conformToMask/conformToMask";
 
 
 export class FormatterParser {
@@ -43,18 +44,23 @@ export class FormatterParser {
     };
   };
 
-  static maskAndPlaceholdString(mask: string, config: any): IFormatterParserFn {
+  static conformToMask(mask: string | (RegExp | string)[] | Function = '', config: IConformToMaskConfigOptions = {}): IFormatterParserFn {
 
-    return (rawValue: string) => {
-      console.log('in maskAndPlaceholdString', rawValue);
-      rawValue = rawValue || '';
-      console.log('efore conformedValue', rawValue);
-
+    return (value: any):IFormatterParserResult => {
+      value = value || '';
+      const realResult: IConformToMaskResult = realConformToMask(value, mask, config);
       return {
-        name: 'maskAndPlaceholdString',
-        result: rawValue
-      }
+        name: "conformToMask",
+        result: realResult.conformedValue,
+        conformToMaskResult: realResult
+      };
     }
+
+  }
+
+  /*Dummy placeholder for textMask exception*/
+  static textMask() {
+
   }
 
 }

@@ -1,1 +1,1 @@
-export const placeholderChar = '_'
+export const placeholderChar = '_';

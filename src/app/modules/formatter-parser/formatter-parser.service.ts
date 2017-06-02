@@ -18,6 +18,7 @@ export class FormatterParserService {
     }
     else if (this.FORMATTER_PARSER) {
       formatParseFunction = this.FORMATTER_PARSER.find(formParsFunc => {
+        console.log('FN', formParsFunc.name);
         return functionName === formParsFunc.name;
       });
     } else {

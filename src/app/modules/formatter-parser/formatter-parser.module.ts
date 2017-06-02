@@ -3,10 +3,10 @@ import {NgModule} from "@angular/core";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 
-import {FormatterParserDirective} from "./formatter-parser.directive";
+import {FormatterParserTextMaskDirective} from "./formatter-parser-text-mask.directive";
 import {FormatterParserService} from "./formatter-parser.service";
 
-const EXPORTS = [FormatterParserDirective];
+const EXPORTS = [FormatterParserTextMaskDirective];
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule],

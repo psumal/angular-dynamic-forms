@@ -1,18 +1,12 @@
-import {convertMaskToPlaceholder} from "./utilities";
-import {placeholderChar as defaultPlaceholderChar} from "./constants";
+import {convertMaskToPlaceholder} from "../utilities";
+import {placeholderChar as defaultPlaceholderChar} from "../constants";
+import {IConformToMaskConfigOptions, IConformToMaskResult} from "./ConformToMask-struckt";
 
-const emptyString = '';
+const emptyString: string = '';
 
-export interface IMaskConfig {
-  guide:boolean,
-  previousConformedValue:string,
-  placeholderChar:string,
-  placeholder:string,
-  currentCaretPosition:any,
-  keepCharPositions:any
-}
 
-export default function conformToMask(rawValue = emptyString, mask: RegExp[] | string = emptyString, config = {}) {
+export function conformToMask(rawValue = emptyString, mask: string | (RegExp | string)[] | Function = emptyString, config: IConformToMaskConfigOptions = {}): IConformToMaskResult {
+
   // These configurations tell us how to conform the mask
   const {
     guide = true,
@@ -24,7 +18,7 @@ export default function conformToMask(rawValue = emptyString, mask: RegExp[] | s
   }:any = config;
 
   // The configs below indicate that the user wants the algorithm to work in *no guide* mode
-  const suppressGuide = <boolean>guide === false && previousConformedValue !== undefined;
+  const suppressGuide: boolean = <boolean>guide === false && previousConformedValue !== undefined;
 
   // Calculate lengths once for performance
   const rawValueLength = rawValue.length;

@@ -8,6 +8,8 @@ import {
 import {IDynamicFormElementModel} from "../../../modules/dymanic-form-element/model/base/form-control-options";
 import {ISelectOption} from "../../../modules/dymanic-form-element/model/base/objects/select-option";
 import {GoogleAddressSearchModel} from "../../../modules/dynamic-form-addons/components/google-address-search/google-address-search";
+import {ITextMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-core/text-mask-config";
+import {IConformToMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-core/conformToMask/ConformToMask-struckt";
 
 @Injectable()
 export class FormConfigService {
@@ -527,6 +529,28 @@ export class FormConfigService {
       replaceSpace
     ];
 
+
+    const phoneNumberMask: (RegExp | string)[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    const conformToMaskConfig: IConformToMaskConfigOptions = {
+      guide: false,
+      //placeholderChar: '_',
+      //keepCharPositions: false,
+      //placeholder: ' ',
+      //previousConformedValue: '',
+      //currentCaretPosition: false
+    };
+
+    const textMaskConfig: ITextMaskConfigOptions = {
+      guide: false,
+      mask: phoneNumberMask
+      //placeholderChar: '_',
+      //keepCharPositions: false,
+      //placeholder: ' ',
+      //previousConformedValue: '',
+      //currentCaretPosition: false
+    };
+
+
     let config: any[] = [
       {
         key: 'ccn',
@@ -534,7 +558,6 @@ export class FormConfigService {
         inputType: 'text',
         label: 'Credit Card Number',
         formatterParser: pFA,
-        parser: pFA
       },
       {
         key: 'ccn-prefilled',
@@ -543,9 +566,50 @@ export class FormConfigService {
         label: 'Credit Card Number (pre filled with "11 112 2223 3 3344 44")',
         formState: '11 112 2223 3 3344 44',
         formatterParser: pFA,
-        parser: pFA
+      },
+      {
+        key: 'conformToMask',
+        controlType: 'textbox',
+        inputType: 'text',
+        label: 'conformToMask with "11 112 2223 3 3344 44")',
+        formState: '11 112 2223 3 3344 44',
+        formatterParser: [
+          {
+            name: "conformToMask",
+            params: [
+              phoneNumberMask,
+              conformToMaskConfig
+            ],
+            target: 0
+          },
+          {
+            name: "replaceString",
+            params: [/[()-/ /]/g, ''],
+            target: 1
+          }
+        ],
+      },
+      {
+        key: 'textMask',
+        controlType: 'textbox',
+        inputType: 'text',
+        label: 'textMask with "11 112 2223 3 3344 44")',
+        formState: '11 112 2223 3 3344 44',
+        formatterParser: [
+          {
+            name: "textMask",
+            params: [textMaskConfig],
+            target: 0
+          },
+          {
+            name: "replaceString",
+            params: [/[()-/ /]/g, ''],
+            target: 1
+          }
+        ],
       }
     ];
+
 
     let fgConfig: any = {
       config: config
@@ -730,7 +794,7 @@ export class FormConfigService {
   }
 
   getValueChangesData() {
-    const valueChangesConfig:IDynamicFormElementModel = {
+    const valueChangesConfig: IDynamicFormElementModel = {
       config: [
         {
           controlType: 'textbox',
@@ -753,7 +817,6 @@ export class FormConfigService {
 
     return valueChangesConfig;
   }
-
 
   getAddressDataConfig(): IDynamicFormElementModel {
 
@@ -909,7 +972,7 @@ export class FormConfigService {
   }
 
   getContactData() {
-    const contactData:IDynamicFormElementModel = {
+    const contactData: IDynamicFormElementModel = {
       config: [
         {
           controlType: 'textbox',

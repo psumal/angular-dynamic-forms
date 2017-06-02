@@ -19,6 +19,7 @@ import {AgmCoreModule} from "@agm/core";
 import {syncWithAddressComponent} from "./change-subscriptions/syncWithAddressComponent";
 import {focusFirstEmpty} from "./change-subscriptions/focusFirstEmpty";
 
+
 const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
 
 @NgModule({

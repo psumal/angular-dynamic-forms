@@ -13,27 +13,27 @@ import {ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} 
 import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
 import {FormatterParserService} from "./formatter-parser.service";
 import {IFormatterParserFn} from "./struct/formatter-parser-function";
+import {TextMaskService} from "./text-mask-core/services/textMask.service";
 
 const CONTROL_VALUE_ACCESSOR = {
   name: 'formatterParserValueAccessor',
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => FormatterParserDirective),
+  useExisting: forwardRef(() => FormatterParserTextMaskDirective),
   multi: true
 };
 
 export const FORMATTER_PARSER: InjectionToken<(IFormatterParserFn)[]> = new InjectionToken<(IFormatterParserFn)[]>('formatterParser');
 
-const TEXT_MASK: InjectionToken<Function> = new InjectionToken<Function>('text-mask');
 
 @Directive({
   inputs: ['config', 'formControlName'],
   selector: '[formatterParser]',
   providers: [
     CONTROL_VALUE_ACCESSOR,
-    {provide: TEXT_MASK, useValue: ''}
+    TextMaskService
   ]
 })
-export class FormatterParserDirective implements ControlValueAccessor, OnInit {
+export class FormatterParserTextMaskDirective implements ControlValueAccessor, OnInit {
 
   // Input binding
   config: DynamicFormElementModel;
@@ -49,7 +49,9 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   constructor(private _elementRef: ElementRef,
               private fps: FormatterParserService,
               //BIG THX to https://github.com/SanderElias for this hint
-              @Optional() @Host() @SkipSelf() private fcd: ControlContainer) {
+              @Optional() @Host() @SkipSelf() private fcd: ControlContainer,
+              // BIG THX to https://github.com/text-mask/text-mask for the code share
+              private tms: TextMaskService) {
   }
 
   ngOnInit(): void {
@@ -66,6 +68,7 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     //not implemented
   };
 
+
   registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
   }
@@ -77,13 +80,34 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   // Parser: View to Model
   @HostListener('input', ['$event'])
   onControlInput($event: KeyboardEvent) {
-
-    console.log('onControlInput: ', $event);
     const input = $event.target as HTMLInputElement;
     const rawValue: any = input.value;
 
-    //write value to view (visible text of the form control)
-    input.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
+    /* TEXT-MASK EXCEPTION ==============================================================*/
+
+    const fpC = this.config.formatterParser.find(i => (i.name === 'textMask'));
+    if (!!fpC) {
+      const res = this.tms.update(rawValue, {
+        inputElement: input,
+        mask: fpC.params[0].mask || '',
+        guide: fpC.params[0].guide || false,
+        pipe: fpC.params[0].pipe || false,
+        placeholderChar: fpC.params[0].placeholderChar || '_',
+        keepCharPositions: fpC.params[0].keepCharPositions || false,
+        showMask: fpC.params[0].showMask || false,
+      });
+
+      if (res) {
+        input.value = res.inputElementValue; // set the input value
+        this.tms.safeSetSelection(input, res.adjustedCaretPosition) // adjust caret position
+      }
+    }
+
+    /*============================================================== TEXT-MASK EXCEPTION*/
+    else {
+      //write value to view (visible text of the form control)
+      input.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
+    }
 
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
@@ -132,5 +156,6 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     }
 
   }
+
 
 }

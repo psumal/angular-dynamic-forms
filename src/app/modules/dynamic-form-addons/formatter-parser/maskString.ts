@@ -2,7 +2,7 @@ import {IFormatterParserFn} from "../../formatter-parser/struct/formatter-parser
 export function maskString(mask: string, maskPatterns: { [key: string]: RegExp }): IFormatterParserFn {
   return (value: any) => {
 
-    value = value || '';
+    value = (typeof value === 'string' || value instanceof String) ? value : '';
     mask = mask || '';
     maskPatterns = maskPatterns || {};
 

@@ -11,14 +11,14 @@ export class FormatterParserService {
 
   getFormatParseFunction(functionName: string, params: any[]): IFormatterParserFn | undefined {
     let formatParseFunction: Function;
-
+    console.log('functionName', functionName);
     if (functionName in FormatterParser) {
-      console.log('found in Core: ', functionName, params);
+      console.log('FN Core: ', functionName, params);
       formatParseFunction = FormatterParser[functionName];
     }
     else if (this.FORMATTER_PARSER) {
       formatParseFunction = this.FORMATTER_PARSER.find(formParsFunc => {
-        console.log('FN', formParsFunc.name);
+        console.log('FN Token: ', formParsFunc.name);
         return functionName === formParsFunc.name;
       });
     } else {

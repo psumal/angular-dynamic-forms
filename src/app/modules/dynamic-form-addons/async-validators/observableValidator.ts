@@ -5,12 +5,23 @@ import {AbstractControl, ValidationErrors} from "@angular/forms";
 
 export function observableValidator(c: AbstractControl): Observable<ValidationErrors | null> {
 
-  return new Observable(observer => {
-    if (c.value !== "test") {
-      observer.next({observableInvalid: true});
+  const validatorName =  "observableValidator";
+
+  console.log('CityAsyncValidationDirective validateWithObservable');
+  const routValidation$ = new Observable(observer => {
+    if ("Tesunddamatoterfklomeisaan".indexOf(c.value.toString()) !== -1) {
+      observer.next({
+        [this.validationName]: {
+          actual: c.value,
+          data: 'something'
+        }
+      });
     } else {
-      observer.next(null);
+      observer.next();
     }
   });
+
+  return routValidation$.debounceTime(500).distinctUntilChanged().delay(2000).first();
+
 
 }

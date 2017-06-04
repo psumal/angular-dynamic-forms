@@ -46,32 +46,27 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   protected formatterParserView: Function[] = [];
   protected formatterParserModel: Function[] = [];
 
+  private onTouch: Function;
+  private onModelChange: Function;
+
   constructor(private _elementRef: ElementRef,
               private fps: FormatterParserService,
               //BIG THX to https://github.com/SanderElias for this hint
               @Optional() @Host() @SkipSelf() private fcd: ControlContainer) {
   }
 
+  registerOnTouched(fn) {
+    this.onTouch = fn;
+  }
+
+  registerOnChange(fn) {
+    this.onModelChange = fn;
+  }
+
   ngOnInit(): void {
     this.formControl = (<any>this.fcd).form.controls[this.formControlName];
     this.updateFormatterAndParser();
 
-  }
-
-  onChange = (value: any) => {
-    return value;
-  };
-
-  onTouched = () => {
-    //not implemented
-  };
-
-  registerOnChange(fn: (_: any) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
   }
 
   // Parser: View to Model
@@ -87,7 +82,7 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
 
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
-    this.onChange(modelValue);
+    this.onModelChange(modelValue);
   }
 
   // Formatter: Model to View

@@ -8,8 +8,9 @@ import {
 import {IDynamicFormElementModel} from "../../../modules/dymanic-form-element/model/base/form-control-options";
 import {ISelectOption} from "../../../modules/dymanic-form-element/model/base/objects/select-option";
 import {GoogleAddressSearchModel} from "../../../modules/dynamic-form-addons/components/google-address-search/google-address-search";
-import {ITextMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-core/text-mask-config";
-import {IConformToMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-core/conformToMask/ConformToMask-struckt";
+import {ITextMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-helpers/text-mask-config";
+import {IConformToMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-helpers/conformToMask-struckt";
+import {TextMaskService} from "../../../modules/formatter-parser/text-mask-helpers/textMask.service";
 
 @Injectable()
 export class FormConfigService {
@@ -451,7 +452,7 @@ export class FormConfigService {
     let cCAV: any = this._getRandItem('cCAV', 'formGroup', null, 'Custom Async validators', [], [], '', '');
 
     cCAV.config.push(this._getRandItem('promiseValidator', ct, itt, 'Promise Validator (test => true)[2s]', [], [{name: "promiseValidator"}], '', ''));
-    cCAV.config.push(this._getRandItem('observableValidator', ct, itt, 'Observable Validator (unique@gmail => true)[0s]', [], [{name: "observableValidator"}], '', ''));
+    cCAV.config.push(this._getRandItem('observableValidator', ct, itt, 'Observable Validator (ei => true)[0s]', [], [{name: "observableValidator"}], '', ''));
 
     config.push(cCAV);
 
@@ -511,6 +512,15 @@ export class FormConfigService {
 
   getFormatterParserConfig(): IDynamicFormElementModel {
 
+    const defaultValues = {
+      placeholderChar: TextMaskService.placeholderChars.whitespace,
+      guide: true,
+      pipe: null,
+      keepCharPositions: false,
+      help: null,
+      placeholder: null
+    };
+
     let creditCardMask = {
       name: "maskString",
       params: [
@@ -543,11 +553,6 @@ export class FormConfigService {
     const textMaskConfig: ITextMaskConfigOptions = {
       guide: false,
       mask: phoneNumberMask
-      //placeholderChar: '_',
-      //keepCharPositions: false,
-      //placeholder: ' ',
-      //previousConformedValue: '',
-      //currentCaretPosition: false
     };
 
 
@@ -555,7 +560,6 @@ export class FormConfigService {
       {
         key: 'ccn',
         controlType: 'textbox',
-        inputType: 'text',
         label: 'Credit Card Number',
         formatterParser: pFA,
       },
@@ -570,8 +574,7 @@ export class FormConfigService {
       {
         key: 'conformToMask',
         controlType: 'textbox',
-        inputType: 'text',
-        label: 'conformToMask with "11 112 2223 3 3344 44")',
+        label: 'conformToMask',
         formState: '11 112 2223 3 3344 44',
         formatterParser: [
           {
@@ -581,19 +584,28 @@ export class FormConfigService {
               conformToMaskConfig
             ],
             target: 0
-          },
+          }
+        ],
+      },
+      {
+        key: 'conformToMaskPhone',
+        controlType: 'textbox',
+        label: 'Phone Number',
+        formatterParser: [
           {
-            name: "replaceString",
-            params: [/[()-/ /]/g, ''],
-            target: 1
+            name: "conformToMask",
+            params: [
+              phoneNumberMask,
+              {mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+            ],
+            target: 0
           }
         ],
       },
       {
         key: 'textMask',
         controlType: 'textbox',
-        inputType: 'text',
-        label: 'textMask with "11 112 2223 3 3344 44")',
+        label: 'textMask',
         formState: '11 112 2223 3 3344 44',
         formatterParser: [
           {
@@ -604,9 +616,65 @@ export class FormConfigService {
           {
             name: "replaceString",
             params: [/[()-/ /]/g, ''],
+            keepCharPositions: true,
             target: 1
           }
         ],
+      },
+      /**/{
+        key: 'textMaskAddon-createAutoCorrectedDatePipe',
+        controlType: 'textbox',
+        label: 'textMaskAddon createAutoCorrectedDatePipe',
+        formatterParser: [
+          {
+            name: "textMask",
+            params: [{}, {name: "createAutoCorrectedDatePipe"}],
+            target: 0
+          }
+        ],
+      },
+      {
+        key: 'textMaskAddon-createNumberMask',
+        controlType: 'textbox',
+        label: 'textMaskAddon createNumberMask',
+        formState: '1365968',
+        formatterParser: [
+          {
+            name: "textMask",
+            params: [
+              {
+                mask: false,
+
+              },
+              {
+                name: "createNumberMask",
+                config: {
+                  prefix: '',
+                  suffix: ' $'
+                }
+              }
+            ],
+            target: 0
+          }
+        ]
+      },
+      {
+        key: 'textMaskAddon-emailMask',
+        controlType: 'textbox',
+        label: 'textMaskAddon emailMask',
+        formState: 'adfa&%§$"§%$&%/sfd aasdf asdf ',
+        formatterParser: [
+          {
+            name: "textMask",
+            params: [
+              {mask: false},
+              {
+                name: "emailMask",
+              }
+            ],
+            target: 0
+          }
+        ]
       }
     ];
 
@@ -615,7 +683,91 @@ export class FormConfigService {
       config: config
     };
 
+    //fgConfig.config = [...getTextMaskConfigs(), ...fgConfig.config];
+
     return fgConfig;
+
+    //////////
+
+    function getTextMaskConfigs() {
+
+      // textMask demos To configconst
+      const choices = [
+        {
+          name: 'US phone number',
+          mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+          placeholder: '(555) 495-3947'
+        }, {
+          name: 'US phone number with country code',
+          mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+          placeholder: '+1 (555) 495-3947'
+        }, {
+          name: 'Date',
+          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+          placeholder: '25/09/1970'
+        }, {
+          name: 'Date (auto-corrected)',
+          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+          pipe: "createAutoCorrectedDatePipe",
+          placeholder: 'Please enter a date',
+          keepCharPositions: true,
+        }, {
+          name: 'US dollar amount',
+          mask: "createNumberMask",
+          placeholder: 'Enter an amount',
+        }, {
+          name: 'US dollar amount (allows decimal)',
+          mask: "createNumberMask",
+          addonConf: {allowDecimal: true},
+          placeholder: 'Enter an amount',
+        }, {
+          name: 'Percentage amount',
+          mask: "createNumberMask",
+          addonConf: {suffix: '%', prefix: ''},
+          placeholder: 'Enter an amount',
+        }, {
+          name: 'Email',
+          mask: 'emailMask',
+          placeholder: 'john@smith.com',
+          placeholderChar: TextMaskService.placeholderChars.whitespace
+        }, {
+          name: 'US zip code',
+          mask: [/\d/, /\d/, /\d/, /\d/, /\d/],
+          placeholder: '94303',
+          placeholderChar: TextMaskService.placeholderChars.underscore
+        }, {
+          name: 'Canadian postal code',
+          mask: [TextMaskService.alphabetic, TextMaskService.digit, TextMaskService.alphabetic, ' ', TextMaskService.digit, TextMaskService.alphabetic, TextMaskService.digit],
+          //pipe: "toUpperCase",
+          placeholder: 'K1A 0B2',
+          placeholderChar: TextMaskService.placeholderChars.underscore
+        }
+      ];
+
+      return choices.map((conf) => {
+
+        const defaultConfig = {
+          key: '',
+          controlType: 'textbox',
+          label: '',
+          formatterParser: [
+            {
+              name: "textMask",
+              params: [{}, {}],
+              target: 0
+            }
+          ],
+        };
+
+        defaultConfig.key = conf.name;
+        defaultConfig.label = conf.name;
+        defaultConfig.formatterParser[0].params = [TextMaskService.getBasicConfig(conf)];
+
+        return defaultConfig;
+      });
+
+
+    }
 
   }
 

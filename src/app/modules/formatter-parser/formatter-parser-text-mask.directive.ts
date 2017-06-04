@@ -13,7 +13,11 @@ import {ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} 
 import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
 import {FormatterParserService} from "./formatter-parser.service";
 import {IFormatterParserFn} from "./struct/formatter-parser-function";
-import {TextMaskService} from "./text-mask-core/services/textMask.service";
+
+/*TEXT-MASK EXCEPTION ==============================================================*/
+import {TextMaskService} from "./text-mask-helpers/textMask.service";
+import {createTextMaskInputElement} from "text-mask-core/dist/textMaskCore";
+/*============================================================== TEXT-MASK EXCEPTION*/
 
 const CONTROL_VALUE_ACCESSOR = {
   name: 'formatterParserValueAccessor',
@@ -41,10 +45,21 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
   formControlName: string;
 
   // Container component reference
-  formControl: FormControl;
+  protected formControl: FormControl;
 
-  protected formatterParserView: Function[] = [];
-  protected formatterParserModel: Function[] = [];
+  // html input reference
+  protected inputElement: HTMLInputElement;
+
+  /*TEXT-MASK EXCEPTION ==============================================================*/
+  protected textMaskPresent = false;
+  protected textMaskInputElement: any;
+  /*============================================================== TEXT-MASK EXCEPTION*/
+
+  private formatterParserView: Function[] = [];
+  private formatterParserModel: Function[] = [];
+
+  private onTouch: Function;
+  private onModelChange: Function;
 
   constructor(private _elementRef: ElementRef,
               private fps: FormatterParserService,
@@ -52,78 +67,63 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
               @Optional() @Host() @SkipSelf() private fcd: ControlContainer,
               // BIG THX to https://github.com/text-mask/text-mask for the code share
               private tms: TextMaskService) {
+
   }
+
+  registerOnTouched(fn) {
+    this.onTouch = fn;
+  }
+
+  registerOnChange(fn) {
+    this.onModelChange = fn;
+  }
+
 
   ngOnInit(): void {
     this.formControl = (<any>this.fcd).form.controls[this.formControlName];
+    this.inputElement = this.getInputElementRef();
     this.updateFormatterAndParser();
 
-  }
-
-  onChange = (value: any) => {
-    return value;
-  };
-
-  onTouched = () => {
-    //not implemented
-  };
-
-
-  registerOnChange(fn: (_: any) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
   }
 
   // Parser: View to Model
   @HostListener('input', ['$event'])
   onControlInput($event: KeyboardEvent) {
-    const input = $event.target as HTMLInputElement;
-    const rawValue: any = input.value;
+    const rawValue: any = this.inputElement.value;
 
-    /* TEXT-MASK EXCEPTION ==============================================================*/
-
-    const fpC = this.config.formatterParser.find(i => (i.name === 'textMask'));
-    if (!!fpC) {
-      const res = this.tms.update(rawValue, {
-        inputElement: input,
-        mask: fpC.params[0].mask || '',
-        guide: fpC.params[0].guide || false,
-        pipe: fpC.params[0].pipe || false,
-        placeholderChar: fpC.params[0].placeholderChar || '_',
-        keepCharPositions: fpC.params[0].keepCharPositions || false,
-        showMask: fpC.params[0].showMask || false,
-      });
-
-      if (res) {
-        input.value = res.inputElementValue; // set the input value
-        this.tms.safeSetSelection(input, res.adjustedCaretPosition) // adjust caret position
-      }
+    /*TEXT-MASK EXCEPTION ==============================================================*/
+    if (this.textMaskPresent) {
+      this.textMaskInputElement.update(rawValue)
     }
-
     /*============================================================== TEXT-MASK EXCEPTION*/
     else {
       //write value to view (visible text of the form control)
-      input.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
+      this.inputElement.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
     }
 
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
-    this.onChange(modelValue);
+    this.onModelChange(modelValue);
   }
 
   // Formatter: Model to View
   writeValue(rawValue: any): void {
-    const input: HTMLInputElement = this._elementRef.nativeElement;
-    //write value to view (visible text of the form control)
-    input.value = rawValue;//this.formatterParserView.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
+
+    /*TEXT-MASK EXCEPTION ==============================================================*/
+    if (this.textMaskPresent) {
+      this.textMaskInputElement.update(rawValue)
+    }
+    /*============================================================== TEXT-MASK EXCEPTION*/
+    else {
+      //write value to view (visible text of the form control)
+      this.inputElement.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
+    }
 
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
-    // prevent cyclic function calls @TODO consider other way to call patchValue
+    // prevent cyclic function calls
     if (rawValue !== modelValue) {
+      // @TODO consider other way to call patchValue
       this.formControl.patchValue(modelValue);
     }
   }
@@ -133,6 +133,10 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
 
     this.formatterParserView = [];
     this.formatterParserModel = [];
+
+    /*TEXT-MASK EXCEPTION ==============================================================*/
+    this.textMaskPresent = false;
+    /*============================================================== TEXT-MASK EXCEPTION*/
 
     if (!this.config) {
       return;
@@ -146,16 +150,42 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
           const fPF: IFormatterParserFn = this.fps.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
           const t = (formatterConfig.target === undefined) ? targetBoth : formatterConfig.target;
 
-          if ((t == 0 || t == 2)) {
-            this.formatterParserView.push(fPF);
+          /*TEXT-MASK EXCEPTION ==============================================================*/
+          if (formatterConfig.name === 'textMask') {
+            this.textMaskPresent = true;
+            const config: any = TextMaskService.getConfig(formatterConfig.params[0], formatterConfig.params[1]);
+            this.textMaskInputElement = createTextMaskInputElement(Object.assign({inputElement: this.inputElement}, config));
           }
-          if (t == 1 || t == 2) {
-            this.formatterParserModel.push(fPF);
+          /*============================================================== TEXT-MASK EXCEPTION*/
+          else {
+            if ((t == 0 || t == 2)) {
+              this.formatterParserView.push(fPF);
+            }
+            if (t == 1 || t == 2) {
+              this.formatterParserModel.push(fPF);
+            }
           }
         });
     }
 
   }
 
+  // get a safe ref to the input element
+  private getInputElementRef(): HTMLInputElement {
+    let input: HTMLInputElement;
+    if (this._elementRef.nativeElement.tagName === 'INPUT') {
+      // `textMask` directive is used directly on an input element
+      input = this._elementRef.nativeElement
+    } else {
+      // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
+      input = this._elementRef.nativeElement.getElementsByTagName('INPUT')[0]
+    }
+
+    if (!input) {
+      throw new Error('You can applied the "formatterParser" directive only on inputs or elements containing inputs');
+    }
+
+    return input;
+  }
 
 }

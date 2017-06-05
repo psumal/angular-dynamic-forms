@@ -8,14 +8,12 @@ export class TooltipDirective implements OnDestroy {
   @Input('tooltipId') id: string;
 
   constructor(private tooltipService: TooltipService, private element: ElementRef) {
-    console.log('element', element);
   }
 
   @HostListener('mouseenter')
   @HostListener('focus')
   onMouseEnter(): void {
     if (this.config) {
-      console.log('add new Tooltip', this.config);
       this.tooltipService.components.push({
         id: this.id,
         ref: this.element,

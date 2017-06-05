@@ -84,11 +84,9 @@ export class DynamicFormElementComponent implements OnInit, OnDestroy, AfterCont
 
   //sideEffects
   public onValueSubscriptionChanged:Function = ($event: any) => {
-    console.log('element onValueSubscriptionChanged: ', $event);
     const name = $event.name;
     switch (name) {
       case 'focusFirstEmpty':
-        console.log('focusFirstEmpty SIDE EFFECT');
         break;
     }
   };

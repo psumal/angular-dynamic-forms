@@ -7,7 +7,6 @@ export function observableValidator(c: AbstractControl): Observable<ValidationEr
 
   const validatorName =  "observableValidator";
 
-  console.log('CityAsyncValidationDirective validateWithObservable');
   const routValidation$ = new Observable(observer => {
     if ("Tesunddamatoterfklomeisaan".indexOf(c.value.toString()) !== -1) {
       observer.next({

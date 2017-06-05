@@ -1,16 +1,16 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   buttonTypes,
   controlTypes,
   inputTypes,
   textboxTypes
-} from "../../../modules/dymanic-form-element/model/item.types";
-import {IDynamicFormElementModel} from "../../../modules/dymanic-form-element/model/base/form-control-options";
-import {ISelectOption} from "../../../modules/dymanic-form-element/model/base/objects/select-option";
-import {GoogleAddressSearchModel} from "../../../modules/dynamic-form-addons/components/google-address-search/google-address-search";
-import {ITextMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-helpers/text-mask-config";
-import {IConformToMaskConfigOptions} from "../../../modules/formatter-parser/text-mask-helpers/conformToMask-struckt";
-import {TextMaskService} from "../../../modules/formatter-parser/text-mask-helpers/textMask.service";
+} from '../../../modules/dymanic-form-element/model/item.types';
+import { IDynamicFormElementModel } from '../../../modules/dymanic-form-element/model/base/form-control-options';
+import { ISelectOption } from '../../../modules/dymanic-form-element/model/base/objects/select-option';
+import { GoogleAddressSearchModel } from '../../../modules/dynamic-form-addons/components/google-address-search/google-address-search';
+import { ITextMaskConfigOptions } from '../../../modules/formatter-parser/text-mask-helpers/text-mask-config';
+import { IConformToMaskConfigOptions } from '../../../modules/formatter-parser/text-mask-helpers/conformToMask-struckt';
+import { TextMaskService } from '../../../modules/formatter-parser/text-mask-helpers/textMask.service';
 
 @Injectable()
 export class FormConfigService {
@@ -58,8 +58,8 @@ export class FormConfigService {
     //static requiredTrue(control: AbstractControl): {[key: string]: boolean;};
     {value: {name: 'minLength', params: []}, name: 'Min Length'},
     {value: {name: 'maxLength', params: [4]}, name: 'Max Length'},
-    {value: {name: 'pattern', params: ["[A-Za-z]+"]}, name: 'Pattern'},
-    {value: {name: 'nullValidator', params: ["[A-Za-z]+"]}, name: 'Null Validator'},
+    {value: {name: 'pattern', params: ['[A-Za-z]+']}, name: 'Pattern'},
+    {value: {name: 'nullValidator', params: ['[A-Za-z]+']}, name: 'Null Validator'},
     //custom validators
 
     {
@@ -67,7 +67,7 @@ export class FormConfigService {
       name: 'Control Match Validator'
     },
     //email
-    {value: {name: "randomValidator"}, name: 'Validate Email'},
+    {value: {name: 'randomValidator'}, name: 'Validate Email'},
   ];
 
   static INPUT_ASYNC_VALIDATORS: { value: any, name: string } [] = [
@@ -80,100 +80,100 @@ export class FormConfigService {
         // textbox text
         {
           controlType: 'textbox',
-          key: "textboxItem_text",
-          label: "Textbox Item of type text",
-          inputType: "text"
+          key: 'textboxItem_text',
+          label: 'Textbox Item of type text',
+          inputType: 'text'
         },
         //textbox email
         {
           controlType: 'textbox',
-          key: "textboxItem_email",
-          label: "Textbox Item of type email",
-          inputType: "email"
+          key: 'textboxItem_email',
+          label: 'Textbox Item of type email',
+          inputType: 'email'
         },
         //textbox tel
         {
           controlType: 'textbox',
-          key: "textboxItem_tel",
-          label: "Textbox Item of type tel",
-          inputType: "tel"
+          key: 'textboxItem_tel',
+          label: 'Textbox Item of type tel',
+          inputType: 'tel'
         },
         //textbox password
         {
           controlType: 'textbox',
-          key: "textboxItem_password",
-          label: "Textbox Item of password",
-          inputType: "password"
+          key: 'textboxItem_password',
+          label: 'Textbox Item of password',
+          inputType: 'password'
         },
         // textbox number
         {
           controlType: 'textbox',
-          key: "textboxItem_number",
-          label: "Textbox Item of type number",
-          inputType: "number"
+          key: 'textboxItem_number',
+          label: 'Textbox Item of type number',
+          inputType: 'number'
         },
         //textbox range
         {
           controlType: 'textbox',
-          key: "textboxItem_range",
-          label: "Textbox Item of type range",
-          inputType: "range"
+          key: 'textboxItem_range',
+          label: 'Textbox Item of type range',
+          inputType: 'range'
         },
         //textbox date
         {
           controlType: 'textbox',
-          key: "textboxItem_date",
-          label: "Textbox Item of type date",
-          inputType: "date"
+          key: 'textboxItem_date',
+          label: 'Textbox Item of type date',
+          inputType: 'date'
         },
         //textbox time
         {
           controlType: 'textbox',
-          key: "textboxItem_time",
-          label: "Textbox Item of type time",
-          inputType: "time"
+          key: 'textboxItem_time',
+          label: 'Textbox Item of type time',
+          inputType: 'time'
         },
         //textbox datetime-local
         {
           controlType: 'textbox',
-          key: "textboxItem_datetime-local",
-          label: "Textbox Item of type datetime-local",
-          inputType: "datetime-local"
+          key: 'textboxItem_datetime-local',
+          label: 'Textbox Item of type datetime-local',
+          inputType: 'datetime-local'
         },
         //textbox week
         {
           controlType: 'textbox',
-          key: "textboxItem_week",
-          label: "Textbox Item of type week",
-          inputType: "week"
+          key: 'textboxItem_week',
+          label: 'Textbox Item of type week',
+          inputType: 'week'
         },
         //textbox month
         {
           controlType: 'textbox',
-          key: "textboxItem_month",
-          label: "Textbox Item of type month",
-          inputType: "month"
+          key: 'textboxItem_month',
+          label: 'Textbox Item of type month',
+          inputType: 'month'
         },
         //textbox url
         {
           controlType: 'textbox',
-          key: "textboxItem_url",
-          label: "Textbox Item of type url",
-          inputType: "url"
+          key: 'textboxItem_url',
+          label: 'Textbox Item of type url',
+          inputType: 'url'
         },
         //textbox search
         {
           controlType: 'textbox',
-          key: "textboxItem_search",
-          label: "Textbox Item of type search",
-          inputType: "search"
+          key: 'textboxItem_search',
+          label: 'Textbox Item of type search',
+          inputType: 'search'
         },
         //hidden
         {
           controlType: 'textbox',
-          key: "textboxItem_hidden",
-          label: "Textbox Item of type hidden",
-          inputType: "hidden"
+          key: 'textboxItem_hidden',
+          label: 'Textbox Item of type hidden',
+          inputType: 'hidden'
         }
       ]
     };
@@ -226,8 +226,8 @@ export class FormConfigService {
 
     let groupOptions: ISelectOption[] = [
       {
-        label: "colors",
-        value: "Colors",
+        label: 'colors',
+        value: 'Colors',
         options: [
           {label: 'red', value: '0'},
           {label: 'green', value: '1'},
@@ -236,8 +236,8 @@ export class FormConfigService {
         ]
       },
       {
-        label: "shapes",
-        value: "Shapes",
+        label: 'shapes',
+        value: 'Shapes',
         options: [
           {label: 'circle', value: '0'},
           {label: 'rectangle', value: '1'},
@@ -268,7 +268,7 @@ export class FormConfigService {
         controlType: 'select',
         key: 'custom_noopt_select',
         label: 'Custom no option',
-        noOptKey: "--none--",
+        noOptKey: '--none--',
         options: simpleOptions
       },
       // select custom on option
@@ -347,10 +347,10 @@ export class FormConfigService {
 
     conf.push({
       controlType: 'textbox',
-      inputType: "text",
-      key: "TextboxFg" + 3,
-      label: "Textbox Item of type url",
-      validator: [{name: "required"}]
+      inputType: 'text',
+      key: 'TextboxFg' + 3,
+      label: 'Textbox Item of type url',
+      validator: [{name: 'required'}]
     });
 
     let config: any = {
@@ -366,15 +366,15 @@ export class FormConfigService {
       let conf = [
         {
           controlType: 'textbox',
-          inputType: "text",
-          key: "TextboxFg" + count,
-          label: "Textbox Item " + '.' + count + " of fG" + count
+          inputType: 'text',
+          key: 'TextboxFg' + count,
+          label: 'Textbox Item ' + '.' + count + ' of fG' + count
         },
         {
           controlType: 'textbox',
-          inputType: "text",
-          key: "TextboxFg" + count + '.' + count,
-          label: "Textbox Item " + '.' + count + '.' + count + " of fG" + count
+          inputType: 'text',
+          key: 'TextboxFg' + count + '.' + count,
+          label: 'Textbox Item ' + '.' + count + '.' + count + ' of fG' + count
         },
         /*{
          controlType: 'textbox',
@@ -393,10 +393,10 @@ export class FormConfigService {
 
       let fg = {
         controlType: 'formGroup',
-        key: "fG" + count,
-        title: "Form Group " + count,
+        key: 'fG' + count,
+        title: 'Form Group ' + count,
         config: conf,
-        validator: (count > 0) ? {name: 'controlMatch', params: [["TextboxFg2"], ["TextboxFg2.2"]]} : {}
+        validator: (count > 0) ? {name: 'controlMatch', params: [['TextboxFg2'], ['TextboxFg2.2']]} : {}
       };
 
       if (count > 0) {
@@ -420,20 +420,20 @@ export class FormConfigService {
     ////// Basic Control Validators
     let cV: any = this._getRandItem('cV', 'formGroup', null, 'Default Validators', [], [], '', '');
 
-    cV.config.push(this._getRandItem('required', ct, itt, 'Required Validation', [{name: "required"}], [], '', ''));
+    cV.config.push(this._getRandItem('required', ct, itt, 'Required Validation', [{name: 'required'}], [], '', ''));
     cV.config.push(this._getRandItem('minLength2', ct, itt, 'Min Length 2 Validation', [{
-      name: "minLength",
+      name: 'minLength',
       params: [2]
     }], [], '', ''));
     cV.config.push(this._getRandItem('maxLength4', ct, itt, 'Max Length 4 Validation', [{
-      name: "maxLength",
+      name: 'maxLength',
       params: [4]
     }], [], '', ''));
     cV.config.push(this._getRandItem('pattern[a-z]', ct, itt, 'Pattern [a-z] Validation', [{
-      name: "pattern",
+      name: 'pattern',
       params: ['[a-z]+']
     }], [], '', ''));
-    cV.config.push(this._getRandItem('nullValidator', ct, itt, 'Null Validation', [{name: "nullValidator"}], [], '', ''));
+    cV.config.push(this._getRandItem('nullValidator', ct, itt, 'Null Validation', [{name: 'nullValidator'}], [], '', ''));
 
     config.push(cV);
 
@@ -442,7 +442,7 @@ export class FormConfigService {
 
     //cCV.config.push(this._getRandItem('randomValidator', ct, itn, 'Random Validator', [{name: "randomValidator"}], [], '', ''));
     cCV.config.push(this._getRandItem('dividableBy', ct, itn, 'Dividable By [3]', [{
-      name: "dividableBy",
+      name: 'dividableBy',
       params: [3]
     }], [], '', ''));
 
@@ -451,8 +451,8 @@ export class FormConfigService {
     ////// Custom Async Control Validators
     let cCAV: any = this._getRandItem('cCAV', 'formGroup', null, 'Custom Async validators', [], [], '', '');
 
-    cCAV.config.push(this._getRandItem('promiseValidator', ct, itt, 'Promise Validator (test => true)[2s]', [], [{name: "promiseValidator"}], '', ''));
-    cCAV.config.push(this._getRandItem('observableValidator', ct, itt, 'Observable Validator (ei => true)[0s]', [], [{name: "observableValidator"}], '', ''));
+    cCAV.config.push(this._getRandItem('promiseValidator', ct, itt, 'Promise Validator (test => true)[2s]', [], [{name: 'promiseValidator'}], '', ''));
+    cCAV.config.push(this._getRandItem('observableValidator', ct, itt, 'Observable Validator (ei => true)[0s]', [], [{name: 'observableValidator'}], '', ''));
 
     config.push(cCAV);
 
@@ -463,7 +463,7 @@ export class FormConfigService {
       params: [[['controlMatchPattern'], ['controlMatch']]]
     }], [], '', '');
 
-    gCV1.config.push(this._getRandItem('controlMatchPattern', ct, itt, 'Control Match Pattern', [{name: "required"}], [], '', ''));
+    gCV1.config.push(this._getRandItem('controlMatchPattern', ct, itt, 'Control Match Pattern', [{name: 'required'}], [], '', ''));
     gCV1.config.push(this._getRandItem('controlMatch', ct, itt, 'Control Match', [], [], '', ''));
 
     config.push(gCV1);
@@ -492,14 +492,14 @@ export class FormConfigService {
       params: [['controlMatchPattern'], ['controlMatch']]
     }], [], '', '');
 
-    gCVM.validatorMessages = {"controlMatch": "My custom message for group %cl with %vn"};
+    gCVM.validatorMessages = {'controlMatch': 'My custom message for group %cl with %vn'};
 
-    let a = this._getRandItem('c1', ct, itt, 'Control Match Pattern', [{name: "required"}], [], '', '');
-    a.validatorMessages = {"required": "My custom message for %cl with %vn"};
+    let a = this._getRandItem('c1', ct, itt, 'Control Match Pattern', [{name: 'required'}], [], '', '');
+    a.validatorMessages = {'required': 'My custom message for %cl with %vn'};
     gCVM.config.push(a);
 
-    let b = this._getRandItem('c2', ct, itt, 'Control Match', [], [{name: "promiseValidator"}], '', '');
-    b.validatorMessages = {"promiseValidator": "My custom async message for %cl with %vn"};
+    let b = this._getRandItem('c2', ct, itt, 'Control Match', [], [{name: 'promiseValidator'}], '', '');
+    b.validatorMessages = {'promiseValidator': 'My custom async message for %cl with %vn'};
     gCVM.config.push(b);
 
     config.push(gCVM);
@@ -522,23 +522,17 @@ export class FormConfigService {
     };
 
     let creditCardMask = {
-      name: "maskString",
+      name: 'maskString',
       params: [
-        "0000 0000 0000 0000",
+        '0000 0000 0000 0000',
         {'0': /[0-9]/}],
       target: 2
     };
     let replaceSpace = {
-      name: "replaceString",
+      name: 'replaceString',
       params: [/ /g, ''],
       target: 1
     };
-
-    let pFA: any[] = [
-      creditCardMask,
-      replaceSpace
-    ];
-
 
     const phoneNumberMask: (RegExp | string)[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     const conformToMaskConfig: IConformToMaskConfigOptions = {
@@ -555,8 +549,15 @@ export class FormConfigService {
       mask: phoneNumberMask
     };
 
+    let pFA: any[] = [
+      creditCardMask,
+      replaceSpace
+    ];
 
-    let config: any[] = [
+    ////// standard formatter
+    let stdFP: any = this._getRandItem('standardFormatterParser', 'formGroup', null, 'StandardFormatterParser', [], [], '', '');
+
+    stdFP.config = [
       {
         key: 'ccn',
         controlType: 'textbox',
@@ -578,7 +579,7 @@ export class FormConfigService {
         formState: '11 112 2223 3 3344 44',
         formatterParser: [
           {
-            name: "conformToMask",
+            name: 'conformToMask',
             params: [
               phoneNumberMask,
               conformToMaskConfig
@@ -593,7 +594,7 @@ export class FormConfigService {
         label: 'Phone Number',
         formatterParser: [
           {
-            name: "conformToMask",
+            name: 'conformToMask',
             params: [
               phoneNumberMask,
               {mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
@@ -601,7 +602,13 @@ export class FormConfigService {
             target: 0
           }
         ],
-      },
+      }
+    ];
+
+    ////// standard formatter
+    let tmFP: any = this._getRandItem('standardFormatterParser', 'formGroup', null, 'TextMask Feature', [], [], '', '');
+
+    tmFP.config = [
       {
         key: 'textMask',
         controlType: 'textbox',
@@ -609,12 +616,12 @@ export class FormConfigService {
         formState: '11 112 2223 3 3344 44',
         formatterParser: [
           {
-            name: "textMask",
+            name: 'textMask',
             params: [textMaskConfig],
             target: 0
           },
           {
-            name: "replaceString",
+            name: 'replaceString',
             params: [/[()-/ /]/g, ''],
             keepCharPositions: true,
             target: 1
@@ -627,8 +634,8 @@ export class FormConfigService {
         label: 'textMaskAddon createAutoCorrectedDatePipe',
         formatterParser: [
           {
-            name: "textMask",
-            params: [{}, {name: "createAutoCorrectedDatePipe"}],
+            name: 'textMask',
+            params: [{}, {name: 'createAutoCorrectedDatePipe'}],
             target: 0
           }
         ],
@@ -640,14 +647,14 @@ export class FormConfigService {
         formState: '1365968',
         formatterParser: [
           {
-            name: "textMask",
+            name: 'textMask',
             params: [
               {
                 mask: false,
 
               },
               {
-                name: "createNumberMask",
+                name: 'createNumberMask',
                 config: {
                   prefix: '',
                   suffix: ' $'
@@ -665,11 +672,11 @@ export class FormConfigService {
         formState: 'adfa&%§$"§%$&%/sfd aasdf asdf ',
         formatterParser: [
           {
-            name: "textMask",
+            name: 'textMask',
             params: [
               {mask: false},
               {
-                name: "emailMask",
+                name: 'emailMask',
               }
             ],
             target: 0
@@ -678,12 +685,18 @@ export class FormConfigService {
       }
     ];
 
+    let config: any[] = [
+      stdFP,
+      tmFP
+    ];
+
 
     let fgConfig: any = {
       config: config
     };
 
-    //fgConfig.config = [...getTextMaskConfigs(), ...fgConfig.config];
+
+    fgConfig.config = [...fgConfig.config, ...getTextMaskConfigs()];
 
     return fgConfig;
 
@@ -708,26 +721,44 @@ export class FormConfigService {
         }, {
           name: 'Date (auto-corrected)',
           mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
-          pipe: "createAutoCorrectedDatePipe",
+          addon: {
+            name: 'createAutoCorrectedDatePipe'
+          },
           placeholder: 'Please enter a date',
           keepCharPositions: true,
         }, {
           name: 'US dollar amount',
-          mask: "createNumberMask",
+          mask: [],
+          addon: {
+            name: 'createNumberMask',
+            config: {
+              prefix: '',
+              suffix: ' $'
+            }
+          },
           placeholder: 'Enter an amount',
         }, {
           name: 'US dollar amount (allows decimal)',
-          mask: "createNumberMask",
-          addonConf: {allowDecimal: true},
+          mask: [],
+          addon: {
+            name: 'createNumberMask',
+            config: {allowDecimal: true},
+          },
           placeholder: 'Enter an amount',
         }, {
           name: 'Percentage amount',
-          mask: "createNumberMask",
-          addonConf: {suffix: '%', prefix: ''},
+          mask: [],
+          addon: {
+            name: 'createNumberMask',
+            config: {suffix: '%', prefix: ''},
+          },
           placeholder: 'Enter an amount',
         }, {
           name: 'Email',
-          mask: 'emailMask',
+          mask: [],
+          addon: {
+            name: 'emailMask'
+          },
           placeholder: 'john@smith.com',
           placeholderChar: TextMaskService.placeholderChars.whitespace
         }, {
@@ -746,21 +777,24 @@ export class FormConfigService {
 
       return choices.map((conf) => {
 
-        const defaultConfig = {
+        const defaultConfig:IDynamicFormElementModel = {
           key: '',
           controlType: 'textbox',
           label: '',
           formatterParser: [
             {
-              name: "textMask",
+              name: 'textMask',
               params: [{}, {}],
               target: 0
             }
           ],
         };
 
-        defaultConfig.key = conf.name;
+        defaultConfig.key = conf.name.split(' ').join();
         defaultConfig.label = conf.name;
+        delete conf.name;
+        defaultConfig.placeholder =  conf.placeholder;
+        delete conf.placeholder;
         defaultConfig.formatterParser[0].params = [TextMaskService.getBasicConfig(conf)];
 
         return defaultConfig;
@@ -776,13 +810,13 @@ export class FormConfigService {
       config: [
         {
           controlType: 'slider',
-          key: "slider",
-          label: "Slider Group"
+          key: 'slider',
+          label: 'Slider Group'
         },
         {
           controlType: 'google-address-search',
-          key: "gAS",
-          label: "Google Address Search"
+          key: 'gAS',
+          label: 'Google Address Search'
         }
       ]
     };
@@ -803,7 +837,7 @@ export class FormConfigService {
         {label: 'Firma', value: '2'}
       ],
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ]
     };
 
@@ -821,10 +855,10 @@ export class FormConfigService {
         {name: 'toCapitalized', target: 2}
       ],
       valueChangeSubscriptions: [
-        {name: "isRendered", controls: ['isCompany'], params: [true]}
+        {name: 'isRendered', controls: ['isCompany'], params: [true]}
       ],
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ]
     };
 
@@ -842,11 +876,11 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'geburtsdatum',
       label: 'Geburtsdatum',
-      placeholder: "Geburtsdatum hier",
-      helpText: "der Geburtsdatum der Person",
+      placeholder: 'Geburtsdatum hier',
+      helpText: 'der Geburtsdatum der Person',
       inputType: 'date',
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ]
     };
 
@@ -854,7 +888,7 @@ export class FormConfigService {
       controlType: 'select',
       key: 'beschaeftigung',
       label: 'Beschäftigung',
-      helpText: "Beschäftigung der Person (Arbeiter, Angestellter)",
+      helpText: 'Beschäftigung der Person (Arbeiter, Angestellter)',
       options: [
         {label: 'Arbeiter', value: 'Arbeiter'},
         {label: 'Angestellter', value: 'Angestellter'}
@@ -866,7 +900,7 @@ export class FormConfigService {
       key: 'kommunikationssprache',
       label: 'Kommunikationssprache',
       //wrapperClass:['col-sm-4'],
-      helpText: "Kommunikationssprache der Person",
+      helpText: 'Kommunikationssprache der Person',
       options: [
         {label: 'Deutsch', value: 'DE'},
         {label: 'Englisch', value: 'EN'}
@@ -899,12 +933,12 @@ export class FormConfigService {
       controlType: 'container',
       key: 'pd-c-gender',
       config: [],
-      valueChangeSubscriptions: [{name: "isRendered", controls: ['isCompany'], params: [true]}]
+      valueChangeSubscriptions: [{name: 'isRendered', controls: ['isCompany'], params: [true]}]
     };
 
     let firstName = {
-      controlType: "textbox",
-      type: "text",
+      controlType: 'textbox',
+      type: 'text',
       key: 'firstName',
       label: 'Firstname',
       formatterParser: [
@@ -912,8 +946,8 @@ export class FormConfigService {
       ]
     };
     let lastName = {
-      controlType: "textbox",
-      type: "text",
+      controlType: 'textbox',
+      type: 'text',
       key: 'lastName',
       label: 'Lastname'
     };
@@ -933,8 +967,8 @@ export class FormConfigService {
 
     let personalData: IDynamicFormElementModel = {
       controlType: 'formGroup',
-      key: "personalData",
-      label: "Personal Data",
+      key: 'personalData',
+      label: 'Personal Data',
       config: []
     };
 
@@ -960,7 +994,7 @@ export class FormConfigService {
           label: 'isRendered Target',
           inputType: 'text',
           valueChangeSubscriptions: [
-            {name: "isRendered", controls: ['isRenderedIndicator'], params: []}
+            {name: 'isRendered', controls: ['isRenderedIndicator'], params: []}
           ],
         },
 
@@ -974,15 +1008,15 @@ export class FormConfigService {
 
     let googleAddressSearch: GoogleAddressSearchModel = {
       controlType: 'google-address-search',
-      key: "googleAddressSearch",
-      label: "Google Address Search",
+      key: 'googleAddressSearch',
+      label: 'Google Address Search',
       wrapperClass: ['col-sm-12'],
       addressComponentControls: [
-        {component: "street_number", control: 'house_number'},
-        {component: "street", control: 'street'},
-        {component: "postal_code", control: 'zip_code'},
-        {component: "locality", control: 'city'},
-        {component: "country", control: 'country'}
+        {component: 'street_number', control: 'house_number'},
+        {component: 'street', control: 'street'},
+        {component: 'postal_code', control: 'zip_code'},
+        {component: 'locality', control: 'city'},
+        {component: 'country', control: 'country'}
       ]
     };
 
@@ -992,13 +1026,13 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'house_number',
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ],
       valueChangeSubscriptions: [
         {
-          name: "syncWithAddressComponent",
-          controls: ["googleAddressSearch"],
-          params: ["street_number"]
+          name: 'syncWithAddressComponent',
+          controls: ['googleAddressSearch'],
+          params: ['street_number']
         }
       ]
     };
@@ -1012,13 +1046,13 @@ export class FormConfigService {
         {name: 'toCapitalized', target: 2}
       ],
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ],
       valueChangeSubscriptions: [
         {
-          name: "syncWithAddressComponent",
-          controls: ["googleAddressSearch"],
-          params: ["route"]
+          name: 'syncWithAddressComponent',
+          controls: ['googleAddressSearch'],
+          params: ['route']
         }
       ]
     };
@@ -1029,16 +1063,16 @@ export class FormConfigService {
       controlType: 'textbox',
       key: 'zip_code',
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ],
       formatterParser: [
         {name: 'toUpperCase', target: 2}
       ],
       valueChangeSubscriptions: [
         {
-          name: "syncWithAddressComponent",
-          controls: ["googleAddressSearch"],
-          params: ["postal_code"]
+          name: 'syncWithAddressComponent',
+          controls: ['googleAddressSearch'],
+          params: ['postal_code']
         }
       ]
     };
@@ -1052,13 +1086,13 @@ export class FormConfigService {
         {name: 'toCapitalized', target: 2}
       ],
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ],
       valueChangeSubscriptions: [
         {
-          name: "syncWithAddressComponent",
-          controls: ["googleAddressSearch"],
-          params: ["locality"]
+          name: 'syncWithAddressComponent',
+          controls: ['googleAddressSearch'],
+          params: ['locality']
         }
       ]
     };
@@ -1068,7 +1102,7 @@ export class FormConfigService {
       wrapperClass: ['col-sm-4'],
       controlType: 'select',
       key: 'country',
-      formState: "DE",
+      formState: 'DE',
       options: [
         {label: 'Österreich', value: 'AT'},
         {label: 'Deutschland', value: 'DE'},
@@ -1077,13 +1111,13 @@ export class FormConfigService {
         {label: 'Italien', value: 'IT'}
       ],
       validator: [
-        {name: "required"}
+        {name: 'required'}
       ],
       valueChangeSubscriptions: [
         {
-          name: "syncWithAddressComponent",
-          controls: ["googleAddressSearch"],
-          params: ["country"]
+          name: 'syncWithAddressComponent',
+          controls: ['googleAddressSearch'],
+          params: ['country']
         }
       ]
     };
@@ -1114,8 +1148,8 @@ export class FormConfigService {
 
     let addressData: IDynamicFormElementModel = {
       controlType: 'formGroup',
-      key: "addressData",
-      label: "Address Data",
+      key: 'addressData',
+      label: 'Address Data',
       config: []
     };
     addressData.config.push(row0, row1, row2);
@@ -1136,7 +1170,7 @@ export class FormConfigService {
             {name: 'email'}
           ],
           formatterParser: [
-            {name: "maskAndPlaceholdString", params: [''], target: 0}
+            {name: 'maskAndPlaceholdString', params: [''], target: 0}
           ]
         },
         {
@@ -1173,7 +1207,7 @@ export class FormConfigService {
             controlType: 'select',
             key: 'controlType',
             label: 'Control Type',
-            helpText: "This value is used to identify the control type  of the element",
+            helpText: 'This value is used to identify the control type  of the element',
             options: [
               {value: 'textbox', label: 'Textbox'},
               {value: 'select', label: 'Select'},
@@ -1190,7 +1224,7 @@ export class FormConfigService {
             controlType: 'select',
             key: 'type',
             label: 'type',
-            helpText: "This value is used in the type attribute of the element",
+            helpText: 'This value is used in the type attribute of the element',
             options: [
               {value: 'text', label: 'Text'},
               {value: 'number', label: 'Number'},
@@ -1200,25 +1234,25 @@ export class FormConfigService {
             ],
             valueChangeSubscriptions: [
               /**/{
-                controls: ['controlType'], name: "filteredOptions",
+                controls: ['controlType'], name: 'filteredOptions',
                 params: [
                   {key: 'textbox', optionsKeys: ['text', 'number']},
                   {key: 'button', optionsKeys: ['button', 'submit', 'reset']}
                 ]
               },
               {
-                controls: ['controlType'], name: "isRendered", params: ['textbox', 'button']
+                controls: ['controlType'], name: 'isRendered', params: ['textbox', 'button']
               }
             ]
           },
           //key
           {
             controlType: 'textbox',
-            key: "key",
-            label: "Key",
-            placeholder: "The element key",
-            helpText: "This value is used in the id and name attribute of the element",
-            inputType: "text",
+            key: 'key',
+            label: 'Key',
+            placeholder: 'The element key',
+            helpText: 'This value is used in the id and name attribute of the element',
+            inputType: 'text',
             validator: [{name: 'required'}]
           },
           // label
@@ -1226,8 +1260,8 @@ export class FormConfigService {
             controlType: 'textbox',
             key: 'label',
             label: 'Label',
-            placeholder: "The element label",
-            helpText: "This value is used in the lable of the element",
+            placeholder: 'The element label',
+            helpText: 'This value is used in the lable of the element',
             inputType: 'text'
           },
           // placeholder
@@ -1235,11 +1269,11 @@ export class FormConfigService {
             controlType: 'textbox',
             key: 'placeholder',
             label: 'Placeholder',
-            placeholder: "The element placeholder",
-            helpText: "This value is used in the placeholder of the element",
+            placeholder: 'The element placeholder',
+            helpText: 'This value is used in the placeholder of the element',
             inputType: 'text',
             validator: [
-              {name: "randomValidator"}
+              {name: 'randomValidator'}
             ]
           },
           //validator
@@ -1247,18 +1281,18 @@ export class FormConfigService {
             controlType: 'select',
             key: 'validator',
             label: 'Validator',
-            helpText: "Select default validation for this element",
-            noOptValue: "--none--",
+            helpText: 'Select default validation for this element',
+            noOptValue: '--none--',
             options: [
               {
-                key: "builtIn", value: "built in validators",
+                key: 'builtIn', value: 'built in validators',
                 children: [
                   {key: [{name: 'required'}], value: 'Required'},
                   {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
                 ]
               },
               {
-                key: "custom", value: "custom in validators",
+                key: 'custom', value: 'custom in validators',
                 children: [
                   {key: [{name: 'email'}], value: 'Email'},
                 ]
@@ -1266,7 +1300,7 @@ export class FormConfigService {
             ],
             valueChangeSubscriptions: [{
               controls: ['controlType'],
-              name: "isRendered",
+              name: 'isRendered',
               params: ['textbox', 'select', 'multiselect', 'checkbox', 'radio', 'textarea']
             }]
           },
@@ -1275,8 +1309,8 @@ export class FormConfigService {
             controlType: 'textbox',
             key: 'help',
             label: 'Help',
-            placeholder: "The element help",
-            helpText: "This value is used in the help of the element",
+            placeholder: 'The element help',
+            helpText: 'This value is used in the help of the element',
             inputType: 'text'
           },
           //submit button
@@ -1307,35 +1341,35 @@ export class FormConfigService {
             controlType: 'textbox',
             key: 'housenr',
             label: 'House Nummer',
-            placeholder: "House Nummer hier",
+            placeholder: 'House Nummer hier',
             inputType: 'text'
           },
           {
             controlType: 'textbox',
             key: 'strasse',
             label: 'Strasse',
-            placeholder: "Strassenname hier",
+            placeholder: 'Strassenname hier',
             inputType: 'text'
           },
           {
             controlType: 'textbox',
             key: 'plz',
             label: 'PLZ',
-            placeholder: "PLZ hier",
+            placeholder: 'PLZ hier',
             inputType: 'text'
           },
           {
             controlType: 'textbox',
             key: 'stadt',
             label: 'Stadt',
-            placeholder: "Stadt hier",
+            placeholder: 'Stadt hier',
             inputType: 'text'
           },
           {
             controlType: 'textbox',
             key: 'email',
             label: 'Email',
-            placeholder: "Email hier",
+            placeholder: 'Email hier',
             inputType: 'mail',
             validator: [
               {name: 'required'},
@@ -1392,7 +1426,7 @@ export class FormConfigService {
             controlType: 'select',
             key: 'zahlungs_interval',
             label: 'Zahlungs Interval',
-            helpText: "Intervall der Zahlung",
+            helpText: 'Intervall der Zahlung',
             options: [
               {label: 'monatlich', value: 'monatlich'},
               {label: 'vierteljährlich', value: 'vierteljährlich'},
@@ -1401,7 +1435,7 @@ export class FormConfigService {
             ],
             valueChangeSubscriptions: [
               /**/{
-                controls: ['sponsorship'], name: "filteredOptions",
+                controls: ['sponsorship'], name: 'filteredOptions',
                 params: [
                   {key: 'hund', options: ['monatlich', 'jährlich']},
                   {key: 'katze', options: ['vierteljährlich', 'halbjährlich']}
@@ -1468,7 +1502,7 @@ export class FormConfigService {
       },
 
       {
-        label: "generic Item",
+        label: 'generic Item',
         key: 9,
         config: this.getGenericElementConfig()
       },

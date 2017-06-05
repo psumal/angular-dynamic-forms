@@ -11,14 +11,11 @@ export class FormatterParserService {
 
   getFormatParseFunction(functionName: string, params: any[]): IFormatterParserFn | undefined {
     let formatParseFunction: Function;
-    console.log('functionName', functionName);
     if (functionName in FormatterParser) {
-      console.log('FN Core: ', functionName, params);
       formatParseFunction = FormatterParser[functionName];
     }
     else if (this.FORMATTER_PARSER) {
       formatParseFunction = this.FORMATTER_PARSER.find(formParsFunc => {
-        console.log('FN Token: ', formParsFunc.name);
         return functionName === formParsFunc.name;
       });
     } else {
@@ -29,7 +26,6 @@ export class FormatterParserService {
       throw new Error(`Formatter or Parser with name ${functionName} is not provided as a function via FormatterParser service or FORMATTER_PARSER InjectionToken.`);
     }
 
-    console.log('formatParseFunctionCompose: ', formatParseFunction(...params));
     return (params) ? formatParseFunction(...params) : formatParseFunction;
   }
 

@@ -90,7 +90,6 @@ export class FormGroupComponent implements OnInit, OnDestroy {
 
   //sideEffects
   public onValueSubscriptionChanged:Function = ($event: any) => {
-    console.log('formGroup onValueSubscriptionChanged: ', $event);
     const name = $event.name;
     switch (name) {
       case 'isRendered':

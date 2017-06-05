@@ -48,10 +48,8 @@ var FormConfigSelectorComponent = (function () {
       });
   };
   FormConfigSelectorComponent.prototype.updateFormConfig = function (formValue) {
-    console.log('formValue: ', formValue);
     if (formValue || formValue.toString() === '0') {
       var configSet = this.getConfigByKey(formValue);
-      console.log('configSet: ', configSet);
       this.formConfig = configSet.config || {};
     }
   };

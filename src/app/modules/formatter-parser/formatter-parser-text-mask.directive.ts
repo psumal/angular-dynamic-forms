@@ -102,18 +102,19 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
     }
 
     //write value to model (value stored in FormControl)
-    const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
-    this.onModelChange(modelValue);
+    //const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
+    //this.onModelChange(modelValue);
   }
+
 
   // Formatter: Model to View
   writeValue(rawValue: any): void {
-
-    /*TEXT-MASK EXCEPTION ==============================================================*/
+    /*
+    ///TEXT-MASK EXCEPTION ==============================================================
     if (this.textMaskPresent) {
       this.textMaskInputElement.update(rawValue)
     }
-    /*============================================================== TEXT-MASK EXCEPTION*/
+    ///============================================================== TEXT-MASK EXCEPTION
     else {
       //write value to view (visible text of the form control)
       this.inputElement.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
@@ -126,7 +127,9 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
       // @TODO consider other way to call patchValue
       this.formControl.patchValue(modelValue);
     }
+     */
   }
+
 
   //fetch formatter and parser form config and update props
   updateFormatterAndParser(): void {
@@ -154,6 +157,9 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
           if (formatterConfig.name === 'textMask') {
             this.textMaskPresent = true;
             const config: any = TextMaskService.getConfig(formatterConfig.params[0], formatterConfig.params[1]);
+            if(formatterConfig.params[1].name = "createAutoCorrectedDatePipe") {
+              console.log('textMask Config: ', config);
+            }
             this.textMaskInputElement = createTextMaskInputElement(Object.assign({inputElement: this.inputElement}, config));
           }
           /*============================================================== TEXT-MASK EXCEPTION*/

@@ -73,7 +73,6 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   @HostListener('input', ['$event'])
   onControlInput($event: KeyboardEvent) {
 
-    console.log('onControlInput: ', $event);
     const input = $event.target as HTMLInputElement;
     const rawValue: any = input.value;
 

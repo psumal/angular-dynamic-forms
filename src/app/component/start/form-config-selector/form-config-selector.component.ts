@@ -51,10 +51,8 @@ export class FormConfigSelectorComponent {
   }
 
   updateFormConfig(formValue: any) {
-    console.log('formValue: ', formValue);
     if (formValue || formValue.toString() === '0') {
       const configSet: any = this.getConfigByKey(formValue);
-      console.log('configSet: ', configSet);
       this.formConfig = configSet.config || {};
     }
   }

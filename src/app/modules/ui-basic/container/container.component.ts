@@ -79,7 +79,6 @@ export class ContainerComponent implements OnInit {
 
 
   onValueSubscriptionChanged = ($event: any) => {
-    console.log('container onValueSubscriptionChanged: ', $event);
     const name = $event.name;
     switch (name) {
       //list of default actions

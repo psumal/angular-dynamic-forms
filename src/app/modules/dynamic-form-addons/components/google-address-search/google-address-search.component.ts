@@ -94,7 +94,6 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
 
   initAddressCopySubscription() {
     this.currentFormItem.valueChanges.subscribe((change) => {
-      console.log('initAddressCopySubscription');
       this.explodeAddressIntoFormGroup(change);
 
       for(let key in this.group.value) {
@@ -113,12 +112,10 @@ export class GoogleAddressSearchComponent implements OnInit, OnDestroy {
     let locality: string;
     let country: string;
 
-    console.log('place', place.address_components);
 
     if (typeof place === 'object' && 'address_components' in place) {
       place.address_components.forEach(function (component) {
         component.types.forEach(function (addressComponentType) {
-          console.log('addressComponentType', addressComponentType)
           if (addressComponentType == 'country') {
             country = component.short_name.toLowerCase()
           }

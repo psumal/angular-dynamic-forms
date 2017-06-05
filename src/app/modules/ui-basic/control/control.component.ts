@@ -63,9 +63,7 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.hostClass = this.getHostClass();
-    console.log('add element: ', this.config.key);
     this.dfes.addControlConfigToGroup(this.group, this.config);
-    console.log('initValueChangeSubscriptions element: ', this.config.key);
     this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
   }
 
@@ -159,7 +157,6 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   //sideEffects
   public onValueSubscriptionChanged: Function = ($event: any) => {
-    console.log('control onValueSubscriptionChanged: ', $event);
     const name = $event.name;
     switch (name) {
       case 'isRendered':

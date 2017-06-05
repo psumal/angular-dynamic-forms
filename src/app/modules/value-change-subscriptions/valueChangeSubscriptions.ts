@@ -2,7 +2,6 @@ import {ValueChangeSubscriptionFn} from "./value-change-subscriptions-function";
 export class ValueChangeSubscriptions {
 
   static isRendered: ValueChangeSubscriptionFn = (change: any, params: any): any => {
-    console.log('isRendered');
     //check if the change is present in params. If true display it.
 
     return {

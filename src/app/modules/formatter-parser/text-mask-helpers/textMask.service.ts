@@ -1,10 +1,7 @@
 import {Injectable} from "@angular/core";
-import {ITextMaskConfigOptions, ITextMasResult} from "./text-mask-config";
+import {ITextMaskConfigOptions,} from "./text-mask-config";
 import {createAutoCorrectedDatePipe, createNumberMask, emailMask} from "text-mask-addons/dist/textMaskAddons";
 import { FormatterParserService } from '../formatter-parser.service';
-
-const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
-const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : setTimeout;
 
 
 @Injectable()
@@ -14,15 +11,6 @@ export class TextMaskService {
     whitespace: '\u2000',
     underscore: '_'
   };
-
-  static textMaskProps = [
-    'placeholder',
-    'placeholderChar',
-    'pipe',
-    'keepCharPositions',
-    'mask',
-    'guide'
-  ];
 
   static alphabetic = /[A-Z]/i;
   static digit = /\d/;

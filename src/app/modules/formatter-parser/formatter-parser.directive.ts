@@ -1,18 +1,8 @@
-import {
-  Directive,
-  ElementRef,
-  forwardRef,
-  Host,
-  HostListener,
-  InjectionToken,
-  OnInit,
-  Optional,
-  SkipSelf
-} from "@angular/core";
-import {ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
-import {FormatterParserService} from "./formatter-parser.service";
-import {IFormatterParserFn} from "./struct/formatter-parser-function";
+import { Directive, ElementRef, forwardRef, Host, HostListener, OnInit, Optional, SkipSelf } from '@angular/core';
+import { ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DynamicFormElementModel } from '../dymanic-form-element/model/base/form-control';
+import { FormatterParserService } from './formatter-parser.service';
+import { IFormatterParserFn } from './struct/formatter-parser-function';
 
 const CONTROL_VALUE_ACCESSOR = {
   name: 'formatterParserValueAccessor',
@@ -21,14 +11,11 @@ const CONTROL_VALUE_ACCESSOR = {
   multi: true
 };
 
-const TEXT_MASK: InjectionToken<Function> = new InjectionToken<Function>('text-mask');
-
 @Directive({
   inputs: ['config', 'formControlName'],
   selector: '[formatterParser]',
   providers: [
-    CONTROL_VALUE_ACCESSOR,
-    {provide: TEXT_MASK, useValue: ''}
+    CONTROL_VALUE_ACCESSOR
   ]
 })
 export class FormatterParserDirective implements ControlValueAccessor, OnInit {
@@ -39,10 +26,13 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   formControlName: string;
 
   // Container component reference
-  formControl: FormControl;
+  protected formControl: FormControl;
 
-  protected formatterParserView: IFormatterParserFn[] = [];
-  protected formatterParserModel: IFormatterParserFn[] = [];
+  // html input reference
+  protected inputElement: HTMLInputElement;
+
+  private formatterParserView: IFormatterParserFn[] = [];
+  private formatterParserModel: IFormatterParserFn[] = [];
 
   private onTouch: Function;
   private onModelChange: Function;
@@ -51,6 +41,7 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
               private fps: FormatterParserService,
               //BIG THX to https://github.com/SanderElias for this hint
               @Optional() @Host() @SkipSelf() private fcd: ControlContainer) {
+
   }
 
   registerOnTouched(fn) {
@@ -61,8 +52,10 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
     this.onModelChange = fn;
   }
 
+
   ngOnInit(): void {
     this.formControl = (<any>this.fcd).form.controls[this.formControlName];
+    this.inputElement = this.getInputElementRef();
     this.updateFormatterAndParser();
 
   }
@@ -70,31 +63,33 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   // Parser: View to Model
   @HostListener('input', ['$event'])
   onControlInput($event: KeyboardEvent) {
-
-    const input = $event.target as HTMLInputElement;
-    const rawValue: any = input.value;
+    const rawValue: any = this.inputElement.value;
 
     //write value to view (visible text of the form control)
-    input.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
+    this.inputElement.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
 
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
     this.onModelChange(modelValue);
   }
 
+
   // Formatter: Model to View
   writeValue(rawValue: any): void {
-    const input: HTMLInputElement = this._elementRef.nativeElement;
+
     //write value to view (visible text of the form control)
-    input.value = rawValue;//this.formatterParserView.reduce((state:any, transform: IFormatterParserFn) => transform(state).result, value);
+    this.inputElement.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
 
     //write value to model (value stored in FormControl)
     const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
-    // prevent cyclic function calls @TODO consider other way to call patchValue
+    // prevent cyclic function calls
     if (rawValue !== modelValue) {
+      // @TODO consider other way to call patchValue
       this.formControl.patchValue(modelValue);
     }
+
   }
+
 
   //fetch formatter and parser form config and update props
   updateFormatterAndParser(): void {
@@ -114,15 +109,35 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
           const fPF: IFormatterParserFn = this.fps.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
           const t = (formatterConfig.target === undefined) ? targetBoth : formatterConfig.target;
 
-          if ((t == 0 || t == 2)) {
-            this.formatterParserView.push(fPF);
-          }
           if (t == 1 || t == 2) {
             this.formatterParserModel.push(fPF);
           }
+
+          if ((t == 0 || t == 2)) {
+              this.formatterParserView.push(fPF);
+          }
         });
+
     }
 
+  }
+
+  // get a safe ref to the input element
+  private getInputElementRef(): HTMLInputElement {
+    let input: HTMLInputElement;
+    if (this._elementRef.nativeElement.tagName === 'INPUT') {
+      // `textMask` directive is used directly on an input element
+      input = this._elementRef.nativeElement
+    } else {
+      // `textMask` directive is used on an abstracted input element, `ion-input`, `md-input`, etc
+      input = this._elementRef.nativeElement.getElementsByTagName('INPUT')[0]
+    }
+
+    if (!input) {
+      throw new Error('You can applied the "formatterParser" directive only on inputs or elements containing inputs');
+    }
+
+    return input;
   }
 
 }

@@ -175,7 +175,7 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
         // this is exactly the same what our formatterParserFunctions are
         // so we just use them on the textMask input as pipe param :-)
 
-        // if a pipe is already given push it to the view formatter
+        // if a pipe is already given push it to the view formatter => formatterParserView
         if ('pipe' in config && typeof config.pipe === 'function') {
           let clonedPipe = {...config}.pipe.bind({});
           const fPF: IFormatterParserFn = (conformedValue) => {

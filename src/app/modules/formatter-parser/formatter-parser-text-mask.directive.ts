@@ -8,15 +8,15 @@ import {
   OnInit,
   Optional,
   SkipSelf
-} from "@angular/core";
-import {ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
-import {FormatterParserService} from "./formatter-parser.service";
-import {IFormatterParserFn} from "./struct/formatter-parser-function";
-
+} from '@angular/core';
+import { ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DynamicFormElementModel } from '../dymanic-form-element/model/base/form-control';
+import { FormatterParserService } from './formatter-parser.service';
+import { IFormatterParserFn } from './struct/formatter-parser-function';
 /*TEXT-MASK EXCEPTION ==============================================================*/
-import {TextMaskService} from "./text-mask-helpers/textMask.service";
-import {createTextMaskInputElement} from "text-mask-core/dist/textMaskCore";
+import { TextMaskService } from './text-mask-helpers/textMask.service';
+import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore';
+import { ITextMaskConfigOptions } from './text-mask-helpers/text-mask-config';
 /*============================================================== TEXT-MASK EXCEPTION*/
 
 const CONTROL_VALUE_ACCESSOR = {
@@ -25,9 +25,6 @@ const CONTROL_VALUE_ACCESSOR = {
   useExisting: forwardRef(() => FormatterParserTextMaskDirective),
   multi: true
 };
-
-export const FORMATTER_PARSER: InjectionToken<(IFormatterParserFn)[]> = new InjectionToken<(IFormatterParserFn)[]>('formatterParser');
-
 
 @Directive({
   inputs: ['config', 'formControlName'],
@@ -51,12 +48,12 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
   protected inputElement: HTMLInputElement;
 
   /*TEXT-MASK EXCEPTION ==============================================================*/
-  protected textMaskPresent = false;
+  protected textMaskConfig: boolean | ITextMaskConfigOptions = false;
   protected textMaskInputElement: any;
   /*============================================================== TEXT-MASK EXCEPTION*/
 
-  private formatterParserView: Function[] = [];
-  private formatterParserModel: Function[] = [];
+  private formatterParserView: IFormatterParserFn[] = [];
+  private formatterParserModel: IFormatterParserFn[] = [];
 
   private onTouch: Function;
   private onModelChange: Function;
@@ -92,7 +89,7 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
     const rawValue: any = this.inputElement.value;
 
     /*TEXT-MASK EXCEPTION ==============================================================*/
-    if (this.textMaskPresent) {
+    if (!!this.textMaskConfig) {
       this.textMaskInputElement.update(rawValue)
     }
     /*============================================================== TEXT-MASK EXCEPTION*/
@@ -102,32 +99,32 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
     }
 
     //write value to model (value stored in FormControl)
-    //const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
-    //this.onModelChange(modelValue);
+    const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue || null);
+    this.onModelChange(modelValue);
   }
 
 
   // Formatter: Model to View
   writeValue(rawValue: any): void {
-    /*
-    ///TEXT-MASK EXCEPTION ==============================================================
-    if (this.textMaskPresent) {
-      this.textMaskInputElement.update(rawValue)
-    }
-    ///============================================================== TEXT-MASK EXCEPTION
-    else {
-      //write value to view (visible text of the form control)
-      this.inputElement.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
-    }
 
-    //write value to model (value stored in FormControl)
-    const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
-    // prevent cyclic function calls
-    if (rawValue !== modelValue) {
-      // @TODO consider other way to call patchValue
-      this.formControl.patchValue(modelValue);
-    }
-     */
+     ///TEXT-MASK EXCEPTION ==============================================================
+     if (!!this.textMaskConfig) {
+     this.textMaskInputElement.update(rawValue)
+     }
+     ///============================================================== TEXT-MASK EXCEPTION
+     else {
+     //write value to view (visible text of the form control)
+     this.inputElement.value = this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
+     }
+
+     //write value to model (value stored in FormControl)
+     const modelValue = this.formatterParserModel.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, rawValue);
+     // prevent cyclic function calls
+     if (rawValue !== modelValue) {
+     // @TODO consider other way to call patchValue
+     this.formControl.patchValue(modelValue);
+     }
+
   }
 
 
@@ -138,7 +135,7 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
     this.formatterParserModel = [];
 
     /*TEXT-MASK EXCEPTION ==============================================================*/
-    this.textMaskPresent = false;
+    this.textMaskConfig = false;
     /*============================================================== TEXT-MASK EXCEPTION*/
 
     if (!this.config) {
@@ -153,25 +150,47 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
           const fPF: IFormatterParserFn = this.fps.getFormatParseFunction(formatterConfig.name, formatterConfig.params);
           const t = (formatterConfig.target === undefined) ? targetBoth : formatterConfig.target;
 
-          /*TEXT-MASK EXCEPTION ==============================================================*/
-          if (formatterConfig.name === 'textMask') {
-            this.textMaskPresent = true;
-            const config: any = TextMaskService.getConfig(formatterConfig.params[0], formatterConfig.params[1]);
-            if(formatterConfig.params[1].name = "createAutoCorrectedDatePipe") {
-              console.log('textMask Config: ', config);
-            }
-            this.textMaskInputElement = createTextMaskInputElement(Object.assign({inputElement: this.inputElement}, config));
+          if (t == 1 || t == 2) {
+            this.formatterParserModel.push(fPF);
           }
-          /*============================================================== TEXT-MASK EXCEPTION*/
-          else {
-            if ((t == 0 || t == 2)) {
-              this.formatterParserView.push(fPF);
+
+          if ((t == 0 || t == 2)) {
+            /*TEXT-MASK EXCEPTION ==============================================================*/
+            if (formatterConfig.name === 'textMask') {
+              this.textMaskConfig = TextMaskService.getConfig(formatterConfig.params[0], formatterConfig.params[1]);
             }
-            if (t == 1 || t == 2) {
-              this.formatterParserModel.push(fPF);
+            /*============================================================== TEXT-MASK EXCEPTION*/
+            else {
+              this.formatterParserView.push(fPF);
             }
           }
         });
+
+
+      /*TEXT-MASK EXCEPTION ==============================================================*/
+      if (this.textMaskConfig) {
+        const config: any = this.textMaskConfig;
+        config.inputElement = this.inputElement;
+
+        // a pipe is a function that receives an value and returns an maybe altered value
+        // this is exactly the same what our formatterParserFunctions are
+        // so we just use them on the textMask input as pipe param :-)
+
+        // if a pipe is already given push it to the view formatter
+        if ('pipe' in config && typeof config.pipe === 'function') {
+          let clonedPipe = {...config}.pipe.bind({});
+          const fPF: IFormatterParserFn = (conformedValue) => {
+            return {name: 'textMask', result: clonedPipe(conformedValue)}
+          };
+          this.formatterParserView.push(fPF);
+        }
+        config.pipe = (conformedValue) => {
+          return (this.formatterParserView.length <= 0) ? conformedValue : this.formatterParserView.reduce((state: any, transform: IFormatterParserFn) => transform(state).result, conformedValue)
+        };
+
+        this.textMaskInputElement = createTextMaskInputElement(config);
+      }
+      /*============================================================== TEXT-MASK EXCEPTION*/
     }
 
   }

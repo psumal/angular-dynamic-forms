@@ -21,8 +21,6 @@ const CONTROL_VALUE_ACCESSOR = {
   multi: true
 };
 
-export const FORMATTER_PARSER: InjectionToken<(IFormatterParserFn)[]> = new InjectionToken<(IFormatterParserFn)[]>('formatterParser');
-
 const TEXT_MASK: InjectionToken<Function> = new InjectionToken<Function>('text-mask');
 
 @Directive({
@@ -43,8 +41,8 @@ export class FormatterParserDirective implements ControlValueAccessor, OnInit {
   // Container component reference
   formControl: FormControl;
 
-  protected formatterParserView: Function[] = [];
-  protected formatterParserModel: Function[] = [];
+  protected formatterParserView: IFormatterParserFn[] = [];
+  protected formatterParserModel: IFormatterParserFn[] = [];
 
   private onTouch: Function;
   private onModelChange: Function;

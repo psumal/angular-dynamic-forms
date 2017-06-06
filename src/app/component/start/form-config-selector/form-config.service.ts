@@ -635,7 +635,10 @@ export class FormConfigService {
         formatterParser: [
           {
             name: 'textMask',
-            params: [{}, {name: 'createAutoCorrectedDatePipe'}],
+            params: [{
+              mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+            },
+              {name: 'createAutoCorrectedDatePipe'}],
             target: 0
           }
         ],
@@ -720,12 +723,14 @@ export class FormConfigService {
           placeholder: '25/09/1970'
         }, {
           name: 'Date (auto-corrected)',
-          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
-          addon: {
-            name: 'createAutoCorrectedDatePipe'
-          },
           placeholder: 'Please enter a date',
+          //guide: true,
+          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
           keepCharPositions: true,
+          addon: {
+            // pipe: createAutoCorrectedDatePipe('mm/dd/yyyy'),
+            name: 'createAutoCorrectedDatePipe'
+          }
         }, {
           name: 'US dollar amount',
           mask: [],
@@ -769,22 +774,22 @@ export class FormConfigService {
         }, {
           name: 'Canadian postal code',
           mask: [TextMaskService.alphabetic, TextMaskService.digit, TextMaskService.alphabetic, ' ', TextMaskService.digit, TextMaskService.alphabetic, TextMaskService.digit],
-          //pipe: "toUpperCase",
+          pipe: function(str) { return str.toUpperCase()},
           placeholder: 'K1A 0B2',
           placeholderChar: TextMaskService.placeholderChars.underscore
         }
       ];
 
-      return choices.map((conf) => {
+      return choices.map((conf:any) => {
 
-        const defaultConfig:IDynamicFormElementModel = {
+        const defaultConfig: IDynamicFormElementModel = {
           key: '',
           controlType: 'textbox',
           label: '',
           formatterParser: [
             {
               name: 'textMask',
-              params: [{}, {}],
+              params: [],
               target: 0
             }
           ],
@@ -793,9 +798,13 @@ export class FormConfigService {
         defaultConfig.key = conf.name.split(' ').join();
         defaultConfig.label = conf.name;
         delete conf.name;
-        defaultConfig.placeholder =  conf.placeholder;
+        defaultConfig.placeholder = conf.placeholder;
         delete conf.placeholder;
-        defaultConfig.formatterParser[0].params = [TextMaskService.getBasicConfig(conf)];
+
+        const addonConfig = conf.addon;
+        delete conf.addon;
+
+        defaultConfig.formatterParser[0].params = [TextMaskService.getBasicConfig(conf),addonConfig];
 
         return defaultConfig;
       });

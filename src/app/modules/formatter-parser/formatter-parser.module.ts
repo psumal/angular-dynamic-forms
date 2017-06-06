@@ -5,6 +5,7 @@ import {CommonModule} from "@angular/common";
 
 import {FormatterParserTextMaskDirective} from "./formatter-parser-text-mask.directive";
 import {FormatterParserService} from "./formatter-parser.service";
+import { TextMaskService } from './text-mask-helpers/textMask.service';
 
 const EXPORTS = [FormatterParserTextMaskDirective];
 
@@ -12,7 +13,7 @@ const EXPORTS = [FormatterParserTextMaskDirective];
   imports: [CommonModule, ReactiveFormsModule],
   exports: [EXPORTS],
   declarations: [EXPORTS],
-  providers: [FormatterParserService]
+  providers: [FormatterParserService, TextMaskService]
 })
 export class FormatterParserModule {
 }

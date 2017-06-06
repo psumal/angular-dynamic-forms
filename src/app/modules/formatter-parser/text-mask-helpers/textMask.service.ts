@@ -40,20 +40,39 @@ export class TextMaskService {
     placeholder: null
   };
 
-  static getBasicConfig({
-                          mask,
-                          placeholderChar = '_',
-                          guide,
-                          pipe,
-                          keepCharPositions = false,
-                          showMask = true
-                        }: ITextMaskConfigOptions = {}):ITextMaskConfigOptions {
+  static getBasicConfig(config: ITextMaskConfigOptions = {}):ITextMaskConfigOptions {
 
-    return ({placeholderChar,guide,pipe, keepCharPositions,mask,showMask});
+    const safeConfig: ITextMaskConfigOptions = {};
+
+    if('mask' in config) {
+      safeConfig.mask = config.mask
+    }
+
+    if('guide' in config) {
+      safeConfig.guide = config.guide
+    }
+
+    if('pipe' in config) {
+      safeConfig.pipe = config.pipe
+    }
+
+    if('placeholderChar' in config) {
+      safeConfig.placeholderChar = config.placeholderChar
+    }
+
+    if('keepCharPositions' in config) {
+      safeConfig.keepCharPositions = config.keepCharPositions
+    }
+
+    if('showMask' in config) {
+      safeConfig.showMask = config.showMask;
+    }
+
+    return safeConfig;
   }
 
   static getConfig(config: ITextMaskConfigOptions, addon?: { name, config }): ITextMaskConfigOptions {
-    const safeConfig: ITextMaskConfigOptions = this.getBasicConfig(config);
+    const safeConfig:ITextMaskConfigOptions = TextMaskService.getBasicConfig(config);
 
     const addonName = (addon && 'name' in addon) ? addon.name : '';
     switch (addonName) {
@@ -65,10 +84,10 @@ export class TextMaskService {
         safeConfig.mask = emailMask;
         break;
       case "createAutoCorrectedDatePipe":
-        safeConfig.mask = [];
+        console.log('before',config, {...safeConfig});
         safeConfig.pipe = createAutoCorrectedDatePipe('mm/dd/yyyy');
         safeConfig.keepCharPositions = true;
-      break;
+        break;
     }
 
 

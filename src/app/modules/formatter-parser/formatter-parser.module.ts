@@ -6,14 +6,15 @@ import {CommonModule} from "@angular/common";
 import {FormatterParserTextMaskDirective} from "./formatter-parser-text-mask.directive";
 import {FormatterParserService} from "./formatter-parser.service";
 import { TextMaskService } from './text-mask-helpers/textMask.service';
+import { FormatterParserDirective } from './formatter-parser.directive';
 
-const EXPORTS = [FormatterParserTextMaskDirective];
+const EXPORTS = [FormatterParserDirective, FormatterParserTextMaskDirective];
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule],
   exports: [EXPORTS],
   declarations: [EXPORTS],
-  providers: [FormatterParserService, TextMaskService]
+  providers: [ FormatterParserService, TextMaskService ]
 })
 export class FormatterParserModule {
 }

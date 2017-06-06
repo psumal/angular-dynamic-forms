@@ -28,7 +28,7 @@ const CONTROL_VALUE_ACCESSOR = {
 
 @Directive({
   inputs: ['config', 'formControlName'],
-  selector: '[formatterParser]',
+  selector: '[formatterParserTextMask]',
   providers: [
     CONTROL_VALUE_ACCESSOR,
     TextMaskService

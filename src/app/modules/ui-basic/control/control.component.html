@@ -8,7 +8,7 @@
     *ngIf="isControlTypeVisible('textbox')"
     [formControlName]="config.key"
     [ngClass]="getControlClass()"
-    formatterParser
+    formatterParserTextMask
     [config]="config">
 
   <div *ngIf="isControlTypeVisible('radio')">
@@ -66,8 +66,8 @@
   <div *ngIf="getCurrentStatus() == 'PENDING'">
     Validation is pending...
   </div>
-
-  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{getCurrentValue()}}</small>
   -->
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{config.helpText}}</small>
+
 </div>
 

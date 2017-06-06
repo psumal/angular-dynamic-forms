@@ -517,7 +517,7 @@ export class FormConfigService {
       guide: true,
       pipe: null,
       keepCharPositions: false,
-      help: null,
+      helpText: null,
       placeholder: null
     };
 
@@ -730,7 +730,19 @@ export class FormConfigService {
           addon: {
             // pipe: createAutoCorrectedDatePipe('mm/dd/yyyy'),
             name: 'createAutoCorrectedDatePipe'
-          }
+          },
+          helpText: `
+           <p>
+              User input in this configuration is passed through a <Links.pipe/> that auto-corrects some values. For
+              example,
+              if you enter <code>9</code> in the 1st digit of the month, it'll auto-correct it to <code>09</code>. Or
+              if you enter <code>0</code> in the 1st digit of the year, it'll auto-correct it to <code>200</code>.
+            </p>
+
+            <p>
+              It is using <Links.createAutoCorrectedDatePipe />, which is available as an <Links.addon/>.
+            </p>
+            `
         }, {
           name: 'US dollar amount',
           mask: [],
@@ -742,6 +754,10 @@ export class FormConfigService {
             }
           },
           placeholder: 'Enter an amount',
+          hlep: `
+              <p style={{marginBottom: 0}}>
+              <code>createNumberMask</code> can be used to mask amounts, currencies, percentages, and more.
+            </p>`
         }, {
           name: 'US dollar amount (allows decimal)',
           mask: [],
@@ -758,6 +774,10 @@ export class FormConfigService {
             config: {suffix: '%', prefix: ''},
           },
           placeholder: 'Enter an amount',
+          hlep: `
+              <p style={{marginBottom: 0}}>
+              <code>createNumberMask</code> can be used to mask amounts, currencies, percentages, and more.
+            </p>`
         }, {
           name: 'Email',
           mask: [],
@@ -774,13 +794,26 @@ export class FormConfigService {
         }, {
           name: 'Canadian postal code',
           mask: [TextMaskService.alphabetic, TextMaskService.digit, TextMaskService.alphabetic, ' ', TextMaskService.digit, TextMaskService.alphabetic, TextMaskService.digit],
-          pipe: function(str) { return str.toUpperCase()},
+          pipe: function (str) {
+            return str.toUpperCase()
+          },
           placeholder: 'K1A 0B2',
-          placeholderChar: TextMaskService.placeholderChars.underscore
+          placeholderChar: TextMaskService.placeholderChars.underscore,
+          helpText: `
+        <p>
+        User input in this configuration is passed through a <Links.pipe/> that upper-cases it.
+        </p>
+
+        <p>
+          The pipe in this case is a function such as:
+        </p>
+
+        <pre>{'function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}'}</pre>
+       `
         }
       ];
 
-      return choices.map((conf:any) => {
+      return choices.map((conf: any) => {
 
         const defaultConfig: IDynamicFormElementModel = {
           key: '',
@@ -800,11 +833,13 @@ export class FormConfigService {
         delete conf.name;
         defaultConfig.placeholder = conf.placeholder;
         delete conf.placeholder;
+        defaultConfig.helpText = conf.helpText;
+        delete conf.helpText;
 
         const addonConfig = conf.addon;
         delete conf.addon;
 
-        defaultConfig.formatterParser[0].params = [TextMaskService.getBasicConfig(conf),addonConfig];
+        defaultConfig.formatterParser[0].params = [TextMaskService.getBasicConfig(conf), addonConfig];
 
         return defaultConfig;
       });

@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -14,7 +14,18 @@ const EXPORTS = [FormatterParserDirective, FormatterParserTextMaskDirective];
   imports: [CommonModule, ReactiveFormsModule],
   exports: [EXPORTS],
   declarations: [EXPORTS],
-  providers: [ FormatterParserService, TextMaskService ]
+  providers: [FormatterParserService,TextMaskService]
 })
 export class FormatterParserModule {
+
+  static forRoot(): ModuleWithProviders {
+    return {
+      providers: [
+        {provide: FormatterParserService, useClass: FormatterParserService},
+        {provide: TextMaskService, useClass: TextMaskService}
+      ],
+      ngModule: FormatterParserModule
+    };
+  }
+
 }

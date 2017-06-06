@@ -74,6 +74,10 @@ export class FormConfigService {
     {value: {name: 'wait2SecToValidateRequired'}, name: 'Wait 2 Sec To Validate Required'},
   ];
 
+  constructor(private tms:TextMaskService) {
+
+  }
+
   getTextboxConfig(): IDynamicFormElementModel {
     let conf: any = {
       config: [
@@ -608,86 +612,6 @@ export class FormConfigService {
     ////// standard formatter
     let tmFP: any = this._getRandItem('standardFormatterParser', 'formGroup', null, 'TextMask Feature', [], [], '', '');
 
-    tmFP.config = [
-      {
-        key: 'textMask',
-        controlType: 'textbox',
-        label: 'textMask',
-        formState: '11 112 2223 3 3344 44',
-        formatterParser: [
-          {
-            name: 'textMask',
-            params: [textMaskConfig],
-            target: 0
-          },
-          {
-            name: 'replaceString',
-            params: [/[()-/ /]/g, ''],
-            keepCharPositions: true,
-            target: 1
-          }
-        ],
-      },
-      /**/{
-        key: 'textMaskAddon-createAutoCorrectedDatePipe',
-        controlType: 'textbox',
-        label: 'textMaskAddon createAutoCorrectedDatePipe',
-        formatterParser: [
-          {
-            name: 'textMask',
-            params: [{
-              mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
-            },
-              {name: 'createAutoCorrectedDatePipe'}],
-            target: 0
-          }
-        ],
-      },
-      {
-        key: 'textMaskAddon-createNumberMask',
-        controlType: 'textbox',
-        label: 'textMaskAddon createNumberMask',
-        formState: '1365968',
-        formatterParser: [
-          {
-            name: 'textMask',
-            params: [
-              {
-                mask: false,
-
-              },
-              {
-                name: 'createNumberMask',
-                config: {
-                  prefix: '',
-                  suffix: ' $'
-                }
-              }
-            ],
-            target: 0
-          }
-        ]
-      },
-      {
-        key: 'textMaskAddon-emailMask',
-        controlType: 'textbox',
-        label: 'textMaskAddon emailMask',
-        formState: 'adfa&%§$"§%$&%/sfd aasdf asdf ',
-        formatterParser: [
-          {
-            name: 'textMask',
-            params: [
-              {mask: false},
-              {
-                name: 'emailMask',
-              }
-            ],
-            target: 0
-          }
-        ]
-      }
-    ];
-
     let config: any[] = [
       stdFP,
       tmFP
@@ -698,155 +622,11 @@ export class FormConfigService {
       config: config
     };
 
-
-    fgConfig.config = [...fgConfig.config, ...getTextMaskConfigs()];
+    fgConfig.config = [...fgConfig.config, ...this._getTextMaskConfigs()];
 
     return fgConfig;
 
     //////////
-
-    function getTextMaskConfigs() {
-
-      // textMask demos To configconst
-      const choices = [
-        {
-          name: 'US phone number',
-          mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
-          placeholder: '(555) 495-3947'
-        }, {
-          name: 'US phone number with country code',
-          mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
-          placeholder: '+1 (555) 495-3947'
-        }, {
-          name: 'Date',
-          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
-          placeholder: '25/09/1970'
-        }, {
-          name: 'Date (auto-corrected)',
-          placeholder: 'Please enter a date',
-          //guide: true,
-          mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
-          keepCharPositions: true,
-          addon: {
-            // pipe: createAutoCorrectedDatePipe('mm/dd/yyyy'),
-            name: 'createAutoCorrectedDatePipe'
-          },
-          helpText: `
-           <p>
-              User input in this configuration is passed through a <Links.pipe/> that auto-corrects some values. For
-              example,
-              if you enter <code>9</code> in the 1st digit of the month, it'll auto-correct it to <code>09</code>. Or
-              if you enter <code>0</code> in the 1st digit of the year, it'll auto-correct it to <code>200</code>.
-            </p>
-
-            <p>
-              It is using <Links.createAutoCorrectedDatePipe />, which is available as an <Links.addon/>.
-            </p>
-            `
-        }, {
-          name: 'US dollar amount',
-          mask: [],
-          addon: {
-            name: 'createNumberMask',
-            config: {
-              prefix: '',
-              suffix: ' $'
-            }
-          },
-          placeholder: 'Enter an amount',
-          hlep: `
-              <p style={{marginBottom: 0}}>
-              <code>createNumberMask</code> can be used to mask amounts, currencies, percentages, and more.
-            </p>`
-        }, {
-          name: 'US dollar amount (allows decimal)',
-          mask: [],
-          addon: {
-            name: 'createNumberMask',
-            config: {allowDecimal: true},
-          },
-          placeholder: 'Enter an amount',
-        }, {
-          name: 'Percentage amount',
-          mask: [],
-          addon: {
-            name: 'createNumberMask',
-            config: {suffix: '%', prefix: ''},
-          },
-          placeholder: 'Enter an amount',
-          hlep: `
-              <p style={{marginBottom: 0}}>
-              <code>createNumberMask</code> can be used to mask amounts, currencies, percentages, and more.
-            </p>`
-        }, {
-          name: 'Email',
-          mask: [],
-          addon: {
-            name: 'emailMask'
-          },
-          placeholder: 'john@smith.com',
-          placeholderChar: TextMaskService.placeholderChars.whitespace
-        }, {
-          name: 'US zip code',
-          mask: [/\d/, /\d/, /\d/, /\d/, /\d/],
-          placeholder: '94303',
-          placeholderChar: TextMaskService.placeholderChars.underscore
-        }, {
-          name: 'Canadian postal code',
-          mask: [TextMaskService.alphabetic, TextMaskService.digit, TextMaskService.alphabetic, ' ', TextMaskService.digit, TextMaskService.alphabetic, TextMaskService.digit],
-          pipe: function (str) {
-            return str.toUpperCase()
-          },
-          placeholder: 'K1A 0B2',
-          placeholderChar: TextMaskService.placeholderChars.underscore,
-          helpText: `
-        <p>
-        User input in this configuration is passed through a <Links.pipe/> that upper-cases it.
-        </p>
-
-        <p>
-          The pipe in this case is a function such as:
-        </p>
-
-        <pre>{'function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}'}</pre>
-       `
-        }
-      ];
-
-      return choices.map((conf: any) => {
-
-        const defaultConfig: IDynamicFormElementModel = {
-          key: '',
-          controlType: 'textbox',
-          label: '',
-          formatterParser: [
-            {
-              name: 'textMask',
-              params: [],
-              target: 0
-            }
-          ],
-        };
-
-        defaultConfig.key = conf.name.split(' ').join();
-        defaultConfig.label = conf.name;
-        delete conf.name;
-        defaultConfig.placeholder = conf.placeholder;
-        delete conf.placeholder;
-        defaultConfig.helpText = conf.helpText;
-        delete conf.helpText;
-
-        const addonConfig = conf.addon;
-        delete conf.addon;
-
-        defaultConfig.formatterParser[0].params = [TextMaskService.getBasicConfig(conf), addonConfig];
-
-        return defaultConfig;
-      });
-
-
-    }
-
   }
 
   getCustomCompomponentConfig(): IDynamicFormElementModel {
@@ -1582,6 +1362,146 @@ export class FormConfigService {
   }
 
 ////////////////////////////////////////////////
+
+  _getTextMaskConfigs() {
+  // textMask demos To configconst
+  const choices = [
+    {
+      name: 'US phone number',
+      mask: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+      placeholder: '(555) 495-3947'
+    }, {
+      name: 'US phone number with country code',
+      mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+      placeholder: '+1 (555) 495-3947'
+    }, {
+      name: 'Date',
+      mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+      placeholder: '25/09/1970'
+    }, {
+      name: 'Date (auto-corrected)',
+      placeholder: 'Please enter a date',
+      //guide: true,
+      mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+      keepCharPositions: true,
+      addon: {
+        // pipe: createAutoCorrectedDatePipe('mm/dd/yyyy'),
+        name: 'createAutoCorrectedDatePipe'
+      },
+      helpText: `
+           <p>
+              User input in this configuration is passed through a <Links.pipe/> that auto-corrects some values. For
+              example,
+              if you enter <code>9</code> in the 1st digit of the month, it'll auto-correct it to <code>09</code>. Or
+              if you enter <code>0</code> in the 1st digit of the year, it'll auto-correct it to <code>200</code>.
+            </p>
+
+            <p>
+              It is using <Links.createAutoCorrectedDatePipe />, which is available as an <Links.addon/>.
+            </p>
+            `
+    }, {
+      name: 'US dollar amount',
+      mask: [],
+      addon: {
+        name: 'createNumberMask',
+        config: {
+          prefix: '',
+          suffix: ' $'
+        }
+      },
+      placeholder: 'Enter an amount',
+      hlep: `
+              <p style={{marginBottom: 0}}>
+              <code>createNumberMask</code> can be used to mask amounts, currencies, percentages, and more.
+            </p>`
+    }, {
+      name: 'US dollar amount (allows decimal)',
+      mask: [],
+      addon: {
+        name: 'createNumberMask',
+        config: {allowDecimal: true},
+      },
+      placeholder: 'Enter an amount',
+    }, {
+      name: 'Percentage amount',
+      mask: [],
+      addon: {
+        name: 'createNumberMask',
+        config: {suffix: '%', prefix: ''},
+      },
+      placeholder: 'Enter an amount',
+      hlep: `
+              <p style={{marginBottom: 0}}>
+              <code>createNumberMask</code> can be used to mask amounts, currencies, percentages, and more.
+            </p>`
+    }, {
+      name: 'Email',
+      mask: [],
+      addon: {
+        name: 'emailMask'
+      },
+      placeholder: 'john@smith.com',
+      placeholderChar: TextMaskService.placeholderChars.whitespace
+    }, {
+      name: 'US zip code',
+      mask: [/\d/, /\d/, /\d/, /\d/, /\d/],
+      placeholder: '94303',
+      placeholderChar: TextMaskService.placeholderChars.underscore
+    }, {
+      name: 'Canadian postal code',
+      mask: [TextMaskService.alphabetic, TextMaskService.digit, TextMaskService.alphabetic, ' ', TextMaskService.digit, TextMaskService.alphabetic, TextMaskService.digit],
+      // @TODO implement as fetch from FORMATER_PARSER Token
+      pipe: 'toUpperCase',
+      placeholder: 'K1A 0B2',
+      placeholderChar: TextMaskService.placeholderChars.underscore,
+      helpText: `
+        <p>
+        User input in this configuration is passed through a <Links.pipe/> that upper-cases it.
+        </p>
+
+        <p>
+          The pipe in this case is a function such as:
+        </p>
+
+        <pre>{'function upperCasePipe(conformedValue) {\n  return conformedValue.toUpperCase()\n}'}</pre>
+       `
+    }
+  ];
+
+  return choices.map((conf: any) => {
+
+    const defaultConfig: IDynamicFormElementModel = {
+      key: '',
+      controlType: 'textbox',
+      label: '',
+      formatterParser: [
+        {
+          name: 'textMask',
+          params: [],
+          target: 0
+        }
+      ],
+    };
+
+    defaultConfig.key = conf.name.split(' ').join();
+    defaultConfig.label = conf.name;
+    delete conf.name;
+    defaultConfig.placeholder = conf.placeholder;
+    delete conf.placeholder;
+    defaultConfig.helpText = conf.helpText;
+    delete conf.helpText;
+
+    const addonConfig = conf.addon;
+    delete conf.addon;
+    defaultConfig.formatterParser[0].params = [this.tms.getBasicConfig(conf), addonConfig];
+
+    return defaultConfig;
+  });
+
+
+}
+
 
 
   _getRandItem(key: string, controlType ?: controlTypes, inputType ?: inputTypes, label ?: string, validator ?: any[], asyncValidator ?: any[], placeholder ?: string, helpText ?: string, config ?: any[]): any {

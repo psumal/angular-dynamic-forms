@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ITextMaskConfigOptions, ITextMasResult} from "./text-mask-config";
 import {createAutoCorrectedDatePipe, createNumberMask, emailMask} from "text-mask-addons/dist/textMaskAddons";
+import { FormatterParserService } from '../formatter-parser.service';
 
 const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
 const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : setTimeout;
@@ -8,16 +9,11 @@ const defer = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFra
 
 @Injectable()
 export class TextMaskService {
-  state = {
-    previousConformedValue: undefined,
-    previousPlaceholder: undefined
-  };
-
 
   static placeholderChars = {
     whitespace: '\u2000',
     underscore: '_'
-  }
+  };
 
   static textMaskProps = [
     'placeholder',
@@ -26,21 +22,16 @@ export class TextMaskService {
     'keepCharPositions',
     'mask',
     'guide'
-  ]
+  ];
 
   static alphabetic = /[A-Z]/i;
   static digit = /\d/;
 
-  static defaultValues = {
-    placeholderChar: ' ',
-    guide: true,
-    pipe: null,
-    keepCharPositions: false,
-    help: null,
-    placeholder: null
-  };
+  constructor(private fps:FormatterParserService) {
 
-  static getBasicConfig(config: ITextMaskConfigOptions = {}):ITextMaskConfigOptions {
+  }
+
+  getBasicConfig(config: ITextMaskConfigOptions = {}):ITextMaskConfigOptions {
 
     const safeConfig: ITextMaskConfigOptions = {};
 
@@ -53,7 +44,12 @@ export class TextMaskService {
     }
 
     if('pipe' in config) {
-      safeConfig.pipe = config.pipe
+      if(typeof config.pipe === 'string' || config.pipe instanceof String) {
+        safeConfig.pipe = (value) => { return this.fps.getFormatParseFunction(config.pipe as string)(value).result };
+      }
+      else {
+        safeConfig.pipe = config.pipe
+      }
     }
 
     if('placeholderChar' in config) {
@@ -71,8 +67,8 @@ export class TextMaskService {
     return safeConfig;
   }
 
-  static getConfig(config: ITextMaskConfigOptions, addon?: { name, config }): ITextMaskConfigOptions {
-    const safeConfig:ITextMaskConfigOptions = TextMaskService.getBasicConfig(config);
+  getConfig(config: ITextMaskConfigOptions, addon?: { name, config }): ITextMaskConfigOptions {
+    const safeConfig:ITextMaskConfigOptions = this.getBasicConfig(config);
 
     const addonName = (addon && 'name' in addon) ? addon.name : '';
     switch (addonName) {
@@ -84,7 +80,6 @@ export class TextMaskService {
         safeConfig.mask = emailMask;
         break;
       case "createAutoCorrectedDatePipe":
-        console.log('before',config, {...safeConfig});
         safeConfig.pipe = createAutoCorrectedDatePipe('mm/dd/yyyy');
         safeConfig.keepCharPositions = true;
         break;

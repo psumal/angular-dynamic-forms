@@ -30,8 +30,7 @@ const CONTROL_VALUE_ACCESSOR = {
   inputs: ['config', 'formControlName'],
   selector: '[formatterParserTextMask]',
   providers: [
-    CONTROL_VALUE_ACCESSOR,
-    TextMaskService
+    CONTROL_VALUE_ACCESSOR
   ]
 })
 export class FormatterParserTextMaskDirective implements ControlValueAccessor, OnInit {
@@ -157,7 +156,7 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
           if ((t == 0 || t == 2)) {
             /*TEXT-MASK EXCEPTION ==============================================================*/
             if (formatterConfig.name === 'textMask') {
-              this.textMaskConfig = TextMaskService.getConfig(formatterConfig.params[0], formatterConfig.params[1]);
+              this.textMaskConfig = this.tms.getConfig(formatterConfig.params[0], formatterConfig.params[1]);
             }
             /*============================================================== TEXT-MASK EXCEPTION*/
             else {

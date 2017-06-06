@@ -26,15 +26,13 @@ export class FormatterParser {
   };
 
   static toUpperCase: IFormatterParserFn = (value: any): IFormatterParserResult => {
-
-    let transformedValue;
+    console.log('transformedValue toUpperCase', value);
+    let  transformedValue = value;
     if (typeof value === 'string' || value instanceof String) {
+
       transformedValue = value.toString().toLowerCase().replace(/[a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć]/g, function (str) {
         return str.toUpperCase();
       });
-    }
-    else {
-      transformedValue = "";
     }
 
     return {
@@ -58,7 +56,7 @@ export class FormatterParser {
   }
 
   static textMask() {
-    // This is a placeholder for the textMask inplementation
+    // This is a placeholder for the textMask implementation
   }
 }
 

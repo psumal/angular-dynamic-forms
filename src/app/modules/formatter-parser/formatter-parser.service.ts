@@ -9,7 +9,7 @@ export class FormatterParserService {
   constructor(@Optional() @Inject(FORMATTER_PARSER) private FORMATTER_PARSER: IFormatterParserFn[]) {
   }
 
-  getFormatParseFunction(functionName: string, params: any[]): IFormatterParserFn | undefined {
+  getFormatParseFunction(functionName: string, params?: any[]): IFormatterParserFn | undefined {
     let formatParseFunction: Function;
     if (functionName in FormatterParser) {
       formatParseFunction = FormatterParser[functionName];

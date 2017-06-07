@@ -3,9 +3,9 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 
-import {FormatterParserTextMaskDirective} from "./formatter-parser-text-mask.directive";
+import {FormatterParserTextMaskDirective} from "./text-mask-implementation/formatter-parser-text-mask.directive";
 import {FormatterParserService} from "./formatter-parser.service";
-import { TextMaskService } from './text-mask-helpers/textMask.service';
+import { TextMaskService } from './text-mask-implementation/textMask.service';
 import { FormatterParserDirective } from './formatter-parser.directive';
 
 const EXPORTS = [FormatterParserDirective, FormatterParserTextMaskDirective];

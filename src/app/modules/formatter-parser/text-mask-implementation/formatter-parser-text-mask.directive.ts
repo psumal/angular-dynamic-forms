@@ -10,13 +10,13 @@ import {
   SkipSelf
 } from '@angular/core';
 import { ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DynamicFormElementModel } from '../dymanic-form-element/model/base/form-control';
-import { FormatterParserService } from './formatter-parser.service';
-import { IFormatterParserFn } from './struct/formatter-parser-function';
+import { DynamicFormElementModel } from '../../dymanic-form-element/model/base/form-control';
+import { FormatterParserService } from '../formatter-parser.service';
+import { IFormatterParserFn } from '../struct/formatter-parser-function';
 /*TEXT-MASK EXCEPTION ==============================================================*/
-import { TextMaskService } from './text-mask-helpers/textMask.service';
+import { TextMaskService } from './textMask.service';
 import { createTextMaskInputElement } from 'text-mask-core/dist/textMaskCore';
-import { ITextMaskConfigOptions } from './text-mask-helpers/text-mask-config';
+import { ITextMaskConfigOptions } from './struct/textMask-config-options';
 /*============================================================== TEXT-MASK EXCEPTION*/
 
 const CONTROL_VALUE_ACCESSOR = {

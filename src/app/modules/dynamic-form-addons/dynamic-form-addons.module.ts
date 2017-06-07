@@ -18,6 +18,7 @@ import {filteredOptions} from "./change-subscriptions/filteredOptionsSubscriptio
 import {AgmCoreModule} from "@agm/core";
 import {syncWithAddressComponent} from "./change-subscriptions/syncWithAddressComponent";
 import {focusFirstEmpty} from "./change-subscriptions/focusFirstEmpty";
+import { ibanMask } from './payment/sepa/formatter-parser/iban-mask';
 
 
 const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
@@ -62,6 +63,8 @@ const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
     //Custom Formatter and Parser
     {provide: FORMATTER_PARSER, useValue: maskString, multi: true},
     {provide: FORMATTER_PARSER, useValue: replaceString, multi: true},
+    //Payment
+    {provide: FORMATTER_PARSER, useValue: ibanMask, multi: true},
 
     //Custom Components
     {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},

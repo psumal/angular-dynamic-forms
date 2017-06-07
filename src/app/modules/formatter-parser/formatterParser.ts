@@ -1,7 +1,8 @@
-import {IFormatterParserFn} from "./struct/formatter-parser-function";
-import {IFormatterParserResult} from "./struct/formatter-parser-result";
-import {IConformToMaskConfigOptions, IConformToMaskResult} from "./text-mask-helpers/conformToMask-struckt";
-import {conformToMask as realConformToMask} from "text-mask-core/dist/textMaskCore";
+import { IFormatterParserFn } from './struct/formatter-parser-function';
+import { IFormatterParserResult } from './struct/formatter-parser-result';
+import { conformToMask as realConformToMask } from 'text-mask-core/dist/textMaskCore';
+import { IConformToMaskResult } from './text-mask-implementation/struct/conformToMask-result';
+import { IConformToMaskConfigOptions } from './text-mask-implementation/struct/conformToMask-config-options';
 
 export class FormatterParser {
 
@@ -15,19 +16,18 @@ export class FormatterParser {
       });
     }
     else {
-      value = "";
+      value = '';
     }
 
     return {
-      name: "toCapitalized",
+      name: 'toCapitalized',
       result: value.charAt(0).toUpperCase() + value.slice(1)
     }
 
   };
 
   static toUpperCase: IFormatterParserFn = (value: any): IFormatterParserResult => {
-    console.log('transformedValue toUpperCase', value);
-    let  transformedValue = value;
+    let transformedValue = value;
     if (typeof value === 'string' || value instanceof String) {
 
       transformedValue = value.toString().toLowerCase().replace(/[a-zA-Zäéöüßàâæçèéêëîïôœùûàáèéìíòóùúčšéć]/g, function (str) {
@@ -36,18 +36,18 @@ export class FormatterParser {
     }
 
     return {
-      name: "toUpperCase",
+      name: 'toUpperCase',
       result: transformedValue
     };
   };
 
   static conformToMask(mask: string | (RegExp | string)[] | Function = '', config: IConformToMaskConfigOptions = {}): IFormatterParserFn {
 
-    return (value: any):IFormatterParserResult => {
+    return (value: any): IFormatterParserResult => {
       value = (typeof value === 'string' || value instanceof String) ? value : '';
       const realResult: IConformToMaskResult = realConformToMask(value, mask, config);
       return {
-        name: "conformToMask",
+        name: 'conformToMask',
         result: realResult.conformedValue,
         conformToMaskResult: realResult
       };
@@ -55,8 +55,10 @@ export class FormatterParser {
 
   }
 
+  /* Special cases */
   static textMask() {
     // This is a placeholder for the textMask implementation
   }
+
 }
 

@@ -6,10 +6,3 @@ export interface IConformToMaskConfigOptions {
   previousConformedValue?: string,
   currentCaretPosition?: boolean
 }
-
-export interface IConformToMaskResult {
-  conformedValue: string,
-  meta: {
-    someCharsRejected: any
-  }
-}

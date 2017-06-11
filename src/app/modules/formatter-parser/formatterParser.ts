@@ -45,6 +45,8 @@ export class FormatterParser {
 
     return (value: any): IFormatterParserResult => {
       value = (typeof value === 'string' || value instanceof String) ? value : '';
+      config.previousConformedValue = value;
+
       const realResult: IConformToMaskResult = realConformToMask(value, mask, config);
       return {
         name: 'conformToMask',

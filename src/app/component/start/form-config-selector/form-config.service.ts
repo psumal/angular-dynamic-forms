@@ -516,71 +516,40 @@ export class FormConfigService {
   }
 
   getFormatterParserConfig(): IDynamicFormElementModel {
-
-    const defaultValues = {
-      placeholderChar: TextMaskService.placeholderChars.whitespace,
-      guide: true,
-      pipe: null,
+    const conformToMaskConfig: IConformToMaskConfigOptions = {
+      guide: false,
+      //placeholderChar: '_',
       keepCharPositions: false,
-      helpText: null,
-      placeholder: null
+      //placeholder: ' ',
+      //previousConformedValue: '',
+      currentCaretPosition: false
     };
 
-    let creditCardMask = {
+
+    const phoneNumberMask: (RegExp | string)[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+
+    const creditCardMask = {
       name: 'maskString',
       params: [
         '0000 0000 0000 0000',
         {'0': /[0-9]/}],
       target: 2
     };
-    let replaceSpace = {
+    const replaceSpace = {
       name: 'replaceString',
       params: [/ /g, ''],
       target: 1
     };
 
-    const phoneNumberMask: (RegExp | string)[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-    const conformToMaskConfig: IConformToMaskConfigOptions = {
-      guide: false,
-      //placeholderChar: '_',
-      //keepCharPositions: false,
-      //placeholder: ' ',
-      //previousConformedValue: '',
-      //currentCaretPosition: false
-    };
-
-    const textMaskConfig: ITextMaskConfigOptions = {
-      guide: false,
-      mask: phoneNumberMask
-    };
-
-    let pFA: any[] = [
+    const pFA: any[] = [
       creditCardMask,
       replaceSpace
     ];
 
     ////// standard formatter
-    let stdFP: any = this._getRandItem('standardFormatterParser', 'formGroup', null, 'StandardFormatterParser', [], [], '', '');
+    let stdFP: IDynamicFormElementModel = this._getRandItem('standardFormatterParser', 'formGroup', null, 'StandardFormatterParser', [], [], '', '');
 
     stdFP.config = [
-      {
-        key: 'ibanFormat',
-        label: 'IBAN Format',
-        controlType: 'textbox',
-        formatterParser: [
-          {
-            name: 'textMask',
-            target: 0,
-            params: [
-              {
-                //mask: ibanMask,
-                //pipe: (v) => v.toUpperCase()
-              }
-              , {name: 'ibanMask'}
-            ]
-          }
-        ]
-      },
       {
         key: 'ccn',
         controlType: 'textbox',
@@ -596,10 +565,9 @@ export class FormConfigService {
         formatterParser: pFA,
       },
       {
-        key: 'conformToMask',
+        key: 'conformToMaskPhone',
         controlType: 'textbox',
-        label: 'conformToMask',
-        formState: '11 112 2223 3 3344 44',
+        label: 'Phone Number',
         formatterParser: [
           {
             name: 'conformToMask',
@@ -610,38 +578,47 @@ export class FormConfigService {
             target: 0
           }
         ],
-      },
-      {
-        key: 'conformToMaskPhone',
-        controlType: 'textbox',
-        label: 'Phone Number',
-        formatterParser: [
-          {
-            name: 'conformToMask',
-            params: [
-              phoneNumberMask,
-              {mask: ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-            ],
-            target: 0
-          }
-        ],
       }
     ];
 
     ////// standard formatter
     let tmFP: any = this._getRandItem('standardFormatterParser', 'formGroup', null, 'TextMask Feature', [], [], '', '');
 
-    let config: any[] = [
+    let fPConfig: IDynamicFormElementModel = {};
+
+    fPConfig.config = [
       stdFP,
       tmFP
     ];
 
+    return fPConfig;
+  }
 
-    let fgConfig: any = {
-      config: config
-    };
+    getFormatterParserTextMaskConfig(): IDynamicFormElementModel {
 
-    fgConfig.config = [...fgConfig.config, ...this._getTextMaskConfigs()];
+    let fgConfig: any = {};
+
+       let ibanConfig = {
+        key: 'ibanFormat',
+          label: 'IBAN Format',
+        controlType: 'textbox',
+        formatterParser: [
+        {
+          name: 'textMask',
+          target: 0,
+          params: [
+            {
+              //mask: ibanMask,
+              //pipe: (v) => v.toUpperCase()
+            }
+            , {name: 'ibanMask'}
+          ]
+        }
+      ]
+      };
+
+
+      fgConfig.config = [ibanConfig, ...this._getTextMaskConfigs()];
 
     return fgConfig;
 
@@ -1342,6 +1319,11 @@ export class FormConfigService {
         label: 'FormatterParser',
         key: 8,
         config: this.getFormatterParserConfig()
+      },
+      {
+        label: 'FormatterParserTextMask',
+        key: 81,
+        config: this.getFormatterParserTextMaskConfig()
       },
 
       {

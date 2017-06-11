@@ -17,7 +17,13 @@ const ENTRY_COMPONENTS = [ControlComponent, ButtonComponent, FormGroupComponent,
 const EXPORTS = [...ENTRY_COMPONENTS];
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, DynamicFormElementModule, FormatterParserModule, ValidationUtilsModule, ChangeSubscriptionsModule],
+  imports: [
+    CommonModule, ReactiveFormsModule,
+    DynamicFormElementModule,
+    FormatterParserModule.forRoot(),
+    ValidationUtilsModule,
+    ChangeSubscriptionsModule
+  ],
   exports: [EXPORTS],
   declarations: [EXPORTS],
   entryComponents: [

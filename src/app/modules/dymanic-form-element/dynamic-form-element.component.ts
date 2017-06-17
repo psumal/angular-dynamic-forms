@@ -1,4 +1,7 @@
-import {AfterContentInit, AfterViewChecked, Component, EventEmitter, OnDestroy, OnInit} from "@angular/core";
+import {
+  AfterContentInit, AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, OnDestroy,
+  OnInit
+} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {IDynamicFormElementModel} from "./model/base/form-control-options";
 import {ValueChangeSubscriptionService} from "../value-change-subscriptions/value-change-subscription.service";
@@ -7,7 +10,8 @@ import {ValueChangeSubscriptionService} from "../value-change-subscriptions/valu
   inputs: ['config', 'group'],
   outputs: ['onGroupValueChanged'],
   selector: 'dynamic-form-group',
-  templateUrl: './dynamic-form-element.component.html'
+  templateUrl: './dynamic-form-element.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DynamicFormElementComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewChecked {
 

@@ -726,7 +726,16 @@ export class FormConfigService {
           controlType: 'google-address-search',
           key: 'gAS',
           label: 'Google Address Search'
-        }
+        },
+        {
+          controlType: 'customRadio',
+          key: 'customRadio',
+          label: 'Custom Radio',
+          options: [
+            {label: '100', value: '100'},
+            {label: '200', value: '200'},
+          ],
+        },
       ]
     };
 

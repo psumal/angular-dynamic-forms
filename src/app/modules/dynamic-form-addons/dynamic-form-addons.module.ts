@@ -19,9 +19,10 @@ import {AgmCoreModule} from "@agm/core";
 import {syncWithAddressComponent} from "./change-subscriptions/syncWithAddressComponent";
 import {focusFirstEmpty} from "./change-subscriptions/focusFirstEmpty";
 import { ibanMask } from './payment/sepa/formatter-parser/iban-mask';
+import { CustomRadioComponent } from './components/custom-radio/custom-radio.component';
 
 
-const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
+const EXPORTS = [SliderComponent, GoogleAddressSearchComponent, CustomRadioComponent];
 
 @NgModule({
   imports: [
@@ -69,6 +70,7 @@ const EXPORTS = [SliderComponent, GoogleAddressSearchComponent];
     //Custom Components
     {provide: UI_COMPONENTS, useValue: SliderComponent, multi: true},
     {provide: UI_COMPONENTS, useValue: GoogleAddressSearchComponent, multi: true},
+    {provide: UI_COMPONENTS, useValue: CustomRadioComponent, multi: true},
 
     //Custom Value Change Subscriptions
     {provide: VALUE_CHANGE_SUBSCRIPTIONS, useValue: filteredOptions, multi: true},

@@ -40,21 +40,6 @@ export class TextboxComponent extends BaseUiComponent {
     return classNames.join(' ');
   }
 
-  getValidationClass() {
-    let classNames: Array<string> = [];
-
-    if (this.currentFormItem.valid && (this.currentFormItem.touched && this.currentFormItem.dirty)) {
-      classNames.push('has-success');
-    }
-
-    if (!this.currentFormItem.valid && (this.currentFormItem.touched && this.currentFormItem.dirty)) {
-      classNames.push('has-danger');
-    }
-
-    return classNames.join(' ');
-  }
-
-
   private updateAttributes() {
     const el: any = this._elementRef.nativeElement;
 

@@ -1,6 +1,10 @@
 <div [formGroup]="group"
      *ngIf="formInitialized && isRendered">
 
+  <label [attr.for]="config.key" [attr.class]="'form-control-label'">
+    {{config.label}}
+  </label>
+
   <select
     [ngClass]="getControlClass()"
     [formControlName]="config.key">

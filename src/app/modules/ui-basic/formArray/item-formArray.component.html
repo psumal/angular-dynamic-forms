@@ -9,9 +9,9 @@
     <button class="btn btn-danger" (click)="removeGroup(conf.key)">Remove Me!</button>
   </ng-container>
 
-
-  <!--   -->
-  <button class="btn btn-secondary" (click)="addGroup()">Add</button>
+  <div class="col">
+    <button class="btn btn-secondary" (click)="addGroup()">Add</button>
+  </div>
 
   <item-errors [config]="config" [group]="currentFormItem"></item-errors>
 

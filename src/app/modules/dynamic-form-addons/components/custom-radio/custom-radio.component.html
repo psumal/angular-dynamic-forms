@@ -1,0 +1,11 @@
+<div [formGroup]="group">
+
+  <label [attr.class]="'form-check-label'" *ngFor="let opt of config.options">
+    <input type="radio"
+           [formControlName]="config.key"
+           [attr.class]="getControlClass()"
+           [value]="opt.label">
+    {{opt.value}}
+  </label>
+
+</div>

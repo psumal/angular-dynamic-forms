@@ -8,7 +8,9 @@ export interface IDynamicFormElementModel {
   key?: string;
   controlType?: string;
   config?: IDynamicFormElementModel[];
+  numOfRows?:number;
   inputType?: string;
+
   placeholder?: string;
 
   options?: ISelectOption[];

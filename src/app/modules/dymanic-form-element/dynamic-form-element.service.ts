@@ -1,5 +1,5 @@
 import {Inject, Injectable, Optional} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 import {UI_COMPONENTS} from "./dynamic-form-element.injectonToken";
 import {DynamicFormElementModel} from "./model/base/form-control";
@@ -12,6 +12,7 @@ import {TextareaItem} from "./model/item-textarea";
 import {FormGroupItem} from "./model/item-formGroup";
 import {ValidationService} from "../validation-utils/validation.service";
 import {IDynamicFormElementModel} from "./model/base/form-control-options";
+import { FormArrayItem } from './model/item-formArray';
 
 @Injectable()
 export class DynamicFormElementService {
@@ -94,6 +95,10 @@ export class DynamicFormElementService {
       item = new FormGroupItem(config);
     }
 
+    if(controlType === "formArray") {
+      item = new FormArrayItem(config);
+    }
+
     return item;
 
     /////////////////////////////
@@ -108,8 +113,7 @@ export class DynamicFormElementService {
     }
   }
 
-  //@TODO move to utils
-  getFormGroupExtras = (formGroupConfig: IDynamicFormElementModel) => {
+  getFormGroupExtras = (formGroupConfig: IDynamicFormElementModel):{ validator: any, asyncValidator: any } | null => {
 
     if (!formGroupConfig) {
       return null;
@@ -171,8 +175,26 @@ export class DynamicFormElementService {
   }
 
   addGroupConfigToGroup(group: FormGroup, config: IDynamicFormElementModel) {
-    let extras: any[] = this.getFormGroupExtras(config);
-    let control: any = (<any>this.fb).group({},extras);
+    let extras = this.getFormGroupExtras(config);
+    let control = this.fb.group({},extras);
+    group.addControl(config.key, control);
+  }
+
+  addGroupConfigToArray(group: FormArray, config: IDynamicFormElementModel) {
+    let extras = this.getFormGroupExtras(config);
+    let control = this.fb.group({},extras);
+    group.push(control);
+  }
+
+  addArrayConfigToGroup(group: FormGroup, config: IDynamicFormElementModel) {
+    const extras = this.getFormGroupExtras(config);
+    let validator = null;
+    let asyncValidator = null;
+    if(extras) {
+      validator = ('validator' in extras)?extras.validator:null;
+      asyncValidator = ('asyncValidator' in extras)?extras.asyncValidator:null;
+    }
+    let control = this.fb.array([]);
     group.addControl(config.key, control);
   }
 

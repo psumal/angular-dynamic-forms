@@ -1,17 +1,9 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  DoCheck,
   ElementRef,
   HostBinding,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges
 } from '@angular/core';
 
 import { DynamicFormElementService } from '../../dymanic-form-element/dynamic-form-element.service';
@@ -26,7 +18,7 @@ import { IDynamicFormElementModel } from '../../dymanic-form-element/model/base/
   templateUrl: 'control.component.html',
 })
 export class ControlComponent implements OnInit, OnDestroy {
-  static controlTypes = ['select', 'checkbox', 'radio'];
+  static controlTypes = ["select", "checkbox", "radio", "textbox", "textarea"];
 
   formInitialized = false;
 
@@ -80,20 +72,15 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
-    console.log('controls: ', Object.keys(this.group.controls));
     this.hostClass = this.getHostClass();
     setTimeout(() => {
       this.dfes.addControlConfigToGroup(this.group, this.config);
-      console.log('addControl');
-      console.log('controls: ', Object.keys(this.group.controls));
       this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
       this.formInitialized = true;
     })
   }
 
 ngOnDestroy() {
-    console.log('ngOnDestroy');
     this.destroySubscriptions();
     this.dfes.removeConfigFromGroup(this.group, this.config);
   }

@@ -46,6 +46,8 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
   // html input reference
   protected inputElement: HTMLInputElement;
 
+  protected onModelChange: Function;
+
   /*TEXT-MASK EXCEPTION ==============================================================*/
   protected textMaskConfig: boolean | ITextMaskConfigOptions = false;
   protected textMaskInputElement: any;
@@ -53,9 +55,6 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
 
   private formatterParserView: IFormatterParserFn[] = [];
   private formatterParserModel: IFormatterParserFn[] = [];
-
-  private onTouch: Function;
-  private onModelChange: Function;
 
   constructor(private _elementRef: ElementRef,
               private fps: FormatterParserService,
@@ -66,15 +65,6 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
 
   }
 
-  registerOnTouched(fn) {
-    this.onTouch = fn;
-  }
-
-  registerOnChange(fn) {
-    this.onModelChange = fn;
-  }
-
-
   ngOnInit(): void {
     this.formControl = (<any>this.fcd).form.controls[this.formControlName];
     this.inputElement = this.getInputElementRef();
@@ -82,9 +72,16 @@ export class FormatterParserTextMaskDirective implements ControlValueAccessor, O
 
   }
 
+  @HostListener('blur', []) onTouched = () => { };
+
+  registerOnChange(fn: (_: any) => void): void { this.onModelChange = fn; }
+  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
+
+
   // Parser: View to Model
   @HostListener('input', ['$event'])
   onControlInput($event: KeyboardEvent) {
+    this.onTouched();
     const rawValue: any = this.inputElement.value;
 
     /*TEXT-MASK EXCEPTION ==============================================================*/

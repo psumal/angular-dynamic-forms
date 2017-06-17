@@ -1,0 +1,21 @@
+<fieldset *ngIf="isRendered && formInitialized">
+  <legend>{{config.label}}</legend>
+
+  <ng-container
+    *ngFor="let conf of items; let i = index;"
+    dynamicFormElement
+    [config]="conf"
+    [group]="currentFormItem">
+  </ng-container>
+
+  <button (click)="addGroup()">Add</button>
+
+  <!--   -->
+  <item-errors [config]="config" [group]="currentFormItem"></item-errors>
+
+  <div *ngIf="currentFormItem.status == 'PENDING'">
+    Validation is pending...
+  </div>
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted"></small>
+
+</fieldset>

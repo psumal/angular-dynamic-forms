@@ -17,6 +17,7 @@ import { TextareaComponent } from './textarea/textarea.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { RadioComponent } from './radio/radio.component';
 import { SelectComponent } from './select/select.component';
+import { FormArrayComponent } from './formArray/item-formArray.component';
 
 const ENTRY_COMPONENTS = [
   ContainerComponent,
@@ -27,7 +28,8 @@ const ENTRY_COMPONENTS = [
   RadioComponent,
   SelectComponent,
   ButtonComponent,
-  FormGroupComponent
+  FormGroupComponent,
+  FormArrayComponent
 ];
 const EXPORTS = [...ENTRY_COMPONENTS];
 
@@ -57,6 +59,7 @@ const EXPORTS = [...ENTRY_COMPONENTS];
     {provide: UI_COMPONENTS, useValue: ButtonComponent, multi: true},
 
     {provide: UI_COMPONENTS, useValue: FormGroupComponent, multi: true},
+    {provide: UI_COMPONENTS, useValue: FormArrayComponent, multi: true},
   ]
 })
 export class UiBasicModule {

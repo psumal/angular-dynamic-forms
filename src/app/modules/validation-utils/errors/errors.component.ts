@@ -72,9 +72,7 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
     })
   }
 
-
   updateErrors() {
-
     this.errors = this.errorService.getErrors(this.group);
   }
 

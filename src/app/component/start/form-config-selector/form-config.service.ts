@@ -347,40 +347,84 @@ export class FormConfigService {
 
   getFormGroupConfig(): IDynamicFormElementModel {
 
-    let conf = createFgConfig(2);
-
-    conf.push({
+    const basicFormGroup: IDynamicFormElementModel = {
+      controlType: 'formGroup',
+      key: 'basicFormGroup',
+      label: 'BasicFormGroup',
+      config: []
+    };
+    basicFormGroup.config.push({
       controlType: 'textbox',
       inputType: 'text',
-      key: 'TextboxFg' + 3,
-      label: 'Textbox Item of type url',
-      validator: [{name: 'required'}]
+      key: 'txtb',
+      label: 'Textbox Control',
+      validator: [
+        {name: 'required'}
+        ]
     });
 
-    let config: any = {
-      config: conf
+    const basicFormGroup1: IDynamicFormElementModel = {
+      controlType: 'formGroup',
+      key: 'basicFormGroup1',
+      label: 'BasicFormGroup1',
+      config: []
     };
+    basicFormGroup1.config.push({
+      controlType: 'textbox',
+      inputType: 'text',
+      key: 'txtb1',
+      label: 'Textbox Control1',
+      validator: [
+        {name: 'required'}
+      ]
+    });
+
+    const basicFormGroup2: IDynamicFormElementModel = {
+      controlType: 'formGroup',
+      key: 'basicFormGroup2',
+      label: 'BasicFormGroup2',
+      config: []
+    };
+    basicFormGroup2.config.push({
+      controlType: 'textbox',
+      inputType: 'text',
+      key: 'txtb2',
+      label: 'Textbox Control2',
+      validator: [
+        {name: 'required'}
+      ]
+    });
+
+    basicFormGroup1.config.push(basicFormGroup2);
+
+    basicFormGroup.config.push(basicFormGroup1);
+
+    const config: IDynamicFormElementModel = {
+      numOfRows:3,
+      config: [basicFormGroup]
+    };
+
+    //const conf = createFgConfig(1);
 
     return config;
 
     //////////////////////////////////
 
-    function createFgConfig(count: any): any {
-
-      let conf = [
+    function createFgConfig(count: any): IDynamicFormElementModel {
+      const conf:IDynamicFormElementModel[] = [
         {
           controlType: 'textbox',
           inputType: 'text',
           key: 'TextboxFg' + count,
           label: 'Textbox Item ' + '.' + count + ' of fG' + count
         },
-        {
+       {
           controlType: 'textbox',
           inputType: 'text',
           key: 'TextboxFg' + count + '.' + count,
           label: 'Textbox Item ' + '.' + count + '.' + count + ' of fG' + count
-        },
-        /*{
+        }, /*
+        {
          controlType: 'textbox',
          inputType: "text",
          key: "TextboxFg" + count + '.' + count + '.' + count,
@@ -395,23 +439,62 @@ export class FormConfigService {
          }*/
       ];
 
-      let fg = {
+      const fg:IDynamicFormElementModel = {
         controlType: 'formGroup',
         key: 'fG' + count,
-        title: 'Form Group ' + count,
-        config: conf,
-        validator: (count > 0) ? {name: 'controlMatch', params: [['TextboxFg2'], ['TextboxFg2.2']]} : {}
+        label: 'Form Group ' + count,
+        config: conf
       };
 
       if (count > 0) {
-        fg.config = fg.config.concat(createFgConfig(count - 1));
+        count--;
+        fg.config.push(createFgConfig(count));
+      } else{
+        return fg;
       }
-
-      return [fg];
 
     }
 
   }
+
+  getFormArrayConfig(): IDynamicFormElementModel {
+
+    const basicFormGroup: IDynamicFormElementModel = {
+      controlType: 'formGroup',
+      key: 'basicFormGroup',
+      label: 'BasicFormGroup',
+      config: []
+    };
+    basicFormGroup.config.push();
+
+
+    let config: IDynamicFormElementModel = {
+      config: [
+        {
+          controlType: 'formArray',
+          key: 'formArray',
+          label: 'formArray',
+          config: [
+            {
+              controlType: 'textbox',
+              inputType: 'text',
+              key: 'txtb0',
+              label: 'Textbox Control 0',
+            },
+            {
+              controlType: 'textbox',
+              inputType: 'text',
+              key: 'txtb1',
+              label: 'Textbox Control 1',
+            }
+          ]
+        }
+      ]
+    };
+
+    return config;
+  }
+
 
   getValidationConfig(): IDynamicFormElementModel {
 
@@ -1333,7 +1416,11 @@ export class FormConfigService {
         key: 6,
         config: this.getFormGroupConfig()
       },
-
+      {
+        label: 'formArray Test',
+        key: 61,
+        config: this.getFormArrayConfig()
+      },
       {
         label: 'validation Test',
         key: 7,

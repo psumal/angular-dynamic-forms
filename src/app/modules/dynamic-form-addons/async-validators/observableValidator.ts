@@ -8,7 +8,11 @@ export function observableValidator(c: AbstractControl): Observable<ValidationEr
   const validatorName =  "observableValidator";
 
   const routValidation$ = new Observable(observer => {
-    if ("Tesunddamatoterfklomeisaan".indexOf(c.value.toString()) !== -1) {
+
+
+
+    if (c.value && typeof c.value === "string" &&
+      "asdf".indexOf(c.value.toString()) !== -1) {
       observer.next({
         [this.validationName]: {
           actual: c.value,
@@ -16,7 +20,7 @@ export function observableValidator(c: AbstractControl): Observable<ValidationEr
         }
       });
     } else {
-      observer.next();
+      observer.next(null);
     }
   });
 

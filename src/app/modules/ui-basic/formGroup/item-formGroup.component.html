@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset *ngIf="isRendered && formInitialized">
   <legend>{{config.label}}</legend>
 
   <ng-container
@@ -8,11 +8,11 @@
     [group]="currentFormItem">
   </ng-container>
 
-  <item-errors [config]="config" [group]="currentFormItem"></item-errors>
+    <item-errors [config]="config" [group]="currentFormItem"></item-errors>
 
-  <div *ngIf="currentFormItem.status == 'PENDING'">
-    Validation is pending...
-  </div>
-  <small [attr.id]="config.key+'Help'" class="form-text text-muted"></small>
-
+    <div *ngIf="currentFormItem.status == 'PENDING'">
+      Validation is pending...
+    </div>
+    <small [attr.id]="config.key+'Help'" class="form-text text-muted"></small>
+  <!--  -->
 </fieldset>

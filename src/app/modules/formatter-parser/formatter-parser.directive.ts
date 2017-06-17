@@ -1,4 +1,7 @@
-import { Directive, ElementRef, forwardRef, Host, HostListener, OnInit, Optional, SkipSelf } from '@angular/core';
+import {
+  Directive, ElementRef, forwardRef, Host, HostListener, Input, OnInit, Optional,
+  SkipSelf
+} from '@angular/core';
 import { ControlContainer, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DynamicFormElementModel } from '../dymanic-form-element/model/base/form-control';
 import { FormatterParserService } from './formatter-parser.service';
@@ -12,7 +15,6 @@ const CONTROL_VALUE_ACCESSOR = {
 };
 
 @Directive({
-  inputs: ['config', 'formControlName'],
   selector: '[formatterParser]',
   providers: [
     CONTROL_VALUE_ACCESSOR
@@ -20,9 +22,10 @@ const CONTROL_VALUE_ACCESSOR = {
 })
 export class FormatterParserDirective implements ControlValueAccessor, OnInit {
 
-  // Input binding
-  config: DynamicFormElementModel;
-  // Input binding
+  @Input('formatterParser')
+  config: DynamicFormElementModel
+
+  @Input('formControlName')
   formControlName: string;
 
   // Container component reference

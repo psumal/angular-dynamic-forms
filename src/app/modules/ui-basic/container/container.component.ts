@@ -1,7 +1,6 @@
-import {Component, HostBinding, OnInit} from "@angular/core";
+import {Component, HostBinding, OnInit } from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
-import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {ValueChangeSubscriptionService} from "../../value-change-subscriptions/value-change-subscription.service";
 
 @Component({
@@ -69,23 +68,20 @@ export class ContainerComponent implements OnInit {
     return this._isRendered;
   }
 
-  constructor(private vcss: ValueChangeSubscriptionService) {
+  constructor( private vcss: ValueChangeSubscriptionService) {
   }
 
   ngOnInit() {
     this.hostClass = this.getHostClass();
-    this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
+    //this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
   }
-
 
   onValueSubscriptionChanged = ($event: any) => {
     const name = $event.name;
     switch (name) {
       //list of default actions
       case 'isRendered':
-        setTimeout(() => {
-          this.isRendered = $event.result;
-        },10)
+        this.isRendered = $event.result;
         break;
     }
 

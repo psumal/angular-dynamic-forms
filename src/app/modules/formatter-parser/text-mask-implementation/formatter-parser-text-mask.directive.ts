@@ -4,7 +4,7 @@ import {
   forwardRef,
   Host,
   HostListener,
-  InjectionToken,
+  InjectionToken, Input,
   OnInit,
   Optional,
   SkipSelf
@@ -27,7 +27,6 @@ const CONTROL_VALUE_ACCESSOR = {
 };
 
 @Directive({
-  inputs: ['config', 'formControlName'],
   selector: '[formatterParserTextMask]',
   providers: [
     CONTROL_VALUE_ACCESSOR
@@ -35,9 +34,10 @@ const CONTROL_VALUE_ACCESSOR = {
 })
 export class FormatterParserTextMaskDirective implements ControlValueAccessor, OnInit {
 
-  // Input binding
+  @Input('formatterParserTextMask')
   config: DynamicFormElementModel;
-  // Input binding
+
+  @Input()
   formControlName: string;
 
   // Container component reference

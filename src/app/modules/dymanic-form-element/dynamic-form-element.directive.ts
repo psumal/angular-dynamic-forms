@@ -24,6 +24,7 @@ export class DynamicFormElementDirective implements DynamicFormElementBindings, 
   ngOnChanges() {
     //if component is set up correctly update values
     if (this.component) {
+      console.log('DYNAMIC COMPNENT CHANGES BINDINGS');
       this.component.instance.config = this.config;
       this.component.instance.group = this.group;
     }

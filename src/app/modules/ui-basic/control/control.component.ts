@@ -1,10 +1,24 @@
-import {Component, ElementRef, HostBinding, OnDestroy, OnInit} from "@angular/core";
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  ElementRef,
+  HostBinding,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 
-import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
-import {AbstractControl, FormGroup} from "@angular/forms";
-import {ValueChangeSubscriptionService} from "../../value-change-subscriptions/value-change-subscription.service";
-import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
-import {IValueChangeSubscriptionConfig} from "../../value-change-subscriptions/value-change-subscription-config";
+import { DynamicFormElementService } from '../../dymanic-form-element/dynamic-form-element.service';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { ValueChangeSubscriptionService } from '../../value-change-subscriptions/value-change-subscription.service';
+import { IDynamicFormElementModel } from '../../dymanic-form-element/model/base/form-control-options';
+
 
 @Component({
   inputs: ['config', 'group'],
@@ -12,16 +26,18 @@ import {IValueChangeSubscriptionConfig} from "../../value-change-subscriptions/v
   templateUrl: 'control.component.html',
 })
 export class ControlComponent implements OnInit, OnDestroy {
+  static controlTypes = ['select', 'checkbox', 'radio'];
 
-  static controlTypes = ["select", "checkbox", "radio", "textbox", "textarea"];
+  formInitialized = false;
 
   subscriptions: any[] = [];
 
   @HostBinding('class')
   hostClass: string;
 
-
   private _config: IDynamicFormElementModel;
+
+
   set config(config: IDynamicFormElementModel) {
     this._config = this.dfes.createFormItem(config) as IDynamicFormElementModel;
   }
@@ -31,6 +47,7 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   private _group: FormGroup;
+
   set group(group: FormGroup) {
     this._group = group;
   }
@@ -56,18 +73,27 @@ export class ControlComponent implements OnInit, OnDestroy {
   }
 
   constructor(protected _elementRef: ElementRef,
+              // protected cdr: ChangeDetectorRef,
               protected dfes: DynamicFormElementService,
               protected vcss: ValueChangeSubscriptionService) {
 
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
+    console.log('controls: ', Object.keys(this.group.controls));
     this.hostClass = this.getHostClass();
-    this.dfes.addControlConfigToGroup(this.group, this.config);
-    this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
+    setTimeout(() => {
+      this.dfes.addControlConfigToGroup(this.group, this.config);
+      console.log('addControl');
+      console.log('controls: ', Object.keys(this.group.controls));
+      this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
+      this.formInitialized = true;
+    })
   }
 
-  ngOnDestroy() {
+ngOnDestroy() {
+    console.log('ngOnDestroy');
     this.destroySubscriptions();
     this.dfes.removeConfigFromGroup(this.group, this.config);
   }
@@ -89,9 +115,25 @@ export class ControlComponent implements OnInit, OnDestroy {
     return this.config.controlType === controlType;
   }
 
+  isLabelVisible(controlType: string): boolean {
+    const typesWithWrapperLabel:string[] = ['generalControl'];
+    return typesWithWrapperLabel.indexOf(this.config.controlType) === -1;
+  }
+
   getHostClass(): string {
     let classNames: string[] = [];
-    classNames.push('form-group');
+
+    switch (this.config.controlType) {
+      case'checkbox':
+        classNames.push('form-check');
+        break;
+      case 'radio':
+        classNames.push('form-group');
+        break;
+      default:
+        classNames.push('form-group');
+    }
+
     if (this.config) {
       classNames.push(...this.config.wrapperClass);
     }
@@ -146,7 +188,7 @@ export class ControlComponent implements OnInit, OnDestroy {
 
   getNoOptText() {
 
-    let text: string = "-- noOpt --";
+    let text: string = '-- noOpt --';
 
     if ('noOptKey' in this.config && this.config['noOptKey'] && this.config['noOptKey'] !== '') {
       text = this.config['noOptKey'];
@@ -171,6 +213,7 @@ export class ControlComponent implements OnInit, OnDestroy {
     }
 
   };
+
 
   updateAttributes() {
     const el: any = this._elementRef.nativeElement;
@@ -207,5 +250,4 @@ export class ControlComponent implements OnInit, OnDestroy {
     set('type', this.config.attrs['type']);
 
   }
-
 }

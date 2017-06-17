@@ -1,0 +1,31 @@
+<div [formGroup]="group"
+     *ngIf="formInitialized && isRendered">
+
+  <select
+    [ngClass]="getControlClass()"
+    [formControlName]="config.key">
+
+    <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
+    <template ngFor let-opt [ngForOf]="config.visibleOptions">
+      <optgroup *ngIf="opt.options" label="{{opt.label}}">
+        <option *ngFor="let optChild of opt.options" [ngValue]="optChild.value">
+          {{optChild.label}}
+        </option>
+      </optgroup>
+      <option *ngIf="!opt.options" [attr.disabled]="opt.disabled?'':null" [value]="opt.value">{{opt.label}}</option>
+    </template>
+
+  </select>
+
+  <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}<br/>{{config.helpText}}
+  </small>
+
+  <item-errors [config]="config" [group]="currentFormItem">
+  </item-errors>
+
+  <div *ngIf="getCurrentStatus() == 'PENDING'">
+    Validation is pending...
+  </div>
+
+
+</div>

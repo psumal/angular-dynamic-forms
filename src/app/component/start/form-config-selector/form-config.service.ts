@@ -8,7 +8,6 @@ import {
 import { IDynamicFormElementModel } from '../../../modules/dymanic-form-element/model/base/form-control-options';
 import { ISelectOption } from '../../../modules/dymanic-form-element/model/base/objects/select-option';
 import { GoogleAddressSearchModel } from '../../../modules/dynamic-form-addons/components/google-address-search/google-address-search';
-import { ITextMaskConfigOptions } from '../../../modules/formatter-parser/text-mask-implementation/struct/textMask-config-options';
 import { TextMaskService } from '../../../modules/formatter-parser/text-mask-implementation/textMask.service';
 import { ibanMask } from '../../../modules/dynamic-form-addons/payment/sepa/formatter-parser/iban-mask';
 import { IConformToMaskConfigOptions } from '../../../modules/formatter-parser/text-mask-implementation/struct/conformToMask-config-options';
@@ -594,15 +593,15 @@ export class FormConfigService {
     return fPConfig;
   }
 
-    getFormatterParserTextMaskConfig(): IDynamicFormElementModel {
+  getFormatterParserTextMaskConfig(): IDynamicFormElementModel {
 
     let fgConfig: any = {};
 
-       let ibanConfig = {
-        key: 'ibanFormat',
-          label: 'IBAN Format',
-        controlType: 'textbox',
-        formatterParser: [
+    let ibanConfig = {
+      key: 'ibanFormat',
+      label: 'IBAN Format',
+      controlType: 'textbox',
+      formatterParser: [
         {
           name: 'textMask',
           target: 0,
@@ -615,10 +614,10 @@ export class FormConfigService {
           ]
         }
       ]
-      };
+    };
 
 
-      fgConfig.config = [ibanConfig, ...this._getTextMaskConfigs()];
+    fgConfig.config = [ibanConfig, ...this._getTextMaskConfigs()];
 
     return fgConfig;
 
@@ -648,6 +647,7 @@ export class FormConfigService {
   getPersonalDataConfig(): IDynamicFormElementModel {
 
     let salutation: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
       label: 'Anrede',
       controlType: 'select',
       key: 'anrede',
@@ -662,27 +662,31 @@ export class FormConfigService {
     };
 
     let isCompany: IDynamicFormElementModel = {
+      //wrapperClass: ['col-sm-3'],
       label: 'Als Firma',
       controlType: 'checkbox',
       key: 'isCompany'
     };
 
     let companyName: IDynamicFormElementModel = {
+      //wrapperClass: ['col-sm-3'],
       label: 'Firma',
       controlType: 'textbox',
       key: 'company',
+
       formatterParser: [
         {name: 'toCapitalized', target: 2}
+      ],
+      validator: [
+        {name: 'required'}
       ],
       valueChangeSubscriptions: [
         {name: 'isRendered', controls: ['isCompany'], params: [true]}
       ],
-      validator: [
-        {name: 'required'}
-      ]
     };
 
     let title: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
       controlType: 'select',
       key: 'titel',
       label: 'Titel',
@@ -693,18 +697,35 @@ export class FormConfigService {
     };
 
     let geb: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
       key: 'geburtsdatum',
       label: 'Geburtsdatum',
       placeholder: 'Geburtsdatum hier',
       helpText: 'der Geburtsdatum der Person',
-      inputType: 'date',
+      inputType: 'text',
       validator: [
         {name: 'required'}
+      ],
+      formatterParser: [
+        {
+          name: 'textMask',
+          params: [
+            {
+              guide: true,
+              mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+            },
+            {
+              name: 'createAutoCorrectedDatePipe'
+            }
+          ],
+          target: 0
+        }
       ]
     };
 
     let besch: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
       controlType: 'select',
       key: 'beschaeftigung',
       label: 'Beschäftigung',
@@ -716,6 +737,7 @@ export class FormConfigService {
     };
 
     let main_lang: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
       controlType: 'select',
       key: 'kommunikationssprache',
       label: 'Kommunikationssprache',
@@ -732,7 +754,9 @@ export class FormConfigService {
       key: 'pd-c-gender',
       config: []
     };
+
     let company: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-12'],
       controlType: 'container',
       key: 'pd-c-company',
       config: []
@@ -757,6 +781,7 @@ export class FormConfigService {
     };
 
     let firstName = {
+      wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
       type: 'text',
       key: 'firstName',
@@ -766,15 +791,22 @@ export class FormConfigService {
       ]
     };
     let lastName = {
+      wrapperClass: ['col-sm-3'],
       controlType: 'textbox',
       type: 'text',
       key: 'lastName',
-      label: 'Lastname'
+      label: 'Lastname',
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
+      ]
     };
+
+    let personalData: IDynamicFormElementModel = {
+      config: []
+    };
+
     company.config.push(isCompany);
     company.config.push(companyName);
-
-    name.config.push(container);
 
     name.config.push(salutation);
     name.config.push(title);
@@ -784,13 +816,6 @@ export class FormConfigService {
     bottom.config.push(geb);
     bottom.config.push(besch);
     bottom.config.push(main_lang);
-
-    let personalData: IDynamicFormElementModel = {
-      controlType: 'formGroup',
-      key: 'personalData',
-      label: 'Personal Data',
-      config: []
-    };
 
     personalData.config.push(company);
     personalData.config.push(name);

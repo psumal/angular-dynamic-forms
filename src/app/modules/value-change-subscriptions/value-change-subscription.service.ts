@@ -65,7 +65,7 @@ export class ValueChangeSubscriptionService {
         const controlChanges$ = Observable.merge(...subs);
         subscriptions.push(
           controlChanges$
-           //.startWith(...initialValues)
+           .startWith(...initialValues)
             .subscribe((change: any) => {
               const result:any = subscriptionFn(change, listener.params, config, group);
               sideEffect(result)

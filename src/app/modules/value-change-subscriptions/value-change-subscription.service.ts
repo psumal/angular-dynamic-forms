@@ -43,7 +43,7 @@ export class ValueChangeSubscriptionService {
     return subscriptionFn;
   }
 
-  initValueChangeSubscriptions(config: { valueChangeSubscriptions?: IValueChangeSubscriptionConfig[] }, group: FormGroup, sideEffect: Function): Subscription[] {
+  initValueChangeSubscriptions(config: { valueChangeSubscriptions?: IValueChangeSubscriptionConfig[] }, group: FormGroup | FormArray, sideEffect: Function): Subscription[] {
     let subscriptions: Subscription[] = [];
 
     if ('valueChangeSubscriptions' in config) {

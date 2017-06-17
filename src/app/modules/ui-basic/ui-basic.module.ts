@@ -18,6 +18,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { RadioComponent } from './radio/radio.component';
 import { SelectComponent } from './select/select.component';
 import { FormArrayComponent } from './formArray/item-formArray.component';
+import { FormArrayGroupComponent } from './formArrayGroup/item-formArrayGroup.component';
 
 const ENTRY_COMPONENTS = [
   ContainerComponent,
@@ -29,7 +30,8 @@ const ENTRY_COMPONENTS = [
   SelectComponent,
   ButtonComponent,
   FormGroupComponent,
-  FormArrayComponent
+  FormArrayComponent,
+  FormArrayGroupComponent
 ];
 const EXPORTS = [...ENTRY_COMPONENTS];
 
@@ -39,7 +41,7 @@ const EXPORTS = [...ENTRY_COMPONENTS];
     DynamicFormElementModule,
     FormatterParserModule.forRoot(),
     ValidationUtilsModule,
-    ChangeSubscriptionsModule
+    ChangeSubscriptionsModule,
   ],
   exports: [EXPORTS],
   declarations: [EXPORTS],
@@ -60,6 +62,7 @@ const EXPORTS = [...ENTRY_COMPONENTS];
 
     {provide: UI_COMPONENTS, useValue: FormGroupComponent, multi: true},
     {provide: UI_COMPONENTS, useValue: FormArrayComponent, multi: true},
+    {provide: UI_COMPONENTS, useValue: FormArrayGroupComponent, multi: true},
   ]
 })
 export class UiBasicModule {

@@ -360,7 +360,7 @@ export class FormConfigService {
       label: 'Textbox Control',
       validator: [
         {name: 'required'}
-        ]
+      ]
     });
 
     const basicFormGroup1: IDynamicFormElementModel = {
@@ -400,7 +400,6 @@ export class FormConfigService {
     basicFormGroup.config.push(basicFormGroup1);
 
     const config: IDynamicFormElementModel = {
-      numOfRows:3,
       config: [basicFormGroup]
     };
 
@@ -411,20 +410,20 @@ export class FormConfigService {
     //////////////////////////////////
 
     function createFgConfig(count: any): IDynamicFormElementModel {
-      const conf:IDynamicFormElementModel[] = [
+      const conf: IDynamicFormElementModel[] = [
         {
           controlType: 'textbox',
           inputType: 'text',
           key: 'TextboxFg' + count,
           label: 'Textbox Item ' + '.' + count + ' of fG' + count
         },
-       {
+        {
           controlType: 'textbox',
           inputType: 'text',
           key: 'TextboxFg' + count + '.' + count,
           label: 'Textbox Item ' + '.' + count + '.' + count + ' of fG' + count
         }, /*
-        {
+         {
          controlType: 'textbox',
          inputType: "text",
          key: "TextboxFg" + count + '.' + count + '.' + count,
@@ -439,7 +438,7 @@ export class FormConfigService {
          }*/
       ];
 
-      const fg:IDynamicFormElementModel = {
+      const fg: IDynamicFormElementModel = {
         controlType: 'formGroup',
         key: 'fG' + count,
         label: 'Form Group ' + count,
@@ -449,7 +448,7 @@ export class FormConfigService {
       if (count > 0) {
         count--;
         fg.config.push(createFgConfig(count));
-      } else{
+      } else {
         return fg;
       }
 
@@ -459,13 +458,31 @@ export class FormConfigService {
 
   getFormArrayConfig(): IDynamicFormElementModel {
 
-    const basicFormGroup: IDynamicFormElementModel = {
-      controlType: 'formGroup',
-      key: 'basicFormGroup',
-      label: 'BasicFormGroup',
+    const container: IDynamicFormElementModel = {
+      controlType: 'container',
+      wrapperClass: ['row'],
+      key: 'c1',
       config: []
     };
-    basicFormGroup.config.push();
+
+    const groupConfig: IDynamicFormElementModel[] = [
+      {
+        controlType: 'textbox',
+        wrapperClass: ['col-sm-6'],
+        inputType: 'text',
+        key: 'txtb0',
+        label: 'Textbox Control 0',
+      },
+      {
+        controlType: 'textbox',
+        wrapperClass: ['col-sm-6'],
+        inputType: 'text',
+        key: 'txtb1',
+        label: 'Textbox Control 1',
+      }
+    ];
+
+    container.config = groupConfig
 
 
     let config: IDynamicFormElementModel = {
@@ -474,19 +491,9 @@ export class FormConfigService {
           controlType: 'formArray',
           key: 'formArray',
           label: 'formArray',
+          numOfRows: 1,
           config: [
-            {
-              controlType: 'textbox',
-              inputType: 'text',
-              key: 'txtb0',
-              label: 'Textbox Control 0',
-            },
-            {
-              controlType: 'textbox',
-              inputType: 'text',
-              key: 'txtb1',
-              label: 'Textbox Control 1',
-            }
+            container
           ]
         }
       ]

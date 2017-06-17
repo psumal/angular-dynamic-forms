@@ -202,4 +202,8 @@ export class DynamicFormElementService {
     group.removeControl(config.key);
   }
 
+  removeConfigFromArray(array: FormArray, config: IDynamicFormElementModel) {
+    array.removeAt(parseInt(config.key));
+  }
+
 }

@@ -1,18 +1,18 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { DynamicFormElementService } from '../../dymanic-form-element/dynamic-form-element.service';
 import { IDynamicFormElementModel } from '../../dymanic-form-element/model/base/form-control-options';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 import { ValueChangeSubscriptionService } from '../../value-change-subscriptions/value-change-subscription.service';
 
 @Component({
   inputs: ['config', 'group'],
   selector: 'df-form-group',
-  templateUrl: 'item-formGroup.component.html',
+  templateUrl: './item-formArrayGroup.component.html',
   providers: [DynamicFormElementService]
 })
-export class FormGroupComponent implements OnInit, OnDestroy {
+export class FormArrayGroupComponent implements OnInit, OnDestroy {
 
-  static controlTypes = ['formGroup'];
+  static controlTypes = ['formArrayGroup'];
 
   formInitialized = false;
   private subscriptions: any[] = [];
@@ -30,12 +30,12 @@ export class FormGroupComponent implements OnInit, OnDestroy {
     return this._config;
   }
 
-  private _group: FormGroup;
-  set group(group: FormGroup) {
+  private _group: FormArray;
+  set group(group: FormArray) {
     this._group = group;
   }
 
-  get group(): FormGroup {
+  get group(): FormArray {
     return this._group;
   }
 
@@ -59,7 +59,7 @@ export class FormGroupComponent implements OnInit, OnDestroy {
   }
 
   get currentFormItem() {
-    return this.group.get(this.config.key);
+      return this.group.at(parseInt(this.config.key))
   }
 
   constructor(protected dfes: DynamicFormElementService,
@@ -68,21 +68,21 @@ export class FormGroupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
-      if (this.group instanceof FormGroup) {
-        this.dfes.addGroupConfigToGroup(this.group, this.config);
+    setTimeout(() => {
+      if (this.group instanceof FormArray) {
+        console.log('FormArray', typeof this.group, this.group instanceof FormArray);
+        this.dfes.addGroupConfigToArray(this.group as FormArray, this.config);
       } else {
         throw new Error('');
       }
 
-      this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
       this.formInitialized = true;
-
+    })
   }
 
   ngOnDestroy() {
     this.destroySubscriptions();
-    this.dfes.removeConfigFromGroup(this.group, this.config);
+    this.dfes.removeConfigFromArray(this.group, this.config);
   }
 
   destroySubscriptions() {
@@ -96,21 +96,6 @@ export class FormGroupComponent implements OnInit, OnDestroy {
     });
     this.subscriptions = [];
   }
-
-  //sideEffects
-  public onValueSubscriptionChanged: Function = ($event: any) => {
-    const name = $event.name;
-    switch (name) {
-      case 'isRendered':
-        this.isRendered = $event.result;
-        break;
-      //@TODO we need a way to import this custom actions
-      case 'syncWithAddressComponent':
-        this.currentFormItem.setValue($event.result)
-        break;
-    }
-
-  };
 
 
 }

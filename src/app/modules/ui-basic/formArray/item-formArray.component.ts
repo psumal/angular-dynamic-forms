@@ -1,8 +1,9 @@
 import {Component, HostBinding, OnDestroy, OnInit} from "@angular/core";
 import {DynamicFormElementService} from "../../dymanic-form-element/dynamic-form-element.service";
 import {IDynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control-options";
-import {FormGroup} from "@angular/forms";
+import { FormArray, FormGroup } from '@angular/forms';
 import {ValueChangeSubscriptionService} from "../../value-change-subscriptions/value-change-subscription.service";
+import { ButtonItem } from '../../dymanic-form-element/model/item-button';
 
 @Component({
   inputs: ['config', 'group'],
@@ -24,7 +25,8 @@ export class FormArrayComponent implements OnInit, OnDestroy {
   private _config: IDynamicFormElementModel;
   set config(config: IDynamicFormElementModel) {
     this._config = config;
-    this.items = config.config;
+    this.items = [];
+    this.addGroup(config.numOfRows)
   }
 
   get config(): IDynamicFormElementModel {
@@ -42,9 +44,7 @@ export class FormArrayComponent implements OnInit, OnDestroy {
 
   private _items: IDynamicFormElementModel[] = [];
   set items(items: IDynamicFormElementModel[]) {
-
-    this._items = [];
-    this.addGroup(items,this.config.numOfRows)
+    this._items = items;
   }
 
   get items(): IDynamicFormElementModel[] {
@@ -61,8 +61,8 @@ export class FormArrayComponent implements OnInit, OnDestroy {
     return this._isRendered;
   }
 
-  get currentFormItem() {
-    return this.group.get(this.config.key);
+  get currentFormItem():FormArray {
+    return this.group.get(this.config.key) as FormArray;
   }
 
   constructor(protected dfes: DynamicFormElementService,
@@ -73,8 +73,6 @@ export class FormArrayComponent implements OnInit, OnDestroy {
   ngOnInit() {
     setTimeout(() => {
       this.dfes.addArrayConfigToGroup(this.group, this.config);
-
-      //this.dfes.addGroupConfigToGroup(this.currentFormItem, this.config);
       //this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged)
       this.formInitialized = true;
     });
@@ -97,35 +95,32 @@ export class FormArrayComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
   }
 
+  addGroup( numOfRows: number) {
+    numOfRows = numOfRows || 1;
 
-  addGroup(config:IDynamicFormElementModel[], numOfRows: number) {
+    const config:IDynamicFormElementModel[] = this.config.config;
     const dynFormGroup:IDynamicFormElementModel = {
       key:'',
-      controlType: 'formGroup',
+      controlType: 'formArrayGroup',
       config:config
     };
 
-    console.log(numOfRows);
     for(let i = 0; i < numOfRows;i++) {
-      dynFormGroup.key = (this._items.length).toString();
-      this._items.push({...dynFormGroup})
+      const newGroup = {...dynFormGroup};
+      newGroup.key = (this._items.length).toString();
+      this.items.push(newGroup)
     }
 
   }
-  //sideEffects
-  public onValueSubscriptionChanged:Function = ($event: any) => {
-    const name = $event.name;
-    switch (name) {
-      case 'isRendered':
-        this.isRendered = $event.result;
-        break;
-      //@TODO we need a way to import this custom actions
-      case 'syncWithAddressComponent':
-        this.currentFormItem.setValue($event.result);
-        break;
-    }
 
-  };
+  removeGroup(index:number) {
+    const temp = Array.from(this.items);
 
+    temp.splice(index,1);
+    console.log(index, temp, this.items);
+
+    this.items = temp;
+
+  }
 
 }

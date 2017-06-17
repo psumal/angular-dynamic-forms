@@ -30,6 +30,7 @@ export class DynamicFormElementDirective implements DynamicFormElementBindings, 
   }
 
   ngOnInit() {
+    console.log('this.config: ', this.config);
     const componentClass = this.dfes.getComponent(this.config.controlType);
     if (!componentClass) {
       throw new Error(

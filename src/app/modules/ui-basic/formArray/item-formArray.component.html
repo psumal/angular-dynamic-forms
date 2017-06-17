@@ -6,11 +6,13 @@
     dynamicFormElement
     [config]="conf"
     [group]="currentFormItem">
+    <button class="btn btn-danger" (click)="removeGroup(conf.key)">Remove Me!</button>
   </ng-container>
 
-  <button (click)="addGroup()">Add</button>
 
   <!--   -->
+  <button class="btn btn-secondary" (click)="addGroup()">Add</button>
+
   <item-errors [config]="config" [group]="currentFormItem"></item-errors>
 
   <div *ngIf="currentFormItem.status == 'PENDING'">

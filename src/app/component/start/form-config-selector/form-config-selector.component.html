@@ -2,6 +2,7 @@
 -->
 <form novalidate [formGroup]="configSelectionForm" (ngSubmit)="onSubmitConfigSelection(configSelectionForm);">
   <!-- -->
+  {{configSelectionConfig | json}}
   <dynamic-form-group
     [config]="configSelectionConfig"
     [group]="configSelectionForm">

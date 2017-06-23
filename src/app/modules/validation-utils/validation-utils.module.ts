@@ -1,18 +1,26 @@
-import {NgModule} from "@angular/core";
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import {CommonModule} from "@angular/common";
-import {ValidationService} from "./validation.service";
-import {ControlErrorComponent} from "./errors/errors.component";
-import {ErrorService} from "./errors/error.service";
-
-
-const EXPORTS = [ControlErrorComponent];
+import { ValidationService } from './validation.service';
+import { ValidatorWarningDirective } from './validator-warning.directive';
 
 @NgModule({
-  imports: [CommonModule],
-  exports: [EXPORTS],
-  declarations: [EXPORTS],
-  providers: [ValidationService, ErrorService]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule
+    ],
+    declarations: [ValidatorWarningDirective],
+    exports: [ ValidatorWarningDirective, ReactiveFormsModule]
 })
 export class ValidationUtilsModule {
+
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ValidationUtilsModule,
+            providers: [
+                ValidationService
+            ]
+        };
+    }
 }

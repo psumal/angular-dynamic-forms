@@ -10,10 +10,16 @@ import { IDynamicFormElementModel } from '../../dymanic-form-element/model/base/
   inputs: ['config', 'group']
 })
 export class BaseUiComponent implements OnInit, OnDestroy {
-  static controlTypes = ['textbox'];
 
-  formInitialized = false;
 
+  private _formInitialized = false;
+  get formInitialized(): boolean {
+    return this._formInitialized;
+  }
+
+  set formInitialized(value: boolean) {
+    this._formInitialized = value;
+  }
   subscriptions: any[] = [];
 
   @HostBinding('class')
@@ -61,12 +67,15 @@ export class BaseUiComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.hostClass = this.getHostClass();
-    setTimeout(() => {
+    //setTimeout(() => {
       this.dfes.addControlConfigToGroup(this.group, this.config);
       this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
       this.formInitialized = true;
-    })
+      this.isRendered = true;
+      console.log(this.formInitialized, this.isRendered);
+    //})
   }
 
   ngOnDestroy() {

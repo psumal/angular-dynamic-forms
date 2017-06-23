@@ -7,9 +7,7 @@ import { ControlComponent } from './control/control.component';
 import { FormGroupComponent } from './formGroup/item-formGroup.component';
 import { ContainerComponent } from './container/container.component';
 
-import { FormatterParserModule } from '../formatter-parser/formatter-parser.module';
-import { ValidationUtilsModule } from '../validation-utils/validation-utils.module';
-import { ChangeSubscriptionsModule } from '../value-change-subscriptions/value-change-subscriptions.module';
+import { FormatterParserModule } from '../formatter-parser/formatter-parser.module';import { ChangeSubscriptionsModule } from '../value-change-subscriptions/value-change-subscriptions.module';
 import { DynamicFormElementModule } from '../dymanic-form-element/dynamic-form-element.module';
 import { UI_COMPONENTS } from '../dymanic-form-element/dynamic-form-element.injectonToken';
 import { TextboxComponent } from './textbox/textbox.component';
@@ -19,6 +17,8 @@ import { RadioComponent } from './radio/radio.component';
 import { SelectComponent } from './select/select.component';
 import { FormArrayComponent } from './formArray/item-formArray.component';
 import { FormArrayGroupComponent } from './formArrayGroup/item-formArrayGroup.component';
+import { ValidationUtilsModule } from '../validation-utils/validation-utils.module';
+import { MessagesModule } from '../messages/messages.module';
 
 const ENTRY_COMPONENTS = [
   ContainerComponent,
@@ -40,7 +40,8 @@ const EXPORTS = [...ENTRY_COMPONENTS];
     CommonModule, ReactiveFormsModule,
     DynamicFormElementModule,
     FormatterParserModule.forRoot(),
-    ValidationUtilsModule,
+    ValidationUtilsModule.forRoot(),
+    MessagesModule.forRoot(),
     ChangeSubscriptionsModule,
   ],
   exports: [EXPORTS],

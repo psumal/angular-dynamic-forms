@@ -1,5 +1,5 @@
-import {DynamicFormElementModel} from "./base/form-control";
-import {IDynamicFormElementModel} from "./base/form-control-options";
+import { DynamicFormElementModel } from './base/form-control';
+import { IDynamicFormElementModel } from './base/form-control-options';
 
 export class ButtonItem extends DynamicFormElementModel {
 

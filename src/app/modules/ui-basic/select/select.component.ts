@@ -1,4 +1,4 @@
-import { Component, ElementRef} from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 
 import { DynamicFormElementService } from '../../dymanic-form-element/dynamic-form-element.service';
 import { ValueChangeSubscriptionService } from '../../value-change-subscriptions/value-change-subscription.service';
@@ -33,7 +33,6 @@ export class SelectComponent extends BaseUiComponent {
 
     return classNames.join(' ');
   }
-
 
   isNoOptPresent() {
     return 'noOptKey' in this.config && !!this.config['noOptKey'];

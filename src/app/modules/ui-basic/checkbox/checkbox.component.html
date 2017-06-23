@@ -4,14 +4,14 @@
   <input type="checkbox"
          [ngClass]="getControlClass()"
          [formControlName]="config.key"
-         name="{{config.key}}">
+         [name]="config.key">
   {{config.label}}
 
 
 <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}<br/>{{config.helpText}}</small>
 
-  <item-errors [config]="config" [group]="currentFormItem">
-  </item-errors>
+  <messages [config]="config" [group]="currentFormItem">
+  </messages>
 
   <div *ngIf="getCurrentStatus() == 'PENDING'">
     Validation is pending...

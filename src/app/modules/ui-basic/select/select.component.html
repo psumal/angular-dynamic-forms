@@ -1,3 +1,5 @@
+formInitialized: {{formInitialized}} <br>
+isRendered: {{isRendered}}
 <div [formGroup]="group"
      *ngIf="formInitialized && isRendered">
 
@@ -7,7 +9,8 @@
 
   <select
     [ngClass]="getControlClass()"
-    [formControlName]="config.key">
+    [formControlName]="config.key"
+    [name]="config.key">
 
     <option *ngIf="isNoOptPresent()" [ngValue]="" (click)="select(config.noOptKey)">{{getNoOptText()}}</option>
     <template ngFor let-opt [ngForOf]="config.visibleOptions">
@@ -24,8 +27,8 @@
   <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}<br/>{{config.helpText}}
   </small>
 
-  <item-errors [config]="config" [group]="currentFormItem">
-  </item-errors>
+  <messages [config]="config" [group]="currentFormItem">
+  </messages>
 
   <div *ngIf="getCurrentStatus() == 'PENDING'">
     Validation is pending...

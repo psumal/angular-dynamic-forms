@@ -3,6 +3,7 @@ import { DynamicFormElementService } from '../../../dymanic-form-element/dynamic
 import { ValueChangeSubscriptionService } from '../../../value-change-subscriptions/value-change-subscription.service';
 import { IDynamicFormElementModel } from '../../../dymanic-form-element/model/base/form-control-options';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { CustomRadioItem } from './custom-radio';
 
 @Component({
   inputs: ['config', 'group'],
@@ -10,9 +11,16 @@ import { AbstractControl, FormGroup } from '@angular/forms';
   templateUrl: './custom-radio.component.html',
 })
 export class CustomRadioComponent {
+  get formInitialized(): boolean {
+    return this._formInitialized;
+  }
+
+  set formInitialized(value: boolean) {
+    this._formInitialized = value;
+  }
   static controlTypes = ['customRadio'];
 
-  formInitialized = false;
+  private _formInitialized = false;
 
   subscriptions: any[] = [];
 
@@ -22,7 +30,7 @@ export class CustomRadioComponent {
   private _config: IDynamicFormElementModel;
 
   set config(config: IDynamicFormElementModel) {
-    this._config = this.dfes.createFormItem(config) as IDynamicFormElementModel;
+    this._config = new CustomRadioItem(config);
   }
 
   get config(): IDynamicFormElementModel {
@@ -58,15 +66,15 @@ export class CustomRadioComponent {
   constructor(protected _elementRef: ElementRef,
               protected dfes: DynamicFormElementService,
               protected vcss: ValueChangeSubscriptionService) {
-
   }
 
   ngOnInit() {
     this.hostClass = this.getHostClass();
     setTimeout(() => {
+      console.log('KADKAF:', this.config);
       this.dfes.addControlConfigToGroup(this.group, this.config);
-      this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
-      this.formInitialized = true;
+      //this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
+      this._formInitialized = true;
     })
   }
 

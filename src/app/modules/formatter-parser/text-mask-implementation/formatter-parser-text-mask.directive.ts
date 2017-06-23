@@ -20,7 +20,7 @@ import { ITextMaskConfigOptions } from './struct/textMask-config-options';
 /*============================================================== TEXT-MASK EXCEPTION*/
 
 const CONTROL_VALUE_ACCESSOR = {
-  name: 'formatterParserValueAccessor',
+  name: 'formatterParserTextMaskValueAccessor',
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => FormatterParserTextMaskDirective),
   multi: true

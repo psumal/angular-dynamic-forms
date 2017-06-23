@@ -4,6 +4,7 @@
   <label [attr.class]="'form-check-label'" *ngFor="let opt of config.options">
     <input type="radio"
            [formControlName]="config.key"
+           [name]="config.key"
            [attr.class]="getControlClass()"
            [value]="opt.label">
     {{opt.value}}
@@ -13,8 +14,8 @@
   <small [attr.id]="config.key+'Help'" class="form-text text-muted">{{currentFormItem.value}}<br/>{{config.helpText}}
   </small>
 
-  <item-errors [config]="config" [group]="currentFormItem">
-  </item-errors>
+  <messages [config]="config" [group]="currentFormItem">
+  </messages>
 
   <div *ngIf="getCurrentStatus() == 'PENDING'">
     Validation is pending...

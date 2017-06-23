@@ -458,7 +458,184 @@ export class FormConfigService {
 
   getFormArrayConfig(): IDynamicFormElementModel {
 
-    const container: IDynamicFormElementModel = {
+    let salutation: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
+      label: 'Anrede',
+      controlType: 'select',
+      key: 'anrede',
+      options: [
+        {label: 'Herr', value: '0'},
+        {label: 'Frau', value: '1'},
+        {label: 'Firma', value: '2'}
+      ],
+      validator: [
+        {name: 'required'}
+      ]
+    };
+
+    let isCompany: IDynamicFormElementModel = {
+      //wrapperClass: ['col-sm-3'],
+      label: 'Als Firma',
+      controlType: 'checkbox',
+      key: 'isCompany'
+    };
+
+    let companyName: IDynamicFormElementModel = {
+      //wrapperClass: ['col-sm-3'],
+      label: 'Firma',
+      controlType: 'textbox',
+      key: 'company',
+
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
+      ],
+      validator: [
+        {name: 'required'}
+      ],
+      valueChangeSubscriptions: [
+        {name: 'isRendered', controls: ['isCompany'], params: [true]}
+      ],
+    };
+
+    let title: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
+      controlType: 'select',
+      key: 'titel',
+      label: 'Titel',
+      options: [
+        {value: 0, label: 'Dr'},
+        {value: 0, label: 'Prof'}
+      ]
+    };
+
+    let geb: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
+      controlType: 'textbox',
+      key: 'geburtsdatum',
+      label: 'Geburtsdatum',
+      placeholder: 'Geburtsdatum hier',
+      helpText: 'der Geburtsdatum der Person',
+      inputType: 'text',
+      validator: [
+        {name: 'required'}
+      ],
+      formatterParser: [
+        {
+          name: 'textMask',
+          params: [
+            {
+              guide: true,
+              mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+            },
+            {
+              name: 'createAutoCorrectedDatePipe'
+            }
+          ],
+          target: 0
+        }
+      ]
+    };
+
+    let besch: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
+      controlType: 'select',
+      key: 'beschaeftigung',
+      label: 'Beschäftigung',
+      helpText: 'Beschäftigung der Person (Arbeiter, Angestellter)',
+      options: [
+        {label: 'Arbeiter', value: 'Arbeiter'},
+        {label: 'Angestellter', value: 'Angestellter'}
+      ]
+    };
+
+    let main_lang: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-3'],
+      controlType: 'select',
+      key: 'kommunikationssprache',
+      label: 'Kommunikationssprache',
+      //wrapperClass:['col-sm-4'],
+      helpText: 'Kommunikationssprache der Person',
+      options: [
+        {label: 'Deutsch', value: 'DE'},
+        {label: 'Englisch', value: 'EN'}
+      ]
+    };
+
+    let gender: IDynamicFormElementModel = {
+      controlType: 'container',
+      key: 'pd-c-gender',
+      config: []
+    };
+
+    let company: IDynamicFormElementModel = {
+      wrapperClass: ['col-sm-12'],
+      controlType: 'container',
+      key: 'pd-c-company',
+      config: []
+    };
+    let name: IDynamicFormElementModel = {
+      controlType: 'container',
+      key: 'pd-c-name',
+      config: []
+    };
+    let bottom: IDynamicFormElementModel = {
+      controlType: 'container',
+      key: 'pd-c-bottom',
+      config: []
+    };
+
+
+    let container: IDynamicFormElementModel = {
+      controlType: 'container',
+      key: 'pd-c-gender',
+      config: [],
+      valueChangeSubscriptions: [{name: 'isRendered', controls: ['isCompany'], params: [true]}]
+    };
+
+    let firstName = {
+      wrapperClass: ['col-sm-3'],
+      controlType: 'textbox',
+      type: 'text',
+      key: 'firstName',
+      label: 'Firstname',
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
+      ]
+    };
+    let lastName = {
+      wrapperClass: ['col-sm-3'],
+      controlType: 'textbox',
+      type: 'text',
+      key: 'lastName',
+      label: 'Lastname',
+      formatterParser: [
+        {name: 'toCapitalized', target: 2}
+      ]
+    };
+
+    let personalData: IDynamicFormElementModel = {
+      config: []
+    };
+
+    company.config.push(isCompany);
+    company.config.push(companyName);
+
+    name.config.push(salutation);
+    name.config.push(title);
+    name.config.push(firstName);
+    name.config.push(lastName);
+
+    bottom.config.push(geb);
+    bottom.config.push(besch);
+    bottom.config.push(main_lang);
+
+    personalData.config.push(company);
+    personalData.config.push(name);
+    personalData.config.push(bottom);
+
+
+
+    const maincontainer: IDynamicFormElementModel = {
       controlType: 'container',
       wrapperClass: ['row'],
       key: 'c1',
@@ -482,7 +659,7 @@ export class FormConfigService {
       }
     ];
 
-    container.config = groupConfig
+    maincontainer.config = personalData.config;
 
 
     let config: IDynamicFormElementModel = {
@@ -493,7 +670,7 @@ export class FormConfigService {
           label: 'formArray',
           numOfRows: 1,
           config: [
-            container
+            maincontainer
           ]
         }
       ]

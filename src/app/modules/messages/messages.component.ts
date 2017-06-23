@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {DynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control";
-import {ErrorService} from "./error.service";
+import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
+import {MessagesService} from "./messages.service";
 
 @Component({
   inputs: ['config', 'group'],
-  selector: 'item-errors',
-  templateUrl: './errors.component.html'
+  selector: 'messages',
+  templateUrl: './messages.component.html'
 })
-export class ControlErrorComponent implements OnInit, OnDestroy {
+export class MessagesComponent implements OnInit, OnDestroy {
 
 
   private _config: DynamicFormElementModel;
@@ -29,7 +29,7 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
     return this._group;
   }
 
-  errorService: ErrorService;
+  errorService: MessagesService;
   errorMessages: {};
 
   private _errors: { [key: string]: string } = {};
@@ -46,7 +46,7 @@ export class ControlErrorComponent implements OnInit, OnDestroy {
 
   subscriptions: any[] = [];
 
-  constructor(errorService: ErrorService) {
+  constructor(errorService: MessagesService) {
     this.errorService = errorService;
   }
 

@@ -1,7 +1,7 @@
 import {IValueChangeSubscriptionConfig} from "../../../value-change-subscriptions/value-change-subscription-config";
 import {ISelectOption} from "./objects/select-option";
 import {IFormState} from "./objects/form-state";
-import {IValidatorConfig} from "../../../validation-utils/validator-config";
+import {IValidatorConfig} from "../../../validation-utils/struct/validator-config";
 import {IFormatterParserConfig} from "../../../formatter-parser/struct/formatter-parser-config";
 
 export interface IDynamicFormElementModel {

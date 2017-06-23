@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
   };
 var core_1 = require("@angular/core");
-var error_service_1 = require("./error.service");
+var error_service_1 = require("./messages.service");
 var ControlErrorComponent = (function () {
   function ControlErrorComponent(errorService) {
     this._errors = {};
@@ -88,8 +88,8 @@ ControlErrorComponent = __decorate([
   core_1.Component({
     moduleId: module.id,
     inputs: ['config', 'group'],
-    selector: 'item-errors',
-    templateUrl: 'src/app/modules/validation-utils/errors/errors.component.html'
+    selector: 'messages',
+    templateUrl: 'src/app/modules/messages/messages.component.html'
   }),
   __metadata("design:paramtypes", [error_service_1.ErrorService])
 ], ControlErrorComponent);

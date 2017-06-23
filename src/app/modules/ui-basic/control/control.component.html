@@ -53,8 +53,8 @@
   </textarea>
 
   <!-- -->
-  <item-errors [config]="config" [group]="currentFormItem">
-  </item-errors>
+  <messages [config]="config" [group]="currentFormItem">
+  </messages>
 
   <div *ngIf="getCurrentStatus() == 'PENDING'">
     Validation is pending...

@@ -1,8 +1,8 @@
 import {AbstractControl} from "@angular/forms";
-import {DynamicFormElementModel} from "../../dymanic-form-element/model/base/form-control";
+import {DynamicFormElementModel} from "../dymanic-form-element/model/base/form-control";
 import {Injectable} from "@angular/core";
 
-interface ErrorReplaceKeys {
+interface MessagesReplaceKeys {
   controlValue?: string,
   controlLabel?: string,
   validatorName?: string,
@@ -10,9 +10,9 @@ interface ErrorReplaceKeys {
 }
 
 @Injectable()
-export class ErrorService {
+export class MessagesService {
 
-  REPLACE_KEYS: ErrorReplaceKeys = {
+  REPLACE_KEYS: MessagesReplaceKeys = {
     controlValue: "cv",
     controlLabel: "cl",
     validatorName: "vn",
@@ -62,7 +62,7 @@ export class ErrorService {
       }
 
 
-      let replaceValues: ErrorReplaceKeys = this.getReplaceValues(config, group, validatorName, errorKeys[validatorName]);
+      let replaceValues: MessagesReplaceKeys = this.getReplaceValues(config, group, validatorName, errorKeys[validatorName]);
       mappedErrors[validatorName] = this.prePareMessage(errorMessage, replaceValues);
 
     }
@@ -70,7 +70,7 @@ export class ErrorService {
     return mappedErrors;
   }
 
-  prePareMessage(error: any, replaceValues: ErrorReplaceKeys) {
+  prePareMessage(error: any, replaceValues: MessagesReplaceKeys) {
     let prepMsg = error;
     for (let key in replaceValues) {
       prepMsg = prepMsg.replace('%' + key, `<${this.REPLACE_WRAPPER_TAG}>${replaceValues[key]}</${this.REPLACE_WRAPPER_TAG}>`);
@@ -79,9 +79,9 @@ export class ErrorService {
     return prepMsg;
   }
 
-  getReplaceValues(config: DynamicFormElementModel, group: AbstractControl, validatorName: string, errorObj: any): ErrorReplaceKeys {
+  getReplaceValues(config: DynamicFormElementModel, group: AbstractControl, validatorName: string, errorObj: any): MessagesReplaceKeys {
 
-    let replaceValues: ErrorReplaceKeys = <ErrorReplaceKeys>{};
+    let replaceValues: MessagesReplaceKeys = <MessagesReplaceKeys>{};
 
     replaceValues[this.REPLACE_KEYS.controlValue] = group.value;
     replaceValues[this.REPLACE_KEYS.controlLabel] = config.label;

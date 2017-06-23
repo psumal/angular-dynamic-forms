@@ -13,7 +13,7 @@
     <button class="btn btn-secondary" (click)="addGroup()">Add</button>
   </div>
 
-  <item-errors [config]="config" [group]="currentFormItem"></item-errors>
+  <messages [config]="config" [group]="currentFormItem"></messages>
 
   <div *ngIf="currentFormItem.status == 'PENDING'">
     Validation is pending...

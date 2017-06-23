@@ -5,13 +5,13 @@ export class ValidationService {
 
   constructor(@Optional() @Inject(NG_VALIDATORS) private NG_VALIDATORS: ValidatorFn[],
               @Optional() @Inject(NG_ASYNC_VALIDATORS) private NG_ASYNC_VALIDATORS: AsyncValidatorFn[],) {
-
   }
 
   getValidators(validatorsConfig: any): ValidatorFn[] {
     let validators: any[] = [];
 
     if (validatorsConfig) {
+      // @TODO type this!!!!
       validators = validatorsConfig.map((validatorObj: any) => {
         return this.getValidatorFn(validatorObj.name, validatorObj.params)
       })
@@ -21,6 +21,7 @@ export class ValidationService {
 
   getValidatorFn(validatorName: string, validatorArgs?: any): ValidatorFn {
     if (!validatorName) {
+      // @TODO throw
       return;
     }
     let validatorFn = Validators[validatorName] || this.getCustomValidatorFn(validatorName);

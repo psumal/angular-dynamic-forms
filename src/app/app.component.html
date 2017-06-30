@@ -1,10 +1,95 @@
+<nav class="navbar-toggleable-md">
+  <div class="navbar-collapse collapse show dropdown" id="navbarCollapse"
+    data-hover="dropdown"
+    data-animations="fadeInDown fadeInRight fadeInUp fadeInLeft"
+    aria-expanded="true">
+    <ul class="nav navbar-nav mr-auto mainmenu">
+      <li class="nav-item ml-2 mr-2 ">
+        <a class="nav-link dropdown-toggle" href="#"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Form controls</a>
+
+        <ul class="" aria-labelledby="dropdownMenuLink">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['textbox-components']">
+              Textbox controls
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['checkbox-components']">
+              Checkbox controls
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['radio-components']">
+              Radio controls
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['select-components']">
+              Select controls
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['textarea-components']">
+              Textarea controls
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['button-components']">
+              Button controls
+            </a>
+          </li>
+        </ul>
+
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav mr-auto mainmenu">
+      <li class="nav-item ml-2 mr-2 dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+          Groups and Arrays
+        </a>
+
+        <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['formgroup-components']">
+              FormGroup controls
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['formarray-components']">
+              FormArray controls
+            </a>
+          </li>
+        </ul>
+
+      </li>
+    </ul>
+
+      <ul class="nav navbar-nav mr-auto mainmenu">
+        <li class="nav-item ml-2 mr-2 dropdown ">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Groups and Arrays
+          </a>
+
+          <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['validation-components']">
+                Validation controls
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+    </ul>
+
+  </div>
+</nav>
+
 <div class="container">
-
-
-  <start></start>
-  <footer class="footer">
-    <p>&copy; Company 2017</p>
-  </footer>
-  <!---->
-
+  <router-outlet></router-outlet>
 </div>

@@ -2,3 +2,5 @@
   [group]="dynamicForm"
   [config]="(formConfig$ | async)">
 </dynamic-form-group>
+
+{{(formConfig$ | async) | json}}

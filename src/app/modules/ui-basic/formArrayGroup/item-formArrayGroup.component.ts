@@ -59,7 +59,7 @@ export class FormArrayGroupComponent implements OnInit, OnDestroy {
   }
 
   get currentFormItem() {
-      return this.group.at(parseInt(this.config.key))
+    return this.group.at(parseInt(this.config.key))
   }
 
   constructor(protected dfes: DynamicFormElementService,
@@ -70,10 +70,13 @@ export class FormArrayGroupComponent implements OnInit, OnDestroy {
   ngOnInit() {
     setTimeout(() => {
       if (this.group instanceof FormArray) {
-        console.log('FormArray', typeof this.group, this.group instanceof FormArray);
-        this.dfes.addGroupConfigToArray(this.group as FormArray, this.config);
+        console.log('this.config.numOfRows', this.config);
+        for(let i = 0;i < this.config.numOfRows; i++) {
+          this.dfes.addGroupConfigToArray(this.group as FormArray, this.config);
+          this.formInitialized = true;
+        }
       } else {
-        throw new Error('');
+        throw new Error('type is wrong! should be FormArray');
       }
 
       this.formInitialized = true;

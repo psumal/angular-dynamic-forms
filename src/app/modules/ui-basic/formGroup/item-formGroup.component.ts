@@ -72,7 +72,7 @@ export class FormGroupComponent implements OnInit, OnDestroy {
       if (this.group instanceof FormGroup) {
         this.dfes.addGroupConfigToGroup(this.group, this.config);
       } else {
-        throw new Error('');
+        throw new Error('Formgroup can aonl be type of formGroup');
       }
 
       this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);

@@ -6,18 +6,21 @@
     dynamicFormElement
     [config]="conf"
     [group]="currentFormItem">
+
     <button class="btn btn-danger" (click)="removeGroup(conf.key)">Remove Me!</button>
+
   </ng-container>
 
   <div class="col">
     <button class="btn btn-secondary" (click)="addGroup()">Add</button>
   </div>
 
+  <!--
   <messages [config]="config" [group]="currentFormItem"></messages>
 
   <div *ngIf="currentFormItem.status == 'PENDING'">
     Validation is pending...
   </div>
   <small [attr.id]="config.key+'Help'" class="form-text text-muted"></small>
-
+-->
 </fieldset>

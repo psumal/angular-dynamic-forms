@@ -67,15 +67,17 @@ export class BaseUiComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
+
     this.hostClass = this.getHostClass();
-    //setTimeout(() => {
+    setTimeout(() => {
+      console.log('ngOnInit', this.group);
       this.dfes.addControlConfigToGroup(this.group, this.config);
+      console.log('after init');
       this.subscriptions = this.vcss.initValueChangeSubscriptions(this.config, this.group, this.onValueSubscriptionChanged);
       this.formInitialized = true;
       this.isRendered = true;
       console.log(this.formInitialized, this.isRendered);
-    //})
+    })
   }
 
   ngOnDestroy() {

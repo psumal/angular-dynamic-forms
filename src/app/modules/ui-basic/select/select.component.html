@@ -1,5 +1,3 @@
-formInitialized: {{formInitialized}} <br>
-isRendered: {{isRendered}}
 <div [formGroup]="group"
      *ngIf="formInitialized && isRendered">
 
@@ -33,6 +31,5 @@ isRendered: {{isRendered}}
   <div *ngIf="getCurrentStatus() == 'PENDING'">
     Validation is pending...
   </div>
-
 
 </div>

@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core'
+import {IDynamicFormElementModel} from '../../modules/dymanic-form-element/model/base/form-control-options'
+import {ISelectOption} from '../../modules/dymanic-form-element/model/base/objects/select-option'
 import {
   buttonTypes,
   controlTypes,
   inputTypes,
   textboxTypes
-} from '../../modules/dymanic-form-element/model/item.types';
-import { IDynamicFormElementModel } from '../../modules/dymanic-form-element/model/base/form-control-options';
-import { ISelectOption } from '../../modules/dymanic-form-element/model/base/objects/select-option';
-import { GoogleAddressSearchModel } from '../../modules/dynamic-form-addons/components/google-address-search/google-address-search';
-import { TextMaskService } from '../../modules/formatter-parser/text-mask-implementation/textMask.service';
-import { ibanMask } from '../../modules/dynamic-form-addons/payment/sepa/formatter-parser/iban-mask';
-import { IConformToMaskConfigOptions } from '../../modules/formatter-parser/text-mask-implementation/struct/conformToMask-config-options';
+} from '../../modules/dymanic-form-element/model/item.types'
+import {GoogleAddressSearchModel} from '../../modules/dynamic-form-addons/components/google-address-search/google-address-search'
+import {ibanMask} from '../../modules/dynamic-form-addons/payment/sepa/formatter-parser/iban-mask'
+import {IConformToMaskConfigOptions} from '../../modules/formatter-parser/text-mask-implementation/struct/conformToMask-config-options'
+import {TextMaskService} from '../../modules/formatter-parser/text-mask-implementation/textMask.service'
 
 @Injectable()
 export class FormConfigService {
@@ -59,11 +59,17 @@ export class FormConfigService {
     {value: {name: 'minLength', params: []}, name: 'Min Length'},
     {value: {name: 'maxLength', params: [4]}, name: 'Max Length'},
     {value: {name: 'pattern', params: ['[A-Za-z]+']}, name: 'Pattern'},
-    {value: {name: 'nullValidator', params: ['[A-Za-z]+']}, name: 'Null Validator'},
+    {
+      value: {name: 'nullValidator', params: ['[A-Za-z]+']},
+      name: 'Null Validator'
+    },
     //custom validators
 
     {
-      value: {name: 'controlMatch', params: [[['controlMatchPattern'], ['controlMatch']]]},
+      value: {
+        name: 'controlMatch',
+        params: [[['controlMatchPattern'], ['controlMatch']]]
+      },
       name: 'Control Match Validator'
     },
     //email
@@ -71,7 +77,10 @@ export class FormConfigService {
   ];
 
   static INPUT_ASYNC_VALIDATORS: { value: any, name: string } [] = [
-    {value: {name: 'wait2SecToValidateRequired'}, name: 'Wait 2 Sec To Validate Required'},
+    {
+      value: {name: 'wait2SecToValidateRequired'},
+      name: 'Wait 2 Sec To Validate Required'
+    },
   ];
 
   constructor(private tms: TextMaskService) {
@@ -210,7 +219,10 @@ export class FormConfigService {
             {label: 'key0', value: 'Short label'},
             {label: 'key1', value: 'Label should always fit'},
             {label: 'key2', value: 'Kind a long label for a radio control'},
-            {label: 'key3', value: 'This label is really long for a normal radio control!'},
+            {
+              label: 'key3',
+              value: 'This label is really long for a normal radio control!'
+            },
           ],
         }
       ]
@@ -225,7 +237,10 @@ export class FormConfigService {
       {label: 'key0', value: 'Short label'},
       {label: 'key1', value: 'Label should always fit'},
       {label: 'key2', value: 'Kind a long label for a select box'},
-      {label: 'key3', value: 'This label is really long for a normal select box!'},
+      {
+        label: 'key3',
+        value: 'This label is really long for a normal select box!'
+      },
     ];
 
     let groupOptions: ISelectOption[] = [
@@ -589,7 +604,11 @@ export class FormConfigService {
       controlType: 'container',
       key: 'pd-c-gender',
       config: [],
-      valueChangeSubscriptions: [{name: 'isRendered', controls: ['isCompany'], params: [true]}]
+      valueChangeSubscriptions: [{
+        name: 'isRendered',
+        controls: ['isCompany'],
+        params: [true]
+      }]
     };
 
     let firstName = {
@@ -634,7 +653,6 @@ export class FormConfigService {
     personalData.config.push(bottom);
 
 
-
     const maincontainer: IDynamicFormElementModel = {
       controlType: 'container',
       wrapperClass: ['row'],
@@ -670,7 +688,20 @@ export class FormConfigService {
           label: 'formArray',
           numOfRows: 1,
           config: [
-            maincontainer
+            {
+              controlType: 'textbox',
+              wrapperClass: ['col-sm-6'],
+              inputType: 'text',
+              key: 'txtb1',
+              label: 'Textbox Control 1',
+            },
+            {
+              controlType: 'textbox',
+              wrapperClass: ['col-sm-6'],
+              inputType: 'text',
+              key: 'txtb2',
+              label: 'Textbox Control 2',
+            }
           ]
         }
       ]
@@ -1052,7 +1083,11 @@ export class FormConfigService {
       controlType: 'container',
       key: 'pd-c-gender',
       config: [],
-      valueChangeSubscriptions: [{name: 'isRendered', controls: ['isCompany'], params: [true]}]
+      valueChangeSubscriptions: [{
+        name: 'isRendered',
+        controls: ['isCompany'],
+        params: [true]
+      }]
     };
 
     let firstName = {
@@ -1361,7 +1396,9 @@ export class FormConfigService {
                 ]
               },
               {
-                controls: ['controlType'], name: 'isRendered', params: ['textbox', 'button']
+                controls: ['controlType'],
+                name: 'isRendered',
+                params: ['textbox', 'button']
               }
             ]
           },
@@ -1408,7 +1445,10 @@ export class FormConfigService {
                 key: 'builtIn', value: 'built in validators',
                 children: [
                   {key: [{name: 'required'}], value: 'Required'},
-                  {key: [{name: 'minLength', params: [2]}], value: 'minLength of 2'}
+                  {
+                    key: [{name: 'minLength', params: [2]}],
+                    value: 'minLength of 2'
+                  }
                 ]
               },
               {
